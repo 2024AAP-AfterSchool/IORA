@@ -4,13 +4,13 @@
  * @date 2024-10-18
  * @author 조동후
  */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "utils/string.h"
 #include "utils/memory.h"
 #include "base/base_type.h"
 #include "bigint/bigint_calculation.h"
+//#define create_prameter
 
 /**
  * @brief bigint의 값을 다른 bigint로 할당하는 함수
@@ -23,7 +23,7 @@ void bi_delete(bigint** dst)
         return;
     }
 
-    // free_if_exist((*dst)->start);
+    free_if_exist((*dst)->start);
     free_if_exist(*dst);
 }
 
@@ -36,12 +36,18 @@ void bi_new(bigint** dst, uint32_t wordlen)
 {   
     bi_delete(dst);
 
-    *dst = (bigint*)calloc(1, sizeof(bigint));
+    *dst = (bigint*)malloc(1, sizeof(bigint));
     (*dst)->sign = POSITIVE;
     (*dst)->wordlen = wordlen;
     (*dst)->start = (word*)calloc(wordlen, sizeof(word));
 }
-
+/**
+* @memory 값을 copy하는 함수 추가함
+*/
+void array_copy(word* dst, word* src, int wordlen)                     // Copy array
+{
+    memcpy_s(dst, sizeof(word) * wordlen, src, sizeof(word) * wordlen);
+}
 /**
  * @brief arrary를 통해 bigint에 값을 할당하는 함수
  * @param dst bigint의 포인터
@@ -60,10 +66,10 @@ void bi_set_from_array(bigint** dst, uint32_t sign, uint32_t wordlen, word* src)
     {
         return;
     }
-
+    //수정함
+    bi_new(dst, wordlen)
     (*dst)->sign = sign;
-    (*dst)->wordlen = wordlen;
-    (*dst)->start = src;
+    array_copy(*dst->start, src, wordlen)
 }
 
 /**
@@ -117,6 +123,7 @@ void bi_set_from_string(bigint** dst, char* str, uint32_t base)
 
 /**
  * @brief bigint에 무작위 값을 할당하는 함수
+ * @create_prime이면 마지막 블럭이 all 0가 되는 것을 방지 = 키 크기 최대한 보장
  * @param dst bigint의 포인터
  * @param sign 부호
  * @param wordlen 배열의 길이
@@ -126,10 +133,22 @@ void bi_get_random(bigint** dst, uint32_t sign, uint32_t wordlen)
     bi_new(dst, wordlen);
 
     (*dst)->sign = sign;
+
     for (int i = 0; i < wordlen; i++)
     {
         (*dst)->start[i] = rand() & 0xFF;
     }
+#ifdef create_prameter
+    if ((*dst)->start[wordlen - 1] == 0)
+    {
+        (*dst)->start[wordlen - 1] = rand() & 0xFF;
+        while ((*dst)->start[wordlen - 1] == 0)
+        {
+            (*dst)->start[wordlen - 1] = rand() & 0xFF; // 0이 아닌 값을 보장
+        }
+    }
+#endif
+    bi_refine(*x);
 }
 
 /**
@@ -155,7 +174,18 @@ void bi_refine(bigint* dst)
         return;
     }
 
-    dst->start = (word*)realloc(dst->start, dst->wordlen * sizeof(word));
+    // 새로운 포인터를 받아 기존 포인터를 그대로 유지하는 방식으로 realloc 사용
+    word* new_start = (word*)realloc(dst->start, dst->wordlen * sizeof(word));
+
+    // realloc 실패 처리
+    if (new_start == NULL)
+    {
+        return;
+    }
+
+    // 성공적으로 할당되었으므로 포인터 업데이트
+    dst->start = new_start;
+
 
     if((dst->start[0] == 0) && (dst->wordlen == 1))
     {
@@ -182,7 +212,7 @@ void bi_assign(bigint** dst, bigint* src)
 
     bi_new(dst, src->wordlen);
     (*dst)->sign = src->sign;
-    (*dst)->start = src->start;
+    array_copy((*dst)->start, src->start, src->wordlen);
 }
 
 /**
