@@ -5,6 +5,7 @@
  * @author 조동후
  */
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include "utils/string.h"
 #include "utils/memory.h"
@@ -36,7 +37,7 @@ void bi_new(bigint** dst, uint32_t wordlen)
 {   
     bi_delete(dst);
 
-    *dst = (bigint*)malloc(1, sizeof(bigint));
+    *dst = (bigint*)malloc(sizeof(bigint));
     (*dst)->sign = POSITIVE;
     (*dst)->wordlen = wordlen;
     (*dst)->start = (word*)calloc(wordlen, sizeof(word));
@@ -44,9 +45,9 @@ void bi_new(bigint** dst, uint32_t wordlen)
 /**
 * @memory 값을 copy하는 함수 추가함
 */
-void array_copy(word* dst, word* src, int wordlen)                     // Copy array
-{
-    memcpy_s(dst, sizeof(word) * wordlen, src, sizeof(word) * wordlen);
+void array_copy(word* dst, word* src, uint32_t wordlen)                     // Copy array
+{   
+    memcpy(dst, src, sizeof(word) * wordlen);
 }
 /**
  * @brief arrary를 통해 bigint에 값을 할당하는 함수
@@ -67,9 +68,9 @@ void bi_set_from_array(bigint** dst, uint32_t sign, uint32_t wordlen, word* src)
         return;
     }
     //수정함
-    bi_new(dst, wordlen)
+    bi_new(dst, wordlen);
     (*dst)->sign = sign;
-    array_copy(*dst->start, src, wordlen)
+    array_copy((*dst)->start, src, wordlen);
 }
 
 /**
@@ -148,7 +149,7 @@ void bi_get_random(bigint** dst, uint32_t sign, uint32_t wordlen)
         }
     }
 #endif
-    bi_refine(*x);
+    bi_refine(*dst);
 }
 
 /**
