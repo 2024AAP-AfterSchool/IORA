@@ -174,7 +174,18 @@ void bi_refine(bigint* dst)
         return;
     }
 
-    dst->start = (word*)realloc(dst->start, dst->wordlen * sizeof(word));
+    // 새로운 포인터를 받아 기존 포인터를 그대로 유지하는 방식으로 realloc 사용
+    word* new_start = (word*)realloc(dst->start, dst->wordlen * sizeof(word));
+
+    // realloc 실패 처리
+    if (new_start == NULL)
+    {
+        return;
+    }
+
+    // 성공적으로 할당되었으므로 포인터 업데이트
+    dst->start = new_start;
+
 
     if((dst->start[0] == 0) && (dst->wordlen == 1))
     {
