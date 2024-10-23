@@ -1,8 +1,12 @@
+#ifndef STRUCT_H
+#define STRUCT_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 
-#ifndef struct.h
+
+
 typedef uint32_t word;
 typedef uint32_t msg;
 
