@@ -1,1 +1,9 @@
+.cmake
+.vscode
 .DS_Store
+build.ninja
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+Makefile
