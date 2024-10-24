@@ -17,4 +17,18 @@
  */
 uint32_t str_to_hex(word** dst, char* str, int base);
 
+/**
+ * @brief 문자열이 10진수인지 확인하는 함수
+ * @param c 문자열
+ * @return 10진수이면 1, 아니면 0
+ */
+uint32_t is_digit(char c);
+
+/**
+ * @brief 문자열이 16진수인지 확인하는 함수
+ * @param c 문자열
+ * @return 16진수이면 1, 아니면 0
+ */
+uint32_t is_hex_digit(char c);
+
 #endif // IORA_UTILS_STRING_H_

@@ -35,4 +35,6 @@ msg bi_assign(bigint** dst, bigint* src);
 // 나눗셈까지 구현을 해야 print를 구현할 수 있음.
 msg bi_print(bigint* dst, uint32_t base);
 
+msg array_copy(word* dst, word* src, uint32_t wordlen);
+
 #endif // BIGINT_CALCULATION_H_

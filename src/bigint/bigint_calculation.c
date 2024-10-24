@@ -6,6 +6,7 @@
  */
 #include <stdio.h>
 #include <string.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include "utils/string.h"
 #include "utils/memory.h"
@@ -20,13 +21,14 @@
  */
 msg bi_delete(bigint** dst)
 {
-    if (is_null_pointer(dst) || is_null_pointer(dst))
+    if (is_null_pointer(dst) || is_null_pointer(*dst))
     {
         return print_null_pointer_error();
     }
 
-    free_if_exist((*dst)->start);
-    free_if_exist(*dst);
+    free((*dst)->start);
+    free(*dst);
+    *dst = NULL;
 
     return print_success_memory_deallocation();
 }
@@ -45,6 +47,8 @@ msg bi_new(bigint** dst, uint32_t wordlen)
 
     if (!is_null_pointer(*dst))
     {
+        fprintf(stdout, "Already freed pointer.\n");
+        fprintf(stdout, "%d", is_null_pointer(*dst));
         // bi_delete(dst);
         return print_already_freed_error();
     }
@@ -62,7 +66,7 @@ msg bi_new(bigint** dst, uint32_t wordlen)
 
     if (is_null_pointer((*dst)->start))
     {   
-        free_if_exist(*dst);
+        free(*dst);
         return print_array_allocation_error();
     }
 
@@ -133,47 +137,104 @@ msg bi_set_from_array(bigint** dst, uint32_t sign, uint32_t wordlen, word* src)
  */
 msg bi_set_from_string(bigint** dst, char* str, uint32_t base)
 {
-    if(is_null_pointer(dst))
-    {
-        return -1;
+    // 예외 처리: NULL 포인터 또는 잘못된 진수 값 체크
+    if (dst == NULL || str == NULL || base != 16) {
+        return print_null_pointer_error();
+    }
+    // 메모리가 이미 할당된 경우, 중복 할당 방지
+    if (*dst == NULL) {
+        msg result = bi_new(dst, 1);  // 최소 크기로 먼저 할당
+        if (result != SUCCESS_INITIALIZATION) {
+            return result;
+        }
+    }
+    // 부호 확인
+    // 부호 확인
+    int start_idx = 0;
+    if (str[0] == '-') {
+        (*dst)->sign = 1;  // 음수로 설정
+        start_idx = 1;
+    }
+    else {
+        (*dst)->sign = 0;  // 양수로 설정
     }
 
-    if(is_null_pointer(str))
-    {
-        return -1;
+    // '0x' 접두사 처리 (16진수일 경우)
+    if (base == 16) {
+        if (strlen(str + start_idx) < 2 ||  // "0x" 이후 값이 없음
+            !(str[start_idx] == '0' && (str[start_idx + 1] == 'x' || str[start_idx + 1] == 'X'))) {
+            return print_invalid_input_error();  // 접두사가 없거나 빈 값인 경우
+        }
+
+        start_idx += 2;  // '0x' 건너뛰기
     }
 
-    uint32_t sign = *str == '-' ? NEGATIVE : POSITIVE;
-    if(sign == NEGATIVE)
-    {
-        str++;
+    // 유효한 숫자 문자열인지 확인
+    int str_len = strlen(str) - start_idx;
+    if (str_len == 0) {  // '0x'만 있고 숫자가 없을 때 예외 처리
+        return print_invalid_input_error();
+    }
+    for (int i = start_idx; i < strlen(str); i++) {
+        if (!is_hex_digit(str[i]))
+        {  // 16진수 문자인지 직접 체크
+            return print_invalid_input_error();
+        }
     }
 
-    if (*str == '0' && (*(str + 1) == 'x' || *(str +1 ) == 'X'))
-    {
-        str += 2;
+    // 워드 길이 계산
+    int wordlen = (str_len + 7) / 8;  // 8자리 16진수를 32비트 워드로 변환
+    if (*dst == NULL) {
+        msg result = bi_new(dst, wordlen);
+        if (result != SUCCESS_INITIALIZATION) {
+            return result;
+        }
+    }
+    else if ((*dst)->wordlen < wordlen) {
+        free((*dst)->start);
+        (*dst)->start = (word*)calloc(wordlen, sizeof(word));
+        if ((*dst)->start == NULL) {
+            return print_memory_allocation_error();
+        }
+        (*dst)->wordlen = wordlen;
     }
 
-    uint32_t zero_count = 0;
-    char* temp_str = str;
-    while (*temp_str == '0')
-    {
-        zero_count++;
-        temp_str++;
+    // 문자열을 16진수로 변환하여 정순으로 워드 배열에 저장
+    int word_idx = 0;
+    word temp_value = 0;
+    int shift = 0;
+
+    for (int i = str_len - 1; i >= 0; i--) {
+        char c = str[start_idx + i];
+        int digit_value = 0;
+
+        if (is_digit(c)) {
+            digit_value = c - '0';
+        }
+        else if (c >= 'a' && c <= 'f') {
+            digit_value = c - 'a' + 10;
+        }
+        else if (c >= 'A' && c <= 'F') {
+            digit_value = c - 'A' + 10;
+        }
+
+        // 16진수 문자를 변환하고 적절한 비트 위치에 저장
+        temp_value |= ((word)digit_value << shift);
+        shift += 4;
+
+        // 워드가 다 채워지면 저장
+        if (shift == sizeof(word) * 8) {
+            (*dst)->start[word_idx++] = temp_value;
+            temp_value = 0;
+            shift = 0;
+        }
     }
 
-    printf("%s\n", str);
-    word target_num = str_to_hex((*dst)->start, str, base);
-    printf("target_num: %d\n", target_num);
-    if (target_num == -1)
-    {
-        return -1;
+    // 남은 값이 있으면 마지막 워드에 저장
+    if (shift > 0) {
+        (*dst)->start[word_idx] = temp_value;
     }
 
-    (*dst)->sign = sign;
-    (*dst)->wordlen = sizeof((*dst)->start) / sizeof(word) + zero_count;
-    
-    return -1;
+    return print_success_set_from_string();
 }
 
 /**

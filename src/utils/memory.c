@@ -23,11 +23,13 @@ bool is_null_pointer(void* ptr)
  * @brief 포인터의 메모리가 할당되어 있으면 해제하는 함수
  * @param ptr 포인터
  */
-void free_if_exist(void* ptr)
+void free_if_exist(void** ptr)
 {   
-    if (!is_null_pointer(ptr))
+    if (!is_null_pointer(ptr) && !is_null_pointer(*ptr))
     {
-        free(ptr);
-        ptr = NULL;
+        printf("Freeing memory...\n");
+        printf("ptr: %p\n", ptr);
+        free(*ptr);
+        *ptr = NULL;
     }
 }
