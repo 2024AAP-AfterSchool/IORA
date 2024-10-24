@@ -14,7 +14,10 @@ msg bi_delete(bigint** dst) {
     }
 
     // 배열 메모리 해제
-    free((*dst)->a);
+    if ((*dst)->a != NULL) {
+        free((*dst)->a);
+        (*dst)->a = NULL;  // 해제 후 NULL로 초기화
+    }
 
     // 구조체 메모리 해제
     free(*dst);
@@ -32,7 +35,7 @@ msg bi_new(bigint** dst, int word_len) {
 
     // 메모리가 이미 할당된 경우 처리
     if (*dst != NULL) {
-        bi_delete(dst);
+        //bi_delete(dst);
         return print_already_freed_error();
     }
 
@@ -258,6 +261,103 @@ msg bi_refine(bigint* x) {
     return print_success_refine();
 }
 
+
 msg bi_set_from_string(bigint** dst, char* int_str, int base) {
-    return 0;
+    // 예외 처리: NULL 포인터 또는 잘못된 진수 값 체크
+    if (dst == NULL || int_str == NULL || base != 16) {
+        return print_null_pointer_error();
+    }
+    // 메모리가 이미 할당된 경우, 중복 할당 방지
+    if (*dst == NULL) {
+        msg result = bi_new(dst, 1);  // 최소 크기로 먼저 할당
+        if (result != SUCCESS_INITIALIZATION) {
+            return result;
+        }
+    }
+    // 부호 확인
+    // 부호 확인
+    int start_idx = 0;
+    if (int_str[0] == '-') {
+        (*dst)->sign = 1;  // 음수로 설정
+        start_idx = 1;
+    }
+    else {
+        (*dst)->sign = 0;  // 양수로 설정
+    }
+
+    // '0x' 접두사 처리 (16진수일 경우)
+    if (base == 16) {
+        if (strlen(int_str + start_idx) < 2 ||  // "0x" 이후 값이 없음
+            !(int_str[start_idx] == '0' && (int_str[start_idx + 1] == 'x' || int_str[start_idx + 1] == 'X'))) {
+            return print_invalid_input_error();  // 접두사가 없거나 빈 값인 경우
+        }
+
+        start_idx += 2;  // '0x' 건너뛰기
+    }
+
+    // 유효한 숫자 문자열인지 확인
+    int str_len = strlen(int_str) - start_idx;
+    if (str_len == 0) {  // '0x'만 있고 숫자가 없을 때 예외 처리
+        return print_invalid_input_error();
+    }
+    for (int i = start_idx; i < strlen(int_str); i++) {
+        if (!isxdigit(int_str[i])) {
+            return print_invalid_input_error();
+        }
+    }
+
+    // 워드 길이 계산
+    int word_len = (str_len + 7) / 8;  // 8자리 16진수를 32비트 워드로 변환
+    if (*dst == NULL) {
+        msg result = bi_new(dst, word_len);
+        if (result != SUCCESS_INITIALIZATION) {
+            return result;
+        }
+    }
+    else if ((*dst)->word_len < word_len) {
+        free((*dst)->a);
+        (*dst)->a = (word*)calloc(word_len, sizeof(word));
+        if ((*dst)->a == NULL) {
+            return print_memory_allocation_error();
+        }
+        (*dst)->word_len = word_len;
+    }
+
+    // 문자열을 16진수로 변환하여 정순으로 워드 배열에 저장
+    int word_idx = 0;
+    word temp_value = 0;
+    int shift = 0;
+
+    for (int i = str_len - 1; i >= 0; i--) {
+        char c = int_str[start_idx + i];
+        int digit_value = 0;
+
+        if (isdigit(c)) {
+            digit_value = c - '0';
+        }
+        else if (c >= 'a' && c <= 'f') {
+            digit_value = c - 'a' + 10;
+        }
+        else if (c >= 'A' && c <= 'F') {
+            digit_value = c - 'A' + 10;
+        }
+
+        // 16진수 문자를 변환하고 적절한 비트 위치에 저장
+        temp_value |= ((word)digit_value << shift);
+        shift += 4;
+
+        // 워드가 다 채워지면 저장
+        if (shift == sizeof(word) * 8) {
+            (*dst)->a[word_idx++] = temp_value;
+            temp_value = 0;
+            shift = 0;
+        }
+    }
+
+    // 남은 값이 있으면 마지막 워드에 저장
+    if (shift > 0) {
+        (*dst)->a[word_idx] = temp_value;
+    }
+
+    return print_success_set_from_string();
 }

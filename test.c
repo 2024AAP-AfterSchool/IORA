@@ -184,7 +184,7 @@ int main() {
     return 0;
 }
 */
-
+/*
 int main() {
     bigint* test_bigint = NULL;  // 초기화를 NULL로 설정
     msg result;
@@ -264,6 +264,104 @@ int main() {
     bi_print(test_bigint, 16);
 
     bi_delete(&test_bigint);  // 메모리 해제
+
+    return 0;
+}
+*/
+
+
+int main() {
+    bigint* number = NULL;  // 반드시 NULL로 초기화
+    char hex_string1[] = "0x1A2B3C4D5E6F";  // 정상적인 16진수 문자열
+    char hex_string2[] = "-0xABCDEF123456"; // 음수 16진수 문자열
+    char hex_string3[] = "1A2B3C";          // '0x' 없이 16진수 문자열
+    char hex_string4[] = "0x";              // 빈 16진수
+    char hex_string5[] = "-0x";             // 빈 음수 16진수
+    char invalid_hex[] = "0x1A2G3C";        // 유효하지 않은 문자 'G' 포함
+    char long_hex[] = "0x123456789ABCDEF0123456789ABCDEF";  // 긴 16진수 문자열
+
+    // 테스트 1: 정상적인 16진수 입력
+    printf("Test Case 1: Valid Hex String\n");
+    msg result = bi_set_from_string(&number, hex_string1, 16);
+    if (result == SUCCESS_SET_FROM_STRING) {
+        printf("Bigint successfully created from string.\n");
+        bi_print(number, 16);  // bigint 출력
+    }
+    else {
+        printf("Failed to create bigint from string.\n");
+    }
+    bi_delete(&number);  // 메모리 해제
+
+    // 테스트 2: 음수 16진수 입력
+    printf("\nTest Case 2: Negative Hex String\n");
+    result = bi_set_from_string(&number, hex_string2, 16);
+    if (result == SUCCESS_SET_FROM_STRING) {
+        printf("Bigint successfully created from negative string.\n");
+        bi_print(number, 16);  // bigint 출력
+    }
+    else {
+        printf("Failed to create bigint from negative string.\n");
+    }
+    bi_delete(&number);  // 메모리 해제
+
+    // 테스트 3: '0x' 없이 16진수 입력
+    printf("\nTest Case 3: Hex String without '0x'\n");
+    result = bi_set_from_string(&number, hex_string3, 16);
+    if (result == SUCCESS_SET_FROM_STRING) {
+        printf("Bigint successfully created from string without '0x'.\n");
+        bi_print(number, 16);  // bigint 출력
+    }
+    else {
+        printf("Failed to create bigint from string without '0x'.\n");
+    }
+    bi_delete(&number);  // 메모리 해제
+
+    // 테스트 4: 빈 16진수 입력
+    printf("\nTest Case 4: Empty Hex String\n");
+    result = bi_set_from_string(&number, hex_string4, 16);
+    if (result == SUCCESS_SET_FROM_STRING) {
+        printf("Bigint successfully created from empty string.\n");
+        bi_print(number, 16);  // bigint 출력
+    }
+    else {
+        printf("Failed to create bigint from empty string.\n");
+    }
+    bi_delete(&number);  // 메모리 해제
+
+    // 테스트 5: 빈 음수 16진수 입력
+    printf("\nTest Case 5: Empty Negative Hex String\n");
+    result = bi_set_from_string(&number, hex_string5, 16);
+    if (result == SUCCESS_SET_FROM_STRING) {
+        printf("Bigint successfully created from empty negative string.\n");
+        bi_print(number, 16);  // bigint 출력
+    }
+    else {
+        printf("Failed to create bigint from empty negative string.\n");
+    }
+    bi_delete(&number);  // 메모리 해제
+
+    // 테스트 6: 유효하지 않은 문자 포함
+    printf("\nTest Case 6: Invalid Hex String (contains 'G')\n");
+    result = bi_set_from_string(&number, invalid_hex, 16);
+    if (result == SUCCESS_SET_FROM_STRING) {
+        printf("Bigint successfully created from string with invalid character.\n");
+        bi_print(number, 16);  // bigint 출력
+    }
+    else {
+        printf("Failed to create bigint from string with invalid character.\n");
+    }
+
+    // 테스트 7: 긴 16진수 입력
+    printf("\nTest Case 7: Long Hex String\n");
+    result = bi_set_from_string(&number, long_hex, 16);
+    if (result == SUCCESS_SET_FROM_STRING) {
+        printf("Bigint successfully created from long string.\n");
+        bi_print(number, 16);  // bigint 출력
+    }
+    else {
+        printf("Failed to create bigint from long string.\n");
+    }
+    bi_delete(&number);  // 메모리 해제
 
     return 0;
 }

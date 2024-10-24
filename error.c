@@ -85,3 +85,13 @@ msg print_success_refine() {
     fprintf(stdout, "Success: print_success_refine.\n");
     return SUCCESS_REFINE;
 }
+msg print_success_set_from_string() {
+    fprintf(stdout, "Success: print_success_set_from_string.\n");
+    return SUCCESS_SET_FROM_STRING;
+}
+
+msg print_invalid_input_error() {
+    fprintf(stderr, "Error: Array copy failed.\n");
+    return INVALID_INPUT_ERROR;
+}
+
