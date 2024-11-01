@@ -1,6 +1,6 @@
 #include "bigint/bigint_calculation.h"
 
-void Sub_ABb(word* A, word* B, unsigned int* b, word* C);		
-void Sub_Ab(word* A, unsigned int* b, word* C);
-void SubC(bigint* A, bigint* B, bigint** z);				 
-void sub(bigint* x, bigint* y, bigint** z);
+void bi_sub_ABb(word* A, word* B, byte* b, word* C);
+void bi_sub_Ab(word* A, byte* b, word* C);
+void bi_sub_C(bigint* A, bigint* B, bigint** z);				 
+void bi_sub(bigint* x, bigint* y, bigint** z);

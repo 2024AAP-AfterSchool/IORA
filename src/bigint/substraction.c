@@ -1,9 +1,9 @@
 #include "bigint/basic_calculation.h"
 #include "base/base_type.h"
 
-void sub_AbB(word* A, word* B, unsigned int* b, word* C)
+void bi_sub_AbB(word* A, word* B, byte* b, word* C)
 {
-	unsigned int tmp = 0;
+	byte tmp = 0;
 	*C = *A - *b;
 	if (*A < *b)
 		tmp = 1;
@@ -13,102 +13,102 @@ void sub_AbB(word* A, word* B, unsigned int* b, word* C)
 	*b = tmp;
 }
 
-void sub_Ab(word* A, unsigned int* b, word* C)
+void bi_sub_Ab(word* A, byte* b, word* C)
 {
-	unsigned int tmp = 0;
+	byte tmp = 0;
 	*C = *A - *b;
 	if (*A < *b)
 		tmp = 1;
 	*b = tmp;
 }
-void sub_C(bigint* A, bigint* B, bigint** z)
+void bi_sub_C(bigint* A, bigint* B, bigint** z)
 {
-    unsigned int b = 0;
+    byte b = 0;
     word C = 0;
-    bigint* sub = NULL;
-    bigint_create(&sub, A->wordlen);
+    bigint* bi_sub = NULL;
+    bi_new(&bi_sub, A->wordlen);
 
     for (int j = 0; j < B->wordlen; j++) 
 	{
-        sub_AbB(&(A->start[j]), &(B->start[j]), &b, &C);
-        sub->start[j] = C;
+        bi_sub_AbB(&(A->start[j]), &(B->start[j]), &b, &C);
+        bi_sub->start[j] = C;
         C = 0;
     }
 	for (int j = B->wordlen; j < A->wordlen; j++) {
-		sub_Ab(&(A->start[j]), &b, &C);
-		sub->start[j] = C;
+		bi_sub_Ab(&(A->start[j]), &b, &C);
+		bi_sub->start[j] = C;
 		C = 0;
 	}
-    bigint_refine(sub);
-    bigint_refine(B);
-    bigint_assign(z, sub);
-    bigint_delete(&sub);
+    bi_refine(bi_sub);
+    bi_refine(B);
+    bi_assign(z, bi_sub);
+    bi_delete(&bi_sub);
 }
 
-void sub(bigint* x, bigint* y, bigint** z)
+void bi_sub(bigint* x, bigint* y, bigint** z)
 {
 	bigint* tmp_x = NULL;
 	bigint* tmp_y = NULL;
 
-	bigint_assign(&tmp_x, x);
-	bigint_assign(&tmp_y, y);
+	bi_assign(&tmp_x, x);
+	bi_assign(&tmp_y, y);
 
 	if (is_zero(tmp_x))
 	{
-		bigint_assign(z, tmp_y);
+		bi_assign(z, tmp_y);
 		(*z)->sign = NEGATIVE;
-		bigint_delete(&tmp_x);
-		bigint_delete(&tmp_y);
+		bi_delete(&tmp_x);
+		bi_delete(&tmp_y);
 		return;
 	}
 	if (is_zero(tmp_y))
 	{
-		bigint_assign(z, tmp_x);
+		bi_assign(z, tmp_x);
 		(*z)->sign = POSITIVE;
-		bigint_delete(&tmp_x);
-		bigint_delete(&tmp_y);
+		bi_delete(&tmp_x);
+		bi_delete(&tmp_y);
 		return;
 	}
 	if (compare(tmp_x, tmp_y) == 0) 
 	{
-		bigint_set_zero(z);
-		bigint_delete(&tmp_y);
-		bigint_delete(&tmp_x);
+		bi_set_zero(z);
+		bi_delete(&tmp_y);
+		bi_delete(&tmp_x);
 		return;
 	}
 	if ((tmp_x->sign == POSITIVE) && (tmp_y->sign == POSITIVE) && (compare(tmp_x, tmp_y) != -1))
 	{
-		sub_C(tmp_x, tmp_y, z);
+		bi_sub_C(tmp_x, tmp_y, z);
 		(*z)->sign = POSITIVE;
-		bigint_delete(&tmp_x);
-		bigint_delete(&tmp_y);
+		bi_delete(&tmp_x);
+		bi_delete(&tmp_y);
 		return;
 	}
 	if ((tmp_x->sign == POSITIVE) && (tmp_y->sign == POSITIVE) && (compare(tmp_x, tmp_y) == -1))
 	{
-		sub_C(tmp_x, tmp_y, z);
+		bi_sub_C(tmp_x, tmp_y, z);
 		(*z)->sign = NEGATIVE;
-		bigint_delete(&tmp_x);
-		bigint_delete(&tmp_y);
+		bi_delete(&tmp_x);
+		bi_delete(&tmp_y);
 		return;
 	}
 	if ((tmp_x->sign == NEGATIVE) && (tmp_y->sign == NEGATIVE) && (compare(tmp_x, tmp_y) != -1))
 	{
 		tmp_x->sign = POSITIVE;
 		tmp_y->sign = POSITIVE;
-		sub_C(tmp_y, tmp_x, z);
-		bigint_delete(&tmp_x);
-		bigint_delete(&tmp_y);
+		bi_sub_C(tmp_y, tmp_x, z);
+		bi_delete(&tmp_x);
+		bi_delete(&tmp_y);
 		return;
 	}
 	if ((tmp_x->sign == NEGATIVE) && (tmp_y->sign == NEGATIVE) && (compare(tmp_x, tmp_y) == -1))
 	{
 		tmp_x->sign = POSITIVE;
 		tmp_y->sign = POSITIVE;
-		sub_C(tmp_y, tmp_x, z);
+		bi_sub_C(tmp_y, tmp_x, z);
 		(*z)->sign = NEGATIVE;
-		bigint_delete(&tmp_x);
-		bigint_delete(&tmp_y);
+		bi_delete(&tmp_x);
+		bi_delete(&tmp_y);
 		return;
 	}
 	if ((tmp_x->sign == POSITIVE) && (tmp_y->sign == NEGATIVE))
@@ -116,8 +116,8 @@ void sub(bigint* x, bigint* y, bigint** z)
 		tmp_y->sign = POSITIVE;
 		add(tmp_y, tmp_x, z);
 		(*z)->sign = POSITIVE;
-		bigint_delete(&tmp_x);
-		bigint_delete(&tmp_y);
+		bi_delete(&tmp_x);
+		bi_delete(&tmp_y);
 		return;
 	}
 	if ((tmp_x->sign == NEGATIVE) && (tmp_y->sign == POSITIVE))
@@ -125,8 +125,8 @@ void sub(bigint* x, bigint* y, bigint** z)
 		tmp_x->sign = POSITIVE;
 		add(tmp_x, tmp_y, z);
 		(*z)->sign = NEGATIVE;
-		bigint_delete(&tmp_x);
-		bigint_delete(&tmp_y);
+		bi_delete(&tmp_x);
+		bi_delete(&tmp_y);
 		return;
 	}
 }
