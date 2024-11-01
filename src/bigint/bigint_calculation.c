@@ -5,17 +5,18 @@
  * @author 조동후
  */
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include "utils/string.h"
 #include "utils/memory.h"
 #include "base/base_type.h"
 #include "bigint/bigint_calculation.h"
-//#define create_prameter
+ //#define create_prameter
 
-/**
- * @brief bigint의 값을 다른 bigint로 할당하는 함수
- * @param dst bigint의 포인터
- */
+ /**
+  * @brief bigint의 값을 다른 bigint로 할당하는 함수
+  * @param dst bigint의 포인터
+  */
 void bi_delete(bigint** dst)
 {
     if (is_null_pointer(*dst))
@@ -33,10 +34,10 @@ void bi_delete(bigint** dst)
  * @param wordlen 배열의 길이
  */
 void bi_new(bigint** dst, uint32_t wordlen)
-{   
+{
     bi_delete(dst);
 
-    *dst = (bigint*)malloc(1, sizeof(bigint));
+    *dst = (bigint*)malloc(sizeof(bigint));
     (*dst)->sign = POSITIVE;
     (*dst)->wordlen = wordlen;
     (*dst)->start = (word*)calloc(wordlen, sizeof(word));
@@ -44,9 +45,9 @@ void bi_new(bigint** dst, uint32_t wordlen)
 /**
 * @memory 값을 copy하는 함수 추가함
 */
-void array_copy(word* dst, word* src, int wordlen)                     // Copy array
+void array_copy(word* dst, word* src, uint32_t wordlen)                     // Copy array
 {
-    memcpy_s(dst, sizeof(word) * wordlen, src, sizeof(word) * wordlen);
+    memcpy(dst, src, sizeof(word) * wordlen);
 }
 /**
  * @brief arrary를 통해 bigint에 값을 할당하는 함수
@@ -56,20 +57,20 @@ void array_copy(word* dst, word* src, int wordlen)                     // Copy a
  * @param src 할당하고자 하는 배열
  */
 void bi_set_from_array(bigint** dst, uint32_t sign, uint32_t wordlen, word* src)
-{   
-    if(is_null_pointer(dst))
+{
+    if (is_null_pointer(dst))
     {
         return;
     }
 
-    if(is_null_pointer(src))
+    if (is_null_pointer(src))
     {
         return;
     }
     //수정함
-    bi_new(dst, wordlen)
+    bi_new(dst, wordlen);
     (*dst)->sign = sign;
-    array_copy(*dst->start, src, wordlen)
+    array_copy((*dst)->start, src, wordlen);
 }
 
 /**
@@ -80,23 +81,23 @@ void bi_set_from_array(bigint** dst, uint32_t sign, uint32_t wordlen, word* src)
  */
 void bi_set_from_string(bigint** dst, char* str, uint32_t base)
 {
-    if(is_null_pointer(dst))
+    if (is_null_pointer(dst))
     {
         return;
     }
 
-    if(is_null_pointer(str))
+    if (is_null_pointer(str))
     {
         return;
     }
 
     uint32_t sign = *str == '-' ? NEGATIVE : POSITIVE;
-    if(sign == NEGATIVE)
+    if (sign == NEGATIVE)
     {
         str++;
     }
 
-    if (*str == '0' && (*(str + 1) == 'x' || *(str +1 ) == 'X'))
+    if (*str == '0' && (*(str + 1) == 'x' || *(str + 1) == 'X'))
     {
         str += 2;
     }
@@ -148,7 +149,7 @@ void bi_get_random(bigint** dst, uint32_t sign, uint32_t wordlen)
         }
     }
 #endif
-    bi_refine(*x);
+    bi_refine(*dst);
 }
 
 /**
@@ -156,10 +157,10 @@ void bi_get_random(bigint** dst, uint32_t sign, uint32_t wordlen)
  * @param dst bigint의 포인터
  */
 void bi_refine(bigint* dst)
-{   
+{
     uint32_t origin_wordlen = dst->wordlen;
 
-    if(is_null_pointer(dst))
+    if (is_null_pointer(dst))
     {
         return;
     }
@@ -187,7 +188,7 @@ void bi_refine(bigint* dst)
     dst->start = new_start;
 
 
-    if((dst->start[0] == 0) && (dst->wordlen == 1))
+    if ((dst->start[0] == 0) && (dst->wordlen == 1))
     {
         dst->sign = POSITIVE;
     }
@@ -200,12 +201,12 @@ void bi_refine(bigint* dst)
  */
 void bi_assign(bigint** dst, bigint* src)
 {
-    if(!is_null_pointer(dst))
+    if (!is_null_pointer(dst))
     {
         return;
     }
 
-    if(is_null_pointer(src))
+    if (is_null_pointer(src))
     {
         return;
     }
@@ -222,11 +223,11 @@ void bi_assign(bigint** dst, bigint* src)
  */
 void bi_print(bigint* dst, uint32_t base)
 {
-    if(is_null_pointer(dst))
+    if (is_null_pointer(dst))
     {
         return;
     }
-    
+
     if (dst->sign == NEGATIVE)
     {
         printf("-");
@@ -239,4 +240,52 @@ void bi_print(bigint* dst, uint32_t base)
         // TODO: base에 따라 출력 형식을 변경할 수 있도록 구현
     }
     printf("\n");
+}
+
+void bigint_set_zero(bigint** x)
+{
+    bigint_create(x, 1);
+    (*x)->sign = POSITIVE;
+    (*x)->start[0] = 0x00;
+}
+
+int compare_ABS(bigint* x, bigint* y)
+{
+    int n = x->wordlen;
+    int m = y->wordlen;
+
+    // Case: A > B
+    if (n > m)
+        return 1;
+
+    // Case: A < B
+    if (n < m)
+        return -1;
+
+    for (int i = n - 1; i >= 0; i--) {
+
+        if (x->start[i] > y->start[i])
+            return 1;
+
+        if (x->start[i] < y->start[i])
+            return -1;
+
+    }
+
+    return 0;
+}
+int compare(bigint* x, bigint* y)
+{
+    if (x->sign == POSITIVE && y->sign == NEGATIVE)
+        return 1;
+
+    if (x->sign == NEGATIVE && y->sign == POSITIVE)
+        return -1;
+
+    int ret = compare_ABS(x, y);
+
+    if (x->sign == POSITIVE)
+        return ret;
+
+    return ret * (-1);
 }
