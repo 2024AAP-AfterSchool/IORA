@@ -254,9 +254,9 @@ int main() {
     fprintf(stdout, "\n[+] Test Case 13: Invalid Hex String (contains 'G')\n");
     result = bi_set_from_string(&number, invalid_hex, 16);
     if (result == SUCCESS_SET_FROM_STRING) {
-        fprintf(stdout, "[X] Bigint successfully created from string with invalid character.\n");
+        fprintf(stdout, "[O] Bigint successfully created from string with invalid character.\n");
     } else {
-        fprintf(stdout, "[O] Failed to create bigint from string with invalid character.\n");
+        fprintf(stdout, "[X] Failed to create bigint from string with invalid character.\n");
     }
     bi_delete(&number);  // 메모리 해제
 
