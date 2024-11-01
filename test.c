@@ -2,6 +2,7 @@
 #include "struct.h"
 #include "base.h"
 #include "error.h"
+#include "bigint_addition.h"
 #include <time.h>
 # define NON_NEGATIVE 0 
 
@@ -267,7 +268,7 @@ int main() {
 
     return 0;
 }
-*/
+
 
 
 int main() {
@@ -362,6 +363,90 @@ int main() {
         printf("Failed to create bigint from long string.\n");
     }
     bi_delete(&number);  // 메모리 해제
+
+    return 0;
+}
+*/
+void run_test(const char* test_name, bigint* a, bigint* b) {
+    bigint* result;
+
+    // 최대 a의 길이 + 1 (자리 올림 고려) 만큼 result 초기화
+    bi_new(&result, a->word_len + 1);
+
+    // 덧셈 수행
+    add(&result, a, b);
+
+    // 결과 출력
+    printf("%s:\n", test_name);
+    printf("a = ");
+    bi_print(a, 16);
+    printf("b = ");
+    bi_print(b, 16);
+    printf("a + b = ");
+    bi_print(result, 16);
+    printf("---------------------------\n");
+
+    // 메모리 해제
+    bi_delete(&result);
+}
+
+int main() {
+    bigint* a, * b;
+
+    // 테스트 케이스 1: 동일한 길이의 bigint 덧셈
+    word a_array1[] = { 0x12345678, 0x9ABCDEF0 };
+    word b_array1[] = { 0x11111111, 0x22222222 };
+    bi_new(&a, 2);
+    bi_new(&b, 2);
+    bi_set_from_array(&a, 0, 2, a_array1);
+    bi_set_from_array(&b, 0, 2, b_array1);
+    run_test("Test Case 1: Same Length", a, b);
+    bi_delete(&a);
+    bi_delete(&b);
+
+    // 테스트 케이스 2: 서로 다른 길이의 bigint 덧셈
+    word a_array2[] = { 0xFFFFFFFF, 0xFFFFFFFF, 0x00000001 };
+    word b_array2[] = { 0x00000001 };
+    bi_new(&a, 3);
+    bi_new(&b, 1);
+    bi_set_from_array(&a, 0, 3, a_array2);
+    bi_set_from_array(&b, 0, 1, b_array2);
+    run_test("Test Case 2: Different Lengths", a, b);
+    bi_delete(&a);
+    bi_delete(&b);
+
+    // 테스트 케이스 3: 오버플로우 발생
+    word a_array3[] = { 0xFFFFFFFF, 0xFFFFFFFF };
+    word b_array3[] = { 0x00000001 };
+    bi_new(&a, 2);
+    bi_new(&b, 1);
+    bi_set_from_array(&a, 0, 2, a_array3);
+    bi_set_from_array(&b, 0, 1, b_array3);
+    run_test("Test Case 3: Overflow Check", a, b);
+    bi_delete(&a);
+    bi_delete(&b);
+
+    // 테스트 케이스 4: 작은 값 덧셈
+    word a_array4[] = { 0x0000000A };
+    word b_array4[] = { 0x00000005 };
+    bi_new(&a, 1);
+    bi_new(&b, 1);
+    bi_set_from_array(&a, 0, 1, a_array4);
+    bi_set_from_array(&b, 0, 1, b_array4);
+    run_test("Test Case 4: Small Values", a, b);
+    bi_delete(&a);
+    bi_delete(&b);
+
+    // 테스트 케이스 5: 큰 숫자 덧셈 (자리 올림 발생)
+    word a_array5[] = { 0xFFFFFFFF, 0xFFFFFFFF };
+    word b_array5[] = { 0xFFFFFFFF, 0xFFFFFFFF };
+    bi_new(&a, 2);
+    bi_new(&b, 2);
+    bi_set_from_array(&a, 0, 2, a_array5);
+    bi_set_from_array(&b, 0, 2, b_array5);
+    run_test("Test Case 5: Large Values with Carry", a, b);
+    bi_delete(&a);
+    bi_delete(&b);
 
     return 0;
 }

@@ -7,6 +7,10 @@
 #include "base.h"
 # define NON_NEGATIVE 0 
 
+int is_hex_digit(char c) {
+    return ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'));
+}
+
 msg bi_delete(bigint** dst) {
     // dst가 NULL인 경우 예외 처리
     if (dst==NULL || *dst == NULL) {
@@ -26,7 +30,7 @@ msg bi_delete(bigint** dst) {
     // 메모리 해제 성공 메시지 출력
     return print_success_memory_deallocation();
 }
-
+/*
 msg bi_new(bigint** dst, int word_len) {
     // 유효하지 않은 단어 길이 체크
     if (word_len <= 0) {
@@ -60,8 +64,30 @@ msg bi_new(bigint** dst, int word_len) {
     // 성공적으로 초기화 완료 메시지 출력
     return print_success_initialization();
 }
+*/
+msg bi_new(bigint** dst, int word_len) {
+    if (word_len <= 0) {
+        return print_invalid_word_length_error();
+    }
 
+    *dst = (bigint*)malloc(sizeof(bigint));
+    if (*dst == NULL) {
+        return print_memory_allocation_error();
+    }
 
+    (*dst)->sign = NON_NEGATIVE;
+    (*dst)->word_len = word_len;
+
+    // 배열 할당 및 초기화 확인
+    (*dst)->a = (word*)calloc(word_len, sizeof(word));
+    if ((*dst)->a == NULL) {
+        free(*dst);
+        *dst = NULL;
+        return print_array_allocation_error();
+    }
+
+    return print_success_initialization();
+}
 
 msg copy_array(word* dst, word* src, int word_len) {
     // 유효하지 않은 길이 체크
@@ -263,33 +289,33 @@ msg bi_refine(bigint* x) {
 
 
 msg bi_set_from_string(bigint** dst, char* int_str, int base) {
-    // 예외 처리: NULL 포인터 또는 잘못된 진수 값 체크
+     // NULL 포인터 또는 잘못된 진수 값 체크
     if (dst == NULL || int_str == NULL || base != 16) {
         return print_null_pointer_error();
     }
-    // 메모리가 이미 할당된 경우, 중복 할당 방지
+    
+    // dst가 NULL이거나 *dst가 NULL인 경우 새로 할당
     if (*dst == NULL) {
-        msg result = bi_new(dst, 1);  // 최소 크기로 먼저 할당
+        msg result = bi_new(dst, 1);  // 최소 크기로 할당
         if (result != SUCCESS_INITIALIZATION) {
             return result;
         }
     }
-    // 부호 확인
-    // 부호 확인
+
+    // 부호 설정
     int start_idx = 0;
     if (int_str[0] == '-') {
         (*dst)->sign = 1;  // 음수로 설정
         start_idx = 1;
-    }
-    else {
+    } else {
         (*dst)->sign = 0;  // 양수로 설정
     }
 
     // '0x' 접두사 처리 (16진수일 경우)
     if (base == 16) {
-        if (strlen(int_str + start_idx) < 2 ||  // "0x" 이후 값이 없음
+        if (strlen(int_str + start_idx) < 2 ||
             !(int_str[start_idx] == '0' && (int_str[start_idx + 1] == 'x' || int_str[start_idx + 1] == 'X'))) {
-            return print_invalid_input_error();  // 접두사가 없거나 빈 값인 경우
+            return print_invalid_input_error();
         }
 
         start_idx += 2;  // '0x' 건너뛰기
@@ -297,11 +323,11 @@ msg bi_set_from_string(bigint** dst, char* int_str, int base) {
 
     // 유효한 숫자 문자열인지 확인
     int str_len = strlen(int_str) - start_idx;
-    if (str_len == 0) {  // '0x'만 있고 숫자가 없을 때 예외 처리
+    if (str_len == 0) {
         return print_invalid_input_error();
     }
     for (int i = start_idx; i < strlen(int_str); i++) {
-        if (!isxdigit(int_str[i])) {
+        if (!is_hex_digit(int_str[i])) {
             return print_invalid_input_error();
         }
     }
