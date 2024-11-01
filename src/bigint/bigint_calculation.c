@@ -376,3 +376,31 @@ msg bi_print(bigint* dst, uint32_t base)
 
     return print_success_print();
 }
+
+/**
+ * @brief bigint가 0인지 확인하는 함수
+ * @param dst bigint의 포인터
+ * @return 0이면 1, 아니면 0
+ */
+int8_t is_zero(bigint* dst)
+{
+    if(is_null_pointer(dst))
+    {
+        return print_null_pointer_error();
+    }
+
+    if(dst->sign == NEGATIVE)
+    {   
+        return false;
+    }
+
+    for (int i = dst->wordlen; i >= 0 ; i--)
+    {
+        if(dst->start[i] != 0x00)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
