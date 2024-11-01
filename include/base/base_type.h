@@ -15,6 +15,7 @@
 typedef uint8_t byte; ///< unsigned char의 별칭. BYTE와 같은 역할.
 typedef uint32_t word; ///< unsigned int의 별칭. WORD와 같은 역할. (TODO: 8, 16, 32, 64비트로 변경 가능하도록 구현)
 
+typedef uint8_t carry;
 typedef uint32_t msg; ///< unsigned int의 별칭. 메시지 코드를 저장하기 위한 변수 타입.
 
 typedef struct 
