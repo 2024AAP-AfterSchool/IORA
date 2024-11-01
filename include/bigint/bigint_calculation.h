@@ -1,7 +1,6 @@
 #ifndef BIGINT_CALCULATION_H_
 #define BIGINT_CALCULATION_H_
 
-
 #include "base/base_type.h"
 
 // bigint의 메모리를 할당하는 함수
@@ -39,5 +38,11 @@ msg bi_print(bigint* dst, uint32_t base);
 msg array_copy(word* dst, word* src, uint32_t wordlen);
 
 int8_t is_zero(bigint* dst);
+
+//set zero 확인하는 함수
+void bi_set_zero(bigint** x);
+// 두 큰수 비교하는 함수
+int8_t bi_compare_ABS(bigint* x, bigint* y);
+int8_t bi_compare(bigint* x, bigint* y);
 
 #endif // BIGINT_CALCULATION_H_

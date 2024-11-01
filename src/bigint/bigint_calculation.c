@@ -13,6 +13,7 @@
 #include "base/base_type.h"
 #include "base/base_error.h"
 #include "bigint/bigint_calculation.h"
+
 //#define create_prameter
 
 /**
@@ -47,10 +48,10 @@ msg bi_new(bigint** dst, uint32_t wordlen)
 
     if (!is_null_pointer(*dst))
     {
-        fprintf(stdout, "Already freed pointer.\n");
-        fprintf(stdout, "%d", is_null_pointer(*dst));
+        fprintf(stdout, "[Warning] Already freed pointer.\n");
+        
         // bi_delete(dst);
-        return print_already_freed_error();
+        // return print_already_freed_error();
     }
 
     *dst = (bigint*)malloc(sizeof(bigint));
@@ -316,11 +317,6 @@ msg bi_refine(bigint* dst)
  */
 msg bi_assign(bigint** dst, bigint* src)
 {
-    if(!is_null_pointer(dst))
-    {
-        return print_already_freed_error();
-    }
-
     if(is_null_pointer(src))
     {
         return print_null_pointer_error();
@@ -403,4 +399,53 @@ int8_t is_zero(bigint* dst)
     }
 
     return true;
+}
+
+void bi_set_zero(bigint** x)
+{
+    bi_new(x, 1);
+    (*x)->sign = POSITIVE;
+    (*x)->start[0] = 0x00;
+}
+
+int8_t bi_compare_ABS(bigint* x, bigint* y)
+{
+    int n = x->wordlen;
+    int m = y->wordlen;
+
+    // Case: A > B
+    if (n > m)
+        return 1;
+
+    // Case: A < B
+    if (n < m)
+        return -1;
+
+    for (int i = n - 1; i >= 0; i--) {
+
+        if (x->start[i] > y->start[i])
+            return 1;
+
+        if (x->start[i] < y->start[i])
+            return -1;
+
+    }
+
+    return 0;
+}
+
+int8_t bi_compare(bigint* x, bigint* y)
+{
+    if (x->sign == POSITIVE && y->sign == NEGATIVE)
+        return 1;
+
+    if (x->sign == NEGATIVE && y->sign == POSITIVE)
+        return -1;
+
+    int ret = bi_compare_ABS(x, y);
+
+    if (x->sign == POSITIVE)
+        return ret;
+
+    return ret * (-1);
 }
