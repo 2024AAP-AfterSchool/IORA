@@ -6,6 +6,9 @@
 #define IN
 #define OUT
 
+#define TRUE 1 ///< 참
+#define FALSE 0 ///< 거짓
+
 #define POSITIVE 0 ///< 양수
 #define NEGATIVE 1 ///< 음수
 
@@ -16,8 +19,8 @@ typedef uint32_t msg; ///< unsigned int의 별칭. 메시지 코드를 저장하
 
 typedef struct 
 {
-    int8_t sign; ///< 부호
-    int8_t wordlen; ///< 저장하고자 하는 정수의 절댓값을 저장하기 위한 최소 WORD 개수
+    int32_t sign; ///< 부호
+    int32_t wordlen; ///< 저장하고자 하는 정수의 절댓값을 저장하기 위한 최소 WORD 개수
     word* start; ///< 정수의 절댓값을 저장하기 위한 WORD 배열의 시작 주소
 } bigint;
 
