@@ -2,48 +2,20 @@ import os
 import ctypes
 import subprocess
 from datetime import datetime
-from IORA_error import result_code
 from IORA_type import bigint, POSITIVE, NEGATIVE, byte, word, msg
-
-
+from IORA_print import print_line, print_center, print_time, print_total_time, print_result
 try:
     from zoneinfo import ZoneInfo
 except ImportError:
     # pip install backports.zoneinfo
     from backports.zoneinfo import ZoneInfo
 
-# 시간대 설정
 seoul_tz = ZoneInfo('Asia/Seoul')
-weekday_names = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
 
 def preset():
     current_path = os.path.dirname(os.path.realpath(__file__))
     os.chdir(current_path)
     os.chdir("../")
-
-def print_line(length=100):
-    print("#" * length, end="\n\n")
-
-def print_center(text, symbol="#", end="\n", length=100):
-    print(text.center(length, symbol), end)
-
-def print_time(time, prefix, end="\n"):
-    weekday = weekday_names[time.weekday()]
-    formatted_time = time.strftime(f'%Y년 %m월 %d일 {weekday} %H시 %M분 %S초')
-    print_center(prefix + formatted_time, ' ', end)
-
-def print_total_time(start_time, end_time, end="\n"):
-    total_time = (end_time - start_time).total_seconds()
-    total_hour = int(total_time // 3600)
-    total_minute = int((total_time % 3600) // 60)
-    total_second = int(total_time % 60)
-
-    print_center(f"TOTAL TIME: {total_hour}시간 {total_minute}분 {total_second}초", ' ', end)
-
-def print_result(result, verbose=False):
-    print()
-    if verbose:
-        print_center(result_code[result], ' ', end="\n\n")
 
 def build_project(OS):
     print_center(" 1. BUILD IORA PROJECT ", '=')
@@ -92,7 +64,8 @@ def load_function(lib):
     function['bi_assign'] = lib.bi_assign
     function['bi_print'] = lib.bi_print
 
-    # function['bi_sub'] = lib.bi_sub
+    function['bi_add'] = lib.bi_add
+    function['bi_sub'] = lib.bi_sub
     
     # 로드한 함수 목록
     print_center(f" LOAD FUNCTION: {list(function.keys())[:3]} ...", ' ')
@@ -100,10 +73,125 @@ def load_function(lib):
 
     return function
 
-def generate_random_number(byte_length):
+def generate_random_number(byte_length=4):
     hex_number = hex(int.from_bytes(os.urandom(byte_length), byteorder='little'))
 
     return int(hex_number, 16)
+
+def test_addtion(function, wordlen=64, iteration=10000, verbose=False):
+    print_center(" 3-8. BigInt 덧셈 테스트 ", '-', '\n', 95)
+
+    for i in range(iteration):
+        sign = POSITIVE
+        test_bigint1 = ctypes.POINTER(bigint)()
+        test_bigint2 = ctypes.POINTER(bigint)()
+        test_bigint3 = ctypes.POINTER(bigint)()
+
+        src_array1 = (word * wordlen)(*(generate_random_number() for _ in range(wordlen)))
+        src_array2 = (word * wordlen)(*(generate_random_number() for _ in range(wordlen)))
+        
+        src_num_from_array1 = ''.join(format(x, '08X') for x in reversed(src_array1))
+        src_num_from_array2 = ''.join(format(x, '08X') for x in reversed(src_array2))
+
+        result = function['bi_new'](ctypes.byref(test_bigint1), wordlen)
+        result = function['bi_new'](ctypes.byref(test_bigint2), wordlen)
+        result = function['bi_new'](ctypes.byref(test_bigint3), wordlen)
+        result = function['bi_set_from_array'](ctypes.byref(test_bigint1), sign, wordlen, src_array1)
+        result = function['bi_set_from_array'](ctypes.byref(test_bigint2), sign, wordlen, src_array2)
+        result = function['bi_add'](ctypes.byref(test_bigint3), test_bigint1, test_bigint2)
+
+        if verbose:
+            print("\nBigInt1: ", end='')
+            function['bi_print'](test_bigint1, 16)
+            print("BigInt2: ", end='')
+            function['bi_print'](test_bigint2, 16)
+            print("BigInt3: ", end='')
+            function['bi_print'](test_bigint3, 16)
+            print()
+
+        python_result = int(src_num_from_array1, 16) + int(src_num_from_array2, 16)
+
+        start_of_result = [test_bigint3.contents.start[i] for i in range(test_bigint3.contents.wordlen)]
+        if python_result == int(''.join(format(x, '08X') for x in reversed(start_of_result)), 16):
+            if verbose:
+                print(python_result, "|||| ",int(''.join(format(x, '08X') for x in reversed(start_of_result)), 16))
+            function['bi_delete'](ctypes.byref(test_bigint1))
+            function['bi_delete'](ctypes.byref(test_bigint2))
+            function['bi_delete'](ctypes.byref(test_bigint3))
+
+        else:
+            print_center(" TEST FAIL ", ' ')
+            print("BigInt1: ", "0x", src_num_from_array1, sep="")
+            print("BigInt2: ", "0x", src_num_from_array2, sep="")
+            print("Python Result: ", hex(python_result).upper().replace('X', 'x'))
+            print("C Result: ", "" if test_bigint3.contents.sign == POSITIVE else "-",
+                  hex(int(''.join(format(x, '08X') for x in reversed(start_of_result)), 16)).upper().replace('X', 'x'), sep="")
+            break
+
+    if iteration == i + 1:
+        print()
+        print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
+    else:
+        print()
+        print_center(f" TEST FAIL (Exit At: {i+1}) ", '-')
+        exit(1)
+
+def test_subtraction(function, wordlen=64, iteration=10000, verbose=False):
+    print_center(" 3-9. BigInt 뺄셈 테스트 ", '-', '\n', 95)
+
+    for i in range(iteration):
+        sign = POSITIVE
+        test_bigint1 = ctypes.POINTER(bigint)()
+        test_bigint2 = ctypes.POINTER(bigint)()
+        test_bigint3 = ctypes.POINTER(bigint)()
+
+        src_array1 = (word * wordlen)(*(generate_random_number() for _ in range(wordlen)))
+        src_array2 = (word * wordlen)(*(generate_random_number() for _ in range(wordlen)))
+        
+        src_num_from_array1 = ''.join(format(x, '08X') for x in reversed(src_array1))
+        src_num_from_array2 = ''.join(format(x, '08X') for x in reversed(src_array2))
+
+        result = function['bi_new'](ctypes.byref(test_bigint1), wordlen)
+        result = function['bi_new'](ctypes.byref(test_bigint2), wordlen)
+        result = function['bi_new'](ctypes.byref(test_bigint3), wordlen)
+        result = function['bi_set_from_array'](ctypes.byref(test_bigint1), sign, wordlen, src_array1)
+        result = function['bi_set_from_array'](ctypes.byref(test_bigint2), sign, wordlen, src_array2)
+        result = function['bi_sub'](test_bigint1, test_bigint2, ctypes.byref(test_bigint3))
+
+        if verbose:
+            print("\nBigInt1: ", end='')
+            function['bi_print'](test_bigint1, 16)
+            print("BigInt2: ", end='')
+            function['bi_print'](test_bigint2, 16)
+            print("BigInt3: ", end='')
+            function['bi_print'](test_bigint3, 16)
+            print()
+
+        python_result = int(src_num_from_array1, 16) - int(src_num_from_array2, 16)
+
+        start_of_result = [test_bigint3.contents.start[i] for i in range(test_bigint3.contents.wordlen)]
+        if python_result == int(''.join(format(x, '08X') for x in reversed(start_of_result)), 16):
+            if verbose:
+                print(python_result, "|||| ",int(''.join(format(x, '08X') for x in reversed(start_of_result)), 16))
+            function['bi_delete'](ctypes.byref(test_bigint1))
+            function['bi_delete'](ctypes.byref(test_bigint2))
+            function['bi_delete'](ctypes.byref(test_bigint3))
+        else:
+            print_center(" TEST FAIL ", ' ')
+            print("BigInt1: ", "0x", src_num_from_array1, sep="")
+            print("BigInt2: ", "0x", src_num_from_array2, sep="")
+            print("Python Result: ", hex(python_result).upper().replace('X', 'x'), sep="")
+            print("C Result: ", "" if test_bigint3.contents.sign == POSITIVE else "-",
+                  hex(int(''.join(format(x, '08X') for x in reversed(start_of_result)), 16)).upper().replace('X', 'x'), sep="")
+            break
+
+    if iteration == i + 1:
+        print()
+        print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
+    else:
+        print()
+        print_center(f" TEST FAIL (Exit At: {i+1}) ", '-')
+        exit(1)
 
 def test():
     OS = os.uname().sysname
@@ -148,27 +236,58 @@ def test():
     print_center(" 3-4. BigInt 배열 생성 테스트 ", '-', '\n', 95)
     sign = POSITIVE
     wordlen = 64
-    src_array = (word * wordlen)(*(generate_random_number(4) for _ in range(wordlen)))
+    src_array = (word * wordlen)(*(generate_random_number() for _ in range(wordlen)))
     print([hex(x).upper().replace('X', 'x') for x in src_array[:min(4, wordlen)]], end=' ...\n' if wordlen > 4 else '\n')
 
-    result = lib.bi_set_from_array(ctypes.byref(test_bigint), sign, wordlen, src_array)
+    result = function['bi_set_from_array'](ctypes.byref(test_bigint), sign, wordlen, src_array)
     print_result(result)
 
     # 3-5 BigInt 랜덤 생성 테스트
     print_center(" 3-5. BigInt 랜덤 생성 테스트 ", '-', '\n', 95)
-    wordlen = 1
+    wordlen = 8
+    sign = POSITIVE
     result = function['bi_delete'](ctypes.byref(test_bigint))
-    result = lib.bi_get_random(ctypes.byref(test_bigint), wordlen)
+    result = function['bi_get_random'](ctypes.byref(test_bigint), sign, wordlen)
     print_result(result)
     function['bi_print'](test_bigint, 16)
+    print()
 
     # 3-6 BigInt 문자열 생성 테스트
     print_center(" 3-6. BigInt 문자열 생성 테스트 ", '-', '\n', 95)
     base = 16
-    src_string = "-0x1234567890123456789012345678901234567890"
-    result = lib.bi_set_from_string(ctypes.byref(test_bigint), src_string, base)
+    src_string = ctypes.c_char_p("0x123456789ABCDEF0123456789ABCDE".encode('utf-8'))
+    result = function['bi_delete'](ctypes.byref(test_bigint))
+    result = function['bi_set_from_string'](ctypes.byref(test_bigint), src_string, base)
     print_result(result)
+    function['bi_print'](test_bigint, 16)
+    print()
 
+    # 3-7 BigInt 대입 테스트
+    print_center(" 3-7. BigInt 대입 테스트 ", '-', '\n', 95)
+    wordlen = 8
+    sign = POSITIVE
+    test_bigint1 = ctypes.POINTER(bigint)()
+    test_bigint2 = ctypes.POINTER(bigint)()
+    result = function['bi_get_random'](ctypes.byref(test_bigint1), sign, wordlen)
+    result = function['bi_get_random'](ctypes.byref(test_bigint2), sign, wordlen)
+    
+    print("\nBigInt1: ", end='')
+    function['bi_print'](test_bigint1, 16)
+    print("BigInt2: ", end='')
+    function['bi_print'](test_bigint2, 16)
+
+    result = function['bi_assign'](ctypes.byref(test_bigint1), test_bigint2)
+    print_result(result)
+    
+    print("BigInt1: ", end='')
+    function['bi_print'](test_bigint1, 16)
+    print()
+
+    # 3-8 BigInt 덧셈 테스트
+    test_addtion(function)
+
+    # 3-9 BigInt 뺄셈 테스트
+    test_subtraction(function)
 
 
     # 실행 테스트
