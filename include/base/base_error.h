@@ -4,19 +4,18 @@
 #include "base_type.h"
 
 // 에러 및 성공 코드 정의
-#define SUCCESS 0                           // 성공
 #define SUCCESS_MEMORY_ALLOCATION 1         // 메모리 할당 성공
 #define SUCCESS_INITIALIZATION 2            // 초기화 성공
 #define SUCCESS_MEMORY_DEALLOCATION 3       // 메모리 해제 성공
 #define SUCCESS_COPY 4                      // 배열 복사 성공
-#define SUCCESS_REFINEMENT 5                // 정제 성공 (새로 추가)
-#define SUCCESS_SET_FROM_ARRAY 6    
-#define SUCCESS_PRINT 7 
-#define SUCCESS_RAND_ARRAY 8
-#define SUCCESS_GEN_RAND 9
-#define SUCCESS_ASSIGN 10
-#define SUCCESS_REFINE 11
-#define SUCCESS_SET_FROM_STRING 12
+#define SUCCESS_SET_FROM_ARRAY 5
+#define SUCCESS_PRINT 6
+#define SUCCESS_RAND_ARRAY 7
+#define SUCCESS_GEN_RAND 8
+#define SUCCESS_ASSIGN 9
+#define SUCCESS_REFINE 10
+#define SUCCESS_SET_FROM_STRING 11
+#define SUCCESS_REFINEMENT 12
 #define INVALID_WORD_LENGTH_ERROR -1        // 잘못된 워드 길이 에러
 #define MEMORY_ALLOCATION_ERROR -2          // 메모리 할당 실패 에러
 #define ARRAY_ALLOCATION_ERROR -3           // 배열 메모리 할당 실패 에러
