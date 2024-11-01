@@ -34,7 +34,8 @@ void bi_assign(bigint** dst, bigint* src);
 // base는 10진수, 16진수 등 어떻게 해석할지 의미함.
 // 나눗셈까지 구현을 해야 print를 구현할 수 있음.
 void bi_print(bigint* dst, uint32_t base);
-
+//set zero 확인하는 함수
+void bi_set_zero(bigint** x);
 // 두 큰수 비교하는 함수
 int compare_ABS(bigint* x, bigint* y);
 int compare(bigint* x, bigint* y);

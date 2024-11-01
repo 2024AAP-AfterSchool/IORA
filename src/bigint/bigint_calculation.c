@@ -242,7 +242,7 @@ void bi_print(bigint* dst, uint32_t base)
     printf("\n");
 }
 
-void bigint_set_zero(bigint** x)
+void bi_set_zero(bigint** x)
 {
     bigint_create(x, 1);
     (*x)->sign = POSITIVE;
