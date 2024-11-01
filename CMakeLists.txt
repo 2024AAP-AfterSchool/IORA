@@ -8,12 +8,19 @@ project(IORA_Project VERSION 1.0)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED True)
 
+if(APPLE)
+    set(CMAKE_SHARED_LIBRARY_SUFFIX ".so")
+endif()
+
 # 빌드 출력 파일의 위치를 지정합니다. (build 디렉토리 하위에 운영체제 별로 파일을 생성)
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    set(LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/build/linux)
     set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/build/linux)
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    set(LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/build/windows)
     set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/build/windows)
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")  # MacOS
+    set(LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/build/mac)
     set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/build/mac)
 endif()
 
@@ -25,6 +32,10 @@ file(GLOB SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/*.c
     ${PROJECT_SOURCE_DIR}/src/*/*.c
 )
+
+# 라이브러라 피알 파일을 빌드합니다. IORA_LIB라는 이름으로 소스 파일들을 빌드합니다.
+add_library(IORA_LIB SHARED ${SOURCE_FILES})
+set_target_properties(IORA_LIB PROPERTIES PREFIX "" OUTPUT_NAME "IORA")
 
 # 실행 파일을 정의합니다. IORA라는 이름으로 소스 파일들을 빌드합니다.
 add_executable(IORA ${SOURCE_FILES})
