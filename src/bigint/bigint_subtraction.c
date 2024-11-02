@@ -57,7 +57,7 @@ void bi_sub(IN bigint* x, IN bigint* y, OUT bigint** z)
 	bi_assign(&tmp_y, y);
 
 	if (is_zero(tmp_x))
-	{
+	{	
 		bi_assign(z, tmp_y);
 		(*z)->sign = NEGATIVE;
 		bi_delete(&tmp_x);
@@ -89,7 +89,7 @@ void bi_sub(IN bigint* x, IN bigint* y, OUT bigint** z)
 	}
 	if ((tmp_x->sign == POSITIVE) && (tmp_y->sign == POSITIVE) && (bi_compare(tmp_x, tmp_y) == -1))
 	{
-		bi_sub_C(tmp_x, tmp_y, z);
+		bi_sub_C(tmp_y, tmp_x, z);
 		(*z)->sign = NEGATIVE;
 		bi_delete(&tmp_x);
 		bi_delete(&tmp_y);
@@ -108,7 +108,7 @@ void bi_sub(IN bigint* x, IN bigint* y, OUT bigint** z)
 	{
 		tmp_x->sign = POSITIVE;
 		tmp_y->sign = POSITIVE;
-		bi_sub_C(tmp_y, tmp_x, z);
+		bi_sub_C(tmp_x, tmp_y, z);
 		(*z)->sign = NEGATIVE;
 		bi_delete(&tmp_x);
 		bi_delete(&tmp_y);
@@ -117,7 +117,7 @@ void bi_sub(IN bigint* x, IN bigint* y, OUT bigint** z)
 	if ((tmp_x->sign == POSITIVE) && (tmp_y->sign == NEGATIVE))
 	{
 		tmp_y->sign = POSITIVE;
-		bi_add(z, tmp_y, tmp_x);
+		bi_add(z, tmp_x, tmp_y);
 		(*z)->sign = POSITIVE;
 		bi_delete(&tmp_x);
 		bi_delete(&tmp_y);
@@ -126,7 +126,7 @@ void bi_sub(IN bigint* x, IN bigint* y, OUT bigint** z)
 	if ((tmp_x->sign == NEGATIVE) && (tmp_y->sign == POSITIVE))
 	{
 		tmp_x->sign = POSITIVE;
-		bi_add(z, tmp_y, tmp_x);
+		bi_add(z, tmp_x, tmp_y);
 		(*z)->sign = NEGATIVE;
 		bi_delete(&tmp_x);
 		bi_delete(&tmp_y);

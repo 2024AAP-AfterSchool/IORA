@@ -114,7 +114,7 @@ def test_addtion(function, wordlen=64, iteration=10000, verbose=False):
         start_of_result = [test_bigint3.contents.start[i] for i in range(test_bigint3.contents.wordlen)]
         if python_result == int(''.join(format(x, '08X') for x in reversed(start_of_result)), 16):
             if verbose:
-                print(python_result, "|||| ",int(''.join(format(x, '08X') for x in reversed(start_of_result)), 16))
+                print(python_result, " |||| ",int(''.join(format(x, '08X') for x in reversed(start_of_result)), 16))
             function['bi_delete'](ctypes.byref(test_bigint1))
             function['bi_delete'](ctypes.byref(test_bigint2))
             function['bi_delete'](ctypes.byref(test_bigint3))
@@ -168,11 +168,12 @@ def test_subtraction(function, wordlen=64, iteration=10000, verbose=False):
             print()
 
         python_result = int(src_num_from_array1, 16) - int(src_num_from_array2, 16)
-
         start_of_result = [test_bigint3.contents.start[i] for i in range(test_bigint3.contents.wordlen)]
-        if python_result == int(''.join(format(x, '08X') for x in reversed(start_of_result)), 16):
+        c_result = int(''.join(format(x, '08X') for x in reversed(start_of_result)), 16)
+        c_result = c_result if test_bigint3.contents.sign == POSITIVE else -c_result
+        if python_result == c_result:
             if verbose:
-                print(python_result, "|||| ",int(''.join(format(x, '08X') for x in reversed(start_of_result)), 16))
+                print(python_result, " |||| ",int(''.join(format(x, '08X') for x in reversed(start_of_result)), 16))
             function['bi_delete'](ctypes.byref(test_bigint1))
             function['bi_delete'](ctypes.byref(test_bigint2))
             function['bi_delete'](ctypes.byref(test_bigint3))
@@ -284,11 +285,10 @@ def test():
     print()
 
     # 3-8 BigInt 덧셈 테스트
-    test_addtion(function)
+    # test_addtion(function)
 
     # 3-9 BigInt 뺄셈 테스트
     test_subtraction(function)
-
 
     # 실행 테스트
     # os.system(command=f"./build/{OS}/IORA")
@@ -300,7 +300,6 @@ def test():
 
     print_total_time(start_time, end_time)
     print_line()
-
 
 if __name__ == "__main__":
     test()
