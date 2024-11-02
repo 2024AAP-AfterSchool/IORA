@@ -244,7 +244,7 @@ void bi_print(bigint* dst, uint32_t base)
 
 void bi_set_zero(bigint** x)
 {
-    bigint_create(x, 1);
+    bi_new(x, 1);
     (*x)->sign = POSITIVE;
     (*x)->start[0] = 0x00;
 }

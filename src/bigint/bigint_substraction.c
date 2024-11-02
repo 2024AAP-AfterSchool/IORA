@@ -86,7 +86,7 @@ void bi_sub(bigint* x, bigint* y, bigint** z)
 	}
 	if ((tmp_x->sign == POSITIVE) && (tmp_y->sign == POSITIVE) && (compare(tmp_x, tmp_y) == -1))
 	{
-		bi_sub_C(tmp_x, tmp_y, z);
+		bi_sub_C(tmp_y, tmp_x, z);
 		(*z)->sign = NEGATIVE;
 		bi_delete(&tmp_x);
 		bi_delete(&tmp_y);
@@ -105,7 +105,7 @@ void bi_sub(bigint* x, bigint* y, bigint** z)
 	{
 		tmp_x->sign = POSITIVE;
 		tmp_y->sign = POSITIVE;
-		bi_sub_C(tmp_y, tmp_x, z);
+		bi_sub_C(tmp_x, tmp_y, z);
 		(*z)->sign = NEGATIVE;
 		bi_delete(&tmp_x);
 		bi_delete(&tmp_y);
