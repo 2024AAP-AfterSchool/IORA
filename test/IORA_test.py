@@ -1,6 +1,7 @@
 import os
 import ctypes
-import subprocess
+import random
+from tqdm import tqdm
 from datetime import datetime
 from IORA_type import bigint, POSITIVE, NEGATIVE, byte, word, msg
 from IORA_print import print_line, print_center, print_time, print_total_time, print_result
@@ -73,7 +74,10 @@ def load_function(lib):
 
     return function
 
-def generate_random_number(byte_length=4):
+def generate_random_number(variable_length = True, byte_length=4):
+    if variable_length:
+        byte_length = random.randint(0, byte_length)
+
     hex_number = hex(int.from_bytes(os.urandom(byte_length), byteorder='little'))
 
     return int(hex_number, 16)
@@ -81,7 +85,7 @@ def generate_random_number(byte_length=4):
 def test_addtion(function, wordlen=64, iteration=10000, verbose=False):
     print_center(" 3-8. BigInt 덧셈 테스트 ", '-', '\n', 95)
 
-    for i in range(iteration):
+    for i in tqdm(range(iteration), desc="BigNum Addition Test", unit=" iter", ncols=100):
         sign = POSITIVE
         test_bigint1 = ctypes.POINTER(bigint)()
         test_bigint2 = ctypes.POINTER(bigint)()
@@ -136,10 +140,10 @@ def test_addtion(function, wordlen=64, iteration=10000, verbose=False):
         print_center(f" TEST FAIL (Exit At: {i+1}) ", '-')
         exit(1)
 
-def test_subtraction(function, wordlen=64, iteration=10000, verbose=False):
+def test_subtraction(function, wordlen=8, iteration=1000000, verbose=True):
     print_center(" 3-9. BigInt 뺄셈 테스트 ", '-', '\n', 95)
 
-    for i in range(iteration):
+    for i in tqdm(range(iteration), desc="BigNum Subtraction Test", unit=" iter", ncols=100):
         sign = POSITIVE
         test_bigint1 = ctypes.POINTER(bigint)()
         test_bigint2 = ctypes.POINTER(bigint)()
@@ -234,7 +238,7 @@ def test():
     print_result(result)
 
     # 3-4 BigInt 배열 생성 테스트
-    print_center(" 3-4. BigInt 배열 생성 테스트 ", '-', '\n', 95)
+    print_center(" 3-4. BigInt 배열 생성 테스트 ", '-', '\n', 93)
     sign = POSITIVE
     wordlen = 64
     src_array = (word * wordlen)(*(generate_random_number() for _ in range(wordlen)))
@@ -244,7 +248,7 @@ def test():
     print_result(result)
 
     # 3-5 BigInt 랜덤 생성 테스트
-    print_center(" 3-5. BigInt 랜덤 생성 테스트 ", '-', '\n', 95)
+    print_center(" 3-5. BigInt 랜덤 생성 테스트 ", '-', '\n', 93)
     wordlen = 8
     sign = POSITIVE
     result = function['bi_delete'](ctypes.byref(test_bigint))
@@ -254,7 +258,7 @@ def test():
     print()
 
     # 3-6 BigInt 문자열 생성 테스트
-    print_center(" 3-6. BigInt 문자열 생성 테스트 ", '-', '\n', 95)
+    print_center(" 3-6. BigInt 문자열 생성 테스트 ", '-', '\n', 92)
     base = 16
     src_string = ctypes.c_char_p("0x123456789ABCDEF0123456789ABCDE".encode('utf-8'))
     result = function['bi_delete'](ctypes.byref(test_bigint))
@@ -285,7 +289,7 @@ def test():
     print()
 
     # 3-8 BigInt 덧셈 테스트
-    # test_addtion(function)
+    test_addtion(function)
 
     # 3-9 BigInt 뺄셈 테스트
     test_subtraction(function)

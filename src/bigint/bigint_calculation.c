@@ -48,7 +48,7 @@ msg bi_new(bigint** dst, uint32_t wordlen)
 
     if (!is_null_pointer(*dst))
     {
-        fprintf(stdout, "[Warning] Already freed pointer.\n");
+        if (VERBOSE) fprintf(stdout, "[Warning] Already freed pointer.\n");
         
         // bi_delete(dst);
         // return print_already_freed_error();
