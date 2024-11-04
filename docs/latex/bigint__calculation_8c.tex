@@ -1,0 +1,448 @@
+\doxysection{src/bigint/bigint\+\_\+calculation.c File Reference}
+\hypertarget{bigint__calculation_8c}{}\label{bigint__calculation_8c}\index{src/bigint/bigint\_calculation.c@{src/bigint/bigint\_calculation.c}}
+
+
+bigint에 대한 연산을 하는 함수들을 정의한 소스 파일  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include "{}utils/memory.\+h"{}}\newline
+{\ttfamily \#include "{}base/base\+\_\+type.\+h"{}}\newline
+{\ttfamily \#include "{}base/base\+\_\+error.\+h"{}}\newline
+{\ttfamily \#include "{}bigint/bigint\+\_\+calculation.\+h"{}}\newline
+Include dependency graph for bigint\+\_\+calculation.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__calculation_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{bigint__calculation_8c_a731cab4cd7a7b2dadddd1c030618f93a}{bi\+\_\+delete}} (\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}dst)
+\begin{DoxyCompactList}\small\item\em bigint의 값을 다른 bigint로 할당하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{bigint__calculation_8c_a441aca43444e577be252db9b5690e503}{bi\+\_\+new}} (\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}dst, uint32\+\_\+t wordlen)
+\begin{DoxyCompactList}\small\item\em bigint에 arrary를 할당하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{bigint__calculation_8c_a91d87036d498204bcc852b687bd30a61}{array\+\_\+copy}} (\mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}} \texorpdfstring{$\ast$}{*}dst, \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}} \texorpdfstring{$\ast$}{*}src, uint32\+\_\+t wordlen)
+\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{bigint__calculation_8c_afcea8fd04d42e0720f3a8bbf6ca86eaf}{bi\+\_\+set\+\_\+from\+\_\+array}} (\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}dst, uint32\+\_\+t sign, uint32\+\_\+t wordlen, \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}} \texorpdfstring{$\ast$}{*}src)
+\begin{DoxyCompactList}\small\item\em arrary를 통해 bigint에 값을 할당하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{bigint__calculation_8c_a5660f5bce5a1afb6326f61f9601de1f1}{bi\+\_\+set\+\_\+from\+\_\+string}} (\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}dst, char \texorpdfstring{$\ast$}{*}str, uint32\+\_\+t base)
+\begin{DoxyCompactList}\small\item\em string을 통해 bigint에 값을 할당하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{bigint__calculation_8c_a0671017de96b8f5a40debe535531b179}{bi\+\_\+get\+\_\+random}} (\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}dst, uint32\+\_\+t sign, uint32\+\_\+t wordlen)
+\begin{DoxyCompactList}\small\item\em bigint에 무작위 값을 할당하는 함수 @create\+\_\+prime이면 마지막 블럭이 all 0가 되는 것을 방지 = 키 크기 최대한 보장 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{bigint__calculation_8c_ab40de6afc896f0873e591b2263622dea}{bi\+\_\+refine}} (\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}dst)
+\begin{DoxyCompactList}\small\item\em bigint의 마지막 워드가 0인 경우 bigint의 메모리를 재할당하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{bigint__calculation_8c_a898d307706d9b410db7a6ceb57000505}{bi\+\_\+assign}} (\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}dst, \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}src)
+\begin{DoxyCompactList}\small\item\em bigint의 값을 다른 bigint로 할당하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{bigint__calculation_8c_a5949b472f818a8c734228c1a9eaf2032}{bi\+\_\+print}} (\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}dst, uint32\+\_\+t base)
+\begin{DoxyCompactList}\small\item\em bigint를 출력하는 함수 \end{DoxyCompactList}\item 
+int8\+\_\+t \mbox{\hyperlink{bigint__calculation_8c_a2564e623fdb80aa8b463eb17802e5113}{is\+\_\+zero}} (\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}dst)
+\begin{DoxyCompactList}\small\item\em bigint가 0인지 확인하는 함수 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{bigint__calculation_8c_a3bb878ba0533bc9e939b2976d00ba382}{bi\+\_\+set\+\_\+zero}} (\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}x)
+\item 
+int8\+\_\+t \mbox{\hyperlink{bigint__calculation_8c_a180c8a81407aea69e09c35d14521de62}{bi\+\_\+compare\+\_\+\+ABS}} (\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}x, \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}y)
+\item 
+int8\+\_\+t \mbox{\hyperlink{bigint__calculation_8c_a145bd3f8e86e42eb436ca2749ba5b2f7}{bi\+\_\+compare}} (\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}x, \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}y)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+bigint에 대한 연산을 하는 함수들을 정의한 소스 파일 
+
+\begin{DoxyDate}{Date}
+2024-\/10-\/18 
+\end{DoxyDate}
+\begin{DoxyAuthor}{Author}
+조동후 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{bigint__calculation_8c_a91d87036d498204bcc852b687bd30a61}\index{bigint\_calculation.c@{bigint\_calculation.c}!array\_copy@{array\_copy}}
+\index{array\_copy@{array\_copy}!bigint\_calculation.c@{bigint\_calculation.c}}
+\doxysubsubsection{\texorpdfstring{array\_copy()}{array\_copy()}}
+{\footnotesize\ttfamily \label{bigint__calculation_8c_a91d87036d498204bcc852b687bd30a61} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} array\+\_\+copy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}} \texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{\mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}} \texorpdfstring{$\ast$}{*}}]{src}{, }\item[{uint32\+\_\+t}]{wordlen}{}\end{DoxyParamCaption})}
+
+@memory 값을 copy하는 함수 추가함 Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=283pt]{bigint__calculation_8c_a91d87036d498204bcc852b687bd30a61_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__calculation_8c_a91d87036d498204bcc852b687bd30a61_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__calculation_8c_a898d307706d9b410db7a6ceb57000505}\index{bigint\_calculation.c@{bigint\_calculation.c}!bi\_assign@{bi\_assign}}
+\index{bi\_assign@{bi\_assign}!bigint\_calculation.c@{bigint\_calculation.c}}
+\doxysubsubsection{\texorpdfstring{bi\_assign()}{bi\_assign()}}
+{\footnotesize\ttfamily \label{bigint__calculation_8c_a898d307706d9b410db7a6ceb57000505} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} bi\+\_\+assign (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}}]{src}{}\end{DoxyParamCaption})}
+
+
+
+bigint의 값을 다른 bigint로 할당하는 함수 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dst} & bigint의 포인터 \\
+\hline
+{\em src} & bigint의 포인터 \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__calculation_8c_a898d307706d9b410db7a6ceb57000505_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=311pt]{bigint__calculation_8c_a898d307706d9b410db7a6ceb57000505_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__calculation_8c_a145bd3f8e86e42eb436ca2749ba5b2f7}\index{bigint\_calculation.c@{bigint\_calculation.c}!bi\_compare@{bi\_compare}}
+\index{bi\_compare@{bi\_compare}!bigint\_calculation.c@{bigint\_calculation.c}}
+\doxysubsubsection{\texorpdfstring{bi\_compare()}{bi\_compare()}}
+{\footnotesize\ttfamily \label{bigint__calculation_8c_a145bd3f8e86e42eb436ca2749ba5b2f7} 
+int8\+\_\+t bi\+\_\+compare (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}}]{x}{, }\item[{\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}}]{y}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{bigint__calculation_8c_a145bd3f8e86e42eb436ca2749ba5b2f7_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=320pt]{bigint__calculation_8c_a145bd3f8e86e42eb436ca2749ba5b2f7_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__calculation_8c_a180c8a81407aea69e09c35d14521de62}\index{bigint\_calculation.c@{bigint\_calculation.c}!bi\_compare\_ABS@{bi\_compare\_ABS}}
+\index{bi\_compare\_ABS@{bi\_compare\_ABS}!bigint\_calculation.c@{bigint\_calculation.c}}
+\doxysubsubsection{\texorpdfstring{bi\_compare\_ABS()}{bi\_compare\_ABS()}}
+{\footnotesize\ttfamily \label{bigint__calculation_8c_a180c8a81407aea69e09c35d14521de62} 
+int8\+\_\+t bi\+\_\+compare\+\_\+\+ABS (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}}]{x}{, }\item[{\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}}]{y}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__calculation_8c_a180c8a81407aea69e09c35d14521de62_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__calculation_8c_a731cab4cd7a7b2dadddd1c030618f93a}\index{bigint\_calculation.c@{bigint\_calculation.c}!bi\_delete@{bi\_delete}}
+\index{bi\_delete@{bi\_delete}!bigint\_calculation.c@{bigint\_calculation.c}}
+\doxysubsubsection{\texorpdfstring{bi\_delete()}{bi\_delete()}}
+{\footnotesize\ttfamily \label{bigint__calculation_8c_a731cab4cd7a7b2dadddd1c030618f93a} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} bi\+\_\+delete (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{dst}{}\end{DoxyParamCaption})}
+
+
+
+bigint의 값을 다른 bigint로 할당하는 함수 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dst} & bigint의 포인터 \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=288pt]{bigint__calculation_8c_a731cab4cd7a7b2dadddd1c030618f93a_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=309pt]{bigint__calculation_8c_a731cab4cd7a7b2dadddd1c030618f93a_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__calculation_8c_a0671017de96b8f5a40debe535531b179}\index{bigint\_calculation.c@{bigint\_calculation.c}!bi\_get\_random@{bi\_get\_random}}
+\index{bi\_get\_random@{bi\_get\_random}!bigint\_calculation.c@{bigint\_calculation.c}}
+\doxysubsubsection{\texorpdfstring{bi\_get\_random()}{bi\_get\_random()}}
+{\footnotesize\ttfamily \label{bigint__calculation_8c_a0671017de96b8f5a40debe535531b179} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} bi\+\_\+get\+\_\+random (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{uint32\+\_\+t}]{sign}{, }\item[{uint32\+\_\+t}]{wordlen}{}\end{DoxyParamCaption})}
+
+
+
+bigint에 무작위 값을 할당하는 함수 @create\+\_\+prime이면 마지막 블럭이 all 0가 되는 것을 방지 = 키 크기 최대한 보장 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dst} & bigint의 포인터 \\
+\hline
+{\em sign} & 부호 \\
+\hline
+{\em wordlen} & 배열의 길이 \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__calculation_8c_a0671017de96b8f5a40debe535531b179_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=233pt]{bigint__calculation_8c_a0671017de96b8f5a40debe535531b179_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__calculation_8c_a441aca43444e577be252db9b5690e503}\index{bigint\_calculation.c@{bigint\_calculation.c}!bi\_new@{bi\_new}}
+\index{bi\_new@{bi\_new}!bigint\_calculation.c@{bigint\_calculation.c}}
+\doxysubsubsection{\texorpdfstring{bi\_new()}{bi\_new()}}
+{\footnotesize\ttfamily \label{bigint__calculation_8c_a441aca43444e577be252db9b5690e503} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} bi\+\_\+new (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{uint32\+\_\+t}]{wordlen}{}\end{DoxyParamCaption})}
+
+
+
+bigint에 arrary를 할당하는 함수 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dst} & bigint의 포인터 \\
+\hline
+{\em wordlen} & 배열의 길이 \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=296pt]{bigint__calculation_8c_a441aca43444e577be252db9b5690e503_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__calculation_8c_a441aca43444e577be252db9b5690e503_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__calculation_8c_a5949b472f818a8c734228c1a9eaf2032}\index{bigint\_calculation.c@{bigint\_calculation.c}!bi\_print@{bi\_print}}
+\index{bi\_print@{bi\_print}!bigint\_calculation.c@{bigint\_calculation.c}}
+\doxysubsubsection{\texorpdfstring{bi\_print()}{bi\_print()}}
+{\footnotesize\ttfamily \label{bigint__calculation_8c_a5949b472f818a8c734228c1a9eaf2032} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} bi\+\_\+print (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{uint32\+\_\+t}]{base}{}\end{DoxyParamCaption})}
+
+
+
+bigint를 출력하는 함수 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dst} & bigint의 포인터 \\
+\hline
+{\em base} & 10진수, 16진수 등 어떻게 해석할지 의미함. \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=264pt]{bigint__calculation_8c_a5949b472f818a8c734228c1a9eaf2032_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=201pt]{bigint__calculation_8c_a5949b472f818a8c734228c1a9eaf2032_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__calculation_8c_ab40de6afc896f0873e591b2263622dea}\index{bigint\_calculation.c@{bigint\_calculation.c}!bi\_refine@{bi\_refine}}
+\index{bi\_refine@{bi\_refine}!bigint\_calculation.c@{bigint\_calculation.c}}
+\doxysubsubsection{\texorpdfstring{bi\_refine()}{bi\_refine()}}
+{\footnotesize\ttfamily \label{bigint__calculation_8c_ab40de6afc896f0873e591b2263622dea} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} bi\+\_\+refine (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}}]{dst}{}\end{DoxyParamCaption})}
+
+
+
+bigint의 마지막 워드가 0인 경우 bigint의 메모리를 재할당하는 함수 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dst} & bigint의 포인터 \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=291pt]{bigint__calculation_8c_ab40de6afc896f0873e591b2263622dea_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__calculation_8c_ab40de6afc896f0873e591b2263622dea_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__calculation_8c_afcea8fd04d42e0720f3a8bbf6ca86eaf}\index{bigint\_calculation.c@{bigint\_calculation.c}!bi\_set\_from\_array@{bi\_set\_from\_array}}
+\index{bi\_set\_from\_array@{bi\_set\_from\_array}!bigint\_calculation.c@{bigint\_calculation.c}}
+\doxysubsubsection{\texorpdfstring{bi\_set\_from\_array()}{bi\_set\_from\_array()}}
+{\footnotesize\ttfamily \label{bigint__calculation_8c_afcea8fd04d42e0720f3a8bbf6ca86eaf} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} bi\+\_\+set\+\_\+from\+\_\+array (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{uint32\+\_\+t}]{sign}{, }\item[{uint32\+\_\+t}]{wordlen}{, }\item[{\mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}} \texorpdfstring{$\ast$}{*}}]{src}{}\end{DoxyParamCaption})}
+
+
+
+arrary를 통해 bigint에 값을 할당하는 함수 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dst} & bigint의 포인터 \\
+\hline
+{\em sign} & 부호 \\
+\hline
+{\em wordlen} & 배열의 길이 \\
+\hline
+{\em src} & 할당하고자 하는 배열 \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__calculation_8c_afcea8fd04d42e0720f3a8bbf6ca86eaf_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=247pt]{bigint__calculation_8c_afcea8fd04d42e0720f3a8bbf6ca86eaf_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__calculation_8c_a5660f5bce5a1afb6326f61f9601de1f1}\index{bigint\_calculation.c@{bigint\_calculation.c}!bi\_set\_from\_string@{bi\_set\_from\_string}}
+\index{bi\_set\_from\_string@{bi\_set\_from\_string}!bigint\_calculation.c@{bigint\_calculation.c}}
+\doxysubsubsection{\texorpdfstring{bi\_set\_from\_string()}{bi\_set\_from\_string()}}
+{\footnotesize\ttfamily \label{bigint__calculation_8c_a5660f5bce5a1afb6326f61f9601de1f1} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} bi\+\_\+set\+\_\+from\+\_\+string (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{str}{, }\item[{uint32\+\_\+t}]{base}{}\end{DoxyParamCaption})}
+
+
+
+string을 통해 bigint에 값을 할당하는 함수 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dst} & bigint의 포인터 \\
+\hline
+{\em str} & 할당하고자 하는 문자열 \\
+\hline
+{\em base} & 10진수, 16진수 등 어떻게 해석할지 의미함. \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__calculation_8c_a5660f5bce5a1afb6326f61f9601de1f1_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=249pt]{bigint__calculation_8c_a5660f5bce5a1afb6326f61f9601de1f1_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__calculation_8c_a3bb878ba0533bc9e939b2976d00ba382}\index{bigint\_calculation.c@{bigint\_calculation.c}!bi\_set\_zero@{bi\_set\_zero}}
+\index{bi\_set\_zero@{bi\_set\_zero}!bigint\_calculation.c@{bigint\_calculation.c}}
+\doxysubsubsection{\texorpdfstring{bi\_set\_zero()}{bi\_set\_zero()}}
+{\footnotesize\ttfamily \label{bigint__calculation_8c_a3bb878ba0533bc9e939b2976d00ba382} 
+void bi\+\_\+set\+\_\+zero (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{x}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__calculation_8c_a3bb878ba0533bc9e939b2976d00ba382_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=320pt]{bigint__calculation_8c_a3bb878ba0533bc9e939b2976d00ba382_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__calculation_8c_a2564e623fdb80aa8b463eb17802e5113}\index{bigint\_calculation.c@{bigint\_calculation.c}!is\_zero@{is\_zero}}
+\index{is\_zero@{is\_zero}!bigint\_calculation.c@{bigint\_calculation.c}}
+\doxysubsubsection{\texorpdfstring{is\_zero()}{is\_zero()}}
+{\footnotesize\ttfamily \label{bigint__calculation_8c_a2564e623fdb80aa8b463eb17802e5113} 
+int8\+\_\+t is\+\_\+zero (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}}]{dst}{}\end{DoxyParamCaption})}
+
+
+
+bigint가 0인지 확인하는 함수 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dst} & bigint의 포인터 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0이면 1, 아니면 0 
+\end{DoxyReturn}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=253pt]{bigint__calculation_8c_a2564e623fdb80aa8b463eb17802e5113_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=301pt]{bigint__calculation_8c_a2564e623fdb80aa8b463eb17802e5113_icgraph}
+\end{center}
+\end{figure}

@@ -1,0 +1,30 @@
+<map id="bi_assign" name="bi_assign">
+<area shape="rect" id="Node000001" title="bigint의 값을 다른 bigint로 할당하는 함수" alt="" coords="5,120,82,146"/>
+<area shape="rect" id="Node000002" href="$bigint__calculation_8c.html#a91d87036d498204bcc852b687bd30a61" title=" " alt="" coords="161,95,246,121"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="82,125,145,114,146,120,83,130"/>
+<area shape="rect" id="Node000003" href="$memory_8c.html#a7a2336750ce2c077f29a85c1fdd9fb31" title="포인터가 NULL인지 확인하는 함수" alt="" coords="362,10,466,35"/>
+<area shape="poly" id="edge14_Node000001_Node000003" title=" " alt="" coords="49,118,79,73,101,49,128,31,183,12,241,4,297,4,346,8,346,13,296,9,241,9,184,17,131,36,105,53,83,77,54,121"/>
+<area shape="rect" id="Node000005" href="$base__error_8c.html#abc4557fb5f08b0aa1a2de96635497f7f" title=" " alt="" coords="354,109,473,149"/>
+<area shape="poly" id="edge15_Node000001_Node000005" title=" " alt="" coords="82,131,277,130,338,129,339,134,277,136,82,136"/>
+<area shape="rect" id="Node000007" href="$bigint__calculation_8c.html#a441aca43444e577be252db9b5690e503" title="bigint에 arrary를 할당하는 함수" alt="" coords="172,196,234,222"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="71,144,131,175,159,188,156,192,129,180,68,149"/>
+<area shape="rect" id="Node000011" href="$memory_8c.html#a28d663dd7aefb4946990275d69e70b6f" title="포인터의 메모리가 할당되어 있으면 해제하는 함수" alt="" coords="157,46,250,71"/>
+<area shape="poly" id="edge12_Node000001_Node000011" title=" " alt="" coords="63,117,128,80,141,75,144,79,131,85,66,122"/>
+<area shape="rect" id="Node000012" href="$base__error_8c.html#ac5a45264db1d1a05e68d047a2e05a8d7" title=" " alt="" coords="130,246,277,271"/>
+<area shape="poly" id="edge16_Node000001_Node000012" title=" " alt="" coords="55,145,85,188,106,212,131,232,138,236,135,241,128,237,103,216,81,191,50,148"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="246,94,276,82,299,63,324,44,346,35,348,40,326,49,303,67,278,86,248,99"/>
+<area shape="rect" id="Node000004" href="$base__error_8c.html#aef05af2222acc0dd48f418acfaf5f174" title=" " alt="" coords="351,174,476,215"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="235,119,326,159,343,166,341,170,324,164,233,124"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="246,109,339,119,338,124,246,115"/>
+<area shape="rect" id="Node000006" href="$base__error_8c.html#a9da255e0af49f4ffd5e68f1429c22ee5" title=" " alt="" coords="345,59,482,85"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="246,98,329,83,330,89,247,103"/>
+<area shape="poly" id="edge7_Node000007_Node000003" title=" " alt="" coords="217,194,245,166,275,132,288,107,295,86,304,65,323,44,346,32,348,37,327,49,309,68,300,88,293,110,279,135,249,170,221,198"/>
+<area shape="poly" id="edge9_Node000007_Node000004" title=" " alt="" coords="235,204,335,197,335,203,235,210"/>
+<area shape="rect" id="Node000008" href="$base__error_8c.html#a44788e0c4c63cd6ca292cb2d44313837" title=" " alt="" coords="342,239,486,280"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="235,214,327,236,326,241,234,219"/>
+<area shape="rect" id="Node000009" href="$base__error_8c.html#a0ff5fd31efce68863a3396862e215487" title=" " alt="" coords="332,305,495,345"/>
+<area shape="poly" id="edge10_Node000007_Node000009" title=" " alt="" coords="236,213,257,220,279,231,294,246,303,261,312,275,327,290,334,295,332,299,323,294,308,279,299,264,290,249,275,235,255,225,234,218"/>
+<area shape="rect" id="Node000010" href="$base__error_8c.html#a47c3d935b57aeec1f128170eee7547de" title=" " alt="" coords="325,370,502,395"/>
+<area shape="poly" id="edge11_Node000007_Node000010" title=" " alt="" coords="236,211,258,218,279,231,292,247,299,263,303,295,308,326,314,341,327,355,332,359,328,363,323,359,310,343,303,327,298,296,294,265,287,250,275,235,256,223,234,216"/>
+<area shape="poly" id="edge13_Node000011_Node000003" title=" " alt="" coords="249,48,346,31,347,37,250,53"/>
+</map>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['uint_0',['uint',['../example_8h.html#a91ad9478d81a7aaf2593e8d9c3d06a14',1,'example.h']]]
+  ['byte_0',['byte',['../base__type_8h.html#ab8ef12fab634c171394422d0ee8baf94',1,'base_type.h']]]
 ];

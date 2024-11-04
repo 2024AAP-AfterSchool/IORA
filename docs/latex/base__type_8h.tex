@@ -1,0 +1,144 @@
+\doxysection{include/base/base\+\_\+type.h File Reference}
+\hypertarget{base__type_8h}{}\label{base__type_8h}\index{include/base/base\_type.h@{include/base/base\_type.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+Include dependency graph for base\+\_\+type.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=207pt]{base__type_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{base__type_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structbigint}{bigint}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}
+\item 
+\#define \mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}}
+\item 
+\#define \mbox{\hyperlink{base__type_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{TRUE}}~1
+\begin{DoxyCompactList}\small\item\em 참 \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{base__type_8h_aa93f0eb578d23995850d61f7d61c55c1}{FALSE}}~0
+\begin{DoxyCompactList}\small\item\em 거짓 \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{base__type_8h_aefb7723e1092c450754ef6c07922b1bf}{POSITIVE}}~0
+\begin{DoxyCompactList}\small\item\em 양수 \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{base__type_8h_ae8da539b402ed6856028a0a60240bbff}{NEGATIVE}}~1
+\begin{DoxyCompactList}\small\item\em 음수 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef uint8\+\_\+t \mbox{\hyperlink{base__type_8h_ab8ef12fab634c171394422d0ee8baf94}{byte}}
+\begin{DoxyCompactList}\small\item\em unsigned char의 별칭. BYTE와 같은 역할. \end{DoxyCompactList}\item 
+typedef uint32\+\_\+t \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}}
+\begin{DoxyCompactList}\small\item\em unsigned int의 별칭. WORD와 같은 역할. (TODO\+: 8, 16, 32, 64비트로 변경 가능하도록 구현) \end{DoxyCompactList}\item 
+typedef uint8\+\_\+t \mbox{\hyperlink{base__type_8h_a41d392b635e85662868de4ceffde68f4}{carry}}
+\item 
+typedef uint32\+\_\+t \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}
+\begin{DoxyCompactList}\small\item\em unsigned int의 별칭. 메시지 코드를 저장하기 위한 변수 타입. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{base__type_8h_aa93f0eb578d23995850d61f7d61c55c1}\index{base\_type.h@{base\_type.h}!FALSE@{FALSE}}
+\index{FALSE@{FALSE}!base\_type.h@{base\_type.h}}
+\doxysubsubsection{\texorpdfstring{FALSE}{FALSE}}
+{\footnotesize\ttfamily \label{base__type_8h_aa93f0eb578d23995850d61f7d61c55c1} 
+\#define FALSE~0}
+
+
+
+거짓 
+
+\Hypertarget{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}\index{base\_type.h@{base\_type.h}!IN@{IN}}
+\index{IN@{IN}!base\_type.h@{base\_type.h}}
+\doxysubsubsection{\texorpdfstring{IN}{IN}}
+{\footnotesize\ttfamily \label{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928} 
+\#define IN}
+
+\Hypertarget{base__type_8h_ae8da539b402ed6856028a0a60240bbff}\index{base\_type.h@{base\_type.h}!NEGATIVE@{NEGATIVE}}
+\index{NEGATIVE@{NEGATIVE}!base\_type.h@{base\_type.h}}
+\doxysubsubsection{\texorpdfstring{NEGATIVE}{NEGATIVE}}
+{\footnotesize\ttfamily \label{base__type_8h_ae8da539b402ed6856028a0a60240bbff} 
+\#define NEGATIVE~1}
+
+
+
+음수 
+
+\Hypertarget{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}\index{base\_type.h@{base\_type.h}!OUT@{OUT}}
+\index{OUT@{OUT}!base\_type.h@{base\_type.h}}
+\doxysubsubsection{\texorpdfstring{OUT}{OUT}}
+{\footnotesize\ttfamily \label{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae} 
+\#define OUT}
+
+\Hypertarget{base__type_8h_aefb7723e1092c450754ef6c07922b1bf}\index{base\_type.h@{base\_type.h}!POSITIVE@{POSITIVE}}
+\index{POSITIVE@{POSITIVE}!base\_type.h@{base\_type.h}}
+\doxysubsubsection{\texorpdfstring{POSITIVE}{POSITIVE}}
+{\footnotesize\ttfamily \label{base__type_8h_aefb7723e1092c450754ef6c07922b1bf} 
+\#define POSITIVE~0}
+
+
+
+양수 
+
+\Hypertarget{base__type_8h_aa8cecfc5c5c054d2875c03e77b7be15d}\index{base\_type.h@{base\_type.h}!TRUE@{TRUE}}
+\index{TRUE@{TRUE}!base\_type.h@{base\_type.h}}
+\doxysubsubsection{\texorpdfstring{TRUE}{TRUE}}
+{\footnotesize\ttfamily \label{base__type_8h_aa8cecfc5c5c054d2875c03e77b7be15d} 
+\#define TRUE~1}
+
+
+
+참 
+
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{base__type_8h_ab8ef12fab634c171394422d0ee8baf94}\index{base\_type.h@{base\_type.h}!byte@{byte}}
+\index{byte@{byte}!base\_type.h@{base\_type.h}}
+\doxysubsubsection{\texorpdfstring{byte}{byte}}
+{\footnotesize\ttfamily \label{base__type_8h_ab8ef12fab634c171394422d0ee8baf94} 
+typedef uint8\+\_\+t \mbox{\hyperlink{base__type_8h_ab8ef12fab634c171394422d0ee8baf94}{byte}}}
+
+
+
+unsigned char의 별칭. BYTE와 같은 역할. 
+
+\Hypertarget{base__type_8h_a41d392b635e85662868de4ceffde68f4}\index{base\_type.h@{base\_type.h}!carry@{carry}}
+\index{carry@{carry}!base\_type.h@{base\_type.h}}
+\doxysubsubsection{\texorpdfstring{carry}{carry}}
+{\footnotesize\ttfamily \label{base__type_8h_a41d392b635e85662868de4ceffde68f4} 
+typedef uint8\+\_\+t \mbox{\hyperlink{base__type_8h_a41d392b635e85662868de4ceffde68f4}{carry}}}
+
+\Hypertarget{base__type_8h_af3db70afcfb515a4def0777a954be00d}\index{base\_type.h@{base\_type.h}!msg@{msg}}
+\index{msg@{msg}!base\_type.h@{base\_type.h}}
+\doxysubsubsection{\texorpdfstring{msg}{msg}}
+{\footnotesize\ttfamily \label{base__type_8h_af3db70afcfb515a4def0777a954be00d} 
+typedef uint32\+\_\+t \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}}
+
+
+
+unsigned int의 별칭. 메시지 코드를 저장하기 위한 변수 타입. 
+
+\Hypertarget{base__type_8h_a19036394f9c80a08fc846c96f668711c}\index{base\_type.h@{base\_type.h}!word@{word}}
+\index{word@{word}!base\_type.h@{base\_type.h}}
+\doxysubsubsection{\texorpdfstring{word}{word}}
+{\footnotesize\ttfamily \label{base__type_8h_a19036394f9c80a08fc846c96f668711c} 
+typedef uint32\+\_\+t \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}}}
+
+
+
+unsigned int의 별칭. WORD와 같은 역할. (TODO\+: 8, 16, 32, 64비트로 변경 가능하도록 구현) 
+

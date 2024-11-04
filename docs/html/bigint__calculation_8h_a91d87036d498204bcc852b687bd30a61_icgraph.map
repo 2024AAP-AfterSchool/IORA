@@ -1,0 +1,16 @@
+<map id="array_copy" name="array_copy">
+<area shape="rect" id="Node000001" title=" " alt="" coords="410,92,496,118"/>
+<area shape="rect" id="Node000002" href="$bigint__calculation_8c.html#a898d307706d9b410db7a6ceb57000505" title="bigint의 값을 다른 bigint로 할당하는 함수" alt="" coords="262,43,338,68"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="395,89,337,70,339,65,397,84"/>
+<area shape="rect" id="Node000005" href="$bigint__calculation_8c.html#afcea8fd04d42e0720f3a8bbf6ca86eaf" title="arrary를 통해 bigint에 값을 할당하는 함수" alt="" coords="237,92,362,118"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="394,108,362,108,362,102,394,102"/>
+<area shape="rect" id="Node000006" href="$_i_o_r_a_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="135,119,184,144"/>
+<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="399,125,363,133,264,139,184,136,185,131,264,133,362,128,398,120"/>
+<area shape="rect" id="Node000003" href="$bigint__subtraction_8c.html#ac2e5c6ccf902dc93649848c28829f4bb" title=" " alt="" coords="130,5,189,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="246,44,189,29,190,23,247,39"/>
+<area shape="rect" id="Node000004" href="$bigint__subtraction_8c.html#ae9763869cd2447760100d4ccccbc1d20" title=" " alt="" coords="5,5,82,31"/>
+<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="246,57,189,54,129,46,81,34,83,29,130,41,190,49,246,52"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="114,30,82,29,82,24,114,24"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="97,7,130,8,129,13,97,12"/>
+<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="222,122,185,130,184,124,221,117"/>
+</map>

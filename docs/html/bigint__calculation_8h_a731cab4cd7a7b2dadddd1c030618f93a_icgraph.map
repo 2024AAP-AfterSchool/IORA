@@ -1,0 +1,11 @@
+<map id="bi_delete" name="bi_delete">
+<area shape="rect" id="Node000001" title="bigint의 값을 다른 bigint로 할당하는 함수" alt="" coords="237,56,310,82"/>
+<area shape="rect" id="Node000002" href="$bigint__subtraction_8c.html#ac2e5c6ccf902dc93649848c28829f4bb" title=" " alt="" coords="130,5,189,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="228,52,188,34,191,29,230,47"/>
+<area shape="rect" id="Node000003" href="$bigint__subtraction_8c.html#ae9763869cd2447760100d4ccccbc1d20" title=" " alt="" coords="5,5,82,31"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="221,64,129,46,81,33,83,28,130,41,222,59"/>
+<area shape="rect" id="Node000004" href="$_i_o_r_a_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="135,107,184,132"/>
+<area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="230,91,186,111,183,106,228,86"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="114,30,82,29,82,24,114,24"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="97,7,130,8,129,13,97,12"/>
+</map>

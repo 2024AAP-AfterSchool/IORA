@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['name_0',['name',['../struct_person.html#afaefe3277bb552b696e9186a81229939',1,'Person']]]
+  ['byte_0',['byte',['../namespace_i_o_r_a__type.html#ad81e75b9f6176eaa511660dba272f41a',1,'IORA_type']]]
 ];

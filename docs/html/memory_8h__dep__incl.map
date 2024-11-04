@@ -1,0 +1,9 @@
+<map id="include/utils/memory.h" name="include/utils/memory.h">
+<area shape="rect" id="Node000001" title="메모리 할당, 해제 등 메모리와 관련된 함수들을 정의한 헤더 파일" alt="" coords="208,5,358,31"/>
+<area shape="rect" id="Node000002" href="$bigint__calculation_8c.html" title="bigint에 대한 연산을 하는 함수들을 정의한 소스 파일" alt="" coords="5,79,195,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="239,39,132,81,130,76,237,34"/>
+<area shape="rect" id="Node000003" href="$memory_8c.html" title="메모리 할당, 해제 등 메모리와 관련된 함수들을 정의한 소스 파일" alt="" coords="219,79,346,105"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="285,46,285,79,280,79,280,46"/>
+<area shape="rect" id="Node000004" href="$string_8c.html" title="문자열과 관련된 함수들을 정의한 소스 파일" alt="" coords="371,79,485,105"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="322,36,404,76,402,81,320,41"/>
+</map>

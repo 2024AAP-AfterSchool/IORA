@@ -1,0 +1,13 @@
+<map id="bi_new" name="bi_new">
+<area shape="rect" id="Node000001" title="bigint에 arrary를 할당하는 함수" alt="" coords="5,128,68,154"/>
+<area shape="rect" id="Node000002" href="$memory_8c.html#a7a2336750ce2c077f29a85c1fdd9fb31" title="포인터가 NULL인지 확인하는 함수" alt="" coords="152,5,256,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="42,127,70,85,90,61,114,41,136,30,139,35,117,46,94,65,74,88,47,129"/>
+<area shape="rect" id="Node000003" href="$base__error_8c.html#a44788e0c4c63cd6ca292cb2d44313837" title=" " alt="" coords="132,55,276,96"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="67,126,115,106,132,99,134,104,117,111,69,131"/>
+<area shape="rect" id="Node000004" href="$base__error_8c.html#aef05af2222acc0dd48f418acfaf5f174" title=" " alt="" coords="142,120,267,161"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="68,138,126,138,126,144,68,144"/>
+<area shape="rect" id="Node000005" href="$base__error_8c.html#a0ff5fd31efce68863a3396862e215487" title=" " alt="" coords="123,186,286,226"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="69,151,117,170,134,177,132,182,115,175,67,156"/>
+<area shape="rect" id="Node000006" href="$base__error_8c.html#a47c3d935b57aeec1f128170eee7547de" title=" " alt="" coords="116,251,293,276"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="47,152,74,194,94,217,117,236,127,242,124,246,114,240,90,220,70,197,42,155"/>
+</map>

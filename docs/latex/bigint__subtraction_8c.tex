@@ -1,0 +1,100 @@
+\doxysection{src/bigint/bigint\+\_\+subtraction.c File Reference}
+\hypertarget{bigint__subtraction_8c}{}\label{bigint__subtraction_8c}\index{src/bigint/bigint\_subtraction.c@{src/bigint/bigint\_subtraction.c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include "{}base/base\+\_\+type.\+h"{}}\newline
+{\ttfamily \#include "{}bigint/bigint\+\_\+addition.\+h"{}}\newline
+{\ttfamily \#include "{}bigint/bigint\+\_\+calculation.\+h"{}}\newline
+Include dependency graph for bigint\+\_\+subtraction.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__subtraction_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{bigint__subtraction_8c_a0d43c98db68f9c60f6a9312a34096550}{bi\+\_\+sub\+\_\+\+AbB}} (\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}} \texorpdfstring{$\ast$}{*}A, \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}} \texorpdfstring{$\ast$}{*}B, \mbox{\hyperlink{base__type_8h_ab8ef12fab634c171394422d0ee8baf94}{byte}} \texorpdfstring{$\ast$}{*}b, \mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}} \texorpdfstring{$\ast$}{*}C)
+\item 
+void \mbox{\hyperlink{bigint__subtraction_8c_a984882b60b0eceae439801af0c57d9f6}{bi\+\_\+sub\+\_\+\+Ab}} (\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}} \texorpdfstring{$\ast$}{*}A, \mbox{\hyperlink{base__type_8h_ab8ef12fab634c171394422d0ee8baf94}{byte}} \texorpdfstring{$\ast$}{*}b, \mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}} \texorpdfstring{$\ast$}{*}C)
+\item 
+void \mbox{\hyperlink{bigint__subtraction_8c_ae9763869cd2447760100d4ccccbc1d20}{bi\+\_\+sub\+\_\+C}} (\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}A, \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}B, \mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}z)
+\item 
+void \mbox{\hyperlink{bigint__subtraction_8c_ac2e5c6ccf902dc93649848c28829f4bb}{bi\+\_\+sub}} (\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}x, \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}y, \mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}z)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{bigint__subtraction_8c_ac2e5c6ccf902dc93649848c28829f4bb}\index{bigint\_subtraction.c@{bigint\_subtraction.c}!bi\_sub@{bi\_sub}}
+\index{bi\_sub@{bi\_sub}!bigint\_subtraction.c@{bigint\_subtraction.c}}
+\doxysubsubsection{\texorpdfstring{bi\_sub()}{bi\_sub()}}
+{\footnotesize\ttfamily \label{bigint__subtraction_8c_ac2e5c6ccf902dc93649848c28829f4bb} 
+void bi\+\_\+sub (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}}]{x}{, }\item[{\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}}]{y}{, }\item[{\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{z}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__subtraction_8c_ac2e5c6ccf902dc93649848c28829f4bb_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=218pt]{bigint__subtraction_8c_ac2e5c6ccf902dc93649848c28829f4bb_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__subtraction_8c_a984882b60b0eceae439801af0c57d9f6}\index{bigint\_subtraction.c@{bigint\_subtraction.c}!bi\_sub\_Ab@{bi\_sub\_Ab}}
+\index{bi\_sub\_Ab@{bi\_sub\_Ab}!bigint\_subtraction.c@{bigint\_subtraction.c}}
+\doxysubsubsection{\texorpdfstring{bi\_sub\_Ab()}{bi\_sub\_Ab()}}
+{\footnotesize\ttfamily \label{bigint__subtraction_8c_a984882b60b0eceae439801af0c57d9f6} 
+void bi\+\_\+sub\+\_\+\+Ab (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}} \texorpdfstring{$\ast$}{*}}]{A}{, }\item[{\mbox{\hyperlink{base__type_8h_ab8ef12fab634c171394422d0ee8baf94}{byte}} \texorpdfstring{$\ast$}{*}}]{b}{, }\item[{\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}} \texorpdfstring{$\ast$}{*}}]{C}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=316pt]{bigint__subtraction_8c_a984882b60b0eceae439801af0c57d9f6_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__subtraction_8c_a0d43c98db68f9c60f6a9312a34096550}\index{bigint\_subtraction.c@{bigint\_subtraction.c}!bi\_sub\_AbB@{bi\_sub\_AbB}}
+\index{bi\_sub\_AbB@{bi\_sub\_AbB}!bigint\_subtraction.c@{bigint\_subtraction.c}}
+\doxysubsubsection{\texorpdfstring{bi\_sub\_AbB()}{bi\_sub\_AbB()}}
+{\footnotesize\ttfamily \label{bigint__subtraction_8c_a0d43c98db68f9c60f6a9312a34096550} 
+void bi\+\_\+sub\+\_\+\+AbB (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}} \texorpdfstring{$\ast$}{*}}]{A}{, }\item[{\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}} \texorpdfstring{$\ast$}{*}}]{B}{, }\item[{\mbox{\hyperlink{base__type_8h_ab8ef12fab634c171394422d0ee8baf94}{byte}} \texorpdfstring{$\ast$}{*}}]{b}{, }\item[{\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}} \texorpdfstring{$\ast$}{*}}]{C}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=322pt]{bigint__subtraction_8c_a0d43c98db68f9c60f6a9312a34096550_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__subtraction_8c_ae9763869cd2447760100d4ccccbc1d20}\index{bigint\_subtraction.c@{bigint\_subtraction.c}!bi\_sub\_C@{bi\_sub\_C}}
+\index{bi\_sub\_C@{bi\_sub\_C}!bigint\_subtraction.c@{bigint\_subtraction.c}}
+\doxysubsubsection{\texorpdfstring{bi\_sub\_C()}{bi\_sub\_C()}}
+{\footnotesize\ttfamily \label{bigint__subtraction_8c_ae9763869cd2447760100d4ccccbc1d20} 
+void bi\+\_\+sub\+\_\+C (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}}]{A}{, }\item[{\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}}]{B}{, }\item[{\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{z}{}\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__subtraction_8c_ae9763869cd2447760100d4ccccbc1d20_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=218pt]{bigint__subtraction_8c_ae9763869cd2447760100d4ccccbc1d20_icgraph}
+\end{center}
+\end{figure}

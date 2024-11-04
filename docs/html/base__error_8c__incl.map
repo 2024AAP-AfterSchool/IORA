@@ -1,0 +1,12 @@
+<map id="src/base/base_error.c" name="src/base/base_error.c">
+<area shape="rect" id="Node000001" title=" " alt="" coords="30,5,177,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,66,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,33,59,70,55,66,90,29"/>
+<area shape="rect" id="Node000003" href="$base__type_8h.html" title=" " alt="" coords="91,153,215,178"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="109,30,131,104,144,137,139,139,126,106,104,32"/>
+<area shape="rect" id="Node000005" href="$base__error_8h.html" title=" " alt="" coords="141,79,266,105"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="122,29,176,67,173,72,119,34"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="121,226,185,252"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="156,179,156,211,150,211,150,179"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="197,106,172,141,168,138,193,103"/>
+</map>

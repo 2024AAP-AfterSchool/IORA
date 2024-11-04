@@ -1,0 +1,15 @@
+<map id="src/bigint/bigint_subtraction.c" name="src/bigint/bigint_subtraction.c">
+<area shape="rect" id="Node000001" title=" " alt="" coords="64,5,255,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,66,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="140,34,71,73,68,69,137,29"/>
+<area shape="rect" id="Node000003" href="$base__type_8h.html" title=" " alt="" coords="153,153,278,178"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="151,33,132,66,127,85,131,104,149,126,173,143,170,147,145,130,126,106,122,85,127,64,147,30"/>
+<area shape="rect" id="Node000005" href="$bigint__addition_8h.html" title=" " alt="" coords="140,79,291,105"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="171,30,199,65,195,68,167,33"/>
+<area shape="rect" id="Node000006" href="$bigint__calculation_8h.html" title=" " alt="" coords="314,79,482,105"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="201,29,344,71,342,77,199,34"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="183,226,248,252"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="218,179,218,211,213,211,213,179"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="218,105,218,137,213,137,213,105"/>
+<area shape="poly" id="edge7_Node000006_Node000003" title=" " alt="" coords="368,108,262,149,260,144,366,103"/>
+</map>

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['person_0',['Person',['../struct_person.html',1,'']]],
-  ['point_1',['Point',['../struct_point.html',1,'']]]
+  ['bigint_0',['bigint',['../structbigint.html',1,'bigint'],['../class_i_o_r_a__type_1_1bigint.html',1,'IORA_type.bigint']]]
 ];
