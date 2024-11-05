@@ -40,3 +40,13 @@ set_target_properties(IORA_LIB PROPERTIES PREFIX "" OUTPUT_NAME "IORA"
 
 # 실행 파일을 정의합니다. IORA라는 이름으로 소스 파일들을 빌드합니다.
 add_executable(IORA ${SOURCE_FILES})
+
+# 메모리 테스트 AddressSanitizer 설정
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")
+
+enable_testing()
+
+add_test(NAME AddressSanitizerTest
+    COMMAND $<TARGET_FILE:IORA>
+)
