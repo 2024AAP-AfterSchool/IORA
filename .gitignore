@@ -4,7 +4,11 @@
 build.ninja
 CMakeFiles
 CMakeCache.txt
+CTestTestfile.cmake
 cmake_install.cmake
 compile_commands.json
 Makefile
 __pycache__
+IORA.*
+Testing/*
+build/Testing/*
