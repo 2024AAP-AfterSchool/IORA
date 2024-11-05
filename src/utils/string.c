@@ -24,7 +24,7 @@ uint32_t str_to_hex(word** dst, char* str, int base)
     uint32_t length = strlen(str);
     uint32_t chunk_size = 8; 
 
-    free_if_exist(dst);
+    free_if_exist((void**)dst);
 
     for (int i = 0; i < length; i += chunk_size)
     {

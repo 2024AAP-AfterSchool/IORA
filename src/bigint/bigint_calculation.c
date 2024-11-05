@@ -149,7 +149,7 @@ msg bi_set_from_string(bigint** dst, char* str, uint32_t base)
             return result;
         }
     }
-    // 부호 확인
+    
     // 부호 확인
     int start_idx = 0;
     if (str[0] == '-') {
@@ -333,7 +333,7 @@ msg bi_assign(bigint** dst, bigint* src)
     result = array_copy((*dst)->start, src->start, src->wordlen);
     if (result != SUCCESS_COPY)
     {
-        free_if_exist(*dst);
+        free_if_exist((void**)*dst);
         return result;
     }
 
