@@ -41,11 +41,11 @@ def load_library(OS):
 
     lib = ""
     if OS == "mac":
-        lib = ctypes.CDLL(f"./IORA.so")
+        lib = ctypes.CDLL(f"./build/{OS}/IORA.so")
     elif OS == "linux":
-        lib = ctypes.CDLL(f"./IORA.so")
+        lib = ctypes.CDLL(f"./build/{OS}/IORA.so")
     elif OS == "windows":
-        lib = ctypes.CDLL(f"./IORA.dll")
+        lib = ctypes.CDLL(f"./build/{OS}/IORA.dll")
     
     print_center(" LOAD FILE: " + lib._name, ' ')
     print_center(" LOAD SUCCESS ", '=')
@@ -140,7 +140,7 @@ def test_addtion(function, wordlen=64, iteration=10000, verbose=False):
         print_center(f" TEST FAIL (Exit At: {i+1}) ", '-')
         exit(1)
 
-def test_subtraction(function, wordlen=8, iteration=1000000, verbose=True):
+def test_subtraction(function, wordlen=64, iteration=10000, verbose=False):
     print_center(" 3-9. BigInt 뺄셈 테스트 ", '-', '\n', 95)
 
     for i in tqdm(range(iteration), desc="BigNum Subtraction Test", unit=" iter", ncols=100):

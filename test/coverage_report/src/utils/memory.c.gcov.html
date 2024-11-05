@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - IORA Test Coverage - src/utils/memory.c</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="title">LCOV - code coverage report</td></tr>
+            <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+            <tr>
+              <td width="100%">
+                <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="10%" class="headerValue"><a href="../../index.html" title="Click to go to top-level">top level</a> - <a href="index.html" title="Click to go to directory src/utils">src/utils</a> - memory.c<span style="font-size: 80%;"> (source / <a href="memory.c.func-c.html" title="Click to go to function table">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="5%"></td>
+            <td width="5%" class="headerCovTableHead">Coverage</td>
+            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
+            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">IORA Test Coverage</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntryLo">20.0&nbsp;%</td>
+            <td class="headerCovTableEntry">10</td>
+            <td class="headerCovTableEntry">2</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test Date:</td>
+            <td class="headerValue">2024-11-06 05:46:58</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntryLo">50.0&nbsp;%</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">1</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+</td>
+            <td></td>
+          </tr>
+                  <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+          </table>
+
+          <table cellpadding=0 cellspacing=0 border=0>
+            <tr>
+              <td><br></td>
+            </tr>
+            <tr>
+              <td>
+<pre class="sourceHeading">            Line data    Source code</pre>
+<pre class="source">
+<span id="L1"><span class="lineNum">       1</span>              : /**</span>
+<span id="L2"><span class="lineNum">       2</span>              :  * @file memory.c</span>
+<span id="L3"><span class="lineNum">       3</span>              :  * @brief 메모리 할당, 해제 등 메모리와 관련된 함수들을 정의한 소스 파일</span>
+<span id="L4"><span class="lineNum">       4</span>              :  * @date 2024-10-17</span>
+<span id="L5"><span class="lineNum">       5</span>              :  * @author 조동후</span>
+<span id="L6"><span class="lineNum">       6</span>              :  */</span>
+<span id="L7"><span class="lineNum">       7</span>              : </span>
+<span id="L8"><span class="lineNum">       8</span>              : #include &lt;stdio.h&gt;</span>
+<span id="L9"><span class="lineNum">       9</span>              : #include &lt;stdlib.h&gt;</span>
+<span id="L10"><span class="lineNum">      10</span>              : #include &quot;utils/memory.h&quot;</span>
+<span id="L11"><span class="lineNum">      11</span>              : #include &quot;base/base_type.h&quot;</span>
+<span id="L12"><span class="lineNum">      12</span>              : </span>
+<span id="L13"><span class="lineNum">      13</span>              : /**</span>
+<span id="L14"><span class="lineNum">      14</span>              :  * @brief 포인터가 NULL인지 확인하는 함수</span>
+<span id="L15"><span class="lineNum">      15</span>              :  * @param ptr 포인터</span>
+<span id="L16"><span class="lineNum">      16</span>              :  */</span>
+<span id="L17"><span class="lineNum">      17</span> <span class="tlaGNC tlaBgGNC">     5204604 : bool is_null_pointer(void* ptr)</span></span>
+<span id="L18"><span class="lineNum">      18</span>              : {</span>
+<span id="L19"><span class="lineNum">      19</span> <span class="tlaGNC">     5204604 :     return ptr == NULL;</span></span>
+<span id="L20"><span class="lineNum">      20</span>              : }</span>
+<span id="L21"><span class="lineNum">      21</span>              : </span>
+<span id="L22"><span class="lineNum">      22</span>              : /**</span>
+<span id="L23"><span class="lineNum">      23</span>              :  * @brief 포인터의 메모리가 할당되어 있으면 해제하는 함수</span>
+<span id="L24"><span class="lineNum">      24</span>              :  * @param ptr 포인터</span>
+<span id="L25"><span class="lineNum">      25</span>              :  */</span>
+<span id="L26"><span class="lineNum">      26</span> <span class="tlaUNC tlaBgUNC">           0 : void free_if_exist(void** ptr)</span></span>
+<span id="L27"><span class="lineNum">      27</span>              : {   </span>
+<span id="L28"><span class="lineNum">      28</span> <span class="tlaUNC">           0 :     if (!is_null_pointer(ptr) &amp;&amp; !is_null_pointer(*ptr))</span></span>
+<span id="L29"><span class="lineNum">      29</span>              :     {</span>
+<span id="L30"><span class="lineNum">      30</span> <span class="tlaUNC">           0 :         printf(&quot;Freeing memory...\n&quot;);</span></span>
+<span id="L31"><span class="lineNum">      31</span> <span class="tlaUNC">           0 :         printf(&quot;ptr: %p\n&quot;, ptr);</span></span>
+<span id="L32"><span class="lineNum">      32</span> <span class="tlaUNC">           0 :         free(*ptr);</span></span>
+<span id="L33"><span class="lineNum">      33</span> <span class="tlaUNC">           0 :         *ptr = NULL;</span></span>
+<span id="L34"><span class="lineNum">      34</span> <span class="tlaUNC">           0 :     }</span></span>
+<span id="L35"><span class="lineNum">      35</span> <span class="tlaUNC">           0 : }</span></span>
+        </pre>
+              </td>
+            </tr>
+          </table>
+          <br>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.1-1</a></td></tr>
+          </table>
+          <br>
+
+</body>
+</html>
