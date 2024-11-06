@@ -625,7 +625,7 @@ int compare(bigint* x, bigint* y)
 void word_left_shift(bigint* dst, byte k) // k는 shift하고싶은 word 사이즈 의미
 {
     bigint* tmp = NULL;
-    bi_new(&tmp, k + dst->wordlen);
+    bi_new(&tmp, dst->wordlen + k);
     tmp->sign = dst->sign;
 
     for (int i = k; i < tmp->wordlen; i++)
@@ -634,6 +634,28 @@ void word_left_shift(bigint* dst, byte k) // k는 shift하고싶은 word 사이�
     }
    //bi_refine(tmp); // dst가 refine된 값이라면 할 필요 x
     // dst를 NULL로 설정하여 bi_assign이 동작하도록 준비
+    bi_delete(&dst);  // 기존 dst의 메모리를 해제
+    dst = NULL;
+
+    // bi_assign을 사용하여 tmp의 값을 dst에 복사
+    bi_assign(&dst, tmp);
+
+    // tmp 삭제
+    bi_delete(&tmp);
+}
+
+void word_right_shift(bigint* dst, byte k) // k는 shift하고싶은 word 사이즈 의미
+{
+    bigint* tmp = NULL;
+    bi_new(&tmp, dst->wordlen - k);
+    tmp->sign = dst->sign;
+
+    for (int i = k; i < tmp->wordlen; i++)
+    {
+        tmp->x[i] = dst->x[i + k];
+    }
+    //bi_refine(tmp); // dst가 refine된 값이라면 할 필요 x
+     // dst를 NULL로 설정하여 bi_assign이 동작하도록 준비
     bi_delete(&dst);  // 기존 dst의 메모리를 해제
     dst = NULL;
 
