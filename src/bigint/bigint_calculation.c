@@ -241,14 +241,24 @@ void bi_print(bigint* dst, uint32_t base)
     }
     printf("\n");
 }
-
-void bi_set_zero(bigint** x)
+/*
+void bi_set_zero(bigint** dst)
 {
-    bi_new(x, 1);
-    (*x)->sign = POSITIVE;
-    (*x)->start[0] = 0x00;
+    bi_new(dst, 1);
+    (*dst)->sign = POSITIVE;
+    (*dst)->start[0] = 0x00;
 }
-
+*/
+bool is_zero(bigint* dst)
+{
+    if (dst->a[0] != 0)
+        return false;
+    for (int i = 1; i < (dst->wordlen); i++)
+    {
+        if (dst->a[i] != 0)
+            return false;
+    }
+}
 int compare_ABS(bigint* x, bigint* y)
 {
     int n = x->wordlen;
@@ -288,4 +298,21 @@ int compare(bigint* x, bigint* y)
         return ret;
 
     return ret * (-1);
+}
+word_left_shift(bigint* dst, byte k) // k는 shift하고싶은 word 사이즈 의미
+{
+    bigint* tmp = NULL;
+    bi_new(&tmp, k + dst->wordlen);
+    tmp->sign = dst->sign;
+
+    for (int i = k; i < tmp->wordlen; i++)
+    {
+        tmp->x[i] = dst->x[i - k];
+    }
+    bigint_refine(tmp);
+    bigint temp = *dst;
+    *dst = *tmp;
+    *tmp = temp;
+    bi_delete(&tmp);
+    return;
 }
