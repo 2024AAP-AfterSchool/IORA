@@ -39,4 +39,8 @@ void bi_set_zero(bigint** x);
 // 두 큰수 비교하는 함수
 int compare_ABS(bigint* x, bigint* y);
 int compare(bigint* x, bigint* y);
+//word 단위 left shift
+void word_left_shift(bigint* dst, byte k)
+//word 단위 right shift
+void word_right_shift(bigint* dst, byte k)
 #endif // BIGINT_CALCULATION_H_
