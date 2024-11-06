@@ -29,6 +29,6 @@ void mul_AB(word* A, word* B, bigint** z) {
     word C0 = A0 * B0;
     word tmp = C0;
     C0 = C0 + (T0 << (sizeof(word) * 4));
-    C1 = C1 + (T1 << (sizeof(word) * 4)) + (T0 >> (sizeof(word) * 4)) + (C0 < tmp);
-    C = (C1 << sizeof(word) * 8) + C0;
+    C1 = C1 + (T1 << (sizeof(word) * 4)) | (T0 >> (sizeof(word) * 4)) + (C0 < tmp);
+    C = word_left_shift(&C1, 1) + C0;
 }
