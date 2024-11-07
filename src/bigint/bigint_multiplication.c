@@ -64,3 +64,7 @@ void mul_C(bigint* x, bigint* y, bigint** z)
     bigint_assign(z, result); // 최종 결과를 z에 할당
     bigint_delete(&result); // result 삭제
 }
+
+///void karatsuba
+
+void mul()

@@ -574,6 +574,8 @@ void bi_set_zero(bigint** dst)
 */
 bool is_zero(bigint* dst)
 {
+    if (dst == NULL) return false;
+
     if (dst->a[0] != 0)
         return false;
     for (int i = 1; i < (dst->wordlen); i++)
@@ -581,7 +583,23 @@ bool is_zero(bigint* dst)
         if (dst->a[i] != 0)
             return false;
     }
+    return true
 }
+
+bool is_one(bigint* dst)
+{
+    if (dst == NULL) return false;
+
+    if (dst->a[0] != 1)
+        return false;
+    for (int i = 1; i < (dst->wordlen); i++)
+    {
+        if (dst->a[i] != 0)
+            return false;
+    }
+    return true
+}
+
 int compare_ABS(bigint* x, bigint* y)
 {
     int n = x->wordlen;
