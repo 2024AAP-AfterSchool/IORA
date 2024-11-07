@@ -36,6 +36,10 @@ void bi_assign(bigint** dst, bigint* src);
 void bi_print(bigint* dst, uint32_t base);
 //set zero 확인하는 함수
 void bi_set_zero(bigint** x);
+//value가 0인지 확인하는 함수
+bool is_zero(bigint* dst)
+//value가 1인지 확인하는 함수
+bool is_one(bigint* dst)
 // 두 큰수 비교하는 함수
 int compare_ABS(bigint* x, bigint* y);
 int compare(bigint* x, bigint* y);
