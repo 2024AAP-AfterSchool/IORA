@@ -1,12 +1,12 @@
 <map id="free_if_exist" name="free_if_exist">
 <area shape="rect" id="Node000001" title="포인터의 메모리가 할당되어 있으면 해제하는 함수" alt="" coords="367,56,460,82"/>
-<area shape="rect" id="Node000002" href="$bigint__calculation_8c.html#a898d307706d9b410db7a6ceb57000505" title="bigint의 값을 다른 bigint로 할당하는 함수" alt="" coords="240,31,316,56"/>
+<area shape="rect" id="Node000002" href="$bigint__calculation_8c.html#a661579c313392e1aa1e2ca1c6c227ce6" title="bigint의 값을 다른 bigint로 할당하는 함수" alt="" coords="240,31,316,56"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="351,60,316,53,317,48,352,55"/>
 <area shape="rect" id="Node000005" href="$string_8c.html#a8750de4bacde177c789c8386d49c3c1f" title="문자열을 숫자로 변환하는 함수" alt="" coords="237,80,319,106"/>
 <area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="352,82,320,88,319,83,351,77"/>
-<area shape="rect" id="Node000003" href="$bigint__subtraction_8c.html#ac2e5c6ccf902dc93649848c28829f4bb" title=" " alt="" coords="130,5,189,31"/>
+<area shape="rect" id="Node000003" href="$bigint__subtraction_8c.html#afa4e93a166e5a4c75a1f8522d1c24425" title="두 bigint의 뺄셈을 수행하는 함수" alt="" coords="130,5,189,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="224,35,189,27,190,22,225,29"/>
-<area shape="rect" id="Node000004" href="$bigint__subtraction_8c.html#ae9763869cd2447760100d4ccccbc1d20" title=" " alt="" coords="5,5,82,31"/>
+<area shape="rect" id="Node000004" href="$bigint__subtraction_8c.html#acaf10206d518b7d29722ad94205bf527" title="두 bigint의 뺄셈을 수행하는 함수." alt="" coords="5,5,82,31"/>
 <area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="224,50,178,50,129,46,81,34,82,29,130,41,178,45,224,45"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="114,30,82,29,82,24,114,24"/>
 <area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="97,7,130,8,129,13,97,12"/>

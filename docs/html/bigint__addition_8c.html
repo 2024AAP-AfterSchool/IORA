@@ -93,117 +93,162 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">bigint_addition.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>bigint에 대한 덧셈 연산을 하는 함수들을 정의한 소스 파일  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="base__type_8h_source.html">base/base_type.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="base__error_8h_source.html">base/base_error.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="bigint__calculation_8h_source.html">bigint/bigint_calculation.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for bigint_addition.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="bigint__addition_8c__incl.png" border="0" usemap="#asrc_2bigint_2bigint__addition_8c" alt=""/></div>
 <map name="asrc_2bigint_2bigint__addition_8c" id="asrc_2bigint_2bigint__addition_8c">
-<area shape="rect" title=" " alt="" coords="17,5,190,31"/>
+<area shape="rect" title="bigint에 대한 덧셈 연산을 하는 함수들을 정의한 소스 파일" alt="" coords="77,5,250,31"/>
 <area shape="rect" title=" " alt="" coords="5,79,66,105"/>
-<area shape="poly" title=" " alt="" coords="94,33,59,70,55,66,90,29"/>
-<area shape="rect" href="base__type_8h.html" title=" " alt="" coords="101,153,226,178"/>
-<area shape="poly" title=" " alt="" coords="109,31,117,64,131,104,150,138,145,141,126,106,112,66,104,32"/>
+<area shape="poly" title=" " alt="" coords="143,34,72,73,69,69,140,29"/>
+<area shape="rect" href="base__type_8h.html" title=" " alt="" coords="163,153,287,178"/>
+<area shape="poly" title=" " alt="" coords="154,33,132,66,127,85,131,103,151,127,177,144,174,148,147,131,126,106,122,85,127,64,150,30"/>
+<area shape="rect" href="base__error_8h.html" title=" " alt="" coords="332,79,456,105"/>
+<area shape="poly" title=" " alt="" coords="203,29,341,71,340,77,202,34"/>
 <area shape="rect" href="bigint__calculation_8h.html" title=" " alt="" coords="141,79,308,105"/>
-<area shape="poly" title=" " alt="" coords="125,29,192,68,190,73,123,34"/>
-<area shape="rect" title=" " alt="" coords="131,226,196,252"/>
-<area shape="poly" title=" " alt="" coords="166,179,166,211,161,211,161,179"/>
-<area shape="poly" title=" " alt="" coords="217,107,186,142,182,139,213,103"/>
+<area shape="poly" title=" " alt="" coords="176,29,207,65,203,69,172,33"/>
+<area shape="rect" title=" " alt="" coords="193,226,257,252"/>
+<area shape="poly" title=" " alt="" coords="228,179,228,211,222,211,222,179"/>
+<area shape="poly" title=" " alt="" coords="366,108,269,149,267,144,364,103"/>
+<area shape="rect" title=" " alt="" coords="357,153,431,178"/>
+<area shape="poly" title=" " alt="" coords="397,105,397,137,392,137,392,105"/>
+<area shape="poly" title=" " alt="" coords="228,105,228,137,222,137,222,105"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a1836e9d7c357ae7f61760de8b96ed158" id="r_a1836e9d7c357ae7f61760de8b96ed158"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1836e9d7c357ae7f61760de8b96ed158">bi_add_ABC</a> (<a class="el" href="base__type_8h.html#ac2bbd6d630a06a980d9a92ddb9a49928">IN</a> <a class="el" href="base__type_8h.html#a19036394f9c80a08fc846c96f668711c">word</a> A, <a class="el" href="base__type_8h.html#ac2bbd6d630a06a980d9a92ddb9a49928">IN</a> <a class="el" href="base__type_8h.html#a19036394f9c80a08fc846c96f668711c">word</a> B, <a class="el" href="base__type_8h.html#a41d392b635e85662868de4ceffde68f4">carry</a> c, <a class="el" href="base__type_8h.html#aec78e7a9e90a406a56f859ee456e8eae">OUT</a> <a class="el" href="base__type_8h.html#a19036394f9c80a08fc846c96f668711c">word</a> *C, <a class="el" href="base__type_8h.html#a41d392b635e85662868de4ceffde68f4">carry</a> *c_prime)</td></tr>
-<tr class="separator:a1836e9d7c357ae7f61760de8b96ed158"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab40e48f44671167452ad9fc3c43a2e2" id="r_aab40e48f44671167452ad9fc3c43a2e2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aab40e48f44671167452ad9fc3c43a2e2">bi_add_C</a> (<a class="el" href="base__type_8h.html#aec78e7a9e90a406a56f859ee456e8eae">OUT</a> <a class="el" href="structbigint.html">bigint</a> **result, <a class="el" href="base__type_8h.html#ac2bbd6d630a06a980d9a92ddb9a49928">IN</a> <a class="el" href="structbigint.html">bigint</a> *A, <a class="el" href="base__type_8h.html#ac2bbd6d630a06a980d9a92ddb9a49928">IN</a> <a class="el" href="structbigint.html">bigint</a> *B)</td></tr>
-<tr class="separator:aab40e48f44671167452ad9fc3c43a2e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa5bf6bd802db80e40c266f9a266a238" id="r_aaa5bf6bd802db80e40c266f9a266a238"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaa5bf6bd802db80e40c266f9a266a238">bi_add</a> (<a class="el" href="base__type_8h.html#aec78e7a9e90a406a56f859ee456e8eae">OUT</a> <a class="el" href="structbigint.html">bigint</a> **result, <a class="el" href="base__type_8h.html#ac2bbd6d630a06a980d9a92ddb9a49928">IN</a> <a class="el" href="structbigint.html">bigint</a> *a, <a class="el" href="base__type_8h.html#ac2bbd6d630a06a980d9a92ddb9a49928">IN</a> <a class="el" href="structbigint.html">bigint</a> *b)</td></tr>
-<tr class="separator:aaa5bf6bd802db80e40c266f9a266a238"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32af245f488858d7dddca18fc1739a1f" id="r_a32af245f488858d7dddca18fc1739a1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="base__type_8h.html#af3db70afcfb515a4def0777a954be00d">msg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a32af245f488858d7dddca18fc1739a1f">bi_add_ABC</a> (<a class="el" href="base__type_8h.html#aec78e7a9e90a406a56f859ee456e8eae">OUT</a> <a class="el" href="base__type_8h.html#a19036394f9c80a08fc846c96f668711c">word</a> *C, <a class="el" href="base__type_8h.html#ac2bbd6d630a06a980d9a92ddb9a49928">IN</a> <a class="el" href="base__type_8h.html#a19036394f9c80a08fc846c96f668711c">word</a> A, <a class="el" href="base__type_8h.html#ac2bbd6d630a06a980d9a92ddb9a49928">IN</a> <a class="el" href="base__type_8h.html#a19036394f9c80a08fc846c96f668711c">word</a> B, <a class="el" href="base__type_8h.html#a41d392b635e85662868de4ceffde68f4">carry</a> c, <a class="el" href="base__type_8h.html#ac2bbd6d630a06a980d9a92ddb9a49928">IN</a> <a class="el" href="base__type_8h.html#a41d392b635e85662868de4ceffde68f4">carry</a> *c_prime)</td></tr>
+<tr class="memdesc:a32af245f488858d7dddca18fc1739a1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A + B + c 연산을 수행하는 함수  <br /></td></tr>
+<tr class="separator:a32af245f488858d7dddca18fc1739a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf63ebdfbe5acde4ea5d05ebdb1cd0a3" id="r_abf63ebdfbe5acde4ea5d05ebdb1cd0a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="base__type_8h.html#af3db70afcfb515a4def0777a954be00d">msg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abf63ebdfbe5acde4ea5d05ebdb1cd0a3">bi_add_C</a> (<a class="el" href="base__type_8h.html#aec78e7a9e90a406a56f859ee456e8eae">OUT</a> <a class="el" href="structbigint.html">bigint</a> **dst, <a class="el" href="base__type_8h.html#ac2bbd6d630a06a980d9a92ddb9a49928">IN</a> <a class="el" href="structbigint.html">bigint</a> *A, <a class="el" href="base__type_8h.html#ac2bbd6d630a06a980d9a92ddb9a49928">IN</a> <a class="el" href="structbigint.html">bigint</a> *B)</td></tr>
+<tr class="memdesc:abf63ebdfbe5acde4ea5d05ebdb1cd0a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">A + B 연산을 수행하는 함수  <br /></td></tr>
+<tr class="separator:abf63ebdfbe5acde4ea5d05ebdb1cd0a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b664d25349d775300da493a96c02a6e" id="r_a0b664d25349d775300da493a96c02a6e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="base__type_8h.html#af3db70afcfb515a4def0777a954be00d">msg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0b664d25349d775300da493a96c02a6e">bi_add</a> (<a class="el" href="base__type_8h.html#aec78e7a9e90a406a56f859ee456e8eae">OUT</a> <a class="el" href="structbigint.html">bigint</a> **dst, <a class="el" href="base__type_8h.html#ac2bbd6d630a06a980d9a92ddb9a49928">IN</a> <a class="el" href="structbigint.html">bigint</a> *A, <a class="el" href="base__type_8h.html#ac2bbd6d630a06a980d9a92ddb9a49928">IN</a> <a class="el" href="structbigint.html">bigint</a> *B)</td></tr>
+<tr class="memdesc:a0b664d25349d775300da493a96c02a6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">두 bigint의 덧셈을 수행하는 함수  <br /></td></tr>
+<tr class="separator:a0b664d25349d775300da493a96c02a6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe02a70ab92f357494f002234b531e45" id="r_afe02a70ab92f357494f002234b531e45"><td class="memItemLeft" align="right" valign="top"><a class="el" href="base__type_8h.html#af3db70afcfb515a4def0777a954be00d">msg</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afe02a70ab92f357494f002234b531e45">bi_test_add</a> ()</td></tr>
+<tr class="memdesc:afe02a70ab92f357494f002234b531e45"><td class="mdescLeft">&#160;</td><td class="mdescRight">bigint 덧셈 테스트 함수  <br /></td></tr>
+<tr class="separator:afe02a70ab92f357494f002234b531e45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="aaa5bf6bd802db80e40c266f9a266a238" name="aaa5bf6bd802db80e40c266f9a266a238"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaa5bf6bd802db80e40c266f9a266a238">&#9670;&#160;</a></span>bi_add()</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>bigint에 대한 덧셈 연산을 하는 함수들을 정의한 소스 파일 </p>
+<dl class="section date"><dt>Date</dt><dd>2024-11-01 </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>송원우 </dd></dl>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a0b664d25349d775300da493a96c02a6e" name="a0b664d25349d775300da493a96c02a6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b664d25349d775300da493a96c02a6e">&#9670;&#160;</a></span>bi_add()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void bi_add </td>
+          <td class="memname"><a class="el" href="base__type_8h.html#af3db70afcfb515a4def0777a954be00d">msg</a> bi_add </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="base__type_8h.html#aec78e7a9e90a406a56f859ee456e8eae">OUT</a> <a class="el" href="structbigint.html">bigint</a> **</td>          <td class="paramname"><span class="paramname"><em>result</em></span>, </td>
+          <td class="paramtype"><a class="el" href="base__type_8h.html#aec78e7a9e90a406a56f859ee456e8eae">OUT</a> <a class="el" href="structbigint.html">bigint</a> **</td>          <td class="paramname"><span class="paramname"><em>dst</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="base__type_8h.html#ac2bbd6d630a06a980d9a92ddb9a49928">IN</a> <a class="el" href="structbigint.html">bigint</a> *</td>          <td class="paramname"><span class="paramname"><em>a</em></span>, </td>
+          <td class="paramtype"><a class="el" href="base__type_8h.html#ac2bbd6d630a06a980d9a92ddb9a49928">IN</a> <a class="el" href="structbigint.html">bigint</a> *</td>          <td class="paramname"><span class="paramname"><em>A</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="base__type_8h.html#ac2bbd6d630a06a980d9a92ddb9a49928">IN</a> <a class="el" href="structbigint.html">bigint</a> *</td>          <td class="paramname"><span class="paramname"><em>b</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="base__type_8h.html#ac2bbd6d630a06a980d9a92ddb9a49928">IN</a> <a class="el" href="structbigint.html">bigint</a> *</td>          <td class="paramname"><span class="paramname"><em>B</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>두 bigint의 덧셈을 수행하는 함수 </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">result</td><td>결과값을 저장할 변수 </td></tr>
+    <tr><td class="paramname">a</td><td>피연산자 a </td></tr>
+    <tr><td class="paramname">b</td><td>피연산자 b </td></tr>
+  </table>
+  </dd>
+</dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="bigint__addition_8c_aaa5bf6bd802db80e40c266f9a266a238_cgraph.png" border="0" usemap="#abigint__addition_8c_aaa5bf6bd802db80e40c266f9a266a238_cgraph" alt=""/></div>
-<map name="abigint__addition_8c_aaa5bf6bd802db80e40c266f9a266a238_cgraph" id="abigint__addition_8c_aaa5bf6bd802db80e40c266f9a266a238_cgraph">
-<area shape="rect" title=" " alt="" coords="5,128,65,154"/>
-<area shape="rect" href="bigint__addition_8c.html#aab40e48f44671167452ad9fc3c43a2e2" title=" " alt="" coords="113,128,189,154"/>
-<area shape="poly" title=" " alt="" coords="65,138,97,138,97,144,65,144"/>
-<area shape="rect" href="bigint__addition_8c.html#a1836e9d7c357ae7f61760de8b96ed158" title=" " alt="" coords="237,79,331,104"/>
-<area shape="poly" title=" " alt="" coords="187,125,232,108,234,113,189,130"/>
-<area shape="rect" href="bigint__calculation_8c.html#a441aca43444e577be252db9b5690e503" title="bigint에 arrary를 할당하는 함수" alt="" coords="253,213,315,239"/>
-<area shape="poly" title=" " alt="" coords="174,152,251,202,249,207,171,156"/>
-<area shape="rect" href="bigint__calculation_8c.html#ab40de6afc896f0873e591b2263622dea" title="bigint의 마지막 워드가 0인 경우 bigint의 메모리를 재할당하는 함수" alt="" coords="249,128,319,154"/>
-<area shape="poly" title=" " alt="" coords="190,138,233,138,233,144,190,144"/>
-<area shape="rect" href="memory_8c.html#a7a2336750ce2c077f29a85c1fdd9fb31" title="포인터가 NULL인지 확인하는 함수" alt="" coords="416,185,520,211"/>
-<area shape="poly" title=" " alt="" coords="315,219,400,206,401,211,316,224"/>
-<area shape="rect" href="base__error_8c.html#a44788e0c4c63cd6ca292cb2d44313837" title=" " alt="" coords="396,235,540,276"/>
-<area shape="poly" title=" " alt="" coords="316,228,381,239,380,244,315,234"/>
-<area shape="rect" href="base__error_8c.html#aef05af2222acc0dd48f418acfaf5f174" title=" " alt="" coords="405,300,531,341"/>
-<area shape="poly" title=" " alt="" coords="305,237,339,261,381,285,394,292,392,296,378,290,336,265,302,242"/>
-<area shape="rect" href="base__error_8c.html#a0ff5fd31efce68863a3396862e215487" title=" " alt="" coords="387,120,549,161"/>
-<area shape="poly" title=" " alt="" coords="305,211,378,170,390,165,392,170,381,175,308,215"/>
-<area shape="rect" href="base__error_8c.html#a47c3d935b57aeec1f128170eee7547de" title=" " alt="" coords="379,365,557,391"/>
-<area shape="poly" title=" " alt="" coords="294,238,326,293,351,324,381,351,390,356,387,361,378,355,347,328,322,296,289,241"/>
-<area shape="poly" title=" " alt="" coords="321,150,380,170,406,178,404,183,379,175,319,155"/>
-<area shape="poly" title=" " alt="" coords="320,138,372,138,372,144,320,144"/>
-<area shape="rect" href="base__error_8c.html#abc4557fb5f08b0aa1a2de96635497f7f" title=" " alt="" coords="408,55,528,96"/>
-<area shape="poly" title=" " alt="" coords="319,126,394,99,395,104,320,131"/>
-<area shape="rect" href="base__error_8c.html#a846f69272a7e03f6f6568a804668074d" title=" " alt="" coords="397,5,539,31"/>
-<area shape="poly" title=" " alt="" coords="315,125,329,115,344,96,352,78,360,60,378,41,386,36,389,40,381,46,365,63,357,80,349,99,333,119,318,130"/>
+<div class="center"><img src="bigint__addition_8c_a0b664d25349d775300da493a96c02a6e_cgraph.png" border="0" usemap="#abigint__addition_8c_a0b664d25349d775300da493a96c02a6e_cgraph" alt=""/></div>
+<map name="abigint__addition_8c_a0b664d25349d775300da493a96c02a6e_cgraph" id="abigint__addition_8c_a0b664d25349d775300da493a96c02a6e_cgraph">
+<area shape="rect" title="두 bigint의 덧셈을 수행하는 함수" alt="" coords="5,215,65,240"/>
+<area shape="rect" href="bigint__addition_8c.html#abf63ebdfbe5acde4ea5d05ebdb1cd0a3" title="A + B 연산을 수행하는 함수" alt="" coords="140,189,216,215"/>
+<area shape="poly" title=" " alt="" coords="65,220,124,209,125,214,66,225"/>
+<area shape="rect" href="base__error_8c.html#a618d1e321ae47aecb3c51c89ad57e337" title="ADD 성공 시 출력하는 함수" alt="" coords="113,239,243,264"/>
+<area shape="poly" title=" " alt="" coords="65,230,98,235,97,241,65,235"/>
+<area shape="rect" href="bigint__addition_8c.html#a32af245f488858d7dddca18fc1739a1f" title="A + B + c 연산을 수행하는 함수" alt="" coords="318,60,412,86"/>
+<area shape="poly" title=" " alt="" coords="197,187,330,93,333,97,200,191"/>
+<area shape="rect" href="bigint__calculation_8c.html#a4266a993110f28fa99163be1cc61d2ce" title="bigint에 arrary를 할당하는 함수" alt="" coords="334,164,396,190"/>
+<area shape="poly" title=" " alt="" coords="216,194,318,180,319,186,217,200"/>
+<area shape="rect" href="bigint__calculation_8h.html#ad3ea6d6810e6d14a748c2ca26a16345d" title=" " alt="" coords="330,213,400,239"/>
+<area shape="poly" title=" " alt="" coords="217,204,314,217,314,222,216,210"/>
+<area shape="rect" href="base__error_8c.html#aeb1d605706602fcc12c1f6ec9699ec00" title="ADD_C 성공 시 출력하는 함수" alt="" coords="291,263,438,288"/>
+<area shape="poly" title=" " alt="" coords="218,213,244,224,292,249,306,255,304,259,290,254,242,229,216,218"/>
+<area shape="rect" href="base__error_8c.html#ae0433a2390a5e949337b503c2d8d4e84" title="ADD_ABC 성공 시 출력하는 함수" alt="" coords="492,5,658,31"/>
+<area shape="poly" title=" " alt="" coords="411,58,507,33,508,38,413,63"/>
+<area shape="rect" href="bigint__calculation_8c.html#a84d3065789f8df11fe043e0323853ee1" title="bigint의 값을 다른 bigint로 할당하는 함수" alt="" coords="538,107,612,132"/>
+<area shape="poly" title=" " alt="" coords="395,166,523,131,524,136,397,171"/>
+<area shape="rect" href="memory_8c.html#a7a2336750ce2c077f29a85c1fdd9fb31" title="포인터가 NULL인지 확인하는 함수" alt="" coords="738,53,842,79"/>
+<area shape="poly" title=" " alt="" coords="379,161,424,125,453,106,485,92,546,75,609,65,669,61,722,60,722,66,670,66,610,70,548,80,487,97,456,111,427,130,382,165"/>
+<area shape="rect" href="base__error_8c.html#a44788e0c4c63cd6ca292cb2d44313837" title="배열 메모리 할당 실패 시 출력하는 함수" alt="" coords="503,156,647,197"/>
+<area shape="poly" title=" " alt="" coords="396,174,487,174,487,180,396,180"/>
+<area shape="rect" href="base__error_8c.html#aef05af2222acc0dd48f418acfaf5f174" title="bigiint의 길이가 올바르지 않을 때 출력하는 함수" alt="" coords="512,222,638,262"/>
+<area shape="poly" title=" " alt="" coords="397,184,498,216,497,221,395,189"/>
+<area shape="rect" href="base__error_8c.html#a0ff5fd31efce68863a3396862e215487" title="메모리 할당 실패 시 출력하는 함수" alt="" coords="494,287,656,328"/>
+<area shape="poly" title=" " alt="" coords="397,180,419,187,440,199,457,217,465,236,473,254,488,272,495,277,492,281,485,276,468,257,460,238,452,220,437,203,417,192,395,185"/>
+<area shape="rect" href="base__error_8c.html#a47c3d935b57aeec1f128170eee7547de" title="초기화 성공 시 출력하는 함수" alt="" coords="486,352,664,378"/>
+<area shape="poly" title=" " alt="" coords="397,178,420,185,440,199,454,217,461,235,465,270,468,305,475,321,488,338,493,342,490,346,484,341,470,324,463,306,459,271,456,236,449,219,437,203,417,190,396,183"/>
+<area shape="poly" title=" " alt="" coords="612,108,722,80,723,85,613,113"/>
+<area shape="rect" href="base__error_8c.html#abc4557fb5f08b0aa1a2de96635497f7f" title="Null 포인터가 발생했을 때 출력하는 함수" alt="" coords="730,103,850,144"/>
+<area shape="poly" title=" " alt="" coords="612,118,715,119,715,125,612,123"/>
+<area shape="rect" href="base__error_8c.html#ac71ec819b187d9d5f24892ec2a5cea40" title="메모리 해제 성공 시 출력하는 함수" alt="" coords="712,168,868,209"/>
+<area shape="poly" title=" " alt="" coords="613,127,664,142,718,160,716,165,663,147,611,132"/>
 </map>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="bigint__addition_8c_aaa5bf6bd802db80e40c266f9a266a238_icgraph.png" border="0" usemap="#abigint__addition_8c_aaa5bf6bd802db80e40c266f9a266a238_icgraph" alt=""/></div>
-<map name="abigint__addition_8c_aaa5bf6bd802db80e40c266f9a266a238_icgraph" id="abigint__addition_8c_aaa5bf6bd802db80e40c266f9a266a238_icgraph">
-<area shape="rect" title=" " alt="" coords="237,5,296,31"/>
-<area shape="rect" href="bigint__subtraction_8c.html#ac2e5c6ccf902dc93649848c28829f4bb" title=" " alt="" coords="130,5,189,31"/>
-<area shape="poly" title=" " alt="" coords="222,21,190,21,190,16,222,16"/>
-<area shape="rect" href="bigint__subtraction_8c.html#ae9763869cd2447760100d4ccccbc1d20" title=" " alt="" coords="5,5,82,31"/>
-<area shape="poly" title=" " alt="" coords="114,30,82,29,82,24,114,24"/>
-<area shape="poly" title=" " alt="" coords="97,7,130,8,129,13,97,12"/>
+<div class="center"><img src="bigint__addition_8c_a0b664d25349d775300da493a96c02a6e_icgraph.png" border="0" usemap="#abigint__addition_8c_a0b664d25349d775300da493a96c02a6e_icgraph" alt=""/></div>
+<map name="abigint__addition_8c_a0b664d25349d775300da493a96c02a6e_icgraph" id="abigint__addition_8c_a0b664d25349d775300da493a96c02a6e_icgraph">
+<area shape="rect" title="두 bigint의 덧셈을 수행하는 함수" alt="" coords="266,31,325,56"/>
+<area shape="rect" href="bigint__subtraction_8c.html#afa4e93a166e5a4c75a1f8522d1c24425" title="두 bigint의 뺄셈을 수행하는 함수" alt="" coords="144,5,204,31"/>
+<area shape="poly" title=" " alt="" coords="250,37,204,27,205,22,251,32"/>
+<area shape="rect" href="bigint__addition_8c.html#afe02a70ab92f357494f002234b531e45" title="bigint 덧셈 테스트 함수" alt="" coords="130,55,218,80"/>
+<area shape="poly" title=" " alt="" coords="251,55,219,61,218,56,250,50"/>
+<area shape="rect" href="bigint__subtraction_8c.html#acaf10206d518b7d29722ad94205bf527" title="두 bigint의 뺄셈을 수행하는 함수." alt="" coords="5,5,82,31"/>
+<area shape="poly" title=" " alt="" coords="128,29,82,29,82,24,129,24"/>
+<area shape="poly" title=" " alt="" coords="97,7,144,8,143,13,97,12"/>
+<area shape="rect" href="_i_o_r_a_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title=" " alt="" coords="19,55,68,80"/>
+<area shape="poly" title=" " alt="" coords="114,70,69,70,69,65,114,65"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a1836e9d7c357ae7f61760de8b96ed158" name="a1836e9d7c357ae7f61760de8b96ed158"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1836e9d7c357ae7f61760de8b96ed158">&#9670;&#160;</a></span>bi_add_ABC()</h2>
+<a id="a32af245f488858d7dddca18fc1739a1f" name="a32af245f488858d7dddca18fc1739a1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32af245f488858d7dddca18fc1739a1f">&#9670;&#160;</a></span>bi_add_ABC()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void bi_add_ABC </td>
+          <td class="memname"><a class="el" href="base__type_8h.html#af3db70afcfb515a4def0777a954be00d">msg</a> bi_add_ABC </td>
           <td>(</td>
+          <td class="paramtype"><a class="el" href="base__type_8h.html#aec78e7a9e90a406a56f859ee456e8eae">OUT</a> <a class="el" href="base__type_8h.html#a19036394f9c80a08fc846c96f668711c">word</a> *</td>          <td class="paramname"><span class="paramname"><em>C</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype"><a class="el" href="base__type_8h.html#ac2bbd6d630a06a980d9a92ddb9a49928">IN</a> <a class="el" href="base__type_8h.html#a19036394f9c80a08fc846c96f668711c">word</a></td>          <td class="paramname"><span class="paramname"><em>A</em></span>, </td>
         </tr>
         <tr>
@@ -219,45 +264,65 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="base__type_8h.html#aec78e7a9e90a406a56f859ee456e8eae">OUT</a> <a class="el" href="base__type_8h.html#a19036394f9c80a08fc846c96f668711c">word</a> *</td>          <td class="paramname"><span class="paramname"><em>C</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="base__type_8h.html#a41d392b635e85662868de4ceffde68f4">carry</a> *</td>          <td class="paramname"><span class="paramname"><em>c_prime</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="base__type_8h.html#ac2bbd6d630a06a980d9a92ddb9a49928">IN</a> <a class="el" href="base__type_8h.html#a41d392b635e85662868de4ceffde68f4">carry</a> *</td>          <td class="paramname"><span class="paramname"><em>c_prime</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>A + B + c 연산을 수행하는 함수 </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">C</td><td>결과값을 저장할 변수 </td></tr>
+    <tr><td class="paramname">A</td><td>피연산자 A </td></tr>
+    <tr><td class="paramname">B</td><td>피연산자 B </td></tr>
+    <tr><td class="paramname">c</td><td>이전 연산에서 발생한 carry </td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="bigint__addition_8c_a32af245f488858d7dddca18fc1739a1f_cgraph.png" border="0" usemap="#abigint__addition_8c_a32af245f488858d7dddca18fc1739a1f_cgraph" alt=""/></div>
+<map name="abigint__addition_8c_a32af245f488858d7dddca18fc1739a1f_cgraph" id="abigint__addition_8c_a32af245f488858d7dddca18fc1739a1f_cgraph">
+<area shape="rect" title="A + B + c 연산을 수행하는 함수" alt="" coords="5,5,100,31"/>
+<area shape="rect" href="base__error_8c.html#ae0433a2390a5e949337b503c2d8d4e84" title="ADD_ABC 성공 시 출력하는 함수" alt="" coords="148,5,313,31"/>
+<area shape="poly" title=" " alt="" coords="100,16,132,16,132,21,100,21"/>
+</map>
+</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="bigint__addition_8c_a1836e9d7c357ae7f61760de8b96ed158_icgraph.png" border="0" usemap="#abigint__addition_8c_a1836e9d7c357ae7f61760de8b96ed158_icgraph" alt=""/></div>
-<map name="abigint__addition_8c_a1836e9d7c357ae7f61760de8b96ed158_icgraph" id="abigint__addition_8c_a1836e9d7c357ae7f61760de8b96ed158_icgraph">
-<area shape="rect" title=" " alt="" coords="469,5,563,31"/>
-<area shape="rect" href="bigint__addition_8c.html#aab40e48f44671167452ad9fc3c43a2e2" title=" " alt="" coords="344,5,421,31"/>
-<area shape="poly" title=" " alt="" coords="453,21,421,21,421,16,453,16"/>
-<area shape="rect" href="bigint__addition_8c.html#aaa5bf6bd802db80e40c266f9a266a238" title=" " alt="" coords="237,5,296,31"/>
-<area shape="poly" title=" " alt="" coords="329,21,297,21,297,16,329,16"/>
-<area shape="rect" href="bigint__subtraction_8c.html#ac2e5c6ccf902dc93649848c28829f4bb" title=" " alt="" coords="130,5,189,31"/>
-<area shape="poly" title=" " alt="" coords="222,21,190,21,190,16,222,16"/>
-<area shape="rect" href="bigint__subtraction_8c.html#ae9763869cd2447760100d4ccccbc1d20" title=" " alt="" coords="5,5,82,31"/>
-<area shape="poly" title=" " alt="" coords="114,30,82,29,82,24,114,24"/>
-<area shape="poly" title=" " alt="" coords="97,7,130,8,129,13,97,12"/>
+<div class="center"><img src="bigint__addition_8c_a32af245f488858d7dddca18fc1739a1f_icgraph.png" border="0" usemap="#abigint__addition_8c_a32af245f488858d7dddca18fc1739a1f_icgraph" alt=""/></div>
+<map name="abigint__addition_8c_a32af245f488858d7dddca18fc1739a1f_icgraph" id="abigint__addition_8c_a32af245f488858d7dddca18fc1739a1f_icgraph">
+<area shape="rect" title="A + B + c 연산을 수행하는 함수" alt="" coords="498,31,592,56"/>
+<area shape="rect" href="bigint__addition_8c.html#abf63ebdfbe5acde4ea5d05ebdb1cd0a3" title="A + B 연산을 수행하는 함수" alt="" coords="373,31,450,56"/>
+<area shape="poly" title=" " alt="" coords="482,46,450,46,450,41,482,41"/>
+<area shape="rect" href="bigint__addition_8c.html#a0b664d25349d775300da493a96c02a6e" title="두 bigint의 덧셈을 수행하는 함수" alt="" coords="266,31,325,56"/>
+<area shape="poly" title=" " alt="" coords="358,46,326,46,326,41,358,41"/>
+<area shape="rect" href="bigint__subtraction_8c.html#afa4e93a166e5a4c75a1f8522d1c24425" title="두 bigint의 뺄셈을 수행하는 함수" alt="" coords="144,5,204,31"/>
+<area shape="poly" title=" " alt="" coords="250,37,204,27,205,22,251,32"/>
+<area shape="rect" href="bigint__addition_8c.html#afe02a70ab92f357494f002234b531e45" title="bigint 덧셈 테스트 함수" alt="" coords="130,55,218,80"/>
+<area shape="poly" title=" " alt="" coords="251,55,219,61,218,56,250,50"/>
+<area shape="rect" href="bigint__subtraction_8c.html#acaf10206d518b7d29722ad94205bf527" title="두 bigint의 뺄셈을 수행하는 함수." alt="" coords="5,5,82,31"/>
+<area shape="poly" title=" " alt="" coords="128,29,82,29,82,24,129,24"/>
+<area shape="poly" title=" " alt="" coords="97,7,144,8,143,13,97,12"/>
+<area shape="rect" href="_i_o_r_a_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title=" " alt="" coords="19,55,68,80"/>
+<area shape="poly" title=" " alt="" coords="114,70,69,70,69,65,114,65"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="aab40e48f44671167452ad9fc3c43a2e2" name="aab40e48f44671167452ad9fc3c43a2e2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab40e48f44671167452ad9fc3c43a2e2">&#9670;&#160;</a></span>bi_add_C()</h2>
+<a id="abf63ebdfbe5acde4ea5d05ebdb1cd0a3" name="abf63ebdfbe5acde4ea5d05ebdb1cd0a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf63ebdfbe5acde4ea5d05ebdb1cd0a3">&#9670;&#160;</a></span>bi_add_C()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void bi_add_C </td>
+          <td class="memname"><a class="el" href="base__type_8h.html#af3db70afcfb515a4def0777a954be00d">msg</a> bi_add_C </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="base__type_8h.html#aec78e7a9e90a406a56f859ee456e8eae">OUT</a> <a class="el" href="structbigint.html">bigint</a> **</td>          <td class="paramname"><span class="paramname"><em>result</em></span>, </td>
+          <td class="paramtype"><a class="el" href="base__type_8h.html#aec78e7a9e90a406a56f859ee456e8eae">OUT</a> <a class="el" href="structbigint.html">bigint</a> **</td>          <td class="paramname"><span class="paramname"><em>dst</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -271,49 +336,151 @@ Here is the caller graph for this function:</div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>A + B 연산을 수행하는 함수 </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">C</td><td>결과값을 저장할 변수 </td></tr>
+    <tr><td class="paramname">A</td><td>피연산자 A </td></tr>
+    <tr><td class="paramname">B</td><td>피연산자 B </td></tr>
+  </table>
+  </dd>
+</dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="bigint__addition_8c_aab40e48f44671167452ad9fc3c43a2e2_cgraph.png" border="0" usemap="#abigint__addition_8c_aab40e48f44671167452ad9fc3c43a2e2_cgraph" alt=""/></div>
-<map name="abigint__addition_8c_aab40e48f44671167452ad9fc3c43a2e2_cgraph" id="abigint__addition_8c_aab40e48f44671167452ad9fc3c43a2e2_cgraph">
-<area shape="rect" title=" " alt="" coords="5,128,82,154"/>
-<area shape="rect" href="bigint__addition_8c.html#a1836e9d7c357ae7f61760de8b96ed158" title=" " alt="" coords="130,79,224,104"/>
-<area shape="poly" title=" " alt="" coords="80,125,125,108,127,113,81,130"/>
-<area shape="rect" href="bigint__calculation_8c.html#a441aca43444e577be252db9b5690e503" title="bigint에 arrary를 할당하는 함수" alt="" coords="146,213,208,239"/>
-<area shape="poly" title=" " alt="" coords="67,152,144,202,141,207,64,156"/>
-<area shape="rect" href="bigint__calculation_8c.html#ab40de6afc896f0873e591b2263622dea" title="bigint의 마지막 워드가 0인 경우 bigint의 메모리를 재할당하는 함수" alt="" coords="142,128,212,154"/>
-<area shape="poly" title=" " alt="" coords="82,138,126,138,126,144,82,144"/>
-<area shape="rect" href="memory_8c.html#a7a2336750ce2c077f29a85c1fdd9fb31" title="포인터가 NULL인지 확인하는 함수" alt="" coords="308,185,413,211"/>
-<area shape="poly" title=" " alt="" coords="208,219,292,206,293,211,209,224"/>
-<area shape="rect" href="base__error_8c.html#a44788e0c4c63cd6ca292cb2d44313837" title=" " alt="" coords="288,235,433,276"/>
-<area shape="poly" title=" " alt="" coords="209,228,274,239,273,244,208,234"/>
-<area shape="rect" href="base__error_8c.html#aef05af2222acc0dd48f418acfaf5f174" title=" " alt="" coords="298,300,423,341"/>
-<area shape="poly" title=" " alt="" coords="198,237,232,261,273,285,287,292,284,296,271,290,229,265,195,242"/>
-<area shape="rect" href="base__error_8c.html#a0ff5fd31efce68863a3396862e215487" title=" " alt="" coords="280,120,442,161"/>
-<area shape="poly" title=" " alt="" coords="198,211,271,170,283,165,285,170,273,175,201,215"/>
-<area shape="rect" href="base__error_8c.html#a47c3d935b57aeec1f128170eee7547de" title=" " alt="" coords="272,365,449,391"/>
-<area shape="poly" title=" " alt="" coords="187,238,219,293,244,324,274,351,283,356,280,361,270,355,240,328,214,296,182,241"/>
-<area shape="poly" title=" " alt="" coords="213,150,273,170,298,178,297,183,271,175,212,155"/>
-<area shape="poly" title=" " alt="" coords="212,138,264,138,264,144,212,144"/>
-<area shape="rect" href="base__error_8c.html#abc4557fb5f08b0aa1a2de96635497f7f" title=" " alt="" coords="301,55,420,96"/>
-<area shape="poly" title=" " alt="" coords="211,126,286,99,288,104,213,131"/>
-<area shape="rect" href="base__error_8c.html#a846f69272a7e03f6f6568a804668074d" title=" " alt="" coords="290,5,431,31"/>
-<area shape="poly" title=" " alt="" coords="208,125,222,115,237,96,245,78,253,60,270,41,279,36,282,40,274,46,258,63,250,80,242,99,226,119,211,130"/>
+<div class="center"><img src="bigint__addition_8c_abf63ebdfbe5acde4ea5d05ebdb1cd0a3_cgraph.png" border="0" usemap="#abigint__addition_8c_abf63ebdfbe5acde4ea5d05ebdb1cd0a3_cgraph" alt=""/></div>
+<map name="abigint__addition_8c_abf63ebdfbe5acde4ea5d05ebdb1cd0a3_cgraph" id="abigint__addition_8c_abf63ebdfbe5acde4ea5d05ebdb1cd0a3_cgraph">
+<area shape="rect" title="A + B 연산을 수행하는 함수" alt="" coords="5,189,82,215"/>
+<area shape="rect" href="bigint__addition_8c.html#a32af245f488858d7dddca18fc1739a1f" title="A + B + c 연산을 수행하는 함수" alt="" coords="156,60,250,86"/>
+<area shape="poly" title=" " alt="" coords="59,187,172,94,176,98,63,191"/>
+<area shape="rect" href="bigint__calculation_8c.html#a4266a993110f28fa99163be1cc61d2ce" title="bigint에 arrary를 할당하는 함수" alt="" coords="172,164,234,190"/>
+<area shape="poly" title=" " alt="" coords="82,194,156,181,157,187,83,199"/>
+<area shape="rect" href="bigint__calculation_8h.html#ad3ea6d6810e6d14a748c2ca26a16345d" title=" " alt="" coords="168,213,238,239"/>
+<area shape="poly" title=" " alt="" coords="82,205,153,216,152,221,82,210"/>
+<area shape="rect" href="base__error_8c.html#aeb1d605706602fcc12c1f6ec9699ec00" title="ADD_C 성공 시 출력하는 함수" alt="" coords="130,263,277,288"/>
+<area shape="poly" title=" " alt="" coords="66,213,131,249,144,254,142,259,129,254,64,218"/>
+<area shape="rect" href="base__error_8c.html#ae0433a2390a5e949337b503c2d8d4e84" title="ADD_ABC 성공 시 출력하는 함수" alt="" coords="331,5,496,31"/>
+<area shape="poly" title=" " alt="" coords="250,58,346,33,347,38,251,63"/>
+<area shape="rect" href="bigint__calculation_8c.html#a84d3065789f8df11fe043e0323853ee1" title="bigint의 값을 다른 bigint로 할당하는 함수" alt="" coords="377,107,450,132"/>
+<area shape="poly" title=" " alt="" coords="234,166,361,131,363,136,236,171"/>
+<area shape="rect" href="memory_8c.html#a7a2336750ce2c077f29a85c1fdd9fb31" title="포인터가 NULL인지 확인하는 함수" alt="" coords="576,53,681,79"/>
+<area shape="poly" title=" " alt="" coords="217,161,262,125,292,106,324,92,385,75,448,65,508,61,561,60,561,66,508,66,449,70,386,80,326,97,295,111,265,130,221,165"/>
+<area shape="rect" href="base__error_8c.html#a44788e0c4c63cd6ca292cb2d44313837" title="배열 메모리 할당 실패 시 출력하는 함수" alt="" coords="342,156,486,197"/>
+<area shape="poly" title=" " alt="" coords="235,174,326,174,326,180,235,180"/>
+<area shape="rect" href="base__error_8c.html#aef05af2222acc0dd48f418acfaf5f174" title="bigiint의 길이가 올바르지 않을 때 출력하는 함수" alt="" coords="351,222,476,262"/>
+<area shape="poly" title=" " alt="" coords="236,184,337,216,335,221,234,189"/>
+<area shape="rect" href="base__error_8c.html#a0ff5fd31efce68863a3396862e215487" title="메모리 할당 실패 시 출력하는 함수" alt="" coords="332,287,495,328"/>
+<area shape="poly" title=" " alt="" coords="236,180,258,187,279,199,296,217,304,236,311,254,327,272,334,277,330,281,323,276,307,257,299,238,291,220,275,203,256,192,234,185"/>
+<area shape="rect" href="base__error_8c.html#a47c3d935b57aeec1f128170eee7547de" title="초기화 성공 시 출력하는 함수" alt="" coords="325,352,502,378"/>
+<area shape="poly" title=" " alt="" coords="236,178,258,185,279,199,293,217,300,235,303,270,307,305,314,321,327,338,332,342,328,346,323,341,309,324,301,306,298,271,295,236,288,219,275,203,256,190,234,183"/>
+<area shape="poly" title=" " alt="" coords="450,108,561,80,562,85,452,113"/>
+<area shape="rect" href="base__error_8c.html#abc4557fb5f08b0aa1a2de96635497f7f" title="Null 포인터가 발생했을 때 출력하는 함수" alt="" coords="569,103,688,144"/>
+<area shape="poly" title=" " alt="" coords="451,118,554,119,553,125,451,123"/>
+<area shape="rect" href="base__error_8c.html#ac71ec819b187d9d5f24892ec2a5cea40" title="메모리 해제 성공 시 출력하는 함수" alt="" coords="550,168,707,209"/>
+<area shape="poly" title=" " alt="" coords="452,127,503,142,557,160,555,165,502,147,450,132"/>
 </map>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="bigint__addition_8c_aab40e48f44671167452ad9fc3c43a2e2_icgraph.png" border="0" usemap="#abigint__addition_8c_aab40e48f44671167452ad9fc3c43a2e2_icgraph" alt=""/></div>
-<map name="abigint__addition_8c_aab40e48f44671167452ad9fc3c43a2e2_icgraph" id="abigint__addition_8c_aab40e48f44671167452ad9fc3c43a2e2_icgraph">
-<area shape="rect" title=" " alt="" coords="344,5,421,31"/>
-<area shape="rect" href="bigint__addition_8c.html#aaa5bf6bd802db80e40c266f9a266a238" title=" " alt="" coords="237,5,296,31"/>
-<area shape="poly" title=" " alt="" coords="329,21,297,21,297,16,329,16"/>
-<area shape="rect" href="bigint__subtraction_8c.html#ac2e5c6ccf902dc93649848c28829f4bb" title=" " alt="" coords="130,5,189,31"/>
-<area shape="poly" title=" " alt="" coords="222,21,190,21,190,16,222,16"/>
-<area shape="rect" href="bigint__subtraction_8c.html#ae9763869cd2447760100d4ccccbc1d20" title=" " alt="" coords="5,5,82,31"/>
-<area shape="poly" title=" " alt="" coords="114,30,82,29,82,24,114,24"/>
-<area shape="poly" title=" " alt="" coords="97,7,130,8,129,13,97,12"/>
+<div class="center"><img src="bigint__addition_8c_abf63ebdfbe5acde4ea5d05ebdb1cd0a3_icgraph.png" border="0" usemap="#abigint__addition_8c_abf63ebdfbe5acde4ea5d05ebdb1cd0a3_icgraph" alt=""/></div>
+<map name="abigint__addition_8c_abf63ebdfbe5acde4ea5d05ebdb1cd0a3_icgraph" id="abigint__addition_8c_abf63ebdfbe5acde4ea5d05ebdb1cd0a3_icgraph">
+<area shape="rect" title="A + B 연산을 수행하는 함수" alt="" coords="373,31,450,56"/>
+<area shape="rect" href="bigint__addition_8c.html#a0b664d25349d775300da493a96c02a6e" title="두 bigint의 덧셈을 수행하는 함수" alt="" coords="266,31,325,56"/>
+<area shape="poly" title=" " alt="" coords="358,46,326,46,326,41,358,41"/>
+<area shape="rect" href="bigint__subtraction_8c.html#afa4e93a166e5a4c75a1f8522d1c24425" title="두 bigint의 뺄셈을 수행하는 함수" alt="" coords="144,5,204,31"/>
+<area shape="poly" title=" " alt="" coords="250,37,204,27,205,22,251,32"/>
+<area shape="rect" href="bigint__addition_8c.html#afe02a70ab92f357494f002234b531e45" title="bigint 덧셈 테스트 함수" alt="" coords="130,55,218,80"/>
+<area shape="poly" title=" " alt="" coords="251,55,219,61,218,56,250,50"/>
+<area shape="rect" href="bigint__subtraction_8c.html#acaf10206d518b7d29722ad94205bf527" title="두 bigint의 뺄셈을 수행하는 함수." alt="" coords="5,5,82,31"/>
+<area shape="poly" title=" " alt="" coords="128,29,82,29,82,24,129,24"/>
+<area shape="poly" title=" " alt="" coords="97,7,144,8,143,13,97,12"/>
+<area shape="rect" href="_i_o_r_a_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title=" " alt="" coords="19,55,68,80"/>
+<area shape="poly" title=" " alt="" coords="114,70,69,70,69,65,114,65"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="afe02a70ab92f357494f002234b531e45" name="afe02a70ab92f357494f002234b531e45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe02a70ab92f357494f002234b531e45">&#9670;&#160;</a></span>bi_test_add()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="base__type_8h.html#af3db70afcfb515a4def0777a954be00d">msg</a> bi_test_add </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>bigint 덧셈 테스트 함수 </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="bigint__addition_8c_afe02a70ab92f357494f002234b531e45_cgraph.png" border="0" usemap="#abigint__addition_8c_afe02a70ab92f357494f002234b531e45_cgraph" alt=""/></div>
+<map name="abigint__addition_8c_afe02a70ab92f357494f002234b531e45_cgraph" id="abigint__addition_8c_afe02a70ab92f357494f002234b531e45_cgraph">
+<area shape="rect" title="bigint 덧셈 테스트 함수" alt="" coords="5,249,94,275"/>
+<area shape="rect" href="bigint__addition_8c.html#a0b664d25349d775300da493a96c02a6e" title="두 bigint의 덧셈을 수행하는 함수" alt="" coords="142,221,201,247"/>
+<area shape="poly" title=" " alt="" coords="94,249,126,242,127,247,95,255"/>
+<area shape="rect" href="bigint__calculation_8c.html#a7434576fe036cda0c7da5bde57b03db0" title="bigint에 무작위 값을 할당하는 함수 @create_prime이면 마지막 블럭이 all 0가 되는 것을 방지 = 키 크기 최대한 보장" alt="" coords="261,276,367,302"/>
+<area shape="poly" title=" " alt="" coords="94,264,246,279,245,285,94,269"/>
+<area shape="rect" href="bigint__addition_8c.html#abf63ebdfbe5acde4ea5d05ebdb1cd0a3" title="A + B 연산을 수행하는 함수" alt="" coords="276,171,352,196"/>
+<area shape="poly" title=" " alt="" coords="200,221,260,200,262,205,202,226"/>
+<area shape="rect" href="base__error_8c.html#a618d1e321ae47aecb3c51c89ad57e337" title="ADD 성공 시 출력하는 함수" alt="" coords="249,221,379,247"/>
+<area shape="poly" title=" " alt="" coords="201,232,234,232,234,237,201,237"/>
+<area shape="rect" href="bigint__addition_8c.html#a32af245f488858d7dddca18fc1739a1f" title="A + B + c 연산을 수행하는 함수" alt="" coords="461,171,556,196"/>
+<area shape="poly" title=" " alt="" coords="353,181,446,181,446,186,353,186"/>
+<area shape="rect" href="bigint__calculation_8c.html#a4266a993110f28fa99163be1cc61d2ce" title="bigint에 arrary를 할당하는 함수" alt="" coords="477,220,540,246"/>
+<area shape="poly" title=" " alt="" coords="354,191,463,219,461,224,352,196"/>
+<area shape="rect" href="bigint__calculation_8h.html#ad3ea6d6810e6d14a748c2ca26a16345d" title=" " alt="" coords="473,72,544,98"/>
+<area shape="poly" title=" " alt="" coords="330,168,372,138,426,106,458,94,459,99,428,111,375,142,334,172"/>
+<area shape="rect" href="base__error_8c.html#aeb1d605706602fcc12c1f6ec9699ec00" title="ADD_C 성공 시 출력하는 함수" alt="" coords="435,121,582,147"/>
+<area shape="poly" title=" " alt="" coords="352,171,440,149,441,154,354,176"/>
+<area shape="rect" href="base__error_8c.html#ae0433a2390a5e949337b503c2d8d4e84" title="ADD_ABC 성공 시 출력하는 함수" alt="" coords="644,5,809,31"/>
+<area shape="poly" title=" " alt="" coords="555,175,573,168,588,158,600,144,606,130,611,100,616,70,623,55,636,40,639,37,643,42,640,44,627,58,621,72,616,101,611,131,604,147,591,161,575,172,557,179"/>
+<area shape="rect" href="bigint__calculation_8c.html#a84d3065789f8df11fe043e0323853ee1" title="bigint의 값을 다른 bigint로 할당하는 함수" alt="" coords="690,55,763,80"/>
+<area shape="poly" title=" " alt="" coords="540,227,565,220,588,207,600,193,606,179,611,150,616,121,623,106,636,91,654,79,674,72,675,77,656,84,639,95,628,108,621,122,616,151,611,181,604,196,591,211,567,225,541,233"/>
+<area shape="rect" href="memory_8c.html#a7a2336750ce2c077f29a85c1fdd9fb31" title="포인터가 NULL인지 확인하는 함수" alt="" coords="889,220,993,246"/>
+<area shape="poly" title=" " alt="" coords="540,230,874,230,874,236,540,236"/>
+<area shape="rect" href="base__error_8c.html#a44788e0c4c63cd6ca292cb2d44313837" title="배열 메모리 할당 실패 시 출력하는 함수" alt="" coords="654,104,798,145"/>
+<area shape="poly" title=" " alt="" coords="540,225,564,218,588,207,603,194,612,182,621,168,636,155,643,150,646,155,639,159,625,172,616,185,607,198,591,211,566,223,541,230"/>
+<area shape="rect" href="base__error_8c.html#aef05af2222acc0dd48f418acfaf5f174" title="bigiint의 길이가 올바르지 않을 때 출력하는 함수" alt="" coords="664,270,789,310"/>
+<area shape="poly" title=" " alt="" coords="541,238,649,267,648,272,540,244"/>
+<area shape="rect" href="base__error_8c.html#a0ff5fd31efce68863a3396862e215487" title="메모리 할당 실패 시 출력하는 함수" alt="" coords="645,335,808,376"/>
+<area shape="poly" title=" " alt="" coords="528,244,576,280,639,320,652,326,650,331,636,324,573,285,524,248"/>
+<area shape="rect" href="base__error_8c.html#a47c3d935b57aeec1f128170eee7547de" title="초기화 성공 시 출력하는 함수" alt="" coords="638,169,815,195"/>
+<area shape="poly" title=" " alt="" coords="540,223,652,197,653,202,541,228"/>
+<area shape="poly" title=" " alt="" coords="764,71,791,78,816,91,851,117,881,147,926,205,921,209,877,151,847,121,814,95,789,83,763,76"/>
+<area shape="rect" href="base__error_8c.html#abc4557fb5f08b0aa1a2de96635497f7f" title="Null 포인터가 발생했을 때 출력하는 함수" alt="" coords="882,382,1001,422"/>
+<area shape="poly" title=" " alt="" coords="764,67,792,75,817,91,834,111,844,131,851,169,854,210,857,232,865,257,893,316,922,367,917,370,888,319,861,259,852,234,848,210,846,170,839,132,829,114,813,95,790,80,763,73"/>
+<area shape="rect" href="base__error_8c.html#ac71ec819b187d9d5f24892ec2a5cea40" title="메모리 해제 성공 시 출력하는 함수" alt="" coords="863,47,1019,88"/>
+<area shape="poly" title=" " alt="" coords="764,65,847,65,847,70,764,70"/>
+<area shape="poly" title=" " alt="" coords="361,273,462,243,463,248,362,278"/>
+<area shape="poly" title=" " alt="" coords="368,286,648,287,648,293,368,292"/>
+<area shape="rect" href="bigint__calculation_8c.html#ab40de6afc896f0873e591b2263622dea" title="bigint의 마지막 워드가 0인 경우 bigint의 메모리를 재할당하는 함수" alt="" coords="473,400,544,426"/>
+<area shape="poly" title=" " alt="" coords="336,300,429,363,473,390,470,394,426,367,333,304"/>
+<area shape="rect" href="base__error_8c.html#ab2c198d5e5e93db68ca235f59902b754" title="랜덤 값 생성 성공 시 출력하는 함수" alt="" coords="427,327,590,352"/>
+<area shape="poly" title=" " alt="" coords="367,300,443,320,442,325,366,305"/>
+<area shape="poly" title=" " alt="" coords="545,416,599,421,669,421,743,411,780,400,814,385,851,359,882,325,907,290,925,259,929,261,911,293,886,328,854,363,816,390,781,405,744,416,669,426,599,426,544,421"/>
+<area shape="poly" title=" " alt="" coords="527,424,575,458,606,474,638,486,687,498,727,503,766,499,814,486,840,476,864,462,906,431,909,435,867,467,842,481,816,491,767,504,727,508,686,504,637,491,604,479,572,462,524,428"/>
+<area shape="poly" title=" " alt="" coords="543,401,631,378,632,383,545,406"/>
+<area shape="rect" href="base__error_8c.html#a846f69272a7e03f6f6568a804668074d" title="refine 성공 시 출력하는 함수" alt="" coords="656,451,797,476"/>
+<area shape="poly" title=" " alt="" coords="545,418,654,444,653,449,543,423"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="bigint__addition_8c_afe02a70ab92f357494f002234b531e45_icgraph.png" border="0" usemap="#abigint__addition_8c_afe02a70ab92f357494f002234b531e45_icgraph" alt=""/></div>
+<map name="abigint__addition_8c_afe02a70ab92f357494f002234b531e45_icgraph" id="abigint__addition_8c_afe02a70ab92f357494f002234b531e45_icgraph">
+<area shape="rect" title="bigint 덧셈 테스트 함수" alt="" coords="103,5,191,31"/>
+<area shape="rect" href="_i_o_r_a_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title=" " alt="" coords="5,5,55,31"/>
+<area shape="poly" title=" " alt="" coords="87,21,55,21,55,16,87,16"/>
 </map>
 </div>
 

@@ -1,7 +1,5 @@
 <map id="print_success_set_from_array" name="print_success_set_from_array">
-<area shape="rect" id="Node000001" title=" " alt="" coords="276,5,436,46"/>
-<area shape="rect" id="Node000002" href="$bigint__calculation_8c.html#afcea8fd04d42e0720f3a8bbf6ca86eaf" title="arrary를 통해 bigint에 값을 할당하는 함수" alt="" coords="103,13,228,38"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="261,28,228,28,228,23,261,23"/>
-<area shape="rect" id="Node000003" href="$_i_o_r_a_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="5,13,55,38"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="87,28,55,28,55,23,87,23"/>
+<area shape="rect" id="Node000001" title="배열로부터 bigint에 값을 할당 성공 시 출력하는 함수" alt="" coords="179,5,339,46"/>
+<area shape="rect" id="Node000002" href="$bigint__calculation_8c.html#ac7b2f0e58574cc42b33d3cd6b2025e70" title="arrary를 통해 bigint에 값을 할당하는 함수" alt="" coords="5,13,131,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,28,131,28,131,23,163,23"/>
 </map>

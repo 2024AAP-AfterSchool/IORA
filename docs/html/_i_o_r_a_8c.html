@@ -89,6 +89,7 @@ $(function(){ initResizable(false); });
 <div id="doc-content">
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">IORA.c File Reference</div></div>
 </div><!--header-->
@@ -98,41 +99,87 @@ $(function(){ initResizable(false); });
 <code>#include &lt;<a class="el" href="string_8h_source.html">string.h</a>&gt;</code><br />
 <code>#include &quot;<a class="el" href="base__type_8h_source.html">base/base_type.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="base__error_8h_source.html">base/base_error.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="bigint__addition_8h_source.html">bigint/bigint_addition.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="bigint__calculation_8h_source.html">bigint/bigint_calculation.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="bigint__subtraction_8h_source.html">bigint/bigint_subtraction.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for IORA.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="_i_o_r_a_8c__incl.png" border="0" usemap="#asrc_2_i_o_r_a_8c" alt=""/></div>
 <map name="asrc_2_i_o_r_a_8c" id="asrc_2_i_o_r_a_8c">
-<area shape="rect" title=" " alt="" coords="200,5,287,31"/>
+<area shape="rect" title=" " alt="" coords="290,5,378,31"/>
 <area shape="rect" title=" " alt="" coords="5,79,66,105"/>
-<area shape="poly" title=" " alt="" coords="209,34,81,78,80,73,207,29"/>
+<area shape="poly" title=" " alt="" coords="290,32,81,81,80,76,289,27"/>
 <area shape="rect" title=" " alt="" coords="89,79,152,105"/>
-<area shape="poly" title=" " alt="" coords="224,34,156,73,153,69,221,29"/>
+<area shape="poly" title=" " alt="" coords="299,34,168,78,166,73,297,29"/>
 <area shape="rect" href="string_8h.html" title="문자열과 관련된 함수들을 정의한 헤더 파일" alt="" coords="177,79,241,105"/>
-<area shape="poly" title=" " alt="" coords="240,32,224,66,219,64,235,30"/>
-<area shape="rect" href="base__type_8h.html" title=" " alt="" coords="265,153,390,178"/>
-<area shape="poly" title=" " alt="" coords="253,30,315,138,311,140,248,33"/>
-<area shape="rect" href="base__error_8h.html" title=" " alt="" coords="316,79,440,105"/>
-<area shape="poly" title=" " alt="" coords="268,29,343,69,341,74,265,34"/>
-<area shape="rect" href="bigint__calculation_8h.html" title=" " alt="" coords="464,79,631,105"/>
-<area shape="poly" title=" " alt="" coords="288,27,481,72,480,78,287,32"/>
-<area shape="poly" title=" " alt="" coords="230,103,296,142,293,147,228,107"/>
-<area shape="rect" title=" " alt="" coords="295,226,360,252"/>
-<area shape="poly" title=" " alt="" coords="330,179,330,211,325,211,325,179"/>
-<area shape="poly" title=" " alt="" coords="372,106,347,141,343,138,368,103"/>
-<area shape="poly" title=" " alt="" coords="511,108,380,150,378,145,509,103"/>
+<area shape="poly" title=" " alt="" coords="314,34,244,73,242,69,312,29"/>
+<area shape="rect" href="base__type_8h.html" title=" " alt="" coords="420,153,544,178"/>
+<area shape="poly" title=" " alt="" coords="326,33,304,67,300,86,306,103,326,124,350,139,377,149,405,156,404,161,376,154,348,143,322,128,301,106,295,86,299,65,321,30"/>
+<area shape="rect" href="base__error_8h.html" title=" " alt="" coords="873,79,998,105"/>
+<area shape="poly" title=" " alt="" coords="379,21,582,43,858,76,857,81,581,48,378,26"/>
+<area shape="rect" href="bigint__addition_8h.html" title=" " alt="" coords="315,79,465,105"/>
+<area shape="poly" title=" " alt="" coords="346,30,373,65,369,68,341,33"/>
+<area shape="rect" href="bigint__calculation_8h.html" title=" " alt="" coords="489,79,656,105"/>
+<area shape="poly" title=" " alt="" coords="375,29,518,71,517,77,374,34"/>
+<area shape="rect" href="bigint__subtraction_8h.html" title=" " alt="" coords="680,79,850,105"/>
+<area shape="poly" title=" " alt="" coords="379,24,677,73,676,79,378,29"/>
+<area shape="poly" title=" " alt="" coords="242,99,422,146,420,151,241,104"/>
+<area shape="rect" title=" " alt="" coords="450,226,514,252"/>
+<area shape="poly" title=" " alt="" coords="485,179,485,211,480,211,480,179"/>
+<area shape="poly" title=" " alt="" coords="873,106,863,107,560,155,559,149,862,102,872,100"/>
+<area shape="rect" title=" " alt="" coords="898,153,973,178"/>
+<area shape="poly" title=" " alt="" coords="938,105,938,137,933,137,933,105"/>
+<area shape="poly" title=" " alt="" coords="407,103,457,141,453,145,404,107"/>
+<area shape="poly" title=" " alt="" coords="559,107,511,145,507,141,556,103"/>
+<area shape="poly" title=" " alt="" coords="718,108,546,151,544,146,716,103"/>
 </map>
 </div>
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ab65bc8e7442aec288c0e221f98730418" id="r_ab65bc8e7442aec288c0e221f98730418"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab65bc8e7442aec288c0e221f98730418">TEST_ADDITION</a></td></tr>
+<tr class="separator:ab65bc8e7442aec288c0e221f98730418"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a235b192c7ccca2915522ead703dd123e" id="r_a235b192c7ccca2915522ead703dd123e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a235b192c7ccca2915522ead703dd123e">TEST_SUBTRACTION</a></td></tr>
+<tr class="separator:a235b192c7ccca2915522ead703dd123e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4" id="r_ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
-<tr class="separator:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97" id="r_a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
+<tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ab65bc8e7442aec288c0e221f98730418" name="ab65bc8e7442aec288c0e221f98730418"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab65bc8e7442aec288c0e221f98730418">&#9670;&#160;</a></span>TEST_ADDITION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TEST_ADDITION</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a235b192c7ccca2915522ead703dd123e" name="a235b192c7ccca2915522ead703dd123e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a235b192c7ccca2915522ead703dd123e">&#9670;&#160;</a></span>TEST_SUBTRACTION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TEST_SUBTRACTION</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ae66f6b31b5ad750f1fe042a706a4e3d4" name="ae66f6b31b5ad750f1fe042a706a4e3d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae66f6b31b5ad750f1fe042a706a4e3d4">&#9670;&#160;</a></span>main()</h2>
+<a id="a0ddf1224851353fc92bfbff6f499fa97" name="a0ddf1224851353fc92bfbff6f499fa97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ddf1224851353fc92bfbff6f499fa97">&#9670;&#160;</a></span>main()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -140,85 +187,71 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">int main </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>argc</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">char *</td>          <td class="paramname"><span class="paramname"><em>argv</em></span>[]&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="_i_o_r_a_8c_ae66f6b31b5ad750f1fe042a706a4e3d4_cgraph.png" border="0" usemap="#a_i_o_r_a_8c_ae66f6b31b5ad750f1fe042a706a4e3d4_cgraph" alt=""/></div>
-<map name="a_i_o_r_a_8c_ae66f6b31b5ad750f1fe042a706a4e3d4_cgraph" id="a_i_o_r_a_8c_ae66f6b31b5ad750f1fe042a706a4e3d4_cgraph">
-<area shape="rect" title=" " alt="" coords="5,394,55,420"/>
-<area shape="rect" href="bigint__calculation_8c.html#a91d87036d498204bcc852b687bd30a61" title=" " alt="" coords="318,66,403,92"/>
-<area shape="poly" title=" " alt="" coords="31,393,37,359,50,313,70,263,101,217,147,175,200,140,254,113,302,94,304,99,256,118,203,145,150,179,105,221,75,265,55,315,42,360,36,394"/>
-<area shape="rect" href="bigint__calculation_8c.html#a731cab4cd7a7b2dadddd1c030618f93a" title="bigint의 값을 다른 bigint로 할당하는 함수" alt="" coords="324,17,397,42"/>
-<area shape="poly" title=" " alt="" coords="29,394,32,350,43,287,64,218,80,184,101,153,122,130,147,109,202,76,258,53,308,38,309,43,260,58,204,81,150,113,126,134,105,157,85,187,69,220,48,289,38,351,34,394"/>
-<area shape="rect" href="bigint__calculation_8c.html#a0671017de96b8f5a40debe535531b179" title="bigint에 무작위 값을 할당하는 함수 @create_prime이면 마지막 블럭이 all 0가 되는 것을 방지 = 키 크기 최대한 보장" alt="" coords="114,484,220,509"/>
-<area shape="poly" title=" " alt="" coords="53,418,134,472,131,477,50,422"/>
-<area shape="rect" href="bigint__calculation_8c.html#a441aca43444e577be252db9b5690e503" title="bigint에 arrary를 할당하는 함수" alt="" coords="329,585,391,610"/>
-<area shape="poly" title=" " alt="" coords="38,419,62,468,81,496,104,520,156,550,212,571,267,584,314,591,313,597,266,589,210,576,153,555,101,524,76,499,57,471,33,421"/>
-<area shape="rect" href="bigint__calculation_8c.html#ab40de6afc896f0873e591b2263622dea" title="bigint의 마지막 워드가 0인 경우 bigint의 메모리를 재할당하는 함수" alt="" coords="325,434,395,460"/>
-<area shape="poly" title=" " alt="" coords="55,407,310,438,309,444,55,413"/>
-<area shape="rect" href="bigint__calculation_8c.html#a5949b472f818a8c734228c1a9eaf2032" title="bigint를 출력하는 함수" alt="" coords="328,333,392,359"/>
-<area shape="poly" title=" " alt="" coords="54,400,313,352,314,357,55,405"/>
-<area shape="rect" href="bigint__calculation_8c.html#afcea8fd04d42e0720f3a8bbf6ca86eaf" title="arrary를 통해 bigint에 값을 할당하는 함수" alt="" coords="104,232,230,257"/>
-<area shape="poly" title=" " alt="" coords="40,392,143,268,147,271,44,395"/>
-<area shape="rect" href="bigint__calculation_8c.html#a5660f5bce5a1afb6326f61f9601de1f1" title="string을 통해 bigint에 값을 할당하는 함수" alt="" coords="103,674,231,700"/>
-<area shape="poly" title=" " alt="" coords="38,419,63,493,105,590,149,660,145,663,100,592,58,495,33,421"/>
-<area shape="rect" href="memory_8c.html#a7a2336750ce2c077f29a85c1fdd9fb31" title="포인터가 NULL인지 확인하는 함수" alt="" coords="526,257,630,283"/>
-<area shape="poly" title=" " alt="" coords="378,90,443,153,467,179,491,204,546,246,542,250,488,208,463,183,439,157,374,94"/>
-<area shape="rect" href="base__error_8c.html#aef05af2222acc0dd48f418acfaf5f174" title=" " alt="" coords="515,380,641,421"/>
-<area shape="poly" title=" " alt="" coords="383,90,414,117,444,154,457,185,463,213,462,266,461,291,464,315,473,340,491,367,504,377,500,381,487,370,468,343,459,317,456,291,457,266,457,214,452,186,439,156,411,121,379,94"/>
-<area shape="rect" href="base__error_8c.html#abc4557fb5f08b0aa1a2de96635497f7f" title=" " alt="" coords="518,153,638,194"/>
-<area shape="poly" title=" " alt="" coords="397,90,442,109,521,144,518,149,440,113,395,95"/>
-<area shape="rect" href="base__error_8c.html#a9da255e0af49f4ffd5e68f1429c22ee5" title=" " alt="" coords="509,70,647,96"/>
-<area shape="poly" title=" " alt="" coords="404,77,494,79,494,84,403,82"/>
-<area shape="poly" title=" " alt="" coords="398,30,422,38,443,52,458,71,467,90,471,126,474,164,480,184,491,204,513,227,539,246,536,251,510,231,487,207,475,186,469,165,466,127,462,91,454,74,440,56,419,43,396,35"/>
-<area shape="poly" title=" " alt="" coords="398,33,421,40,443,51,459,65,469,78,491,106,535,142,532,146,487,110,465,81,455,68,440,56,419,45,396,38"/>
-<area shape="rect" href="base__error_8c.html#ac71ec819b187d9d5f24892ec2a5cea40" title=" " alt="" coords="500,5,656,46"/>
-<area shape="poly" title=" " alt="" coords="397,26,485,25,485,30,397,32"/>
-<area shape="poly" title=" " alt="" coords="199,507,248,525,311,539,344,541,378,540,410,533,440,519,451,511,458,501,464,479,470,455,477,442,488,430,500,421,503,426,491,434,481,445,475,456,470,480,463,503,455,514,443,524,412,538,378,545,344,547,310,544,247,530,197,512"/>
-<area shape="poly" title=" " alt="" coords="189,507,230,535,280,563,316,579,313,584,278,568,227,539,186,512"/>
-<area shape="poly" title=" " alt="" coords="220,480,310,457,311,462,221,485"/>
-<area shape="rect" href="base__error_8c.html#ab2c198d5e5e93db68ca235f59902b754" title=" " alt="" coords="279,484,441,509"/>
-<area shape="poly" title=" " alt="" coords="220,494,263,494,263,499,220,499"/>
-<area shape="poly" title=" " alt="" coords="379,582,411,556,439,520,452,492,458,466,459,417,462,369,471,343,487,316,503,300,522,288,525,292,506,304,491,319,475,346,467,370,464,417,463,466,457,494,444,523,414,560,383,586"/>
-<area shape="poly" title=" " alt="" coords="391,589,417,580,439,564,452,547,458,531,462,498,467,465,474,448,487,430,500,420,503,424,491,434,479,450,472,466,468,499,464,533,456,550,443,568,419,585,393,594"/>
-<area shape="rect" href="base__error_8c.html#a44788e0c4c63cd6ca292cb2d44313837" title=" " alt="" coords="506,520,650,561"/>
-<area shape="poly" title=" " alt="" coords="391,587,490,561,492,566,393,592"/>
-<area shape="rect" href="base__error_8c.html#a0ff5fd31efce68863a3396862e215487" title=" " alt="" coords="497,635,659,675"/>
-<area shape="poly" title=" " alt="" coords="393,603,484,628,483,633,391,608"/>
-<area shape="rect" href="base__error_8c.html#a47c3d935b57aeec1f128170eee7547de" title=" " alt="" coords="489,585,667,610"/>
-<area shape="poly" title=" " alt="" coords="392,595,474,595,474,600,392,600"/>
-<area shape="poly" title=" " alt="" coords="374,432,439,369,462,341,488,316,532,288,534,292,491,320,466,345,443,373,378,436"/>
-<area shape="poly" title=" " alt="" coords="378,432,409,405,439,370,455,336,462,307,469,277,487,243,507,220,529,201,533,205,511,224,492,246,474,279,467,308,460,338,444,372,413,409,381,436"/>
-<area shape="poly" title=" " alt="" coords="397,447,421,455,443,469,458,488,466,508,469,546,471,584,478,603,491,621,493,623,489,626,487,625,473,605,466,585,463,547,461,509,454,491,440,473,419,460,395,453"/>
-<area shape="rect" href="base__error_8c.html#a846f69272a7e03f6f6568a804668074d" title=" " alt="" coords="507,445,649,471"/>
-<area shape="poly" title=" " alt="" coords="396,446,492,451,492,456,395,451"/>
-<area shape="poly" title=" " alt="" coords="391,332,524,286,526,291,393,337"/>
-<area shape="poly" title=" " alt="" coords="391,336,416,326,440,312,455,295,464,279,473,262,487,243,533,202,536,206,491,246,477,265,469,282,460,298,443,316,418,331,393,340"/>
-<area shape="rect" href="base__error_8c.html#ab028432aef6346d801fdd67266472ec8" title=" " alt="" coords="511,330,645,356"/>
-<area shape="poly" title=" " alt="" coords="392,343,495,341,495,347,392,348"/>
-<area shape="poly" title=" " alt="" coords="176,229,226,165,254,131,277,109,302,95,304,100,281,113,258,135,230,168,180,233"/>
-<area shape="poly" title=" " alt="" coords="230,245,510,263,510,268,230,251"/>
-<area shape="poly" title=" " alt="" coords="177,256,216,313,245,344,280,369,334,389,392,401,449,405,500,405,500,410,448,411,391,406,333,395,278,373,242,348,212,316,173,259"/>
-<area shape="poly" title=" " alt="" coords="177,229,218,189,246,168,278,152,336,139,395,137,453,142,504,151,503,156,452,147,395,142,337,145,280,158,249,173,221,193,181,233"/>
-<area shape="poly" title=" " alt="" coords="174,257,186,303,208,370,240,446,281,520,305,549,331,573,327,577,301,552,277,523,235,449,203,372,181,304,169,258"/>
-<area shape="rect" href="base__error_8c.html#abe75eb73e72475409ecdf5b37429e11c" title=" " alt="" coords="280,167,440,207"/>
-<area shape="poly" title=" " alt="" coords="212,228,274,210,275,215,214,233"/>
-<area shape="poly" title=" " alt="" coords="171,673,198,608,228,521,239,463,241,415,249,369,259,345,277,319,315,288,374,255,506,198,508,202,376,260,318,292,281,322,264,347,254,371,246,415,244,464,234,522,203,610,176,675"/>
-<area shape="poly" title=" " alt="" coords="187,671,228,646,278,621,313,608,315,613,280,625,231,651,190,676"/>
-<area shape="poly" title=" " alt="" coords="175,699,187,732,208,775,239,817,259,835,280,850,323,869,360,875,397,869,440,850,463,835,484,817,519,774,545,729,562,688,567,690,549,731,523,777,488,821,466,839,443,855,399,874,360,880,321,874,278,855,255,840,235,821,204,777,182,734,170,701"/>
-<area shape="rect" href="string_8c.html#a82a74f32939c3442b5ba278ffd219e22" title="문자열이 10진수인지 확인하는 함수" alt="" coords="329,765,391,790"/>
-<area shape="poly" title=" " alt="" coords="189,698,230,724,280,750,315,763,313,768,278,755,228,728,186,703"/>
-<area shape="rect" href="string_8c.html#aaa5e14b4c7c0479050bbb124fe3cf834" title="문자열이 16진수인지 확인하는 함수" alt="" coords="315,814,405,840"/>
-<area shape="poly" title=" " alt="" coords="179,699,219,748,248,777,280,801,301,811,299,816,278,805,245,781,216,752,175,702"/>
-<area shape="rect" href="base__error_8c.html#afcf2ec99cdcd9be08648c7773423169a" title=" " alt="" coords="298,635,423,675"/>
-<area shape="poly" title=" " alt="" coords="231,674,281,665,282,671,232,679"/>
-<area shape="rect" href="base__error_8c.html#a680e4f47716fca2fbcdc67a4396e42ac" title=" " alt="" coords="280,700,440,741"/>
-<area shape="poly" title=" " alt="" coords="232,695,265,701,264,706,231,701"/>
+<div class="center"><img src="_i_o_r_a_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph.png" border="0" usemap="#a_i_o_r_a_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph" alt=""/></div>
+<map name="a_i_o_r_a_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph" id="a_i_o_r_a_8c_a0ddf1224851353fc92bfbff6f499fa97_cgraph">
+<area shape="rect" title=" " alt="" coords="5,273,55,299"/>
+<area shape="rect" href="bigint__addition_8c.html#afe02a70ab92f357494f002234b531e45" title="bigint 덧셈 테스트 함수" alt="" coords="103,248,191,274"/>
+<area shape="poly" title=" " alt="" coords="54,278,87,271,88,276,56,284"/>
+<area shape="rect" href="bigint__subtraction_8c.html#a211f200fbe4ad80efd5b18f067fd63a3" title="bigint 뺄셈 테스트 함수" alt="" coords="103,297,191,323"/>
+<area shape="poly" title=" " alt="" coords="56,289,88,295,87,301,54,294"/>
+<area shape="rect" href="bigint__addition_8c.html#a0b664d25349d775300da493a96c02a6e" title="두 bigint의 덧셈을 수행하는 함수" alt="" coords="239,221,298,247"/>
+<area shape="poly" title=" " alt="" coords="191,249,223,241,225,246,192,254"/>
+<area shape="rect" href="bigint__calculation_8c.html#a7434576fe036cda0c7da5bde57b03db0" title="bigint에 무작위 값을 할당하는 함수 @create_prime이면 마지막 블럭이 all 0가 되는 것을 방지 = 키 크기 최대한 보장" alt="" coords="358,276,465,302"/>
+<area shape="poly" title=" " alt="" coords="192,263,343,279,343,284,191,268"/>
+<area shape="rect" href="bigint__addition_8c.html#abf63ebdfbe5acde4ea5d05ebdb1cd0a3" title="A + B 연산을 수행하는 함수" alt="" coords="373,171,450,196"/>
+<area shape="poly" title=" " alt="" coords="298,221,358,200,360,205,300,226"/>
+<area shape="rect" href="base__error_8c.html#a618d1e321ae47aecb3c51c89ad57e337" title="ADD 성공 시 출력하는 함수" alt="" coords="346,221,477,247"/>
+<area shape="poly" title=" " alt="" coords="299,232,331,232,331,237,299,237"/>
+<area shape="rect" href="bigint__addition_8c.html#a32af245f488858d7dddca18fc1739a1f" title="A + B + c 연산을 수행하는 함수" alt="" coords="559,171,653,196"/>
+<area shape="poly" title=" " alt="" coords="450,181,543,181,543,186,450,186"/>
+<area shape="rect" href="bigint__calculation_8c.html#a4266a993110f28fa99163be1cc61d2ce" title="bigint에 arrary를 할당하는 함수" alt="" coords="575,220,637,246"/>
+<area shape="poly" title=" " alt="" coords="451,191,560,219,559,224,450,196"/>
+<area shape="rect" href="bigint__calculation_8h.html#ad3ea6d6810e6d14a748c2ca26a16345d" title=" " alt="" coords="571,72,641,98"/>
+<area shape="poly" title=" " alt="" coords="428,168,470,138,524,106,555,94,557,99,526,111,473,142,431,172"/>
+<area shape="rect" href="base__error_8c.html#aeb1d605706602fcc12c1f6ec9699ec00" title="ADD_C 성공 시 출력하는 함수" alt="" coords="532,121,680,147"/>
+<area shape="poly" title=" " alt="" coords="450,171,537,149,539,154,451,176"/>
+<area shape="rect" href="base__error_8c.html#ae0433a2390a5e949337b503c2d8d4e84" title="ADD_ABC 성공 시 출력하는 함수" alt="" coords="741,5,906,31"/>
+<area shape="poly" title=" " alt="" coords="652,175,670,168,685,158,697,144,704,130,708,100,713,70,720,55,733,40,737,37,740,42,737,44,725,58,718,72,713,101,709,131,702,147,689,161,672,172,654,179"/>
+<area shape="rect" href="bigint__calculation_8c.html#a84d3065789f8df11fe043e0323853ee1" title="bigint의 값을 다른 bigint로 할당하는 함수" alt="" coords="787,55,860,80"/>
+<area shape="poly" title=" " alt="" coords="637,227,662,220,685,207,697,193,704,179,708,150,713,121,720,106,733,91,751,79,771,72,773,77,754,84,737,95,725,108,718,122,714,151,709,181,701,196,689,211,664,225,638,233"/>
+<area shape="rect" href="memory_8c.html#a7a2336750ce2c077f29a85c1fdd9fb31" title="포인터가 NULL인지 확인하는 함수" alt="" coords="986,220,1091,246"/>
+<area shape="poly" title=" " alt="" coords="637,230,971,230,971,236,637,236"/>
+<area shape="rect" href="base__error_8c.html#a44788e0c4c63cd6ca292cb2d44313837" title="배열 메모리 할당 실패 시 출력하는 함수" alt="" coords="752,104,896,145"/>
+<area shape="poly" title=" " alt="" coords="637,225,662,218,686,207,700,194,709,182,718,168,733,155,740,150,743,155,737,159,722,172,713,185,704,198,688,211,663,223,638,230"/>
+<area shape="rect" href="base__error_8c.html#aef05af2222acc0dd48f418acfaf5f174" title="bigiint의 길이가 올바르지 않을 때 출력하는 함수" alt="" coords="761,270,886,310"/>
+<area shape="poly" title=" " alt="" coords="638,238,747,267,745,272,637,244"/>
+<area shape="rect" href="base__error_8c.html#a0ff5fd31efce68863a3396862e215487" title="메모리 할당 실패 시 출력하는 함수" alt="" coords="742,335,905,376"/>
+<area shape="poly" title=" " alt="" coords="625,244,673,280,736,320,749,326,747,331,734,324,670,285,622,248"/>
+<area shape="rect" href="base__error_8c.html#a47c3d935b57aeec1f128170eee7547de" title="초기화 성공 시 출력하는 함수" alt="" coords="735,169,912,195"/>
+<area shape="poly" title=" " alt="" coords="637,223,750,197,751,202,638,228"/>
+<area shape="poly" title=" " alt="" coords="862,71,888,78,914,91,948,117,978,147,1023,205,1019,209,974,151,944,121,911,95,886,83,860,76"/>
+<area shape="rect" href="base__error_8c.html#abc4557fb5f08b0aa1a2de96635497f7f" title="Null 포인터가 발생했을 때 출력하는 함수" alt="" coords="979,382,1098,422"/>
+<area shape="poly" title=" " alt="" coords="862,67,889,75,914,91,931,111,941,131,948,169,951,210,955,232,963,257,991,316,1019,367,1014,370,986,319,958,259,950,234,946,210,943,170,936,132,927,114,911,95,887,80,860,73"/>
+<area shape="rect" href="base__error_8c.html#ac71ec819b187d9d5f24892ec2a5cea40" title="메모리 해제 성공 시 출력하는 함수" alt="" coords="960,47,1117,88"/>
+<area shape="poly" title=" " alt="" coords="861,65,945,65,945,70,861,70"/>
+<area shape="poly" title=" " alt="" coords="458,273,559,243,561,248,459,278"/>
+<area shape="poly" title=" " alt="" coords="465,286,745,287,745,293,465,292"/>
+<area shape="rect" href="bigint__calculation_8c.html#ab40de6afc896f0873e591b2263622dea" title="bigint의 마지막 워드가 0인 경우 bigint의 메모리를 재할당하는 함수" alt="" coords="571,400,641,426"/>
+<area shape="poly" title=" " alt="" coords="433,300,526,363,570,390,567,394,523,367,430,304"/>
+<area shape="rect" href="base__error_8c.html#ab2c198d5e5e93db68ca235f59902b754" title="랜덤 값 생성 성공 시 출력하는 함수" alt="" coords="525,327,687,352"/>
+<area shape="poly" title=" " alt="" coords="464,300,540,320,539,325,463,305"/>
+<area shape="poly" title=" " alt="" coords="642,416,697,421,766,421,841,411,877,400,911,385,948,359,979,325,1004,290,1022,259,1026,261,1009,293,983,328,952,363,914,390,879,405,842,416,766,426,696,426,641,421"/>
+<area shape="poly" title=" " alt="" coords="625,424,673,458,703,474,736,486,785,498,824,503,863,499,911,486,937,476,961,462,1003,431,1006,435,964,467,939,481,913,491,864,504,824,508,784,504,734,491,701,479,670,462,622,428"/>
+<area shape="poly" title=" " alt="" coords="641,401,728,378,730,383,642,406"/>
+<area shape="rect" href="base__error_8c.html#a846f69272a7e03f6f6568a804668074d" title="refine 성공 시 출력하는 함수" alt="" coords="753,451,894,476"/>
+<area shape="poly" title=" " alt="" coords="642,418,751,444,750,449,641,423"/>
 </map>
 </div>
 

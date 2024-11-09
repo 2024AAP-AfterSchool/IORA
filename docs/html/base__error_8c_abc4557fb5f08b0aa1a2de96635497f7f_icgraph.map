@@ -1,46 +1,50 @@
 <map id="print_null_pointer_error" name="print_null_pointer_error">
-<area shape="rect" id="Node000001" title=" " alt="" coords="711,174,830,214"/>
-<area shape="rect" id="Node000002" href="$bigint__calculation_8c.html#a91d87036d498204bcc852b687bd30a61" title=" " alt="" coords="556,156,642,182"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="696,186,641,178,642,172,696,181"/>
-<area shape="rect" id="Node000003" href="$bigint__calculation_8c.html#a898d307706d9b410db7a6ceb57000505" title="bigint의 값을 다른 bigint로 할당하는 함수" alt="" coords="237,5,313,31"/>
-<area shape="poly" id="edge10_Node000001_Node000003" title=" " alt="" coords="746,162,710,118,687,98,662,80,617,60,569,44,472,25,382,19,314,19,314,13,382,13,472,20,570,39,619,55,664,76,690,93,714,115,750,159"/>
-<area shape="rect" id="Node000006" href="$bigint__calculation_8c.html#afcea8fd04d42e0720f3a8bbf6ca86eaf" title="arrary를 통해 bigint에 값을 할당하는 함수" alt="" coords="361,207,487,232"/>
-<area shape="poly" id="edge25_Node000001_Node000006" title=" " alt="" coords="696,202,488,218,487,212,695,197"/>
-<area shape="rect" id="Node000008" href="$bigint__calculation_8c.html#a731cab4cd7a7b2dadddd1c030618f93a" title="bigint의 값을 다른 bigint로 할당하는 함수" alt="" coords="387,105,461,131"/>
-<area shape="poly" id="edge11_Node000001_Node000008" title=" " alt="" coords="719,169,662,146,608,134,553,126,461,121,461,116,554,121,609,129,664,141,721,164"/>
-<area shape="rect" id="Node000009" href="$bigint__calculation_8c.html#a5949b472f818a8c734228c1a9eaf2032" title="bigint를 출력하는 함수" alt="" coords="567,307,630,332"/>
-<area shape="poly" id="edge15_Node000001_Node000009" title=" " alt="" coords="744,228,708,264,664,298,632,313,630,308,662,293,704,260,740,224"/>
-<area shape="rect" id="Node000010" href="$bigint__calculation_8c.html#ab40de6afc896f0873e591b2263622dea" title="bigint의 마지막 워드가 0인 경우 bigint의 메모리를 재할당하는 함수" alt="" coords="564,409,634,435"/>
-<area shape="poly" id="edge17_Node000001_Node000010" title=" " alt="" coords="749,229,665,346,614,410,609,407,661,343,745,226"/>
-<area shape="rect" id="Node000014" href="$bigint__calculation_8c.html#a5660f5bce5a1afb6326f61f9601de1f1" title="string을 통해 bigint에 값을 할당하는 함수" alt="" coords="535,257,663,283"/>
-<area shape="poly" id="edge26_Node000001_Node000014" title=" " alt="" coords="710,224,631,259,629,254,708,219"/>
-<area shape="rect" id="Node000015" href="$bigint__calculation_8c.html#a2564e623fdb80aa8b463eb17802e5113" title="bigint가 0인지 확인하는 함수" alt="" coords="244,55,307,80"/>
-<area shape="poly" id="edge28_Node000001_Node000015" title=" " alt="" coords="736,165,702,138,662,117,614,100,564,88,464,73,374,68,307,69,307,63,374,63,464,68,565,83,616,95,664,112,705,134,739,161"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="568,149,530,121,485,95,394,57,313,31,315,26,396,52,488,90,533,117,571,144"/>
-<area shape="poly" id="edge7_Node000002_Node000006" title=" " alt="" coords="542,188,472,209,470,204,541,183"/>
-<area shape="rect" id="Node000007" href="$_i_o_r_a_8c.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title=" " alt="" coords="250,257,300,283"/>
-<area shape="poly" id="edge9_Node000002_Node000007" title=" " alt="" coords="541,168,454,173,407,181,362,197,340,210,319,226,289,259,285,255,316,222,337,205,360,192,406,176,454,167,540,163"/>
-<area shape="rect" id="Node000004" href="$bigint__subtraction_8c.html#ac2e5c6ccf902dc93649848c28829f4bb" title=" " alt="" coords="130,105,189,131"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="241,43,239,44,203,77,174,107,170,103,199,73,235,40,237,38"/>
-<area shape="rect" id="Node000005" href="$bigint__subtraction_8c.html#ae9763869cd2447760100d4ccccbc1d20" title=" " alt="" coords="5,105,82,131"/>
-<area shape="poly" id="edge6_Node000003_Node000005" title=" " alt="" coords="230,40,77,107,75,102,228,35"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="114,130,82,129,82,124,114,124"/>
-<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="97,107,130,108,129,113,97,112"/>
-<area shape="poly" id="edge8_Node000006_Node000007" title=" " alt="" coords="370,240,301,264,299,259,369,235"/>
-<area shape="poly" id="edge12_Node000008_Node000004" title=" " alt="" coords="372,121,189,121,189,116,372,116"/>
-<area shape="poly" id="edge13_Node000008_Node000005" title=" " alt="" coords="373,132,261,148,195,151,129,146,81,134,82,129,130,141,195,146,260,143,372,127"/>
-<area shape="poly" id="edge14_Node000008_Node000007" title=" " alt="" coords="379,141,363,152,338,179,316,208,286,258,281,255,311,205,333,175,360,148,376,137"/>
-<area shape="poly" id="edge16_Node000009_Node000007" title=" " alt="" coords="551,315,300,276,301,271,552,310"/>
-<area shape="poly" id="edge23_Node000010_Node000005" title=" " alt="" coords="551,443,509,455,460,463,409,462,360,450,302,419,248,379,199,333,156,285,88,195,50,133,54,130,93,192,160,282,203,329,251,375,305,414,362,445,410,457,460,457,508,449,549,438"/>
-<area shape="poly" id="edge24_Node000010_Node000007" title=" " alt="" coords="554,405,299,284,302,279,557,400"/>
-<area shape="rect" id="Node000011" href="$bigint__addition_8c.html#aab40e48f44671167452ad9fc3c43a2e2" title=" " alt="" coords="386,511,462,536"/>
-<area shape="poly" id="edge18_Node000010_Node000011" title=" " alt="" coords="566,446,488,494,453,513,451,508,485,489,563,441"/>
-<area shape="rect" id="Node000013" href="$bigint__calculation_8c.html#a0671017de96b8f5a40debe535531b179" title="bigint에 무작위 값을 할당하는 함수 @create_prime이면 마지막 블럭이 all 0가 되는 것을 방지 = 키 크기 최대한 보장" alt="" coords="371,409,477,435"/>
-<area shape="poly" id="edge21_Node000010_Node000013" title=" " alt="" coords="548,425,477,425,477,420,548,420"/>
-<area shape="rect" id="Node000012" href="$bigint__addition_8c.html#aaa5bf6bd802db80e40c266f9a266a238" title=" " alt="" coords="246,511,305,536"/>
-<area shape="poly" id="edge19_Node000011_Node000012" title=" " alt="" coords="370,526,305,526,305,521,370,521"/>
-<area shape="poly" id="edge20_Node000012_Node000004" title=" " alt="" coords="263,496,162,132,167,131,269,495"/>
-<area shape="poly" id="edge22_Node000013_Node000007" title=" " alt="" coords="376,404,360,392,333,365,311,335,281,285,286,282,316,332,338,362,363,388,379,399"/>
-<area shape="poly" id="edge27_Node000014_Node000007" title=" " alt="" coords="519,273,300,273,300,268,519,268"/>
-<area shape="poly" id="edge29_Node000015_Node000004" title=" " alt="" coords="231,89,191,108,188,103,229,85"/>
+<area shape="rect" id="Node000001" title="Null 포인터가 발생했을 때 출력하는 함수" alt="" coords="804,237,924,278"/>
+<area shape="rect" id="Node000002" href="$bigint__calculation_8c.html#ab79c94ec396b3b384e7f2b102abbe18b" title=" " alt="" coords="550,144,635,170"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="823,230,791,209,755,192,693,173,635,164,636,159,694,168,757,187,793,205,826,226"/>
+<area shape="rect" id="Node000003" href="$bigint__calculation_8c.html#a661579c313392e1aa1e2ca1c6c227ce6" title="bigint의 값을 다른 bigint로 할당하는 함수" alt="" coords="399,94,476,120"/>
+<area shape="poly" id="edge8_Node000001_Node000003" title=" " alt="" coords="833,227,798,193,755,164,719,147,682,135,604,118,533,110,476,108,476,103,533,105,605,113,683,130,721,142,758,159,801,189,837,223"/>
+<area shape="rect" id="Node000006" href="$bigint__calculation_8c.html#ac7b2f0e58574cc42b33d3cd6b2025e70" title="arrary를 통해 bigint에 값을 할당하는 함수" alt="" coords="375,143,500,169"/>
+<area shape="poly" id="edge28_Node000001_Node000006" title=" " alt="" coords="789,242,549,185,494,172,495,167,550,180,790,237"/>
+<area shape="rect" id="Node000007" href="$bigint__calculation_8c.html#a84d3065789f8df11fe043e0323853ee1" title="bigint의 값을 다른 bigint로 할당하는 함수" alt="" coords="683,43,756,69"/>
+<area shape="poly" id="edge9_Node000001_Node000007" title=" " alt="" coords="843,225,805,160,754,90,736,71,740,68,758,86,809,157,847,222"/>
+<area shape="rect" id="Node000014" href="$bigint__calculation_8c.html#aae00b95a98973317f924f62bfb447a20" title="string을 통해 bigint에 값을 할당하는 함수" alt="" coords="373,392,502,418"/>
+<area shape="poly" id="edge29_Node000001_Node000014" title=" " alt="" coords="793,286,757,299,479,394,478,389,755,293,791,281"/>
+<area shape="rect" id="Node000016" href="$bigint__calculation_8c.html#a304e07ea540143803011f7cdd399d412" title="bigint를 출력하는 함수" alt="" coords="688,396,751,422"/>
+<area shape="poly" id="edge25_Node000001_Node000016" title=" " alt="" coords="838,291,758,379,738,398,735,394,754,375,834,288"/>
+<area shape="rect" id="Node000017" href="$bigint__calculation_8c.html#ab40de6afc896f0873e591b2263622dea" title="bigint의 마지막 워드가 0인 경우 bigint의 메모리를 재할당하는 함수" alt="" coords="557,295,628,321"/>
+<area shape="poly" id="edge26_Node000001_Node000017" title=" " alt="" coords="790,274,629,304,628,299,789,269"/>
+<area shape="rect" id="Node000018" href="$bigint__calculation_8c.html#a85731cbcd8a4b5bfa9939fa32268a446" title="bigint가 0인지 확인하는 함수" alt="" coords="688,446,751,472"/>
+<area shape="poly" id="edge30_Node000001_Node000018" title=" " alt="" coords="850,293,813,363,788,401,758,437,746,447,742,443,754,433,783,398,808,360,845,290"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="536,142,475,122,477,117,537,137"/>
+<area shape="poly" id="edge7_Node000002_Node000006" title=" " alt="" coords="534,159,501,159,501,154,534,154"/>
+<area shape="rect" id="Node000004" href="$bigint__subtraction_8c.html#afa4e93a166e5a4c75a1f8522d1c24425" title="두 bigint의 뺄셈을 수행하는 함수" alt="" coords="144,144,204,170"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="385,119,205,154,204,149,383,114"/>
+<area shape="rect" id="Node000005" href="$bigint__subtraction_8c.html#acaf10206d518b7d29722ad94205bf527" title="두 bigint의 뺄셈을 수행하는 함수." alt="" coords="5,144,82,170"/>
+<area shape="poly" id="edge6_Node000003_Node000005" title=" " alt="" coords="384,110,267,117,130,135,83,147,81,142,129,129,267,112,384,105"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="128,169,82,168,82,163,129,163"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="97,146,144,147,143,152,97,151"/>
+<area shape="poly" id="edge23_Node000007_Node000004" title=" " alt="" coords="668,59,534,64,454,72,374,84,320,98,267,118,204,146,202,141,265,114,318,93,373,79,453,66,534,59,667,53"/>
+<area shape="poly" id="edge24_Node000007_Node000005" title=" " alt="" coords="667,44,562,20,501,11,439,8,294,8,256,12,218,24,182,42,149,63,94,108,58,146,54,142,91,105,146,58,180,37,216,19,254,7,294,3,439,3,501,6,563,15,668,39"/>
+<area shape="rect" id="Node000008" href="$bigint__calculation_8c.html#a4266a993110f28fa99163be1cc61d2ce" title="bigint에 arrary를 할당하는 함수" alt="" coords="561,246,624,272"/>
+<area shape="poly" id="edge10_Node000007_Node000008" title=" " alt="" coords="705,83,604,247,599,244,700,80"/>
+<area shape="poly" id="edge16_Node000008_Node000003" title=" " alt="" coords="576,233,545,182,524,156,500,133,475,119,477,114,503,129,528,152,550,179,581,230"/>
+<area shape="poly" id="edge22_Node000008_Node000005" title=" " alt="" coords="547,274,502,283,437,289,373,283,283,260,197,230,70,173,72,168,199,225,285,255,374,277,437,284,501,277,546,269"/>
+<area shape="poly" id="edge19_Node000008_Node000006" title=" " alt="" coords="559,238,548,229,525,204,500,182,480,172,482,167,503,178,529,200,551,225,563,234"/>
+<area shape="rect" id="Node000009" href="$bigint__addition_8c.html#abf63ebdfbe5acde4ea5d05ebdb1cd0a3" title="A + B 연산을 수행하는 함수" alt="" coords="399,192,476,218"/>
+<area shape="poly" id="edge11_Node000008_Node000009" title=" " alt="" coords="546,246,475,221,477,216,548,241"/>
+<area shape="rect" id="Node000013" href="$bigint__calculation_8c.html#a7434576fe036cda0c7da5bde57b03db0" title="bigint에 무작위 값을 할당하는 함수 @create_prime이면 마지막 블럭이 all 0가 되는 것을 방지 = 키 크기 최대한 보장" alt="" coords="384,343,491,369"/>
+<area shape="poly" id="edge17_Node000008_Node000013" title=" " alt="" coords="555,282,551,285,528,306,503,326,470,345,467,340,500,322,524,302,548,281,552,278"/>
+<area shape="poly" id="edge20_Node000008_Node000014" title=" " alt="" coords="553,283,552,284,536,310,529,334,522,358,504,383,487,394,484,390,500,379,517,356,524,332,531,307,548,281,549,280"/>
+<area shape="rect" id="Node000015" href="$bigint__calculation_8c.html#a60481dc2edd27dfcf89351e6c1ff1311" title=" " alt="" coords="393,242,482,268"/>
+<area shape="poly" id="edge21_Node000008_Node000015" title=" " alt="" coords="545,260,482,258,482,253,545,255"/>
+<area shape="rect" id="Node000010" href="$bigint__addition_8c.html#a0b664d25349d775300da493a96c02a6e" title="두 bigint의 덧셈을 수행하는 함수" alt="" coords="266,195,325,221"/>
+<area shape="poly" id="edge12_Node000009_Node000010" title=" " alt="" coords="384,209,326,210,326,205,384,204"/>
+<area shape="poly" id="edge13_Node000010_Node000004" title=" " alt="" coords="251,192,203,172,205,167,253,187"/>
+<area shape="rect" id="Node000011" href="$bigint__addition_8c.html#afe02a70ab92f357494f002234b531e45" title="bigint 덧셈 테스트 함수" alt="" coords="130,343,218,369"/>
+<area shape="poly" id="edge14_Node000010_Node000011" title=" " alt="" coords="276,234,188,344,184,341,272,231"/>
+<area shape="rect" id="Node000012" href="$_i_o_r_a_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title=" " alt="" coords="19,343,68,369"/>
+<area shape="poly" id="edge15_Node000011_Node000012" title=" " alt="" coords="114,359,69,359,69,353,114,353"/>
+<area shape="poly" id="edge18_Node000013_Node000011" title=" " alt="" coords="369,359,219,359,219,353,369,353"/>
+<area shape="poly" id="edge27_Node000017_Node000013" title=" " alt="" coords="543,326,482,345,481,340,542,321"/>
 </map>
