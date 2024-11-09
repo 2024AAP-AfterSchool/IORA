@@ -20,7 +20,7 @@
  * @brief bigint의 값을 다른 bigint로 할당하는 함수
  * @param dst bigint의 포인터
  */
-msg bi_delete(bigint** dst)
+msg bi_delete(OUT bigint** dst)
 {
     if (is_null_pointer(dst) || is_null_pointer(*dst))
     {
@@ -39,7 +39,7 @@ msg bi_delete(bigint** dst)
  * @param dst bigint의 포인터
  * @param wordlen 배열의 길이
  */
-msg bi_new(bigint** dst, uint32_t wordlen)
+msg bi_new(OUT bigint** dst, IN uint32_t wordlen)
 {   
     if (wordlen <= 0)
     {
@@ -77,7 +77,7 @@ msg bi_new(bigint** dst, uint32_t wordlen)
 /**
 * @memory 값을 copy하는 함수 추가함
 */
-msg array_copy(word* dst, word* src, uint32_t wordlen)
+msg array_copy(OUT word* dst, IN word* src, IN uint32_t wordlen)
 {   
     if (wordlen <= 0)
     {
@@ -101,7 +101,7 @@ msg array_copy(word* dst, word* src, uint32_t wordlen)
  * @param wordlen 배열의 길이
  * @param src 할당하고자 하는 배열
  */
-msg bi_set_from_array(bigint** dst, uint32_t sign, uint32_t wordlen, word* src)
+msg bi_set_from_array(OUT bigint** dst, IN uint32_t sign, IN uint32_t wordlen, IN word* src)
 {   
     if (wordlen <= 0)
     {
@@ -136,7 +136,7 @@ msg bi_set_from_array(bigint** dst, uint32_t sign, uint32_t wordlen, word* src)
  * @param str 할당하고자 하는 문자열
  * @param base 10진수, 16진수 등 어떻게 해석할지 의미함.
  */
-msg bi_set_from_string(bigint** dst, char* str, uint32_t base)
+msg bi_set_from_string(OUT bigint** dst, IN char* str, IN uint32_t base)
 {
     // 예외 처리: NULL 포인터 또는 잘못된 진수 값 체크
     if (dst == NULL || str == NULL || base != 16) {
@@ -245,7 +245,7 @@ msg bi_set_from_string(bigint** dst, char* str, uint32_t base)
  * @param sign 부호
  * @param wordlen 배열의 길이
  */
-msg bi_get_random(bigint** dst, uint32_t sign, uint32_t wordlen)
+msg bi_get_random(OUT bigint** dst, IN uint32_t sign, IN uint32_t wordlen)
 {
     if (wordlen <= 0)
     {
@@ -280,7 +280,7 @@ msg bi_get_random(bigint** dst, uint32_t sign, uint32_t wordlen)
  * @brief bigint의 마지막 워드가 0인 경우 bigint의 메모리를 재할당하는 함수
  * @param dst bigint의 포인터
  */
-msg bi_refine(bigint* dst)
+msg bi_refine(OUT bigint* dst)
 {   
     if(is_null_pointer(dst))
     {
@@ -315,7 +315,7 @@ msg bi_refine(bigint* dst)
  * @param dst bigint의 포인터
  * @param src bigint의 포인터
  */
-msg bi_assign(bigint** dst, bigint* src)
+msg bi_assign(OUT bigint** dst, IN bigint* src)
 {
     if(is_null_pointer(src))
     {
@@ -345,7 +345,7 @@ msg bi_assign(bigint** dst, bigint* src)
  * @param dst bigint의 포인터
  * @param base 10진수, 16진수 등 어떻게 해석할지 의미함.
  */
-msg bi_print(bigint* dst, uint32_t base)
+msg bi_print(OUT bigint* dst, IN uint32_t base)
 {
     if(is_null_pointer(dst))
     {
@@ -378,7 +378,7 @@ msg bi_print(bigint* dst, uint32_t base)
  * @param dst bigint의 포인터
  * @return 0이면 1, 아니면 0
  */
-int8_t is_zero(bigint* dst)
+int8_t is_zero(OUT bigint* dst)
 {
     if(is_null_pointer(dst))
     {
@@ -392,7 +392,7 @@ int8_t is_zero(bigint* dst)
 
     for (int i = dst->wordlen; i >= 0 ; i--)
     {
-        if(dst->start[i] != 0x00)
+        if(dst->start[i] != 0)
         {
             return false;
         }
@@ -401,14 +401,14 @@ int8_t is_zero(bigint* dst)
     return true;
 }
 
-void bi_set_zero(bigint** x)
+void bi_set_zero(OUT bigint** x)
 {
     bi_new(x, 1);
     (*x)->sign = POSITIVE;
-    (*x)->start[0] = 0x00;
+    (*x)->start[0] = 0;
 }
 
-int8_t bi_compare_ABS(bigint* x, bigint* y)
+int8_t bi_compare_ABS(IN bigint* x, IN bigint* y)
 {
     int n = x->wordlen;
     int m = y->wordlen;
@@ -434,7 +434,7 @@ int8_t bi_compare_ABS(bigint* x, bigint* y)
     return 0;
 }
 
-int8_t bi_compare(bigint* x, bigint* y)
+int8_t bi_compare(IN bigint* x, IN bigint* y)
 {
     if (x->sign == POSITIVE && y->sign == NEGATIVE)
         return 1;
@@ -448,4 +448,63 @@ int8_t bi_compare(bigint* x, bigint* y)
         return ret;
 
     return ret * (-1);
+}
+
+/**
+ * @brief word를 왼쪽으로 shift하는 함수
+ * @param dst bigint의 포인터
+ * @param k shift 하고싶은 word 사이즈
+ */
+msg bi_word_left_shift(OUT bigint* dst, IN byte k)
+{
+    bigint* tmp = NULL;
+    bi_new(&tmp, dst->wordlen + k);
+    tmp->sign = dst->sign;
+
+    for (int i = k; i < tmp->wordlen; i++)
+    {
+        tmp->start[i] = dst->start[i - k];
+    }
+    //bi_refine(tmp); // dst가 refine된 값이라면 할 필요 x
+    // dst를 NULL로 설정하여 bi_assign이 동작하도록 준비
+    bi_delete(&dst);  // 기존 dst의 메모리를 해제
+    dst = NULL;
+
+    // bi_assign을 사용하여 tmp의 값을 dst에 복사
+    bi_assign(&dst, tmp);
+
+    // tmp 삭제
+    bi_delete(&tmp);
+
+    return print_success_shift();
+}
+
+/**
+ * @brief word를 오른쪽으로 shift하는 함수
+ * @param dst bigint의 포인터
+ * @param k shift 하고싶은 word 사이즈
+ */
+msg bi_word_right_shift(OUT bigint* dst, IN byte k) // k는 shift하고싶은 word 사이즈 의미
+{
+    bigint* tmp = NULL;
+    bi_new(&tmp, dst->wordlen - k);
+    tmp->sign = dst->sign;
+
+    for (int i = k; i < tmp->wordlen; i++)
+    {
+        tmp->start[i] = dst->start[i + k];
+    }
+    
+    //bi_refine(tmp); // dst가 refine된 값이라면 할 필요 x
+    // dst를 NULL로 설정하여 bi_assign이 동작하도록 준비
+    bi_delete(&dst);  // 기존 dst의 메모리를 해제
+    dst = NULL;
+
+    // bi_assign을 사용하여 tmp의 값을 dst에 복사
+    bi_assign(&dst, tmp);
+
+    // tmp 삭제
+    bi_delete(&tmp);
+
+    return print_success_shift();
 }

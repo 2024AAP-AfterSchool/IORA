@@ -3,12 +3,19 @@
 
 #include "base/base_type.h"   // 기본 함수 및 타입 정의
 
-void bi_sub_ABb(IN word* A, IN word* B, byte* b, OUT word* C);
+// SUB_ABC 함수: A, B, borrow의 뺄셈을 수행하고 C에 저장, borrow를 borrow_prime에 저장
+msg bi_sub_ABb(OUT word* dst, IN word* A, IN word* B, byte* borrow);
 
-void bi_sub_Ab(IN word* A, byte* b, word* C);
+// SUB_Ab 함수: A, borrow의 뺄셈을 수행하고 C에 저장, borrow를 borrow_prime에 저장
+msg bi_sub_Ab(OUT word* dst, IN word* A, IN byte* borrow);
 
-void bi_sub_C(IN bigint* A, IN bigint* B, OUT bigint** z);	
+// SUB 함수: 두 bigint A와 B의 뺄셈을 수행하고, 결과를 dst에 저장
+msg bi_sub_C(OUT bigint** dst, IN bigint* A, IN bigint* B);	
 
-void bi_sub(IN bigint* x, IN bigint* y, OUT bigint** z);
+// SUB 함수: 두 bigint A와 B의 뺄셈을 수행하며, 길이에 따라 SUBC를 호출
+msg bi_sub(OUT bigint** dst, IN bigint* A, IN bigint* B);
+
+// SUB 테스트 함수: bigint 뺄셈 테스트 함수
+msg bi_test_sub();
 
 #endif // BIGINT_SUBTRACTION_H_
