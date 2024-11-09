@@ -3,7 +3,7 @@
 #include "base.h"
 typedef uint8_t carry;
 
-void add_ABC(word A, word B, carry c, word* C, carry* c_prime) {
+void bi_add_ABC(word A, word B, carry c, word* C, carry* c_prime) {
     *c_prime = 0;  // 초기 캐리를 0으로 설정
     *C = A + B;
     if (*C < A) {
@@ -15,7 +15,7 @@ void add_ABC(word A, word B, carry c, word* C, carry* c_prime) {
     }
 }
 
-void addC(bigint** result, bigint* A, bigint* B) {
+void bi_addC(bigint** result, bigint* A, bigint* B) {
     if (A == NULL || A->a == NULL) {
         printf("Error: A is not properly initialized.\n");
         return;
@@ -43,7 +43,7 @@ void addC(bigint** result, bigint* A, bigint* B) {
             B_word = 0;        // B의 길이를 넘는 인덱스에서는 0을 할당
         }
 
-        add_ABC(A_word, B_word, c, &C_word, &c);
+        bi_add_ABC(A_word, B_word, c, &C_word, &c);
         (*result)->a[j] = C_word;
     }
 
@@ -57,13 +57,22 @@ void addC(bigint** result, bigint* A, bigint* B) {
     bi_refine(*result);
 }
 
-void add(bigint** result, bigint* a, bigint* b) {
-    // 덧셈만 수행하도록 간단하게 처리
-    if (a->word_len >= b->word_len) {
-        addC(result, a, b);
+void bi_add(bigint** result, bigint* a, bigint* b) {
+
+    if ((a->sign == 0) && (b->sign == 1)) {
+        bi_sub(result,a,b);
     }
-    else {
-        addC(result, b, a);
+    if ((b->sign == 0) && (a->sign == 1)) {
+        bi_sub(result, b, a);
+    }
+    else{
+        
+        if (a->word_len >= b->word_len) {
+            bi_addC(result, a, b);
+        }
+        else {
+            bi_addC(result, b, a);
+        }
     }
 }
 
