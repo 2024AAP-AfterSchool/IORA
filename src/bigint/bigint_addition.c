@@ -97,12 +97,24 @@ msg bi_add_C(OUT bigint** dst, IN bigint* A, IN bigint* B)
  */
 msg bi_add(OUT bigint** dst, IN bigint* A, IN bigint* B)
 {
-    if (A->wordlen >= B->wordlen)
+    if ((A->sign == 0) && (B->sign == 1))
     {
-        bi_add_C(dst, A, B);
+        bi_sub(dst, A, B);
     }
-    else {
+    if ((B->sign == 0) && (A->sign == 1))
+    {
+        bi_sub(dst, B, A);
+    }
+    else
+    {
+    if (A->wordlen >= B->wordlen)
+        {
+        bi_add_C(dst, A, B);
+        }
+    else
+        {
         bi_add_C(dst, B, A);
+        }
     }
 
     return print_success_add();
