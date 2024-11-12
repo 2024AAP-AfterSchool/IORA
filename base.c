@@ -5,348 +5,270 @@
 #include "struct.h"
 #include "error.h"
 #include "base.h"
+#include <stdbool.h>
 # define NON_NEGATIVE 0 
 
-int is_hex_digit(char c) {
+
+bool is_null_pointer(void* ptr)
+{
+    return ptr == NULL;
+}
+
+/**
+ * @brief 포인터의 메모리가 할당되어 있으면 해제하는 함수
+ * @param ptr 포인터
+ */
+void free_if_exist(void** ptr)
+{
+    if (!is_null_pointer(ptr) && !is_null_pointer(*ptr))
+    {
+        printf("Freeing memory...\n");
+        printf("ptr: %p\n", ptr);
+        free(*ptr);
+        *ptr = NULL;
+    }
+}
+
+uint32_t str_to_hex(word** dst, char* str, int base)
+{
+    char* end = NULL;
+
+    uint32_t length = strlen(str);
+    uint32_t chunk_size = 8;
+
+    free_if_exist((void**)dst);
+
+    for (int i = 0; i < length; i += chunk_size)
+    {
+        char* chunk = str + i;
+        printf("chunk: %s\n", chunk);
+        word num_of_chunk = strtol(chunk, &end, base);
+        printf("num_from_str: %d\n", num_of_chunk);
+        uint32_t is_valid = !(strcmp(end, ""));
+
+        if (is_valid)
+        {
+            *(*dst) = num_of_chunk;
+            (*dst)++;
+        }
+
+        if (!is_valid)
+        {
+            return -1;
+        }
+    }
+}
+
+/**
+ * @brief 문자열이 10진수인지 확인하는 함수
+ * @param c 문자열
+ * @return 10진수이면 1, 아니면 0
+ */
+uint32_t is_digit(char c)
+{
+    return (c >= '0' && c <= '9');
+}
+
+/**
+ * @brief 문자열이 16진수인지 확인하는 함수
+ * @param c 문자열
+ * @return 16진수이면 1, 아니면 0
+ */
+uint32_t is_hex_digit(char c)
+{
     return ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'));
 }
 
-msg bi_delete(bigint** dst) {
-    // dst가 NULL인 경우 예외 처리
-    if (dst==NULL || *dst == NULL) {
+//#define create_prameter
+
+/**
+ * @brief bigint의 값을 다른 bigint로 할당하는 함수
+ * @param dst bigint의 포인터
+ */
+msg bi_delete(OUT bigint** dst)
+{
+    if (is_null_pointer(dst) || is_null_pointer(*dst))
+    {
         return print_null_pointer_error();
     }
 
     // 배열 메모리 해제
-    if ((*dst)->a != NULL) {
-        free((*dst)->a);
-        (*dst)->a = NULL;  // 해제 후 NULL로 초기화
+    if ((*dst)->start != NULL)
+    {
+        free((*dst)->start);
+        (*dst)->start = NULL; // 해제 후 NULL로 설정
     }
 
     // 구조체 메모리 해제
     free(*dst);
     *dst = NULL;
 
-    // 메모리 해제 성공 메시지 출력
     return print_success_memory_deallocation();
 }
-/*
-msg bi_new(bigint** dst, int word_len) {
-    // 유효하지 않은 단어 길이 체크
-    if (word_len <= 0) {
+
+/**
+ * @brief bigint에 arrary를 할당하는 함수
+ * @param dst bigint의 포인터
+ * @param wordlen 배열의 길이
+ */
+msg bi_new(OUT bigint** dst, IN uint32_t wordlen)
+{
+    if (wordlen <= 0)
+    {
         return print_invalid_word_length_error();
     }
 
-    // 메모리가 이미 할당된 경우 처리
-    if (*dst != NULL) {
-        //bi_delete(dst);
-        return print_already_freed_error();
-    }
+    if (!is_null_pointer(*dst))
+    {
+        if (VERBOSE) fprintf(stdout, "[Warning] Already freed pointer.\n");
 
-    // 메모리 할당
-    *dst = (bigint*)malloc(sizeof(bigint));
-    if (*dst == NULL) {
-        return print_memory_allocation_error();
-    }
-
-    // 초기화
-    (*dst)->sign = NON_NEGATIVE;
-    (*dst)->word_len = word_len;
-
-    // 배열 할당
-    (*dst)->a = (word*)calloc(word_len, sizeof(word));
-    if ((*dst)->a == NULL) {
-        free(*dst);  // 구조체 메모리 할당 해제
-        *dst = NULL;
-        return print_array_allocation_error();
-    }
-
-    // 성공적으로 초기화 완료 메시지 출력
-    return print_success_initialization();
-}
-*/
-msg bi_new(bigint** dst, int word_len) {
-    if (word_len <= 0) {
-        return print_invalid_word_length_error();
+         //bi_delete(dst);
+        // return print_already_freed_error();
     }
 
     *dst = (bigint*)malloc(sizeof(bigint));
-    if (*dst == NULL) {
+
+    if (is_null_pointer(*dst))
+    {
         return print_memory_allocation_error();
     }
 
-    (*dst)->sign = NON_NEGATIVE;
-    (*dst)->word_len = word_len;
+    (*dst)->sign = POSITIVE;
+    (*dst)->wordlen = wordlen;
+    (*dst)->start = (word*)calloc(wordlen, sizeof(word));
 
-    // 배열 할당 및 초기화 확인
-    (*dst)->a = (word*)calloc(word_len, sizeof(word));
-    if ((*dst)->a == NULL) {
+    if (is_null_pointer((*dst)->start))
+    {
         free(*dst);
-        *dst = NULL;
         return print_array_allocation_error();
     }
 
     return print_success_initialization();
 }
 
-msg copy_array(word* dst, word* src, int word_len) {
-    // 유효하지 않은 길이 체크
-    if (word_len <= 0) {
+/**
+* @memory 값을 copy하는 함수 추가함
+*/
+msg array_copy(OUT word* dst, IN word* src, IN uint32_t wordlen)
+{
+    if (wordlen <= 0)
+    {
         return print_invalid_word_length_error();
     }
 
-    // dst 또는 src가 NULL인지 확인 
-    if (dst == NULL || src == NULL) {
+    if (is_null_pointer(dst) || is_null_pointer(src))
+    {
         return print_null_pointer_error();
     }
 
-    // 배열 복사 시도 error_t는  memcpy_s, fopen_s와 같은 "안전한" 함수들에서 반환되는 값
-    memcpy(dst, src, sizeof(word) * word_len);
-    
+    memcpy(dst, src, sizeof(word) * wordlen);
 
-    // 성공적으로 배열 복사 완료
     return print_success_copy();
 }
 
-#define OUT
-#define IN
-
-msg bi_set_from_array(bigint** dst, int sign, int word_len, word* b) {
-    // 유효하지 않은 단어 길이 체크
-    if (word_len <= 0) {
+/**
+ * @brief arrary를 통해 bigint에 값을 할당하는 함수
+ * @param dst bigint의 포인터
+ * @param sign 부호
+ * @param wordlen 배열의 길이
+ * @param src 할당하고자 하는 배열
+ */
+msg bi_set_from_array(OUT bigint** dst, IN uint32_t sign, IN uint32_t wordlen, IN word* src)
+{
+    if (wordlen <= 0)
+    {
         return print_invalid_word_length_error();
     }
 
-    // b가 NULL인 경우 예외 처리
-    if (b == NULL) {
+    if (is_null_pointer(src))
+    {
         return print_null_pointer_error();
     }
 
-    // 새로운 bigint 구조체를 생성
-    msg result = bi_new(dst, word_len);
-    if (result != SUCCESS_INITIALIZATION) {
-        return result;  // bi_new에서 발생한 에러 반환
+    msg result = bi_new(dst, wordlen);
+    if (result != SUCCESS_INITIALIZATION)
+    {
+        return result;
     }
 
-    // 부호 설정
     (*dst)->sign = sign;
 
-    // 배열 복사 시도
-    result = copy_array((*dst)->a, b, word_len);
-    if (result != SUCCESS_COPY) {
-        bi_delete(dst);  // 복사 실패 시 메모리 해제
-        return result;   // copy_array에서 발생한 에러 반환
+    result = array_copy((*dst)->start, src, wordlen);
+    if (result != SUCCESS_COPY)
+    {
+        return result;
     }
 
-    // 성공적으로 설정 완료
     return print_success_set_from_array();
 }
 
-
-msg bi_print(bigint* dst, int base)
+/**
+ * @brief string을 통해 bigint에 값을 할당하는 함수
+ * @param dst bigint의 포인터
+ * @param str 할당하고자 하는 문자열
+ * @param base 10진수, 16진수 등 어떻게 해석할지 의미함.
+ */
+msg bi_set_from_string(OUT bigint** dst, IN char* str, IN uint32_t base)
 {
-    // 입력이 NULL인 경우 예외 처리
-    if (dst == NULL) {
+    // 예외 처리: NULL 포인터 또는 잘못된 진수 값 체크
+    if (dst == NULL || str == NULL || base != 16) {
         return print_null_pointer_error();
     }
-
-    // 유효하지 않은 base 값 예외 처리 (현재는 16진수만 지원)
-    if (base != 16) {
-        printf("Base %d not supported yet.\n", base);
-        return 0;
-    }
-
-    /*
-    // Bigint가 0인 경우 바로 출력
-    if (dst->word_len == 0 || (dst->word_len == 1 && dst->a[0] == 0)) {
-        printf("0x0\n");
-    }
-    */
-    // 부호 출력
-    if (dst->sign < 0) {
-        printf("-");
-    }
-
-    printf("0x");
-
-    // 모든 비트 출력 (앞쪽 0을 스킵하지 않고 출력)
-    for (int i = dst->word_len - 1; i >= 0; i--) {
-        printf("%08x", dst->a[i]);
-    }
-
-    // 마지막 개행
-    printf("\n");
-
-    return print_success_print();
-}
-
-msg rand_array(word* dst, int word_len) {
-    // 유효하지 않은 길이 체크
-    if (word_len <= 0) {
-        return print_invalid_word_length_error();
-    }
-
-    // dst가 NULL인 경우 예외 처리
-    if (dst == NULL) {
-        return print_null_pointer_error();
-    }
-
-    // 난수로 배열을 채움
-    unsigned char* c = (unsigned char*)dst;  // 한 바이트씩 읽기 위한 타입 캐스팅
-    int cnt_i = word_len * sizeof(word);     // 총 바이트 수 계산
-
-    while (cnt_i > 0) {
-        *c = rand() & 0xff;  // 0~255 범위의 난수를 한 바이트에 저장
-        c++;
-        cnt_i--;
-    }
-
-    // 성공적으로 배열 생성 완료
-    return print_rand_array();
-}
-
-msg bi_gen_random(bigint** dst, int sign, int word_len) {
-    // 유효하지 않은 단어 길이 처리
-    if (word_len <= 0) {
-        return print_invalid_word_length_error();
-    }
-
-    // 새로운 bigint 생성
-    bi_new(dst, word_len);
-    // 부호 설정
-    (*dst)->sign = sign;
-    rand_array((*dst)->a,word_len);
-    // 성공적으로 랜덤 bigint 생성 완료
-    return print_success_gen_rand();
-}
-
-msg bi_assign(bigint** dst, bigint* src) {
-
-    // 이미 할당된 메모리 해제
-    if (*dst != NULL) {
-        msg result = bi_delete(dst);
-        if (result != SUCCESS_MEMORY_DEALLOCATION) {
-            return result;  // 메모리 해제 실패 시 에러 반환
-        }
-    }
-
-    // 새로운 bigint 생성
-    msg result = bi_new(dst, src->word_len);
-    if (result != SUCCESS_INITIALIZATION) {
-        return result;  // bigint 생성 실패 시 에러 반환
-    }
-
-    // 부호 설정
-    (*dst)->sign = src->sign;
-
-    // 배열 복사
-    result = copy_array((*dst)->a, src->a, src->word_len);
-    if (result != SUCCESS_COPY) {
-        bi_delete(dst);  // 복사 실패 시 할당된 메모리 해제
-        return result;   // 배열 복사 실패 시 에러 반환
-    }
-
-    // 성공적으로 할당 완료
-    return print_success_assign();
-}
-
-msg bi_refine(bigint* x) {
-    // 입력이 NULL인 경우 처리
-    if (x == NULL) {
-        return print_null_pointer_error();
-    }
-
-    int new_wordlen = x->word_len;
-
-    // 불필요한 0 제거 (word_len 정제)
-    while (new_wordlen > 1) {
-        if (x->a[new_wordlen - 1] != 0) {
-            break;
-        }
-        new_wordlen--;
-    }
-
-    // 값이 0인 경우 부호를 NON_NEGATIVE로 설정
-    if ((new_wordlen == 1) && (x->a[0] == 0x00)) {
-        x->sign = NON_NEGATIVE;
-    }
-
-    // 필요하다면 메모리 재할당
-    if (x->word_len != new_wordlen) {
-        word* tmp = (word*)realloc(x->a, sizeof(word) * new_wordlen);
-        if (tmp == NULL) {
-            return print_memory_allocation_error();  // 메모리 재할당 실패 시 에러 반환
-        }
-
-        // 재할당 성공 시 메모리와 길이를 업데이트
-        x->a = tmp;
-        x->word_len = new_wordlen;
-    }
-
-    // 성공적으로 정제 완료
-    return print_success_refine();
-}
-
-
-msg bi_set_from_string(bigint** dst, char* int_str, int base) {
-     // NULL 포인터 또는 잘못된 진수 값 체크
-    if (dst == NULL || int_str == NULL || base != 16) {
-        return print_null_pointer_error();
-    }
-    
-    // dst가 NULL이거나 *dst가 NULL인 경우 새로 할당
+    // 메모리가 이미 할당된 경우, 중복 할당 방지
     if (*dst == NULL) {
-        msg result = bi_new(dst, 1);  // 최소 크기로 할당
+        msg result = bi_new(dst, 1);  // 최소 크기로 먼저 할당
         if (result != SUCCESS_INITIALIZATION) {
             return result;
         }
     }
 
-    // 부호 설정
+    // 부호 확인
     int start_idx = 0;
-    if (int_str[0] == '-') {
+    if (str[0] == '-') {
         (*dst)->sign = 1;  // 음수로 설정
         start_idx = 1;
-    } else {
+    }
+    else {
         (*dst)->sign = 0;  // 양수로 설정
     }
 
     // '0x' 접두사 처리 (16진수일 경우)
     if (base == 16) {
-        if (strlen(int_str + start_idx) < 2 ||
-            !(int_str[start_idx] == '0' && (int_str[start_idx + 1] == 'x' || int_str[start_idx + 1] == 'X'))) {
-            return print_invalid_input_error();
+        if (strlen(str + start_idx) < 2 ||  // "0x" 이후 값이 없음
+            !(str[start_idx] == '0' && (str[start_idx + 1] == 'x' || str[start_idx + 1] == 'X'))) {
+            return print_invalid_input_error();  // 접두사가 없거나 빈 값인 경우
         }
 
         start_idx += 2;  // '0x' 건너뛰기
     }
 
     // 유효한 숫자 문자열인지 확인
-    int str_len = strlen(int_str) - start_idx;
-    if (str_len == 0) {
+    int str_len = strlen(str) - start_idx;
+    if (str_len == 0) {  // '0x'만 있고 숫자가 없을 때 예외 처리
         return print_invalid_input_error();
     }
-    for (int i = start_idx; i < strlen(int_str); i++) {
-        if (!is_hex_digit(int_str[i])) {
+    for (int i = start_idx; i < strlen(str); i++) {
+        if (!is_hex_digit(str[i]))
+        {  // 16진수 문자인지 직접 체크
             return print_invalid_input_error();
         }
     }
 
     // 워드 길이 계산
-    int word_len = (str_len + 7) / 8;  // 8자리 16진수를 32비트 워드로 변환
+    int wordlen = (str_len + 7) / 8;  // 8자리 16진수를 32비트 워드로 변환
     if (*dst == NULL) {
-        msg result = bi_new(dst, word_len);
+        msg result = bi_new(dst, wordlen);
         if (result != SUCCESS_INITIALIZATION) {
             return result;
         }
     }
-    else if ((*dst)->word_len < word_len) {
-        free((*dst)->a);
-        (*dst)->a = (word*)calloc(word_len, sizeof(word));
-        if ((*dst)->a == NULL) {
+    else if ((*dst)->wordlen < wordlen) {
+        free((*dst)->start);
+        (*dst)->start = (word*)calloc(wordlen, sizeof(word));
+        if ((*dst)->start == NULL) {
             return print_memory_allocation_error();
         }
-        (*dst)->word_len = word_len;
+        (*dst)->wordlen = wordlen;
     }
 
     // 문자열을 16진수로 변환하여 정순으로 워드 배열에 저장
@@ -355,10 +277,10 @@ msg bi_set_from_string(bigint** dst, char* int_str, int base) {
     int shift = 0;
 
     for (int i = str_len - 1; i >= 0; i--) {
-        char c = int_str[start_idx + i];
+        char c = str[start_idx + i];
         int digit_value = 0;
 
-        if (isdigit(c)) {
+        if (is_digit(c)) {
             digit_value = c - '0';
         }
         else if (c >= 'a' && c <= 'f') {
@@ -374,7 +296,7 @@ msg bi_set_from_string(bigint** dst, char* int_str, int base) {
 
         // 워드가 다 채워지면 저장
         if (shift == sizeof(word) * 8) {
-            (*dst)->a[word_idx++] = temp_value;
+            (*dst)->start[word_idx++] = temp_value;
             temp_value = 0;
             shift = 0;
         }
@@ -382,8 +304,298 @@ msg bi_set_from_string(bigint** dst, char* int_str, int base) {
 
     // 남은 값이 있으면 마지막 워드에 저장
     if (shift > 0) {
-        (*dst)->a[word_idx] = temp_value;
+        (*dst)->start[word_idx] = temp_value;
     }
 
     return print_success_set_from_string();
+}
+
+/**
+ * @brief bigint에 무작위 값을 할당하는 함수
+ * @create_prime이면 마지막 블럭이 all 0가 되는 것을 방지 = 키 크기 최대한 보장
+ * @param dst bigint의 포인터
+ * @param sign 부호
+ * @param wordlen 배열의 길이
+ */
+msg bi_get_random(OUT bigint** dst, IN uint32_t sign, IN uint32_t wordlen)
+{
+    if (wordlen <= 0)
+    {
+        return print_invalid_word_length_error();
+    }
+
+    bi_new(dst, wordlen);
+
+    (*dst)->sign = sign;
+
+    for (int i = 0; i < wordlen; i++)
+    {
+        (*dst)->start[i] = rand() & 0xFF;
+    }
+
+#ifdef create_prameter
+    if ((*dst)->start[wordlen - 1] == 0)
+    {
+        (*dst)->start[wordlen - 1] = rand() & 0xFF;
+        while ((*dst)->start[wordlen - 1] == 0)
+        {
+            (*dst)->start[wordlen - 1] = rand() & 0xFF; // 0이 아닌 값을 보장
+        }
+    }
+#endif
+    bi_refine(*dst);
+
+    return print_success_gen_rand();
+}
+
+/**
+ * @brief bigint의 마지막 워드가 0인 경우 bigint의 메모리를 재할당하는 함수
+ * @param dst bigint의 포인터
+ */
+msg bi_refine(OUT bigint* dst)
+{
+    if (is_null_pointer(dst))
+    {
+        return print_null_pointer_error();
+    }
+
+    while ((dst->start[dst->wordlen - 1] == 0) && (dst->wordlen > 1))
+    {
+        dst->wordlen--;
+    }
+
+    // 새로운 포인터를 받아 기존 포인터를 그대로 유지하는 방식으로 realloc 사용
+    word* new_start = (word*)realloc(dst->start, dst->wordlen * sizeof(word));
+    if (is_null_pointer(new_start))
+    {
+        return print_memory_allocation_error();
+    }
+
+    // 성공적으로 할당되었으므로 포인터 업데이트
+    dst->start = new_start;
+
+    if ((dst->start[0] == 0) && (dst->wordlen == 1))
+    {
+        dst->sign = POSITIVE;
+    }
+
+    return print_success_refine();
+}
+
+/**
+ * @brief bigint의 값을 다른 bigint로 할당하는 함수
+ * @param dst bigint의 포인터
+ * @param src bigint의 포인터
+ */
+msg bi_assign(OUT bigint** dst, IN bigint* src)
+{
+    if (is_null_pointer(src))
+    {
+        return print_null_pointer_error();
+    }
+
+    msg result = bi_new(dst, src->wordlen);
+    if (result != SUCCESS_INITIALIZATION)
+    {
+        return result;
+    }
+
+    (*dst)->sign = src->sign;
+
+    result = array_copy((*dst)->start, src->start, src->wordlen);
+    if (result != SUCCESS_COPY)
+    {
+        free_if_exist((void**)*dst);
+        return result;
+    }
+
+    return print_success_assign();
+}
+
+/**
+ * @brief bigint를 출력하는 함수
+ * @param dst bigint의 포인터
+ * @param base 10진수, 16진수 등 어떻게 해석할지 의미함.
+ */
+msg bi_print(OUT bigint* dst, IN uint32_t base)
+{
+    if (is_null_pointer(dst))
+    {
+        return print_null_pointer_error();
+    }
+
+    if (base != 16)
+    {
+        return fprintf(stdout, "Base %d not supported yet.\n", base);
+    }
+
+    if (dst->sign == NEGATIVE)
+    {
+        printf("-");
+    }
+
+    printf("0x");
+    for (int i = dst->wordlen - 1; i >= 0; i--)
+    {
+        printf("%08X", dst->start[i]);
+        // TODO: base에 따라 출력 형식을 변경할 수 있도록 구현
+    }
+    printf("\n");
+
+    return print_success_print();
+}
+
+/**
+ * @brief bigint가 0인지 확인하는 함수
+ * @param dst bigint의 포인터
+ * @return 0이면 1, 아니면 0
+ */
+int8_t is_zero(OUT bigint* dst)
+{
+    if (is_null_pointer(dst))
+    {
+        return print_null_pointer_error();
+    }
+
+    if (dst->sign == NEGATIVE)
+    {
+        return false;
+    }
+
+    for (int i = dst->wordlen; i >= 0; i--)
+    {
+        if (dst->start[i] != 0)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void bi_set_zero(OUT bigint** x)
+{
+    bi_new(x, 1);
+    (*x)->sign = POSITIVE;
+    (*x)->start[0] = 0;
+}
+
+int8_t bi_compare_ABS(IN bigint* x, IN bigint* y)
+{
+    int n = x->wordlen;
+    int m = y->wordlen;
+
+    // Case: A > B
+    if (n > m)
+        return 1;
+
+    // Case: A < B
+    if (n < m)
+        return -1;
+
+    for (int i = n - 1; i >= 0; i--) {
+
+        if (x->start[i] > y->start[i])
+            return 1;
+
+        if (x->start[i] < y->start[i])
+            return -1;
+
+    }
+
+    return 0;
+}
+
+int8_t bi_compare(IN bigint* x, IN bigint* y)
+{
+    if (x->sign == POSITIVE && y->sign == NEGATIVE)
+        return 1;
+
+    if (x->sign == NEGATIVE && y->sign == POSITIVE)
+        return -1;
+
+    int ret = bi_compare_ABS(x, y);
+
+    if (x->sign == POSITIVE)
+        return ret;
+
+    return ret * (-1);
+}
+
+/**
+ * @brief word를 왼쪽으로 shift하는 함수
+ * @param dst bigint의 포인터
+ * @param k shift 하고싶은 word 사이즈
+ */
+msg bi_word_left_shift(OUT bigint** dst, IN uint32_t shift_amount) {
+    if (is_null_pointer(dst) || is_null_pointer(*dst)) {
+        return print_null_pointer_error();
+    }
+
+    if (shift_amount == 0) {
+        return print_success_shift(); // 아무것도 하지 않음
+    }
+    uint32_t wordlen = (*dst)->wordlen;
+    uint32_t new_wordlen = wordlen + shift_amount;
+    bigint* tmp = NULL;
+    msg result = bi_new(&tmp, new_wordlen);
+    if (result != SUCCESS_INITIALIZATION) {
+        return result;
+    }
+
+    tmp->sign = (*dst)->sign;
+
+    // 왼쪽으로 shift_amount만큼 이동
+    for (uint32_t i = 0; i < (*dst)->wordlen; i++) {
+        tmp->start[i + shift_amount] = (*dst)->start[i];
+    }
+
+    // 나머지 부분은 0으로 유지
+    for (uint32_t i = 0; i < shift_amount; i++) {
+        tmp->start[i] = 0;
+    }
+
+    bi_assign(dst, tmp);
+    bi_delete(&tmp);
+
+    return print_success_shift();
+}
+
+
+msg bi_word_right_shift(OUT bigint** dst, IN byte k)
+{
+    if (is_null_pointer(dst)) {
+        return print_null_pointer_error();
+    }
+
+    if ((*dst)->wordlen == 1 && k >= 1) {
+        // 모든 비트가 이동되어 값이 0이 되는 경우
+        bi_set_zero(dst);
+        return print_success_shift();
+    }
+
+    if (k >= (*dst)->wordlen) {
+        // 모든 비트가 이동되어 값이 0이 되는 경우
+        bi_set_zero(dst);
+        return print_success_shift();
+    }
+
+    bigint* tmp = NULL;
+    msg result = bi_new(&tmp, (*dst)->wordlen - k);
+    if (result != SUCCESS_INITIALIZATION) {
+        return result;
+    }
+
+    tmp->sign = (*dst)->sign;
+
+    // 비트 이동에 따라 값을 할당
+    for (int i = 0; i < tmp->wordlen; i++) {
+        tmp->start[i] = (*dst)->start[i + k];
+    }
+
+    // tmp의 값을 dst로 복사
+    result = bi_assign(dst, tmp);
+    bi_delete(&tmp);
+
+    return result == SUCCESS_ASSIGN ? print_success_shift() : result;
 }

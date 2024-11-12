@@ -3,8 +3,13 @@
 #include "base.h"
 #include "error.h"
 #include "bigint_addition.h"
+#include "bigint_multiplication.h"
 #include <time.h>
+#include "test.h"
 # define NON_NEGATIVE 0 
+# define SUCCESS 0
+# define ERROR -1
+# define MEMORY_ERROR -2
 
 /*
 int main() {
@@ -367,14 +372,17 @@ int main() {
     return 0;
 }
 */
+
+
+/*
 void run_test(const char* test_name, bigint* a, bigint* b) {
     bigint* result;
 
     // 최대 a의 길이 + 1 (자리 올림 고려) 만큼 result 초기화
-    bi_new(&result, a->word_len + 1);
+    bi_new(&result, a->wordlen + 1);
 
     // 덧셈 수행
-    add(&result, a, b);
+    bi_add(&result, a, b);
 
     // 결과 출력
     printf("%s:\n", test_name);
@@ -398,8 +406,8 @@ int main() {
     word b_array1[] = { 0x11111111, 0x22222222 };
     bi_new(&a, 2);
     bi_new(&b, 2);
-    bi_set_from_array(&a, 0, 2, a_array1);
-    bi_set_from_array(&b, 0, 2, b_array1);
+    bi_set_from_array(&a, 1, 2, a_array1);
+    bi_set_from_array(&b, 1, 2, b_array1);
     run_test("Test Case 1: Same Length", a, b);
     bi_delete(&a);
     bi_delete(&b);
@@ -447,6 +455,366 @@ int main() {
     run_test("Test Case 5: Large Values with Carry", a, b);
     bi_delete(&a);
     bi_delete(&b);
+
+    return 0;
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+void run_shift_tests() {
+    bigint* A = NULL;
+
+    // 테스트 케이스 1: 왼쪽 시프트
+    word a_array1[] = { 0x00000001, 0x00000000 };
+    bi_new(&A, 2);
+    bi_set_from_array(&A, 0, 2, a_array1);
+    printf("\n[TEST] Left Shift by 1\n");
+    if (bi_word_left_shift(&A, 1) == SUCCESS_SHIFT) {
+        bi_print(A, 16);
+    }
+    else {
+        fprintf(stderr, "Left shift failed\n");
+    }
+    bi_delete(&A);
+
+    // 테스트 케이스 2: 오른쪽 시프트
+    word a_array2[] = { 0x12345678, 0x9ABCDEF0 };
+    bi_new(&A, 2);
+    bi_set_from_array(&A, 0, 2, a_array2);
+    printf("\n[TEST] Right Shift by 1\n");
+    if (bi_word_right_shift(&A, 1) == SUCCESS_SHIFT) {
+        bi_print(A, 16);
+    }
+    else {
+        fprintf(stderr, "Right shift failed\n");
+    }
+    bi_delete(&A);
+
+    // 테스트 케이스 3: 왼쪽 시프트로 자리 올림 발생
+    word a_array3[] = { 0xFFFFFFFF, 0x00000001 };
+    bi_new(&A, 2);
+    bi_set_from_array(&A, 0, 2, a_array3);
+    printf("\n[TEST] Left Shift by 2 (with carry)\n");
+    if (bi_word_left_shift(&A, 2) == SUCCESS_SHIFT) {
+        bi_print(A, 16);
+    }
+    else {
+        fprintf(stderr, "Left shift failed\n");
+    }
+    bi_delete(&A);
+
+    // 테스트 케이스 4: 오른쪽 시프트로 모든 값이 0이 됨
+    word a_array4[] = { 0x00000001 };
+    bi_new(&A, 1);
+    bi_set_from_array(&A, 0, 1, a_array4);
+    printf("\n[TEST] Right Shift by 1 (resulting in zero)\n");
+    if (bi_word_right_shift(&A, 1) == SUCCESS_SHIFT) {
+        bi_print(A, 16);
+    }
+    else {
+        fprintf(stderr, "Right shift failed\n");
+    }
+    bi_delete(&A);
+}
+
+int main() {
+    run_shift_tests();
+    return 0;
+}
+*/
+
+
+/*
+int main() {
+    bigint* A = NULL, * B = NULL, * result = NULL;
+
+    // 테스트 케이스 1: 동일한 길이의 bigint 곱셈
+    word a_array1[] = { 0x12345678, 0x9ABCDEF0 };
+    word b_array1[] = { 0x11111111, 0x22222222 };
+    bi_new(&A, 2);
+    bi_new(&B, 2);
+    bi_set_from_array(&A, 0, 2, a_array1);
+    bi_set_from_array(&B, 0, 2, b_array1);
+    printf("\n[TEST] Test Case 1: Same Length\n");
+    if (bi_mul_C(&result, A, B) != SUCCESS) {
+        fprintf(stderr, "Multiplication failed\n");
+    }
+    bi_print(result, 16);
+    bi_delete(&A);
+    bi_delete(&B);
+    bi_delete(&result);
+
+    // 테스트 케이스 2: 서로 다른 길이의 bigint 곱셈
+    word a_array2[] = { 0xFFFFFFFF, 0xFFFFFFFF, 0x00000001 };
+    word b_array2[] = { 0x00000001 };
+    bi_new(&A, 3);
+    bi_new(&B, 1);
+    bi_set_from_array(&A, 0, 3, a_array2);
+    bi_set_from_array(&B, 0, 1, b_array2);
+    printf("\n[TEST] Test Case 2: Different Lengths\n");
+    if (bi_mul_C(&result, A, B) != SUCCESS) {
+        fprintf(stderr, "Multiplication failed\n");
+    }
+    bi_print(result, 16);
+    bi_delete(&A);
+    bi_delete(&B);
+    bi_delete(&result);
+
+    // 테스트 케이스 3: 오버플로우 발생
+    word a_array3[] = { 0xFFFFFFFF, 0xFFFFFFFF };
+    word b_array3[] = { 0x00000001 };
+    bi_new(&A, 2);
+    bi_new(&B, 1);
+    bi_set_from_array(&A, 0, 2, a_array3);
+    bi_set_from_array(&B, 0, 1, b_array3);
+    printf("\n[TEST] Test Case 3: Overflow Check\n");
+    if (bi_mul_C(&result, A, B) != SUCCESS) {
+        fprintf(stderr, "Multiplication failed\n");
+    }
+    bi_print(result, 16);
+    bi_delete(&A);
+    bi_delete(&B);
+    bi_delete(&result);
+
+    // 테스트 케이스 4: 작은 값 곱셈
+    word a_array4[] = { 0x0000000A };
+    word b_array4[] = { 0x00000005 };
+    bi_new(&A, 1);
+    bi_new(&B, 1);
+    bi_set_from_array(&A, 0, 1, a_array4);
+    bi_set_from_array(&B, 0, 1, b_array4);
+    printf("\n[TEST] Test Case 4: Small Values\n");
+    if (bi_mul_C(&result, A, B) != SUCCESS) {
+        fprintf(stderr, "Multiplication failed\n");
+    }
+    bi_print(result, 16);
+    bi_delete(&A);
+    bi_delete(&B);
+    bi_delete(&result);
+
+    // 테스트 케이스 5: 큰 숫자 곱셈 (자리 올림 발생)
+    word a_array5[] = { 0xFFFFFFFF, 0xFFFFFFFF };
+    word b_array5[] = { 0xFFFFFFFF, 0xFFFFFFFF };
+    bi_new(&A, 2);
+    bi_new(&B, 2);
+    bi_set_from_array(&A, 0, 2, a_array5);
+    bi_set_from_array(&B, 0, 2, b_array5);
+    printf("\n[TEST] Test Case 5: Large Values with Carry\n");
+    if (bi_mul_C(&result, A, B) != SUCCESS) {
+        fprintf(stderr, "Multiplication failed\n");
+    }
+    bi_print(result, 16);
+    bi_delete(&A);
+    bi_delete(&B);
+    bi_delete(&result);
+
+    return 0;
+}
+
+*/
+/*
+void run_multiplication_tests() {
+    bigint* A = NULL, * B = NULL, ** result = NULL;
+
+    // 테스트 케이스 1: 기본 곱셈 테스트
+    word a_array1[] = { 0x12345678 };
+    word b_array1[] = { 0x9ABCDEF0 };
+    bi_new(&A, 2);
+    bi_new(&B, 2);
+    bi_set_from_array(&A, 0, 1, a_array1);
+    bi_set_from_array(&B, 0, 1, b_array1);
+    printf("\n[TEST] Multiplication of basic values\n");
+    if (bi_mul_C(result, A, B) == SUCCESS_MUL_C) {
+        bi_print(result, 16);
+    }
+    else {
+        fprintf(stderr, "Multiplication failed\n");
+    }
+    bi_delete(&A);
+    bi_delete(&B);
+    bi_delete(&result);
+
+    // 테스트 케이스 2: 큰 값 곱셈 테스트
+    word a_array2[] = { 0xFFFFFFFF, 0xFFFFFFFF };
+    word b_array2[] = { 0xFFFFFFFF, 0xFFFFFFFF };
+    bi_new(&A, 2);
+    bi_new(&B, 2);
+    bi_set_from_array(&A, 0, 1, a_array1);
+    bi_set_from_array(&B, 0, 1, b_array1);
+    printf("\n[TEST] Multiplication of large values\n");
+    if (bi_mul_C(result, A, B) == SUCCESS_MUL_C) {
+        bi_print(result, 16);
+    }
+    else {
+        fprintf(stderr, "Multiplication failed\n");
+    }
+    bi_delete(&A);
+    bi_delete(&B);
+    bi_delete(&result);
+
+    // 테스트 케이스 3: 서로 다른 길이의 곱셈
+    word a_array3[] = { 0x12345678, 0x00000001 };
+    word b_array3[] = { 0x9ABCDEF0 };
+    bi_new(&A, 2);
+    bi_new(&B, 2);
+    bi_set_from_array(&A, 0, 1, a_array1);
+    bi_set_from_array(&B, 0, 1, b_array1);
+    printf("\n[TEST] Multiplication of different lengths\n");
+    if (bi_mul_C(result, A, B) == SUCCESS_MUL_C) {
+        bi_print(result, 16);
+    }
+    else {
+        fprintf(stderr, "Multiplication failed\n");
+    }
+    bi_delete(&A);
+    bi_delete(&B);
+    bi_delete(&result);
+
+    // 테스트 케이스 4: 작은 값 곱셈
+    word a_array4[] = { 0x00000002 };
+    word b_array4[] = { 0x00000003 };
+    bi_new(&A, 2);
+    bi_new(&B, 2);
+    bi_set_from_array(&A, 0, 1, a_array1);
+    bi_set_from_array(&B, 0, 1, b_array1);
+    printf("\n[TEST] Multiplication of small values\n");
+    if (bi_mul_C(result, A, B) == SUCCESS_MUL_C) {
+        bi_print(result, 16);
+    }
+    else {
+        fprintf(stderr, "Multiplication failed\n");
+    }
+    bi_delete(&A);
+    bi_delete(&B);
+    bi_delete(&result);
+
+    // 테스트 케이스 5: 자리 올림 발생하는 곱셈
+    word a_array5[] = { 0x80000000 };
+    word b_array5[] = { 0x00000002 };
+    bi_new(&A, 2);
+    bi_new(&B, 2);
+    bi_set_from_array(&A, 0, 1, a_array1);
+    bi_set_from_array(&B, 0, 1, b_array1);
+    printf("\n[TEST] Multiplication with carry\n");
+    if (bi_mul_C(result, A, B) == SUCCESS_MUL_C) {
+        bi_print(result, 16);
+    }
+    else {
+        fprintf(stderr, "Multiplication failed\n");
+    }
+    bi_delete(&A);
+    bi_delete(&B);
+    bi_delete(&result);
+}
+
+int main() {
+    run_multiplication_tests();
+    return 0;
+}
+*/
+
+/*
+void run_karatsuba_tests() {
+    bigint* A = NULL;
+    bigint* B = NULL;
+    bigint* result = NULL;
+
+    // Test case: Create arrays with wordlen >= 2
+    word a_array[] = { 0x12345678, 0x9ABCDEF0 };
+    word b_array[] = { 0x0FEDCBA9, 0x87654321 };
+
+    // Initialize A and B with wordlen 2
+    if (bi_new(&A, 2) != SUCCESS_MEMORY_ALLOCATION || bi_new(&B, 2) != SUCCESS_MEMORY_ALLOCATION) {
+        fprintf(stderr, "Memory allocation failed for A or B\n");
+        return;
+    }
+
+    bi_set_from_array(&A, 0, 2, a_array);
+    bi_set_from_array(&B, 0, 2, b_array);
+
+    printf("\n[TEST] Karatsuba Multiplication with wordlen >= 2\n");
+    if (karatsuba_mul(&result, A, B) == SUCCESS_MUL_C) {
+        printf("Result: ");
+        bi_print(result, 16); // Print result in hexadecimal format
+    }
+    else {
+        fprintf(stderr, "Karatsuba multiplication failed\n");
+    }
+
+    // Clean up
+    bi_delete(&A);
+    bi_delete(&B);
+    bi_delete(&result);
+}
+
+int main() {
+    run_karatsuba_tests();
+    return 0;
+}
+*/
+
+
+
+int main() {
+    word A, B;
+    bigint* result = NULL;
+
+    // 테스트 케이스 1: 일반적인 곱셈
+    A = 0x12345678;
+    B = 0x9ABCDEF0;
+    bi_mul_AB(&result, &A, &B);
+    printf("Test Case 1: A = 0x12345678, B = 0x9ABCDEF0\nResult: ");
+    bi_print(result, 16);
+    printf("\n");
+    bi_delete(&result);
+
+    // 테스트 케이스 2: 작은 값 곱셈
+    A = 0x00000002;
+    B = 0x00000003;
+    bi_mul_AB(&result, &A, &B);
+    printf("Test Case 2: A = 0x00000002, B = 0x00000003\nResult: ");
+    bi_print(result, 16);
+    printf("\n");
+    bi_delete(&result);
+
+    // 테스트 케이스 3: 큰 값 곱셈 (자리 올림 발생 가능)
+    A = 0xFFFFFFFF;
+    B = 0xFFFFFFFF;
+    bi_mul_AB(&result, &A, &B);
+    printf("Test Case 3: A = 0xFFFFFFFF, B = 0xFFFFFFFF\nResult: ");
+    bi_print(result, 16);
+    printf("\n");
+    bi_delete(&result);
+
+    // 테스트 케이스 4: 서로 다른 크기의 값 곱셈
+    A = 0x1;
+    B = 0xFFFFFFFF;
+    bi_mul_AB(&result, &A, &B);
+    printf("Test Case 4: A = 0x1, B = 0xFFFFFFFF\nResult: ");
+    bi_print(result, 16);
+    printf("\n");
+    bi_delete(&result);
+
+    // 테스트 케이스 5: A 또는 B가 0인 경우
+    A = 0x0;
+    B = 0xFFFFFFFF;
+    bi_mul_AB(&result, &A, &B);
+    printf("Test Case 5: A = 0x0, B = 0xFFFFFFFF\nResult: ");
+    bi_print(result, 16);
+    printf("\n");
+    bi_delete(&result);
 
     return 0;
 }
