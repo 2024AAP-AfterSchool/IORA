@@ -44,7 +44,8 @@ msg bi_mul_AB(OUT bigint** dst, IN word* A, IN word* B)
     word tmp = C0;
     C0 = C0 + (T0 << (sizeof(word) * 4));
     C1 = C1 + (T1 << (sizeof(word) * 4)) + (T0 >> (sizeof(word) * 4)) + (C0 < tmp);
-    C = bi_word_left_shift(&C1, 1) | C0;
+    C->start[1] = C1;
+    C->start[0] = C0;
 
     return print_success_mul_AB();
 }
@@ -92,7 +93,7 @@ msg bi_mul_C(OUT bigint** dst, IN bigint* A, IN bigint* B)
         bi_delete(&T);
     }
 
-    bi_refine(*dst);
+    bi_refine(C);
     bi_assign(dst, C); // 최종 결과를 dst에 할당
     bi_delete(&C); // C 삭제
 
