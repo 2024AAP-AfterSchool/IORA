@@ -1,0 +1,27 @@
+<map id="src/bigint/bigint_calculation.c" name="src/bigint/bigint_calculation.c">
+<area shape="rect" id="Node000001" title="bigint에 대한 연산을 하는 함수들을 정의한 소스 파일" alt="" coords="328,5,517,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,66,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="338,34,220,54,81,81,80,76,219,48,337,29"/>
+<area shape="rect" id="Node000003" href="$string_8h.html" title="문자열과 관련된 함수들을 정의한 헤더 파일" alt="" coords="331,79,396,105"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="415,33,385,69,381,65,410,30"/>
+<area shape="rect" id="Node000004" href="$base__type_8h.html" title=" " alt="" coords="361,153,486,178"/>
+<area shape="poly" id="edge10_Node000001_Node000004" title=" " alt="" coords="386,34,358,47,333,63,319,82,318,92,322,103,343,127,370,144,367,148,339,131,317,106,313,93,314,80,330,59,355,42,384,29"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="535,226,600,252"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="518,26,620,44,661,59,688,77,698,97,699,117,691,138,678,157,642,192,603,220,600,216,638,188,674,154,687,135,693,117,693,98,684,81,659,64,618,50,517,31"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="749,79,812,105"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="489,29,731,76,735,77,734,82,730,82,488,34"/>
+<area shape="rect" id="Node000007" href="$memory_8h.html" title="메모리 할당, 해제 등 메모리와 관련된 함수들을 정의한 헤더 파일" alt="" coords="568,79,674,105"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="457,29,574,71,572,76,455,34"/>
+<area shape="rect" id="Node000009" href="$base__error_8h.html" title=" " alt="" coords="420,79,544,105"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="434,30,464,65,460,69,430,33"/>
+<area shape="rect" id="Node000010" href="$bigint__calculation_8h.html" title=" " alt="" coords="89,79,256,105"/>
+<area shape="poly" id="edge14_Node000001_Node000010" title=" " alt="" coords="381,34,230,77,229,72,379,29"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="375,103,406,139,402,142,371,107"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="449,176,531,217,528,221,447,181"/>
+<area shape="poly" id="edge9_Node000007_Node000004" title=" " alt="" coords="588,108,472,150,470,144,586,103"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="548,153,622,178"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="617,106,600,140,595,138,613,104"/>
+<area shape="poly" id="edge13_Node000009_Node000004" title=" " alt="" coords="475,107,445,142,441,139,470,103"/>
+<area shape="poly" id="edge12_Node000009_Node000008" title=" " alt="" coords="501,103,557,141,554,146,498,107"/>
+<area shape="poly" id="edge15_Node000010_Node000004" title=" " alt="" coords="216,103,367,145,366,151,215,108"/>
+</map>

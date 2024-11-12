@@ -1,0 +1,26 @@
+<map id="bi_set_from_string" name="bi_set_from_string">
+<area shape="rect" id="Node000001" title="string을 통해 bigint에 값을 할당하는 함수" alt="" coords="5,327,134,352"/>
+<area shape="rect" id="Node000002" href="$bigint__calculation_8c.html#a441aca43444e577be252db9b5690e503" title="bigint에 arrary를 할당하는 함수" alt="" coords="231,144,293,170"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,324,123,277,180,219,229,177,233,181,183,223,127,280,84,328"/>
+<area shape="rect" id="Node000006" href="$base__error_8c.html#a0ff5fd31efce68863a3396862e215487" title=" " alt="" coords="398,235,560,276"/>
+<area shape="poly" id="edge10_Node000001_Node000006" title=" " alt="" coords="83,324,124,292,151,275,181,262,231,250,284,243,382,243,382,248,284,249,232,255,183,267,154,280,127,296,86,329"/>
+<area shape="rect" id="Node000008" href="$string_8c.html#a82a74f32939c3442b5ba278ffd219e22" title="문자열이 10진수인지 확인하는 함수" alt="" coords="231,277,293,303"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="122,323,215,299,216,304,123,329"/>
+<area shape="rect" id="Node000009" href="$string_8c.html#aaa5e14b4c7c0479050bbb124fe3cf834" title="문자열이 16진수인지 확인하는 함수" alt="" coords="217,327,307,352"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="134,337,201,337,201,342,134,342"/>
+<area shape="rect" id="Node000010" href="$base__error_8c.html#afcf2ec99cdcd9be08648c7773423169a" title=" " alt="" coords="199,376,324,417"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="116,350,185,371,184,376,115,355"/>
+<area shape="rect" id="Node000011" href="$base__error_8c.html#abc4557fb5f08b0aa1a2de96635497f7f" title=" " alt="" coords="202,442,322,482"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="86,351,128,387,183,427,193,432,191,437,180,431,125,391,83,355"/>
+<area shape="rect" id="Node000012" href="$base__error_8c.html#a680e4f47716fca2fbcdc67a4396e42ac" title=" " alt="" coords="182,507,342,548"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="80,352,118,418,148,457,183,492,190,497,186,501,180,496,144,461,113,421,75,354"/>
+<area shape="rect" id="Node000003" href="$memory_8c.html#a7a2336750ce2c077f29a85c1fdd9fb31" title="포인터가 NULL인지 확인하는 함수" alt="" coords="426,5,531,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="272,142,320,93,353,65,389,41,410,31,413,36,391,46,356,69,323,97,276,145"/>
+<area shape="rect" id="Node000004" href="$base__error_8c.html#a44788e0c4c63cd6ca292cb2d44313837" title=" " alt="" coords="406,55,551,96"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="292,143,408,99,409,104,294,148"/>
+<area shape="rect" id="Node000005" href="$base__error_8c.html#aef05af2222acc0dd48f418acfaf5f174" title=" " alt="" coords="416,120,541,161"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="293,152,400,144,401,149,294,157"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="288,168,391,221,404,227,402,231,389,226,285,173"/>
+<area shape="rect" id="Node000007" href="$base__error_8c.html#a47c3d935b57aeec1f128170eee7547de" title=" " alt="" coords="390,185,567,211"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="294,160,393,179,392,184,293,165"/>
+</map>

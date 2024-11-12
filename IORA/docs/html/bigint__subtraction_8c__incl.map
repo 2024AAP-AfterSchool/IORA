@@ -1,0 +1,20 @@
+<map id="src/bigint/bigint_subtraction.c" name="src/bigint/bigint_subtraction.c">
+<area shape="rect" id="Node000001" title="bigint에 대한 뺄셈 연산을 하는 함수들을 정의한 소스 파일" alt="" coords="120,5,311,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,66,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="186,34,81,75,79,70,184,29"/>
+<area shape="rect" id="Node000003" href="$base__type_8h.html" title=" " alt="" coords="245,153,370,178"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="188,34,162,48,140,65,127,84,127,93,131,103,151,124,175,139,203,149,231,156,229,161,201,154,173,143,148,128,127,106,121,94,122,82,136,61,159,43,186,29"/>
+<area shape="rect" id="Node000005" href="$base__error_8h.html" title=" " alt="" coords="505,79,630,105"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="276,29,493,73,492,78,275,34"/>
+<area shape="rect" id="Node000007" href="$bigint__addition_8h.html" title=" " alt="" coords="140,79,291,105"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="218,31,218,63,213,63,213,31"/>
+<area shape="rect" id="Node000008" href="$bigint__calculation_8h.html" title=" " alt="" coords="314,79,482,105"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="247,29,354,71,352,75,246,34"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="275,226,340,252"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="310,179,310,211,305,211,305,179"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="524,108,367,151,366,145,523,103"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="530,153,605,178"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="570,105,570,137,565,137,565,105"/>
+<area shape="poly" id="edge8_Node000007_Node000003" title=" " alt="" coords="233,103,282,141,279,145,229,107"/>
+<area shape="poly" id="edge10_Node000008_Node000003" title=" " alt="" coords="384,107,336,145,333,141,381,103"/>
+</map>

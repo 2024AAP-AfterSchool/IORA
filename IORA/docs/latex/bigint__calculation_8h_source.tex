@@ -1,0 +1,55 @@
+\doxysection{bigint\+\_\+calculation.\+h}
+\hypertarget{bigint__calculation_8h_source}{}\label{bigint__calculation_8h_source}\index{include/bigint/bigint\_calculation.h@{include/bigint/bigint\_calculation.h}}
+\mbox{\hyperlink{bigint__calculation_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ BIGINT\_CALCULATION\_H\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ BIGINT\_CALCULATION\_H\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{base__type_8h}{base/base\_type.h}}"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ bigint의\ 메모리를\ 할당하는\ 함수}}
+\DoxyCodeLine{00007\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{bigint__calculation_8h_a4266a993110f28fa99163be1cc61d2ce}{bi\_new}}(\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}}\ \mbox{\hyperlink{structbigint}{bigint}}**\ dst,\ \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}\ uint32\_t\ wordlen);}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ bigint를\ 삭제하는\ 함수}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ 삭제\ 시에는\ 값을\ 모두\ 0으로\ 초기화하는\ ZERORIZE를\ 사용함.}}
+\DoxyCodeLine{00011\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{bigint__calculation_8h_a84d3065789f8df11fe043e0323853ee1}{bi\_delete}}(\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}}\ \mbox{\hyperlink{structbigint}{bigint}}**\ dst);}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ bigint에\ arrary를\ 할당하는\ 함수}}
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ sign은\ 부호,\ wordlen은\ 배열의\ 길이,\ a는\ 배열을\ 의미함.}}
+\DoxyCodeLine{00015\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{bigint__calculation_8h_ac7b2f0e58574cc42b33d3cd6b2025e70}{bi\_set\_from\_array}}(\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}}\ \mbox{\hyperlink{structbigint}{bigint}}**\ dst,\ \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}\ uint32\_t\ sign,\ \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}\ uint32\_t\ wordlen,\ \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}\ \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}}*\ src);}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{comment}{//\ bigint에\ string을\ 할당하는\ 함수}}
+\DoxyCodeLine{00018\ \textcolor{comment}{//\ int\_str은\ 문자열,\ base는\ 10진수,\ 16진수\ 등\ 어떻게\ 해석할지\ 의미함.}}
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ string이\ 올바르지\ 않은\ 경우를\ 예외처리\ 해야함.}}
+\DoxyCodeLine{00020\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{bigint__calculation_8h_aae00b95a98973317f924f62bfb447a20}{bi\_set\_from\_string}}(\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}}\ \mbox{\hyperlink{structbigint}{bigint}}**\ dst,\ \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}\ \textcolor{keywordtype}{char}*\ str,\ \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}\ uint32\_t\ base);}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{comment}{//\ random\ 값으로\ 생성한\ 배열의\ 가장\ 마지막\ 인덱스는\ 0이\ 되어서는\ 안됨.}}
+\DoxyCodeLine{00023\ \textcolor{comment}{//\ 0일\ 경우\ wordlen보다\ 작은\ 값이\ 나옴.}}
+\DoxyCodeLine{00024\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{bigint__calculation_8h_a7434576fe036cda0c7da5bde57b03db0}{bi\_get\_random}}(\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}}\ \mbox{\hyperlink{structbigint}{bigint}}**\ dst,\ \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}\ uint32\_t\ sign,\ \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}\ uint32\_t\ wordlen);}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{comment}{//\ bigint의\ 마지막\ 워드가\ 0인\ 경우\ bigint의\ 메모리를\ 재할당하는\ 함수}}
+\DoxyCodeLine{00027\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{bigint__calculation_8h_ad3ea6d6810e6d14a748c2ca26a16345d}{bi\_refine}}(\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}}\ \mbox{\hyperlink{structbigint}{bigint}}*\ dst);}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{comment}{//\ bigint의\ 값을\ 다른\ bigint로\ 할당하는\ 함수}}
+\DoxyCodeLine{00030\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{bigint__calculation_8h_a661579c313392e1aa1e2ca1c6c227ce6}{bi\_assign}}(\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}}\ \mbox{\hyperlink{structbigint}{bigint}}**\ dst,\ \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}\ \mbox{\hyperlink{structbigint}{bigint}}*\ src);}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{comment}{//\ bigint를\ 출력하는\ 함수}}
+\DoxyCodeLine{00033\ \textcolor{comment}{//\ 구조체\ 포인터를\ 사용하는\ 이유는\ 구조체를\ 복사하는\ 것보다\ 포인터를\ 사용하는\ 것이\ 더\ 메모리를\ 절약할\ 수\ 있음.}}
+\DoxyCodeLine{00034\ \textcolor{comment}{//\ base는\ 10진수,\ 16진수\ 등\ 어떻게\ 해석할지\ 의미함.}}
+\DoxyCodeLine{00035\ \textcolor{comment}{//\ 나눗셈까지\ 구현을\ 해야\ print를\ 구현할\ 수\ 있음.}}
+\DoxyCodeLine{00036\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{bigint__calculation_8h_a304e07ea540143803011f7cdd399d412}{bi\_print}}(\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}}\ \mbox{\hyperlink{structbigint}{bigint}}*\ dst,\ \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}\ uint32\_t\ base);}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{bigint__calculation_8h_ab79c94ec396b3b384e7f2b102abbe18b}{array\_copy}}(\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}}\ \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}}*\ dst,\ \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}\ \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}}*\ src,\ \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}\ uint32\_t\ wordlen);}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ int8\_t\ \mbox{\hyperlink{bigint__calculation_8h_a85731cbcd8a4b5bfa9939fa32268a446}{is\_zero}}(\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}}\ \mbox{\hyperlink{structbigint}{bigint}}*\ dst);}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{comment}{//set\ zero\ 확인하는\ 함수}}
+\DoxyCodeLine{00043\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bigint__calculation_8h_a60481dc2edd27dfcf89351e6c1ff1311}{bi\_set\_zero}}(\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}}\ \mbox{\hyperlink{structbigint}{bigint}}**\ x);}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{comment}{//\ 두\ 큰수\ 비교하는\ 함수}}
+\DoxyCodeLine{00046\ int8\_t\ \mbox{\hyperlink{bigint__calculation_8h_a7e37b9de0713c39ca00ab803fc8c103c}{bi\_compare\_ABS}}(\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}\ \mbox{\hyperlink{structbigint}{bigint}}*\ x,\ \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}\ \mbox{\hyperlink{structbigint}{bigint}}*\ y);}
+\DoxyCodeLine{00047\ int8\_t\ \mbox{\hyperlink{bigint__calculation_8h_abc120d0239a1533965133208e4751569}{bi\_compare}}(\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}\ \mbox{\hyperlink{structbigint}{bigint}}*\ x,\ \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}\ \mbox{\hyperlink{structbigint}{bigint}}*\ y);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ BIGINT\_CALCULATION\_H\_}}
+
+\end{DoxyCode}

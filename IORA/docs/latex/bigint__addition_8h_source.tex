@@ -1,0 +1,24 @@
+\doxysection{bigint\+\_\+addition.\+h}
+\hypertarget{bigint__addition_8h_source}{}\label{bigint__addition_8h_source}\index{include/bigint/bigint\_addition.h@{include/bigint/bigint\_addition.h}}
+\mbox{\hyperlink{bigint__addition_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ BIGINT\_ADDITION\_H\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ BIGINT\_ADDITION\_H\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{base__type_8h}{base/base\_type.h}}"{}}\ \ \ \textcolor{comment}{//\ 기본\ 함수\ 및\ 타입\ 정의}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ ADD\_ABC\ 함수:\ A,\ B,\ c의\ 덧셈을\ 수행하고\ C에\ 저장,\ 캐리를\ c\_prime에\ 저장}}
+\DoxyCodeLine{00007\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{bigint__addition_8h_a6c9520545153bec905fec5f49f354cf9}{bi\_add\_ABC}}(\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}\ \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}}\ A,\ \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}\ \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}}\ B,\ \mbox{\hyperlink{base__type_8h_a41d392b635e85662868de4ceffde68f4}{carry}}\ c,\ \mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}}\ \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}}*\ C,\ \mbox{\hyperlink{base__type_8h_a41d392b635e85662868de4ceffde68f4}{carry}}*\ c\_prime);}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ ADD\_C\ 함수:\ 두\ bigint\ A와\ B의\ 덧셈을\ 수행하고,\ 결과를\ result에\ 저장}}
+\DoxyCodeLine{00010\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{bigint__addition_8h_abf63ebdfbe5acde4ea5d05ebdb1cd0a3}{bi\_add\_C}}(\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}}\ \mbox{\hyperlink{structbigint}{bigint}}**\ dst,\ \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}\ \mbox{\hyperlink{structbigint}{bigint}}*\ A,\ \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}\ \mbox{\hyperlink{structbigint}{bigint}}*\ B);}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ ADD\ 함수:\ A와\ B의\ 덧셈을\ 수행하며,\ A와\ B의\ 길이에\ 따라\ ADDC를\ 호출}}
+\DoxyCodeLine{00013\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{bigint__addition_8h_a0b664d25349d775300da493a96c02a6e}{bi\_add}}(\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}}\ \mbox{\hyperlink{structbigint}{bigint}}**\ dst,\ \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}\ \mbox{\hyperlink{structbigint}{bigint}}*\ A,\ \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}}\ \mbox{\hyperlink{structbigint}{bigint}}*\ B);}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ ADD\ 테스트\ 함수:\ bigint\ 덧셈\ 테스트\ 함수}}
+\DoxyCodeLine{00016\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{bigint__addition_8h_afe02a70ab92f357494f002234b531e45}{bi\_test\_add}}();}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ BIGINT\_ADDITION\_H\_}}
+
+\end{DoxyCode}

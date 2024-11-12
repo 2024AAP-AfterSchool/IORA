@@ -1,0 +1,728 @@
+\doxysection{include/base/base\+\_\+error.h File Reference}
+\hypertarget{base__error_8h}{}\label{base__error_8h}\index{include/base/base\_error.h@{include/base/base\_error.h}}
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include "{}base\+\_\+type.\+h"{}}\newline
+Include dependency graph for base\+\_\+error.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=224pt]{base__error_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{base__error_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{base__error_8h_a42f8c497a1968074f38bf5055c650dca}{VERBOSE}}~false
+\item 
+\#define \mbox{\hyperlink{base__error_8h_af908452b7f22a0eaa994dc6d795b3d5b}{SUCCESS\+\_\+\+MEMORY\+\_\+\+ALLOCATION}}~1
+\item 
+\#define \mbox{\hyperlink{base__error_8h_a1b32687f772b885d9ebb9cad9d6de5a5}{SUCCESS\+\_\+\+INITIALIZATION}}~2
+\item 
+\#define \mbox{\hyperlink{base__error_8h_a91e16a9169a4156f57b5fc2846768bf9}{SUCCESS\+\_\+\+MEMORY\+\_\+\+DEALLOCATION}}~3
+\item 
+\#define \mbox{\hyperlink{base__error_8h_a4085eac475d4758540eec8f6366dbf18}{SUCCESS\+\_\+\+COPY}}~4
+\item 
+\#define \mbox{\hyperlink{base__error_8h_a4758dfffc951a2d75944e5613aef2311}{SUCCESS\+\_\+\+SET\+\_\+\+FROM\+\_\+\+ARRAY}}~5
+\item 
+\#define \mbox{\hyperlink{base__error_8h_a9cec5171cc9014cfa75b54808151148a}{SUCCESS\+\_\+\+PRINT}}~6
+\item 
+\#define \mbox{\hyperlink{base__error_8h_a1bb55e15a266be17ea2c94898f4a94de}{SUCCESS\+\_\+\+RAND\+\_\+\+ARRAY}}~7
+\item 
+\#define \mbox{\hyperlink{base__error_8h_a333076bd2d5bb9b488d52adfeeca0cf8}{SUCCESS\+\_\+\+GEN\+\_\+\+RAND}}~8
+\item 
+\#define \mbox{\hyperlink{base__error_8h_a08fdc13b5a2d99a155621d725291d457}{SUCCESS\+\_\+\+ASSIGN}}~9
+\item 
+\#define \mbox{\hyperlink{base__error_8h_a893ee416e915f2a91d17e583a6901ba6}{SUCCESS\+\_\+\+REFINE}}~10
+\item 
+\#define \mbox{\hyperlink{base__error_8h_ab04fe34afe0fe6345d937cb8e2670770}{SUCCESS\+\_\+\+SET\+\_\+\+FROM\+\_\+\+STRING}}~11
+\item 
+\#define \mbox{\hyperlink{base__error_8h_ab7f35c721200ff9d6c1d1a2ba6494a0f}{SUCCESS\+\_\+\+REFINEMENT}}~12
+\item 
+\#define \mbox{\hyperlink{base__error_8h_aff76757b29ef136c0574d67fe5822ded}{SUCCESS\+\_\+\+ADD\+\_\+\+ABC}}~13
+\item 
+\#define \mbox{\hyperlink{base__error_8h_a4cd331d485a525372a644c876f18de95}{SUCCESS\+\_\+\+ADD\+\_\+C}}~14
+\item 
+\#define \mbox{\hyperlink{base__error_8h_a09dbcd208caa122d2a1209467e6b5162}{SUCCESS\+\_\+\+ADD}}~15
+\item 
+\#define \mbox{\hyperlink{base__error_8h_a680d6e59f01aed67fd38ac9fdc9cfa6e}{SUCCESS\+\_\+\+SUB\+\_\+\+AbB}}~16
+\item 
+\#define \mbox{\hyperlink{base__error_8h_ab44d48cea892e1b93803df13ebf54846}{SUCCESS\+\_\+\+SUB\+\_\+\+Ab}}~17
+\item 
+\#define \mbox{\hyperlink{base__error_8h_adaae3961f0f6f17813a88f3783e71b48}{SUCCESS\+\_\+\+SUB\+\_\+C}}~18
+\item 
+\#define \mbox{\hyperlink{base__error_8h_a327396f3091ff84614a36e3b1ab79bb6}{SUCCESS\+\_\+\+SUB}}~19
+\item 
+\#define \mbox{\hyperlink{base__error_8h_ae79cb501726dd07d384073eb8446c016}{INVALID\+\_\+\+WORD\+\_\+\+LENGTH\+\_\+\+ERROR}}~-\/1
+\item 
+\#define \mbox{\hyperlink{base__error_8h_aa6840d299f62b023f82661d31597c982}{MEMORY\+\_\+\+ALLOCATION\+\_\+\+ERROR}}~-\/2
+\item 
+\#define \mbox{\hyperlink{base__error_8h_a0eaa29d735cd06ea1a1583261fa485bf}{ARRAY\+\_\+\+ALLOCATION\+\_\+\+ERROR}}~-\/3
+\item 
+\#define \mbox{\hyperlink{base__error_8h_a7739f63e0b5d8833aa8f36cc1bfe0963}{NULL\+\_\+\+POINTER\+\_\+\+ERROR}}~-\/4
+\item 
+\#define \mbox{\hyperlink{base__error_8h_ab8ccc0f1c2ea7351630b8a1685eeb6fa}{ALREADY\+\_\+\+FREED\+\_\+\+ERROR}}~-\/5
+\item 
+\#define \mbox{\hyperlink{base__error_8h_a4c8df1f9739ed3b088d65df59a5c7dca}{COPY\+\_\+\+FAILED\+\_\+\+ERROR}}~-\/6
+\item 
+\#define \mbox{\hyperlink{base__error_8h_a4479595d820092e7c412baa489424e94}{INVALID\+\_\+\+INPUT\+\_\+\+ERROR}}~-\/7
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_aef05af2222acc0dd48f418acfaf5f174}{print\+\_\+invalid\+\_\+word\+\_\+length\+\_\+error}} ()
+\begin{DoxyCompactList}\small\item\em bigiint의 길이가 올바르지 않을 때 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_a0ff5fd31efce68863a3396862e215487}{print\+\_\+memory\+\_\+allocation\+\_\+error}} ()
+\begin{DoxyCompactList}\small\item\em 메모리 할당 실패 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_a44788e0c4c63cd6ca292cb2d44313837}{print\+\_\+array\+\_\+allocation\+\_\+error}} ()
+\begin{DoxyCompactList}\small\item\em 배열 메모리 할당 실패 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_abc4557fb5f08b0aa1a2de96635497f7f}{print\+\_\+null\+\_\+pointer\+\_\+error}} ()
+\begin{DoxyCompactList}\small\item\em Null 포인터가 발생했을 때 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_a41dab0f04ddaf6b74e96502d377b0316}{print\+\_\+already\+\_\+freed\+\_\+error}} ()
+\begin{DoxyCompactList}\small\item\em 이미 해제된 포인터가 발생했을 때 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_a592d8340d715d61c86ab2c2e336a69f3}{print\+\_\+copy\+\_\+failed\+\_\+error}} ()
+\begin{DoxyCompactList}\small\item\em 배열 복사 실패 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_afcf2ec99cdcd9be08648c7773423169a}{print\+\_\+invalid\+\_\+input\+\_\+error}} ()
+\begin{DoxyCompactList}\small\item\em 유효하지 않은 입력 에러 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_a574afd1336f23dab560de5409fddb920}{print\+\_\+success\+\_\+memory\+\_\+allocation}} ()
+\begin{DoxyCompactList}\small\item\em 메모리 할당 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_a47c3d935b57aeec1f128170eee7547de}{print\+\_\+success\+\_\+initialization}} ()
+\begin{DoxyCompactList}\small\item\em 초기화 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_ac71ec819b187d9d5f24892ec2a5cea40}{print\+\_\+success\+\_\+memory\+\_\+deallocation}} ()
+\begin{DoxyCompactList}\small\item\em 메모리 해제 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_a9da255e0af49f4ffd5e68f1429c22ee5}{print\+\_\+success\+\_\+copy}} ()
+\begin{DoxyCompactList}\small\item\em 배열 복사 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_a4693d86e56d9b6e4a3411112e82f4dfe}{print\+\_\+success\+\_\+refinement}} ()
+\begin{DoxyCompactList}\small\item\em Refine 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_abe75eb73e72475409ecdf5b37429e11c}{print\+\_\+success\+\_\+set\+\_\+from\+\_\+array}} ()
+\begin{DoxyCompactList}\small\item\em 배열로부터 bigint에 값을 할당 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_ab028432aef6346d801fdd67266472ec8}{print\+\_\+success\+\_\+print}} ()
+\begin{DoxyCompactList}\small\item\em bigint를 출력 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_a6633c49ef7e7443b15e082bd93116a44}{print\+\_\+rand\+\_\+array}} ()
+\begin{DoxyCompactList}\small\item\em 랜덤 값을 통해 bigint에 값을 할당 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_ab2c198d5e5e93db68ca235f59902b754}{print\+\_\+success\+\_\+gen\+\_\+rand}} ()
+\begin{DoxyCompactList}\small\item\em 랜덤 값 생성 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_ac5a45264db1d1a05e68d047a2e05a8d7}{print\+\_\+success\+\_\+assign}} ()
+\begin{DoxyCompactList}\small\item\em bigint에 값을 할당 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_a846f69272a7e03f6f6568a804668074d}{print\+\_\+success\+\_\+refine}} ()
+\begin{DoxyCompactList}\small\item\em refine 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_a680e4f47716fca2fbcdc67a4396e42ac}{print\+\_\+success\+\_\+set\+\_\+from\+\_\+string}} ()
+\begin{DoxyCompactList}\small\item\em string을 통해 bigint에 값을 할당 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_ae0433a2390a5e949337b503c2d8d4e84}{print\+\_\+success\+\_\+add\+\_\+\+ABC}} ()
+\begin{DoxyCompactList}\small\item\em ADD\+\_\+\+ABC 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_aeb1d605706602fcc12c1f6ec9699ec00}{print\+\_\+success\+\_\+add\+\_\+C}} ()
+\begin{DoxyCompactList}\small\item\em ADD\+\_\+C 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_a618d1e321ae47aecb3c51c89ad57e337}{print\+\_\+success\+\_\+add}} ()
+\begin{DoxyCompactList}\small\item\em ADD 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_a6e13f9a82a555f901f3b4a5868ceaf72}{print\+\_\+success\+\_\+sub\+\_\+\+AbB}} ()
+\begin{DoxyCompactList}\small\item\em SUB\+\_\+\+AbB 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_a0cb892bcc9756591b5b6cde8c297be55}{print\+\_\+success\+\_\+sub\+\_\+\+Ab}} ()
+\begin{DoxyCompactList}\small\item\em SUB\+\_\+\+Ab 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_a7118840452099cf18d1107961a19e964}{print\+\_\+success\+\_\+sub\+\_\+C}} ()
+\begin{DoxyCompactList}\small\item\em SUB\+\_\+C 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_ad9b36bc988699624cb041520512fbdac}{print\+\_\+success\+\_\+sub}} ()
+\begin{DoxyCompactList}\small\item\em SUB 성공 시 출력하는 함수 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{base__error_8h_ab8ccc0f1c2ea7351630b8a1685eeb6fa}\index{base\_error.h@{base\_error.h}!ALREADY\_FREED\_ERROR@{ALREADY\_FREED\_ERROR}}
+\index{ALREADY\_FREED\_ERROR@{ALREADY\_FREED\_ERROR}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{ALREADY\_FREED\_ERROR}{ALREADY\_FREED\_ERROR}}
+{\footnotesize\ttfamily \label{base__error_8h_ab8ccc0f1c2ea7351630b8a1685eeb6fa} 
+\#define ALREADY\+\_\+\+FREED\+\_\+\+ERROR~-\/5}
+
+\Hypertarget{base__error_8h_a0eaa29d735cd06ea1a1583261fa485bf}\index{base\_error.h@{base\_error.h}!ARRAY\_ALLOCATION\_ERROR@{ARRAY\_ALLOCATION\_ERROR}}
+\index{ARRAY\_ALLOCATION\_ERROR@{ARRAY\_ALLOCATION\_ERROR}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{ARRAY\_ALLOCATION\_ERROR}{ARRAY\_ALLOCATION\_ERROR}}
+{\footnotesize\ttfamily \label{base__error_8h_a0eaa29d735cd06ea1a1583261fa485bf} 
+\#define ARRAY\+\_\+\+ALLOCATION\+\_\+\+ERROR~-\/3}
+
+\Hypertarget{base__error_8h_a4c8df1f9739ed3b088d65df59a5c7dca}\index{base\_error.h@{base\_error.h}!COPY\_FAILED\_ERROR@{COPY\_FAILED\_ERROR}}
+\index{COPY\_FAILED\_ERROR@{COPY\_FAILED\_ERROR}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{COPY\_FAILED\_ERROR}{COPY\_FAILED\_ERROR}}
+{\footnotesize\ttfamily \label{base__error_8h_a4c8df1f9739ed3b088d65df59a5c7dca} 
+\#define COPY\+\_\+\+FAILED\+\_\+\+ERROR~-\/6}
+
+\Hypertarget{base__error_8h_a4479595d820092e7c412baa489424e94}\index{base\_error.h@{base\_error.h}!INVALID\_INPUT\_ERROR@{INVALID\_INPUT\_ERROR}}
+\index{INVALID\_INPUT\_ERROR@{INVALID\_INPUT\_ERROR}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{INVALID\_INPUT\_ERROR}{INVALID\_INPUT\_ERROR}}
+{\footnotesize\ttfamily \label{base__error_8h_a4479595d820092e7c412baa489424e94} 
+\#define INVALID\+\_\+\+INPUT\+\_\+\+ERROR~-\/7}
+
+\Hypertarget{base__error_8h_ae79cb501726dd07d384073eb8446c016}\index{base\_error.h@{base\_error.h}!INVALID\_WORD\_LENGTH\_ERROR@{INVALID\_WORD\_LENGTH\_ERROR}}
+\index{INVALID\_WORD\_LENGTH\_ERROR@{INVALID\_WORD\_LENGTH\_ERROR}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{INVALID\_WORD\_LENGTH\_ERROR}{INVALID\_WORD\_LENGTH\_ERROR}}
+{\footnotesize\ttfamily \label{base__error_8h_ae79cb501726dd07d384073eb8446c016} 
+\#define INVALID\+\_\+\+WORD\+\_\+\+LENGTH\+\_\+\+ERROR~-\/1}
+
+\Hypertarget{base__error_8h_aa6840d299f62b023f82661d31597c982}\index{base\_error.h@{base\_error.h}!MEMORY\_ALLOCATION\_ERROR@{MEMORY\_ALLOCATION\_ERROR}}
+\index{MEMORY\_ALLOCATION\_ERROR@{MEMORY\_ALLOCATION\_ERROR}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{MEMORY\_ALLOCATION\_ERROR}{MEMORY\_ALLOCATION\_ERROR}}
+{\footnotesize\ttfamily \label{base__error_8h_aa6840d299f62b023f82661d31597c982} 
+\#define MEMORY\+\_\+\+ALLOCATION\+\_\+\+ERROR~-\/2}
+
+\Hypertarget{base__error_8h_a7739f63e0b5d8833aa8f36cc1bfe0963}\index{base\_error.h@{base\_error.h}!NULL\_POINTER\_ERROR@{NULL\_POINTER\_ERROR}}
+\index{NULL\_POINTER\_ERROR@{NULL\_POINTER\_ERROR}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{NULL\_POINTER\_ERROR}{NULL\_POINTER\_ERROR}}
+{\footnotesize\ttfamily \label{base__error_8h_a7739f63e0b5d8833aa8f36cc1bfe0963} 
+\#define NULL\+\_\+\+POINTER\+\_\+\+ERROR~-\/4}
+
+\Hypertarget{base__error_8h_a09dbcd208caa122d2a1209467e6b5162}\index{base\_error.h@{base\_error.h}!SUCCESS\_ADD@{SUCCESS\_ADD}}
+\index{SUCCESS\_ADD@{SUCCESS\_ADD}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS\_ADD}{SUCCESS\_ADD}}
+{\footnotesize\ttfamily \label{base__error_8h_a09dbcd208caa122d2a1209467e6b5162} 
+\#define SUCCESS\+\_\+\+ADD~15}
+
+\Hypertarget{base__error_8h_aff76757b29ef136c0574d67fe5822ded}\index{base\_error.h@{base\_error.h}!SUCCESS\_ADD\_ABC@{SUCCESS\_ADD\_ABC}}
+\index{SUCCESS\_ADD\_ABC@{SUCCESS\_ADD\_ABC}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS\_ADD\_ABC}{SUCCESS\_ADD\_ABC}}
+{\footnotesize\ttfamily \label{base__error_8h_aff76757b29ef136c0574d67fe5822ded} 
+\#define SUCCESS\+\_\+\+ADD\+\_\+\+ABC~13}
+
+\Hypertarget{base__error_8h_a4cd331d485a525372a644c876f18de95}\index{base\_error.h@{base\_error.h}!SUCCESS\_ADD\_C@{SUCCESS\_ADD\_C}}
+\index{SUCCESS\_ADD\_C@{SUCCESS\_ADD\_C}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS\_ADD\_C}{SUCCESS\_ADD\_C}}
+{\footnotesize\ttfamily \label{base__error_8h_a4cd331d485a525372a644c876f18de95} 
+\#define SUCCESS\+\_\+\+ADD\+\_\+C~14}
+
+\Hypertarget{base__error_8h_a08fdc13b5a2d99a155621d725291d457}\index{base\_error.h@{base\_error.h}!SUCCESS\_ASSIGN@{SUCCESS\_ASSIGN}}
+\index{SUCCESS\_ASSIGN@{SUCCESS\_ASSIGN}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS\_ASSIGN}{SUCCESS\_ASSIGN}}
+{\footnotesize\ttfamily \label{base__error_8h_a08fdc13b5a2d99a155621d725291d457} 
+\#define SUCCESS\+\_\+\+ASSIGN~9}
+
+\Hypertarget{base__error_8h_a4085eac475d4758540eec8f6366dbf18}\index{base\_error.h@{base\_error.h}!SUCCESS\_COPY@{SUCCESS\_COPY}}
+\index{SUCCESS\_COPY@{SUCCESS\_COPY}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS\_COPY}{SUCCESS\_COPY}}
+{\footnotesize\ttfamily \label{base__error_8h_a4085eac475d4758540eec8f6366dbf18} 
+\#define SUCCESS\+\_\+\+COPY~4}
+
+\Hypertarget{base__error_8h_a333076bd2d5bb9b488d52adfeeca0cf8}\index{base\_error.h@{base\_error.h}!SUCCESS\_GEN\_RAND@{SUCCESS\_GEN\_RAND}}
+\index{SUCCESS\_GEN\_RAND@{SUCCESS\_GEN\_RAND}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS\_GEN\_RAND}{SUCCESS\_GEN\_RAND}}
+{\footnotesize\ttfamily \label{base__error_8h_a333076bd2d5bb9b488d52adfeeca0cf8} 
+\#define SUCCESS\+\_\+\+GEN\+\_\+\+RAND~8}
+
+\Hypertarget{base__error_8h_a1b32687f772b885d9ebb9cad9d6de5a5}\index{base\_error.h@{base\_error.h}!SUCCESS\_INITIALIZATION@{SUCCESS\_INITIALIZATION}}
+\index{SUCCESS\_INITIALIZATION@{SUCCESS\_INITIALIZATION}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS\_INITIALIZATION}{SUCCESS\_INITIALIZATION}}
+{\footnotesize\ttfamily \label{base__error_8h_a1b32687f772b885d9ebb9cad9d6de5a5} 
+\#define SUCCESS\+\_\+\+INITIALIZATION~2}
+
+\Hypertarget{base__error_8h_af908452b7f22a0eaa994dc6d795b3d5b}\index{base\_error.h@{base\_error.h}!SUCCESS\_MEMORY\_ALLOCATION@{SUCCESS\_MEMORY\_ALLOCATION}}
+\index{SUCCESS\_MEMORY\_ALLOCATION@{SUCCESS\_MEMORY\_ALLOCATION}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS\_MEMORY\_ALLOCATION}{SUCCESS\_MEMORY\_ALLOCATION}}
+{\footnotesize\ttfamily \label{base__error_8h_af908452b7f22a0eaa994dc6d795b3d5b} 
+\#define SUCCESS\+\_\+\+MEMORY\+\_\+\+ALLOCATION~1}
+
+\Hypertarget{base__error_8h_a91e16a9169a4156f57b5fc2846768bf9}\index{base\_error.h@{base\_error.h}!SUCCESS\_MEMORY\_DEALLOCATION@{SUCCESS\_MEMORY\_DEALLOCATION}}
+\index{SUCCESS\_MEMORY\_DEALLOCATION@{SUCCESS\_MEMORY\_DEALLOCATION}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS\_MEMORY\_DEALLOCATION}{SUCCESS\_MEMORY\_DEALLOCATION}}
+{\footnotesize\ttfamily \label{base__error_8h_a91e16a9169a4156f57b5fc2846768bf9} 
+\#define SUCCESS\+\_\+\+MEMORY\+\_\+\+DEALLOCATION~3}
+
+\Hypertarget{base__error_8h_a9cec5171cc9014cfa75b54808151148a}\index{base\_error.h@{base\_error.h}!SUCCESS\_PRINT@{SUCCESS\_PRINT}}
+\index{SUCCESS\_PRINT@{SUCCESS\_PRINT}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS\_PRINT}{SUCCESS\_PRINT}}
+{\footnotesize\ttfamily \label{base__error_8h_a9cec5171cc9014cfa75b54808151148a} 
+\#define SUCCESS\+\_\+\+PRINT~6}
+
+\Hypertarget{base__error_8h_a1bb55e15a266be17ea2c94898f4a94de}\index{base\_error.h@{base\_error.h}!SUCCESS\_RAND\_ARRAY@{SUCCESS\_RAND\_ARRAY}}
+\index{SUCCESS\_RAND\_ARRAY@{SUCCESS\_RAND\_ARRAY}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS\_RAND\_ARRAY}{SUCCESS\_RAND\_ARRAY}}
+{\footnotesize\ttfamily \label{base__error_8h_a1bb55e15a266be17ea2c94898f4a94de} 
+\#define SUCCESS\+\_\+\+RAND\+\_\+\+ARRAY~7}
+
+\Hypertarget{base__error_8h_a893ee416e915f2a91d17e583a6901ba6}\index{base\_error.h@{base\_error.h}!SUCCESS\_REFINE@{SUCCESS\_REFINE}}
+\index{SUCCESS\_REFINE@{SUCCESS\_REFINE}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS\_REFINE}{SUCCESS\_REFINE}}
+{\footnotesize\ttfamily \label{base__error_8h_a893ee416e915f2a91d17e583a6901ba6} 
+\#define SUCCESS\+\_\+\+REFINE~10}
+
+\Hypertarget{base__error_8h_ab7f35c721200ff9d6c1d1a2ba6494a0f}\index{base\_error.h@{base\_error.h}!SUCCESS\_REFINEMENT@{SUCCESS\_REFINEMENT}}
+\index{SUCCESS\_REFINEMENT@{SUCCESS\_REFINEMENT}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS\_REFINEMENT}{SUCCESS\_REFINEMENT}}
+{\footnotesize\ttfamily \label{base__error_8h_ab7f35c721200ff9d6c1d1a2ba6494a0f} 
+\#define SUCCESS\+\_\+\+REFINEMENT~12}
+
+\Hypertarget{base__error_8h_a4758dfffc951a2d75944e5613aef2311}\index{base\_error.h@{base\_error.h}!SUCCESS\_SET\_FROM\_ARRAY@{SUCCESS\_SET\_FROM\_ARRAY}}
+\index{SUCCESS\_SET\_FROM\_ARRAY@{SUCCESS\_SET\_FROM\_ARRAY}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS\_SET\_FROM\_ARRAY}{SUCCESS\_SET\_FROM\_ARRAY}}
+{\footnotesize\ttfamily \label{base__error_8h_a4758dfffc951a2d75944e5613aef2311} 
+\#define SUCCESS\+\_\+\+SET\+\_\+\+FROM\+\_\+\+ARRAY~5}
+
+\Hypertarget{base__error_8h_ab04fe34afe0fe6345d937cb8e2670770}\index{base\_error.h@{base\_error.h}!SUCCESS\_SET\_FROM\_STRING@{SUCCESS\_SET\_FROM\_STRING}}
+\index{SUCCESS\_SET\_FROM\_STRING@{SUCCESS\_SET\_FROM\_STRING}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS\_SET\_FROM\_STRING}{SUCCESS\_SET\_FROM\_STRING}}
+{\footnotesize\ttfamily \label{base__error_8h_ab04fe34afe0fe6345d937cb8e2670770} 
+\#define SUCCESS\+\_\+\+SET\+\_\+\+FROM\+\_\+\+STRING~11}
+
+\Hypertarget{base__error_8h_a327396f3091ff84614a36e3b1ab79bb6}\index{base\_error.h@{base\_error.h}!SUCCESS\_SUB@{SUCCESS\_SUB}}
+\index{SUCCESS\_SUB@{SUCCESS\_SUB}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS\_SUB}{SUCCESS\_SUB}}
+{\footnotesize\ttfamily \label{base__error_8h_a327396f3091ff84614a36e3b1ab79bb6} 
+\#define SUCCESS\+\_\+\+SUB~19}
+
+\Hypertarget{base__error_8h_ab44d48cea892e1b93803df13ebf54846}\index{base\_error.h@{base\_error.h}!SUCCESS\_SUB\_Ab@{SUCCESS\_SUB\_Ab}}
+\index{SUCCESS\_SUB\_Ab@{SUCCESS\_SUB\_Ab}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS\_SUB\_Ab}{SUCCESS\_SUB\_Ab}}
+{\footnotesize\ttfamily \label{base__error_8h_ab44d48cea892e1b93803df13ebf54846} 
+\#define SUCCESS\+\_\+\+SUB\+\_\+\+Ab~17}
+
+\Hypertarget{base__error_8h_a680d6e59f01aed67fd38ac9fdc9cfa6e}\index{base\_error.h@{base\_error.h}!SUCCESS\_SUB\_AbB@{SUCCESS\_SUB\_AbB}}
+\index{SUCCESS\_SUB\_AbB@{SUCCESS\_SUB\_AbB}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS\_SUB\_AbB}{SUCCESS\_SUB\_AbB}}
+{\footnotesize\ttfamily \label{base__error_8h_a680d6e59f01aed67fd38ac9fdc9cfa6e} 
+\#define SUCCESS\+\_\+\+SUB\+\_\+\+AbB~16}
+
+\Hypertarget{base__error_8h_adaae3961f0f6f17813a88f3783e71b48}\index{base\_error.h@{base\_error.h}!SUCCESS\_SUB\_C@{SUCCESS\_SUB\_C}}
+\index{SUCCESS\_SUB\_C@{SUCCESS\_SUB\_C}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS\_SUB\_C}{SUCCESS\_SUB\_C}}
+{\footnotesize\ttfamily \label{base__error_8h_adaae3961f0f6f17813a88f3783e71b48} 
+\#define SUCCESS\+\_\+\+SUB\+\_\+C~18}
+
+\Hypertarget{base__error_8h_a42f8c497a1968074f38bf5055c650dca}\index{base\_error.h@{base\_error.h}!VERBOSE@{VERBOSE}}
+\index{VERBOSE@{VERBOSE}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{VERBOSE}{VERBOSE}}
+{\footnotesize\ttfamily \label{base__error_8h_a42f8c497a1968074f38bf5055c650dca} 
+\#define VERBOSE~false}
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{base__error_8h_a41dab0f04ddaf6b74e96502d377b0316}\index{base\_error.h@{base\_error.h}!print\_already\_freed\_error@{print\_already\_freed\_error}}
+\index{print\_already\_freed\_error@{print\_already\_freed\_error}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_already\_freed\_error()}{print\_already\_freed\_error()}}
+{\footnotesize\ttfamily \label{base__error_8h_a41dab0f04ddaf6b74e96502d377b0316} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+already\+\_\+freed\+\_\+error (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+이미 해제된 포인터가 발생했을 때 출력하는 함수 
+
+\Hypertarget{base__error_8h_a44788e0c4c63cd6ca292cb2d44313837}\index{base\_error.h@{base\_error.h}!print\_array\_allocation\_error@{print\_array\_allocation\_error}}
+\index{print\_array\_allocation\_error@{print\_array\_allocation\_error}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_array\_allocation\_error()}{print\_array\_allocation\_error()}}
+{\footnotesize\ttfamily \label{base__error_8h_a44788e0c4c63cd6ca292cb2d44313837} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+array\+\_\+allocation\+\_\+error (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+배열 메모리 할당 실패 시 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{base__error_8h_a44788e0c4c63cd6ca292cb2d44313837_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{base__error_8h_a592d8340d715d61c86ab2c2e336a69f3}\index{base\_error.h@{base\_error.h}!print\_copy\_failed\_error@{print\_copy\_failed\_error}}
+\index{print\_copy\_failed\_error@{print\_copy\_failed\_error}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_copy\_failed\_error()}{print\_copy\_failed\_error()}}
+{\footnotesize\ttfamily \label{base__error_8h_a592d8340d715d61c86ab2c2e336a69f3} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+copy\+\_\+failed\+\_\+error (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+배열 복사 실패 시 출력하는 함수 
+
+\Hypertarget{base__error_8h_afcf2ec99cdcd9be08648c7773423169a}\index{base\_error.h@{base\_error.h}!print\_invalid\_input\_error@{print\_invalid\_input\_error}}
+\index{print\_invalid\_input\_error@{print\_invalid\_input\_error}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_invalid\_input\_error()}{print\_invalid\_input\_error()}}
+{\footnotesize\ttfamily \label{base__error_8h_afcf2ec99cdcd9be08648c7773423169a} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+invalid\+\_\+input\+\_\+error (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+유효하지 않은 입력 에러 시 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=306pt]{base__error_8h_afcf2ec99cdcd9be08648c7773423169a_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{base__error_8h_aef05af2222acc0dd48f418acfaf5f174}\index{base\_error.h@{base\_error.h}!print\_invalid\_word\_length\_error@{print\_invalid\_word\_length\_error}}
+\index{print\_invalid\_word\_length\_error@{print\_invalid\_word\_length\_error}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_invalid\_word\_length\_error()}{print\_invalid\_word\_length\_error()}}
+{\footnotesize\ttfamily \label{base__error_8h_aef05af2222acc0dd48f418acfaf5f174} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+invalid\+\_\+word\+\_\+length\+\_\+error (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+bigiint의 길이가 올바르지 않을 때 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{base__error_8h_aef05af2222acc0dd48f418acfaf5f174_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{base__error_8h_a0ff5fd31efce68863a3396862e215487}\index{base\_error.h@{base\_error.h}!print\_memory\_allocation\_error@{print\_memory\_allocation\_error}}
+\index{print\_memory\_allocation\_error@{print\_memory\_allocation\_error}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_memory\_allocation\_error()}{print\_memory\_allocation\_error()}}
+{\footnotesize\ttfamily \label{base__error_8h_a0ff5fd31efce68863a3396862e215487} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+memory\+\_\+allocation\+\_\+error (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+메모리 할당 실패 시 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{base__error_8h_a0ff5fd31efce68863a3396862e215487_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{base__error_8h_abc4557fb5f08b0aa1a2de96635497f7f}\index{base\_error.h@{base\_error.h}!print\_null\_pointer\_error@{print\_null\_pointer\_error}}
+\index{print\_null\_pointer\_error@{print\_null\_pointer\_error}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_null\_pointer\_error()}{print\_null\_pointer\_error()}}
+{\footnotesize\ttfamily \label{base__error_8h_abc4557fb5f08b0aa1a2de96635497f7f} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+null\+\_\+pointer\+\_\+error (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Null 포인터가 발생했을 때 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{base__error_8h_abc4557fb5f08b0aa1a2de96635497f7f_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{base__error_8h_a6633c49ef7e7443b15e082bd93116a44}\index{base\_error.h@{base\_error.h}!print\_rand\_array@{print\_rand\_array}}
+\index{print\_rand\_array@{print\_rand\_array}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_rand\_array()}{print\_rand\_array()}}
+{\footnotesize\ttfamily \label{base__error_8h_a6633c49ef7e7443b15e082bd93116a44} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+rand\+\_\+array (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+랜덤 값을 통해 bigint에 값을 할당 성공 시 출력하는 함수 
+
+\Hypertarget{base__error_8h_a618d1e321ae47aecb3c51c89ad57e337}\index{base\_error.h@{base\_error.h}!print\_success\_add@{print\_success\_add}}
+\index{print\_success\_add@{print\_success\_add}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_success\_add()}{print\_success\_add()}}
+{\footnotesize\ttfamily \label{base__error_8h_a618d1e321ae47aecb3c51c89ad57e337} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+success\+\_\+add (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+ADD 성공 시 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{base__error_8h_a618d1e321ae47aecb3c51c89ad57e337_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{base__error_8h_ae0433a2390a5e949337b503c2d8d4e84}\index{base\_error.h@{base\_error.h}!print\_success\_add\_ABC@{print\_success\_add\_ABC}}
+\index{print\_success\_add\_ABC@{print\_success\_add\_ABC}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_success\_add\_ABC()}{print\_success\_add\_ABC()}}
+{\footnotesize\ttfamily \label{base__error_8h_ae0433a2390a5e949337b503c2d8d4e84} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+success\+\_\+add\+\_\+\+ABC (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+ADD\+\_\+\+ABC 성공 시 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{base__error_8h_ae0433a2390a5e949337b503c2d8d4e84_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{base__error_8h_aeb1d605706602fcc12c1f6ec9699ec00}\index{base\_error.h@{base\_error.h}!print\_success\_add\_C@{print\_success\_add\_C}}
+\index{print\_success\_add\_C@{print\_success\_add\_C}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_success\_add\_C()}{print\_success\_add\_C()}}
+{\footnotesize\ttfamily \label{base__error_8h_aeb1d605706602fcc12c1f6ec9699ec00} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+success\+\_\+add\+\_\+C (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+ADD\+\_\+C 성공 시 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{base__error_8h_aeb1d605706602fcc12c1f6ec9699ec00_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{base__error_8h_ac5a45264db1d1a05e68d047a2e05a8d7}\index{base\_error.h@{base\_error.h}!print\_success\_assign@{print\_success\_assign}}
+\index{print\_success\_assign@{print\_success\_assign}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_success\_assign()}{print\_success\_assign()}}
+{\footnotesize\ttfamily \label{base__error_8h_ac5a45264db1d1a05e68d047a2e05a8d7} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+success\+\_\+assign (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+bigint에 값을 할당 성공 시 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{base__error_8h_ac5a45264db1d1a05e68d047a2e05a8d7_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{base__error_8h_a9da255e0af49f4ffd5e68f1429c22ee5}\index{base\_error.h@{base\_error.h}!print\_success\_copy@{print\_success\_copy}}
+\index{print\_success\_copy@{print\_success\_copy}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_success\_copy()}{print\_success\_copy()}}
+{\footnotesize\ttfamily \label{base__error_8h_a9da255e0af49f4ffd5e68f1429c22ee5} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+success\+\_\+copy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+배열 복사 성공 시 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{base__error_8h_a9da255e0af49f4ffd5e68f1429c22ee5_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{base__error_8h_ab2c198d5e5e93db68ca235f59902b754}\index{base\_error.h@{base\_error.h}!print\_success\_gen\_rand@{print\_success\_gen\_rand}}
+\index{print\_success\_gen\_rand@{print\_success\_gen\_rand}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_success\_gen\_rand()}{print\_success\_gen\_rand()}}
+{\footnotesize\ttfamily \label{base__error_8h_ab2c198d5e5e93db68ca235f59902b754} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+success\+\_\+gen\+\_\+rand (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+랜덤 값 생성 성공 시 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{base__error_8h_ab2c198d5e5e93db68ca235f59902b754_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{base__error_8h_a47c3d935b57aeec1f128170eee7547de}\index{base\_error.h@{base\_error.h}!print\_success\_initialization@{print\_success\_initialization}}
+\index{print\_success\_initialization@{print\_success\_initialization}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_success\_initialization()}{print\_success\_initialization()}}
+{\footnotesize\ttfamily \label{base__error_8h_a47c3d935b57aeec1f128170eee7547de} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+success\+\_\+initialization (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+초기화 성공 시 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{base__error_8h_a47c3d935b57aeec1f128170eee7547de_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{base__error_8h_a574afd1336f23dab560de5409fddb920}\index{base\_error.h@{base\_error.h}!print\_success\_memory\_allocation@{print\_success\_memory\_allocation}}
+\index{print\_success\_memory\_allocation@{print\_success\_memory\_allocation}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_success\_memory\_allocation()}{print\_success\_memory\_allocation()}}
+{\footnotesize\ttfamily \label{base__error_8h_a574afd1336f23dab560de5409fddb920} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+success\+\_\+memory\+\_\+allocation (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+메모리 할당 성공 시 출력하는 함수 
+
+\Hypertarget{base__error_8h_ac71ec819b187d9d5f24892ec2a5cea40}\index{base\_error.h@{base\_error.h}!print\_success\_memory\_deallocation@{print\_success\_memory\_deallocation}}
+\index{print\_success\_memory\_deallocation@{print\_success\_memory\_deallocation}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_success\_memory\_deallocation()}{print\_success\_memory\_deallocation()}}
+{\footnotesize\ttfamily \label{base__error_8h_ac71ec819b187d9d5f24892ec2a5cea40} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+success\+\_\+memory\+\_\+deallocation (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+메모리 해제 성공 시 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{base__error_8h_ac71ec819b187d9d5f24892ec2a5cea40_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{base__error_8h_ab028432aef6346d801fdd67266472ec8}\index{base\_error.h@{base\_error.h}!print\_success\_print@{print\_success\_print}}
+\index{print\_success\_print@{print\_success\_print}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_success\_print()}{print\_success\_print()}}
+{\footnotesize\ttfamily \label{base__error_8h_ab028432aef6346d801fdd67266472ec8} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+success\+\_\+print (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+bigint를 출력 성공 시 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=264pt]{base__error_8h_ab028432aef6346d801fdd67266472ec8_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{base__error_8h_a846f69272a7e03f6f6568a804668074d}\index{base\_error.h@{base\_error.h}!print\_success\_refine@{print\_success\_refine}}
+\index{print\_success\_refine@{print\_success\_refine}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_success\_refine()}{print\_success\_refine()}}
+{\footnotesize\ttfamily \label{base__error_8h_a846f69272a7e03f6f6568a804668074d} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+success\+\_\+refine (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+refine 성공 시 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{base__error_8h_a846f69272a7e03f6f6568a804668074d_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{base__error_8h_a4693d86e56d9b6e4a3411112e82f4dfe}\index{base\_error.h@{base\_error.h}!print\_success\_refinement@{print\_success\_refinement}}
+\index{print\_success\_refinement@{print\_success\_refinement}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_success\_refinement()}{print\_success\_refinement()}}
+{\footnotesize\ttfamily \label{base__error_8h_a4693d86e56d9b6e4a3411112e82f4dfe} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+success\+\_\+refinement (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Refine 성공 시 출력하는 함수 
+
+\Hypertarget{base__error_8h_abe75eb73e72475409ecdf5b37429e11c}\index{base\_error.h@{base\_error.h}!print\_success\_set\_from\_array@{print\_success\_set\_from\_array}}
+\index{print\_success\_set\_from\_array@{print\_success\_set\_from\_array}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_success\_set\_from\_array()}{print\_success\_set\_from\_array()}}
+{\footnotesize\ttfamily \label{base__error_8h_abe75eb73e72475409ecdf5b37429e11c} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+success\+\_\+set\+\_\+from\+\_\+array (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+배열로부터 bigint에 값을 할당 성공 시 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=330pt]{base__error_8h_abe75eb73e72475409ecdf5b37429e11c_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{base__error_8h_a680e4f47716fca2fbcdc67a4396e42ac}\index{base\_error.h@{base\_error.h}!print\_success\_set\_from\_string@{print\_success\_set\_from\_string}}
+\index{print\_success\_set\_from\_string@{print\_success\_set\_from\_string}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_success\_set\_from\_string()}{print\_success\_set\_from\_string()}}
+{\footnotesize\ttfamily \label{base__error_8h_a680e4f47716fca2fbcdc67a4396e42ac} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+success\+\_\+set\+\_\+from\+\_\+string (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+string을 통해 bigint에 값을 할당 성공 시 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=333pt]{base__error_8h_a680e4f47716fca2fbcdc67a4396e42ac_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{base__error_8h_ad9b36bc988699624cb041520512fbdac}\index{base\_error.h@{base\_error.h}!print\_success\_sub@{print\_success\_sub}}
+\index{print\_success\_sub@{print\_success\_sub}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_success\_sub()}{print\_success\_sub()}}
+{\footnotesize\ttfamily \label{base__error_8h_ad9b36bc988699624cb041520512fbdac} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+success\+\_\+sub (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+SUB 성공 시 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{base__error_8h_ad9b36bc988699624cb041520512fbdac_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{base__error_8h_a0cb892bcc9756591b5b6cde8c297be55}\index{base\_error.h@{base\_error.h}!print\_success\_sub\_Ab@{print\_success\_sub\_Ab}}
+\index{print\_success\_sub\_Ab@{print\_success\_sub\_Ab}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_success\_sub\_Ab()}{print\_success\_sub\_Ab()}}
+{\footnotesize\ttfamily \label{base__error_8h_a0cb892bcc9756591b5b6cde8c297be55} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+success\+\_\+sub\+\_\+\+Ab (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+SUB\+\_\+\+Ab 성공 시 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{base__error_8h_a0cb892bcc9756591b5b6cde8c297be55_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{base__error_8h_a6e13f9a82a555f901f3b4a5868ceaf72}\index{base\_error.h@{base\_error.h}!print\_success\_sub\_AbB@{print\_success\_sub\_AbB}}
+\index{print\_success\_sub\_AbB@{print\_success\_sub\_AbB}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_success\_sub\_AbB()}{print\_success\_sub\_AbB()}}
+{\footnotesize\ttfamily \label{base__error_8h_a6e13f9a82a555f901f3b4a5868ceaf72} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+success\+\_\+sub\+\_\+\+AbB (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+SUB\+\_\+\+AbB 성공 시 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{base__error_8h_a6e13f9a82a555f901f3b4a5868ceaf72_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{base__error_8h_a7118840452099cf18d1107961a19e964}\index{base\_error.h@{base\_error.h}!print\_success\_sub\_C@{print\_success\_sub\_C}}
+\index{print\_success\_sub\_C@{print\_success\_sub\_C}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_success\_sub\_C()}{print\_success\_sub\_C()}}
+{\footnotesize\ttfamily \label{base__error_8h_a7118840452099cf18d1107961a19e964} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+success\+\_\+sub\+\_\+C (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+SUB\+\_\+C 성공 시 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{base__error_8h_a7118840452099cf18d1107961a19e964_icgraph}
+\end{center}
+\end{figure}

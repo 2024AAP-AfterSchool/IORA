@@ -1,6 +1,0 @@
-.DS_Store
-.cmake
-build.ninja
-CMakeFiles
-CMakeCache.txt
-cmake_install.cmake

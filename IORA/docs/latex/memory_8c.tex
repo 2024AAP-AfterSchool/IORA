@@ -1,0 +1,92 @@
+\doxysection{src/utils/memory.c File Reference}
+\hypertarget{memory_8c}{}\label{memory_8c}\index{src/utils/memory.c@{src/utils/memory.c}}
+
+
+메모리 할당, 해제 등 메모리와 관련된 함수들을 정의한 소스 파일  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include "{}utils/memory.\+h"{}}\newline
+{\ttfamily \#include "{}base/base\+\_\+type.\+h"{}}\newline
+Include dependency graph for memory.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{memory_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{memory_8c_a7a2336750ce2c077f29a85c1fdd9fb31}{is\+\_\+null\+\_\+pointer}} (void \texorpdfstring{$\ast$}{*}ptr)
+\begin{DoxyCompactList}\small\item\em 포인터가 NULL인지 확인하는 함수 \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{memory_8c_a28d663dd7aefb4946990275d69e70b6f}{free\+\_\+if\+\_\+exist}} (void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}ptr)
+\begin{DoxyCompactList}\small\item\em 포인터의 메모리가 할당되어 있으면 해제하는 함수 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+메모리 할당, 해제 등 메모리와 관련된 함수들을 정의한 소스 파일 
+
+\begin{DoxyDate}{Date}
+2024-\/10-\/17 
+\end{DoxyDate}
+\begin{DoxyAuthor}{Author}
+조동후 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{memory_8c_a28d663dd7aefb4946990275d69e70b6f}\index{memory.c@{memory.c}!free\_if\_exist@{free\_if\_exist}}
+\index{free\_if\_exist@{free\_if\_exist}!memory.c@{memory.c}}
+\doxysubsubsection{\texorpdfstring{free\_if\_exist()}{free\_if\_exist()}}
+{\footnotesize\ttfamily \label{memory_8c_a28d663dd7aefb4946990275d69e70b6f} 
+void free\+\_\+if\+\_\+exist (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{ptr}{}\end{DoxyParamCaption})}
+
+
+
+포인터의 메모리가 할당되어 있으면 해제하는 함수 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ptr} & 포인터 \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=264pt]{memory_8c_a28d663dd7aefb4946990275d69e70b6f_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{memory_8c_a28d663dd7aefb4946990275d69e70b6f_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{memory_8c_a7a2336750ce2c077f29a85c1fdd9fb31}\index{memory.c@{memory.c}!is\_null\_pointer@{is\_null\_pointer}}
+\index{is\_null\_pointer@{is\_null\_pointer}!memory.c@{memory.c}}
+\doxysubsubsection{\texorpdfstring{is\_null\_pointer()}{is\_null\_pointer()}}
+{\footnotesize\ttfamily \label{memory_8c_a7a2336750ce2c077f29a85c1fdd9fb31} 
+bool is\+\_\+null\+\_\+pointer (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{ptr}{}\end{DoxyParamCaption})}
+
+
+
+포인터가 NULL인지 확인하는 함수 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ptr} & 포인터 \\
+\hline
+\end{DoxyParams}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{memory_8c_a7a2336750ce2c077f29a85c1fdd9fb31_icgraph}
+\end{center}
+\end{figure}

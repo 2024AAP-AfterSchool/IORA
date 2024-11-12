@@ -1,0 +1,110 @@
+﻿  base_error.c
+D:\workspace\IORA\src\base\base_error.c(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+D:\workspace\IORA\include\base\base_type.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/base/base_error.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\include\base\base_error.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/base/base_error.c'을(를) 컴파일하는 중)
+  
+  bigint_addition.c
+D:\workspace\IORA\src\bigint\bigint_addition.c(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+D:\workspace\IORA\include\base\base_type.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/bigint/bigint_addition.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\include\base\base_error.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/bigint/bigint_addition.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\include\bigint\bigint_calculation.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/bigint/bigint_addition.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\src\bigint\bigint_addition.c(102,9): warning C4013: 'bi_sub'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+  bigint_calculation.c
+D:\workspace\IORA\src\bigint\bigint_calculation.c(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+D:\workspace\IORA\include\utils\string.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/bigint/bigint_calculation.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\include\base\base_type.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/bigint/bigint_calculation.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\include\utils\memory.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/bigint/bigint_calculation.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\include\base\base_error.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/bigint/bigint_calculation.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\include\bigint\bigint_calculation.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/bigint/bigint_calculation.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\src\bigint\bigint_calculation.c(174,31): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\workspace\IORA\src\bigint\bigint_calculation.c(259,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  bigint_multiplication.c
+D:\workspace\IORA\src\bigint\bigint_multiplication.c(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+D:\workspace\IORA\include\base\base_type.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/bigint/bigint_multiplication.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\include\base\base_error.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/bigint/bigint_multiplication.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\include\bigint\bigint_addition.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/bigint/bigint_multiplication.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\include\bigint\bigint_calculation.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/bigint/bigint_multiplication.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\include\bigint\bigint_multiplication.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/bigint/bigint_multiplication.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\src\bigint\bigint_multiplication.c(47,28): warning C4133: '함수': 'word *'과(와) 'bigint *' 사이의 형식이 호환되지 않습니다.
+D:\workspace\IORA\src\bigint\bigint_multiplication.c(47,7): warning C4047: '=': 'bigint *'의 간접 참조 수준이 'msg'과(와) 다릅니다.
+  bigint_subtraction.c
+D:\workspace\IORA\src\bigint\bigint_subtraction.c(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+D:\workspace\IORA\include\base\base_type.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/bigint/bigint_subtraction.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\include\base\base_error.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/bigint/bigint_subtraction.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\include\bigint\bigint_addition.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/bigint/bigint_subtraction.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\include\bigint\bigint_calculation.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/bigint/bigint_subtraction.c'을(를) 컴파일하는 중)
+  
+  IORA.c
+D:\workspace\IORA\src\IORA.c(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+D:\workspace\IORA\include\base\base_type.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/IORA.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\include\base\base_error.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/IORA.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\include\bigint\bigint_calculation.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/IORA.c'을(를) 컴파일하는 중)
+  
+  memory.c
+D:\workspace\IORA\src\utils\memory.c(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+D:\workspace\IORA\include\utils\memory.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/utils/memory.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\include\base\base_type.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/utils/memory.c'을(를) 컴파일하는 중)
+  
+  string.c
+D:\workspace\IORA\src\utils\string.c(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+D:\workspace\IORA\include\utils\memory.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/utils/string.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\include\base\base_type.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/utils/string.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\include\utils\string.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'D:/workspace/IORA/src/utils/string.c'을(를) 컴파일하는 중)
+  
+D:\workspace\IORA\src\utils\string.c(29,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+D:\workspace\IORA\src\utils\string.c(24,23): warning C4267: '초기화 중': 'size_t'에서 'uint32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
+D:\workspace\IORA\src\utils\string.c(48,1): warning C4715: 'str_to_hex': 모든 제어 경로에서 값을 반환하지는 않습니다.
+D:\workspace\IORA\src\bigint\bigint_subtraction.c(378,1): warning C4716: 'bi_test_sub': 값을 반환해야 합니다.
+D:\workspace\IORA\src\bigint\bigint_multiplication.c(130,1): warning C4716: 'bi_test_mul': 값을 반환해야 합니다.
+D:\workspace\IORA\src\bigint\bigint_addition.c(239,1): warning C4716: 'bi_test_add': 값을 반환해야 합니다.
+  IORA.vcxproj -> C:\Users\SAMIE\source\repos\IORA\x64\Debug\IORA.exe

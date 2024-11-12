@@ -1,0 +1,32 @@
+<map id="bi_set_from_string" name="bi_set_from_string">
+<area shape="rect" id="Node000001" title="string을 통해 bigint에 값을 할당하는 함수" alt="" coords="5,401,134,427"/>
+<area shape="rect" id="Node000002" href="$bigint__calculation_8c.html#a4266a993110f28fa99163be1cc61d2ce" title="bigint에 arrary를 할당하는 함수" alt="" coords="231,179,293,204"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,399,237,215,241,218,84,403"/>
+<area shape="rect" id="Node000005" href="$base__error_8c.html#abc4557fb5f08b0aa1a2de96635497f7f" title="Null 포인터가 발생했을 때 출력하는 함수" alt="" coords="634,231,753,272"/>
+<area shape="poly" id="edge15_Node000001_Node000005" title=" " alt="" coords="124,398,181,386,240,378,291,374,378,373,463,365,511,354,566,336,615,310,657,280,660,284,618,315,568,341,512,360,463,371,378,378,291,379,241,383,182,391,125,403"/>
+<area shape="rect" id="Node000009" href="$base__error_8c.html#a0ff5fd31efce68863a3396862e215487" title="메모리 할당 실패 시 출력하는 함수" alt="" coords="398,286,560,326"/>
+<area shape="poly" id="edge14_Node000001_Node000009" title=" " alt="" coords="85,399,127,369,181,342,231,327,284,317,382,306,383,311,284,322,233,332,183,347,130,374,88,403"/>
+<area shape="rect" id="Node000011" href="$string_8c.html#a82a74f32939c3442b5ba278ffd219e22" title="문자열이 10진수인지 확인하는 함수" alt="" coords="231,401,293,427"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="134,412,215,412,215,417,134,417"/>
+<area shape="rect" id="Node000012" href="$string_8c.html#aaa5e14b4c7c0479050bbb124fe3cf834" title="문자열이 16진수인지 확인하는 함수" alt="" coords="217,451,307,476"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="123,425,202,446,201,451,122,430"/>
+<area shape="rect" id="Node000013" href="$base__error_8c.html#afcf2ec99cdcd9be08648c7773423169a" title="유효하지 않은 입력 에러 시 출력하는 함수" alt="" coords="199,500,324,541"/>
+<area shape="poly" id="edge13_Node000001_Node000013" title=" " alt="" coords="90,425,131,455,183,487,192,491,190,496,180,491,128,459,87,430"/>
+<area shape="rect" id="Node000014" href="$base__error_8c.html#a680e4f47716fca2fbcdc67a4396e42ac" title="string을 통해 bigint에 값을 할당 성공 시 출력하는 함수" alt="" coords="182,566,342,606"/>
+<area shape="poly" id="edge16_Node000001_Node000014" title=" " alt="" coords="81,426,120,485,149,520,183,551,190,556,187,560,180,555,146,524,116,488,76,429"/>
+<area shape="rect" id="Node000003" href="$bigint__calculation_8c.html#a84d3065789f8df11fe043e0323853ee1" title="bigint의 값을 다른 bigint로 할당하는 함수" alt="" coords="442,56,515,82"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="275,176,323,135,355,112,389,92,426,78,428,83,391,97,358,116,326,139,279,180"/>
+<area shape="rect" id="Node000004" href="$memory_8c.html#a7a2336750ce2c077f29a85c1fdd9fb31" title="포인터가 NULL인지 확인하는 함수" alt="" coords="641,5,746,31"/>
+<area shape="poly" id="edge6_Node000002_Node000004" title=" " alt="" coords="268,177,285,147,311,109,346,71,389,41,448,19,511,8,572,5,626,7,626,12,572,10,512,13,450,24,391,46,350,75,315,113,289,150,272,180"/>
+<area shape="rect" id="Node000007" href="$base__error_8c.html#a44788e0c4c63cd6ca292cb2d44313837" title="배열 메모리 할당 실패 시 출력하는 함수" alt="" coords="406,106,551,146"/>
+<area shape="poly" id="edge7_Node000002_Node000007" title=" " alt="" coords="293,180,394,149,395,154,294,185"/>
+<area shape="rect" id="Node000008" href="$base__error_8c.html#aef05af2222acc0dd48f418acfaf5f174" title="bigiint의 길이가 올바르지 않을 때 출력하는 함수" alt="" coords="416,171,541,212"/>
+<area shape="poly" id="edge8_Node000002_Node000008" title=" " alt="" coords="293,189,401,189,401,194,293,194"/>
+<area shape="poly" id="edge9_Node000002_Node000009" title=" " alt="" coords="282,203,330,236,391,272,402,277,400,282,389,277,328,241,279,207"/>
+<area shape="rect" id="Node000010" href="$base__error_8c.html#a47c3d935b57aeec1f128170eee7547de" title="초기화 성공 시 출력하는 함수" alt="" coords="390,236,567,262"/>
+<area shape="poly" id="edge10_Node000002_Node000010" title=" " alt="" coords="294,197,413,229,412,234,293,202"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="515,58,626,31,627,36,517,63"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="516,71,543,79,569,92,603,120,633,153,676,216,672,219,628,156,599,124,566,96,541,84,515,77"/>
+<area shape="rect" id="Node000006" href="$base__error_8c.html#ac71ec819b187d9d5f24892ec2a5cea40" title="메모리 해제 성공 시 출력하는 함수" alt="" coords="615,55,772,96"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="516,67,600,70,600,75,516,73"/>
+</map>

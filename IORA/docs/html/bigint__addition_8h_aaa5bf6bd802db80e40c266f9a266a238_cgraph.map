@@ -1,0 +1,27 @@
+<map id="bi_add" name="bi_add">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,128,65,154"/>
+<area shape="rect" id="Node000002" href="$bigint__addition_8c.html#aab40e48f44671167452ad9fc3c43a2e2" title=" " alt="" coords="113,128,189,154"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="65,138,97,138,97,144,65,144"/>
+<area shape="rect" id="Node000003" href="$bigint__addition_8c.html#a1836e9d7c357ae7f61760de8b96ed158" title=" " alt="" coords="237,79,331,104"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="187,125,232,108,234,113,189,130"/>
+<area shape="rect" id="Node000004" href="$bigint__calculation_8c.html#a441aca43444e577be252db9b5690e503" title="bigint에 arrary를 할당하는 함수" alt="" coords="253,213,315,239"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="174,152,251,202,249,207,171,156"/>
+<area shape="rect" id="Node000010" href="$bigint__calculation_8c.html#ab40de6afc896f0873e591b2263622dea" title="bigint의 마지막 워드가 0인 경우 bigint의 메모리를 재할당하는 함수" alt="" coords="249,128,319,154"/>
+<area shape="poly" id="edge9_Node000002_Node000010" title=" " alt="" coords="190,138,233,138,233,144,190,144"/>
+<area shape="rect" id="Node000005" href="$memory_8c.html#a7a2336750ce2c077f29a85c1fdd9fb31" title="포인터가 NULL인지 확인하는 함수" alt="" coords="416,185,520,211"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="315,219,400,206,401,211,316,224"/>
+<area shape="rect" id="Node000006" href="$base__error_8c.html#a44788e0c4c63cd6ca292cb2d44313837" title=" " alt="" coords="396,235,540,276"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="316,228,381,239,380,244,315,234"/>
+<area shape="rect" id="Node000007" href="$base__error_8c.html#aef05af2222acc0dd48f418acfaf5f174" title=" " alt="" coords="405,300,531,341"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="305,237,339,261,381,285,394,292,392,296,378,290,336,265,302,242"/>
+<area shape="rect" id="Node000008" href="$base__error_8c.html#a0ff5fd31efce68863a3396862e215487" title=" " alt="" coords="387,120,549,161"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="305,211,378,170,390,165,392,170,381,175,308,215"/>
+<area shape="rect" id="Node000009" href="$base__error_8c.html#a47c3d935b57aeec1f128170eee7547de" title=" " alt="" coords="379,365,557,391"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="294,238,326,293,351,324,381,351,390,356,387,361,378,355,347,328,322,296,289,241"/>
+<area shape="poly" id="edge10_Node000010_Node000005" title=" " alt="" coords="321,150,380,170,406,178,404,183,379,175,319,155"/>
+<area shape="poly" id="edge11_Node000010_Node000008" title=" " alt="" coords="320,138,372,138,372,144,320,144"/>
+<area shape="rect" id="Node000011" href="$base__error_8c.html#abc4557fb5f08b0aa1a2de96635497f7f" title=" " alt="" coords="408,55,528,96"/>
+<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="319,126,394,99,395,104,320,131"/>
+<area shape="rect" id="Node000012" href="$base__error_8c.html#a846f69272a7e03f6f6568a804668074d" title=" " alt="" coords="397,5,539,31"/>
+<area shape="poly" id="edge13_Node000010_Node000012" title=" " alt="" coords="315,125,329,115,344,96,352,78,360,60,378,41,386,36,389,40,381,46,365,63,357,80,349,99,333,119,318,130"/>
+</map>
