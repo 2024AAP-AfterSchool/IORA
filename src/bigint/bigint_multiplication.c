@@ -22,7 +22,6 @@ msg bi_mul_AB(OUT bigint** dst, IN word* A, IN word* B)
     bigint* C = NULL;
     bi_new(&C, 2);
 
-    // 32비트와 64비트 word 크기에 따른 상수값
     word mask = (sizeof(word) == 4) ? 0xFFFF : 0xFFFFFFFF;
 
     // A의 상위와 하위 비트 추출
@@ -32,19 +31,31 @@ msg bi_mul_AB(OUT bigint** dst, IN word* A, IN word* B)
     // B의 상위와 하위 비트 추출
     word B1 = *B >> (sizeof(word) * 4); // 상위 비트 추출
     word B0 = *B & mask;                // 하위 비트 추출
-
-    // A1B0 + A0B1 계산
+    
+    // A1B0+A0B1 계산하는 부분
     word T1 = A1 * B0;
     word T0 = A0 * B1;
-    T0 = T1 + T0; // A1B0 + A0B1 모듈러 덧셈
-    T1 = (T0 < T1) ? 1 : 0; // 캐리 계산
+    T0 = T1 + T0;                //A1B0+A0B1 모듈러덧셈
+    T1 = (T0 < T1) ? 1 : 0;      //carry
 
     word C1 = A1 * B1;
     word C0 = A0 * B0;
     word tmp = C0;
+
     C0 = C0 + (T0 << (sizeof(word) * 4));
     C1 = C1 + (T1 << (sizeof(word) * 4)) + (T0 >> (sizeof(word) * 4)) + (C0 < tmp);
-    C = bi_word_left_shift(&C1, 1) | C0;
+    C->start[0] = C0;
+    C->start[1] = C1;
+    fprintf(stdout, "C0: 0x%016X\n", C0);  
+    fprintf(stdout, "C1: 0x%016X\n", C1);
+    fprintf(stdout, "C: 0x%016X\n", C->start[0]);
+    fprintf(stdout, "C: 0x%016X\n", C->start[1]);
+    // 초기화 함수
+    bi_assign(dst, C);
+    bi_delete(&C);
+
+    fprintf(stdout, "dst0: 0x%016X\n", (*dst)->start[0]);
+    fprintf(stdout, "dst1: 0x%016X\n", (*dst)->start[1]);
 
     return print_success_mul_AB();
 }
@@ -57,9 +68,11 @@ msg bi_mul_AB(OUT bigint** dst, IN word* A, IN word* B)
  */
 msg bi_mul_C(OUT bigint** dst, IN bigint* A, IN bigint* B)
 {
+    fprintf(stdout, "\nbi_mul_C\n");
     bigint* C = NULL;
     bi_new(&C, A->wordlen + B->wordlen);
-
+    fprintf(stdout, "A_wordlen: %d\n", A->wordlen);
+    fprintf(stdout, "B_wordlen: %d\n", B->wordlen);
     for (int i = 0; i < B->wordlen; i++)
     {
         bigint* T0 = NULL;
@@ -70,21 +83,33 @@ msg bi_mul_C(OUT bigint** dst, IN bigint* A, IN bigint* B)
         for (int j = 0; j < (A->wordlen) / 2; j++)
         {
             msg result;
+            fprintf(stdout, "A->start[2 * j]: 0x%016X\n", A->start[2 * j]);
+            fprintf(stdout, "B->start[i]: 0x%016X\n", B->start[i]);
             result = bi_mul_AB(&T0, &(A->start[2 * j]), &(B->start[i]));
+            fprintf(stdout, "T0_bf: 0x%016X\n", T0->start[0]);
             if (result != SUCCESS_MUL_AB) return print_fail_mul_AB();
-            bi_word_left_shift(T0, 2 * j);
+            bi_word_left_shift(&T0, 2 * j);
+            fprintf(stdout, "T0_af: 0x%016X\n", T0->start[0]);
+            fprintf(stdout, "T0_af: 0x%016X\n", T0->start[1]);
 
             result = bi_mul_AB(&T1, &(A->start[(2 * j) + 1]), &(B->start[i]));
+            fprintf(stdout, "T1_bf: 0x%016X\n", T1->start[0]);
             if (result != SUCCESS_MUL_AB) return print_fail_mul_AB();
-            bi_word_left_shift(T1, (2 * j) + 1);
+            bi_word_left_shift(&T1, (2 * j) + 1);
+            fprintf(stdout, "T1_af: 0x%016X\n", T1->start[0]);
+            fprintf(stdout, "T1_af: 0x%016X\n", T1->start[1]);
         }
 
         bigint* T = NULL;
+        bi_new(&T, A->wordlen + B->wordlen);
         msg result = bi_add(&T, T0, T1);
-        if (result != SUCCESS_MUL_AB) return print_fail_mul_AB();
-        bi_word_left_shift(T, i);
+        fprintf(stdout, "T: 0x%016X\n", T->start[0]);
+        fprintf(stdout, "T: 0x%016X\n", T->start[1]);
+        
+        bi_word_left_shift(&T, i);
+        fprintf(stdout, "T_af: 0x%016X\n", T->start[0]);
+        fprintf(stdout, "T_af: 0x%016X\n", T->start[1]);
         result = bi_add(&C, C, T);
-        if (result != SUCCESS_MUL_AB) return print_fail_mul_AB();
 
         // 임시 변수 삭제
         bi_delete(&T0);

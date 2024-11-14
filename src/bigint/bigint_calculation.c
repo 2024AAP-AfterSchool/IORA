@@ -51,7 +51,6 @@ msg bi_new(OUT bigint** dst, IN uint32_t wordlen)
         if (VERBOSE) fprintf(stdout, "[Warning] Already freed pointer.\n");
         
         bi_delete(dst);
-        // return print_already_freed_error();
     }
 
     *dst = (bigint*)malloc(sizeof(bigint));
@@ -455,25 +454,23 @@ int8_t bi_compare(IN bigint* x, IN bigint* y)
  * @param dst bigint의 포인터
  * @param k shift 하고싶은 word 사이즈
  */
-msg bi_word_left_shift(OUT bigint* dst, IN byte k)
+msg bi_word_left_shift(OUT bigint** dst, IN byte k)
 {
     bigint* tmp = NULL;
-    bi_new(&tmp, dst->wordlen + k);
-    tmp->sign = dst->sign;
+    bi_new(&tmp, (*dst)->wordlen + k);
+    tmp->sign = (*dst)->sign;
 
     for (int i = k; i < tmp->wordlen; i++)
     {
-        tmp->start[i] = dst->start[i - k];
+        tmp->start[i] = (*dst)->start[i - k];
     }
     //bi_refine(tmp); // dst가 refine된 값이라면 할 필요 x
     // dst를 NULL로 설정하여 bi_assign이 동작하도록 준비
-    bi_delete(&dst);  // 기존 dst의 메모리를 해제
-    dst = NULL;
 
     // bi_assign을 사용하여 tmp의 값을 dst에 복사
-    bi_assign(&dst, tmp);
+    bi_assign(dst, tmp);
 
-    // tmp 삭제
+    // tmp 및 기존 dst의 메모리를 해제
     bi_delete(&tmp);
 
     return print_success_shift();
@@ -484,26 +481,24 @@ msg bi_word_left_shift(OUT bigint* dst, IN byte k)
  * @param dst bigint의 포인터
  * @param k shift 하고싶은 word 사이즈
  */
-msg bi_word_right_shift(OUT bigint* dst, IN byte k) // k는 shift하고싶은 word 사이즈 의미
+msg bi_word_right_shift(OUT bigint** dst, IN byte k) // k는 shift하고싶은 word 사이즈 의미
 {
     bigint* tmp = NULL;
-    bi_new(&tmp, dst->wordlen - k);
-    tmp->sign = dst->sign;
+    bi_new(&tmp, (*dst)->wordlen - k);
+    tmp->sign = (*dst)->sign;
 
     for (int i = k; i < tmp->wordlen; i++)
     {
-        tmp->start[i] = dst->start[i + k];
+        tmp->start[i] = (*dst)->start[i + k];
     }
     
     //bi_refine(tmp); // dst가 refine된 값이라면 할 필요 x
     // dst를 NULL로 설정하여 bi_assign이 동작하도록 준비
-    bi_delete(&dst);  // 기존 dst의 메모리를 해제
-    dst = NULL;
 
     // bi_assign을 사용하여 tmp의 값을 dst에 복사
-    bi_assign(&dst, tmp);
+    bi_assign(dst, tmp);
 
-    // tmp 삭제
+    // tmp 및 기존 dst의 메모리를 해제
     bi_delete(&tmp);
 
     return print_success_shift();

@@ -17,7 +17,7 @@
  * @param B 피연산자 B
  * @param borrow 이전 연산에서 발생한 borrow
  */
-msg bi_sub_AbB(OUT word* dst, IN word* A, IN word* B, IN byte* borrow)
+msg bi_sub_ABb(OUT word* dst, IN word* A, IN word* B, IN byte* borrow)
 {
 	byte tmp = 0;
 	*dst = *A - *borrow;
@@ -63,7 +63,7 @@ msg bi_sub_C(OUT bigint** dst, IN bigint* A, IN bigint* B)
 
     for (int j = 0; j < B->wordlen; j++) 
 	{
-        bi_sub_AbB(&C, &(A->start[j]), &(B->start[j]), &b);
+        bi_sub_ABb(&C, &(A->start[j]), &(B->start[j]), &b);
         bi_sub->start[j] = C;
         C = 0;
     }

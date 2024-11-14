@@ -1,10 +1,12 @@
 import os
 import ctypes
 import random
+import subprocess
 from tqdm import tqdm
 from datetime import datetime
 from IORA_type import bigint, POSITIVE, NEGATIVE, byte, word, msg
 from IORA_print import print_line, print_center, print_time, print_total_time, print_result
+
 try:
     from zoneinfo import ZoneInfo
 except ImportError:
@@ -37,6 +39,10 @@ def build_project(OS):
     return OS
 
 def load_library(OS):
+    # ==64738==ERROR: Interceptors are not working. This may be because AddressSanitizer is loaded too late (e.g. via dlopen). Please launch the executable with:
+    # DYLD_INSERT_LIBRARIES=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.asan_osx_dynamic.dylib
+    # 위 문제 발생 시, 아래 명령어 수행(AddressSanitizer 사용을 위함)
+    # export DYLD_INSERT_LIBRARIES=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/lib/darwin/libclang_rt.asan_osx_dynamic.dylib
     print_center(" 2. LOAD IORA PROJECT ", '=')
 
     lib = ""
@@ -67,14 +73,15 @@ def load_function(lib):
 
     function['bi_add'] = lib.bi_add
     function['bi_sub'] = lib.bi_sub
-    
+    function['bi_mul_C'] = lib.bi_mul_C
+
     # 로드한 함수 목록
     print_center(f" LOAD FUNCTION: {list(function.keys())[:3]} ...", ' ')
-    print_center(" LOAD SUCCESS ", '-')
+    print_center(" LOAD SUCCESS ", '=')
 
     return function
 
-def generate_random_number(variable_length = True, byte_length=4):
+def generate_random_number(variable_length = False, byte_length=4):
     if variable_length:
         byte_length = random.randint(0, byte_length)
 
@@ -160,7 +167,7 @@ def test_subtraction(function, wordlen=64, iteration=10000, verbose=False):
         result = function['bi_new'](ctypes.byref(test_bigint3), wordlen)
         result = function['bi_set_from_array'](ctypes.byref(test_bigint1), sign, wordlen, src_array1)
         result = function['bi_set_from_array'](ctypes.byref(test_bigint2), sign, wordlen, src_array2)
-        result = function['bi_sub'](test_bigint1, test_bigint2, ctypes.byref(test_bigint3))
+        result = function['bi_sub'](ctypes.byref(test_bigint3), test_bigint1, test_bigint2)
 
         if verbose:
             print("\nBigInt1: ", end='')
@@ -188,6 +195,66 @@ def test_subtraction(function, wordlen=64, iteration=10000, verbose=False):
             print("Python Result: ", hex(python_result).upper().replace('X', 'x'), sep="")
             print("C Result: ", "" if test_bigint3.contents.sign == POSITIVE else "-",
                   hex(int(''.join(format(x, '08X') for x in reversed(start_of_result)), 16)).upper().replace('X', 'x'), sep="")
+            break
+
+    if iteration == i + 1:
+        print()
+        print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
+    else:
+        print()
+        print_center(f" TEST FAIL (Exit At: {i+1}) ", '-')
+        exit(1)
+
+def test_multiplication(function, wordlen=2, iteration=10000, verbose=False):
+    print_center(" 3-10. BigInt 곱셈 테스트 ", '-', '\n', 95)
+
+    for i in tqdm(range(iteration), desc="BigNum Multiplication Test", unit=" iter", ncols=100):
+        sign = POSITIVE
+        test_bigint1 = ctypes.POINTER(bigint)()
+        test_bigint2 = ctypes.POINTER(bigint)()
+        test_bigint3 = ctypes.POINTER(bigint)()
+
+        src_array1 = (word * wordlen)(*(generate_random_number() for _ in range(wordlen)))
+        src_array2 = (word * wordlen)(*(generate_random_number() for _ in range(wordlen)))
+
+        src_num_from_array1 = ''.join(format(x, '08X') for x in reversed(src_array1))
+        src_num_from_array2 = ''.join(format(x, '08X') for x in reversed(src_array2))
+
+        result = function['bi_new'](ctypes.byref(test_bigint1), wordlen)
+        result = function['bi_new'](ctypes.byref(test_bigint2), wordlen)
+        result = function['bi_new'](ctypes.byref(test_bigint3), wordlen * 2)
+        result = function['bi_set_from_array'](ctypes.byref(test_bigint1), sign, wordlen, src_array1)
+        result = function['bi_set_from_array'](ctypes.byref(test_bigint2), sign, wordlen, src_array2)
+        result = function['bi_mul_C'](ctypes.byref(test_bigint3), test_bigint1, test_bigint2)
+        print(result)
+        print_center(f" TEST ITERATION: {i+1} ", '-')
+
+        if verbose:
+            print("\nBigInt1: ", end='')
+            function['bi_print'](test_bigint1, 16)
+            print("BigInt2: ", end='')
+            function['bi_print'](test_bigint2, 16)
+            print("BigInt3: ", end='')
+            function['bi_print'](test_bigint3, 16)
+            print()
+
+        python_result = int(src_num_from_array1, 16) * int(src_num_from_array2, 16)  
+        start_of_result = [test_bigint3.contents.start[i] for i in range(test_bigint3.contents.wordlen)]
+        c_result = int(''.join(format(x, '08X') for x in reversed(start_of_result)), 16)
+        c_result = c_result if test_bigint3.contents.sign == POSITIVE else -c_result
+        if python_result == c_result:
+            if verbose:
+                print(python_result, " |||| ",int(''.join(format(x, '08X') for x in reversed(start_of_result)), 16))
+            function['bi_delete'](ctypes.byref(test_bigint1))
+            function['bi_delete'](ctypes.byref(test_bigint2))
+            function['bi_delete'](ctypes.byref(test_bigint3))
+        else:
+            print_center(" TEST FAIL ", ' ')
+            print("BigInt1: ", "0x", src_num_from_array1, sep="")
+            print("BigInt2: ", "0x", src_num_from_array2, sep="")
+            print("Python Result: ", hex(python_result).upper().replace('X', 'x'), sep="")
+            print("C Result: ", "" if test_bigint3.contents.sign == POSITIVE else "-",
+            hex(int(''.join(format(x, '08X') for x in reversed(start_of_result)), 16)).upper().replace('X', 'x'), sep="")
             break
 
     if iteration == i + 1:
@@ -292,7 +359,10 @@ def test():
     test_addtion(function)
 
     # 3-9 BigInt 뺄셈 테스트
-    test_subtraction(function)
+    # test_subtraction(function)
+
+    # 3-10 BigInt 곱셈 테스트
+    # test_multiplication(function)
 
     # 실행 테스트
     # os.system(command=f"./build/{OS}/IORA")

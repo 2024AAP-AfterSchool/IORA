@@ -66,8 +66,7 @@ add_executable(IORA ${SOURCE_FILES})
 # 커버리지 리포트 생성
 add_custom_target(coverage
     COMMAND ${CMAKE_MAKE_PROGRAM} test
-    COMMAND lcov --capture --directory . --output-file ./test/coverage.info
-    COMMAND lcov --remove ./test/coverage.info "/usr/*" "*/test/*" --output-file coverage.info --ignore-errors unused
+    COMMAND lcov --capture --directory . --output-file ./test/coverage.info --rc lcov_branch_coverage=1
     COMMAND lcov --list ./test/coverage.info
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     COMMENT "Generating Test Coverage Report"

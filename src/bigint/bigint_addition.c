@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include "base/base_type.h"
 #include "base/base_error.h"
+#include "bigint/bigint_subtraction.h"
 #include "bigint/bigint_calculation.h"
 
 /**
@@ -104,6 +105,19 @@ msg bi_add(OUT bigint** dst, IN bigint* A, IN bigint* B)
     if ((B->sign == 0) && (A->sign == 1))
     {
         bi_sub(dst, B, A);
+    }
+    if ((B->sign == 1) && (A->sign == 1))
+    {
+        if (A->wordlen >= B->wordlen)
+        {      
+            bi_addC(dst, A, B);
+            (*dst)->sign = 1;
+        }
+        else
+        {    
+            bi_addC(dst, B, A);
+            (*dst)->sign = 1;
+        }
     }
     else
     {
