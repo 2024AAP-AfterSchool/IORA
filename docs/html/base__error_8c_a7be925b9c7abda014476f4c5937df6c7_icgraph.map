@@ -1,0 +1,5 @@
+<map id="print_success_mul_C" name="print_success_mul_C">
+<area shape="rect" id="Node000001" title="MUL_C 성공 시 출력하는 함수" alt="" coords="130,5,277,31"/>
+<area shape="rect" id="Node000002" href="$bigint__multiplication_8c.html#a2a7113d3ea7470a08ec3eeb8301aee38" title="두 bigint A와 B의 곱셈을 수행하는 함수" alt="" coords="5,5,82,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="114,21,82,21,82,16,114,16"/>
+</map>

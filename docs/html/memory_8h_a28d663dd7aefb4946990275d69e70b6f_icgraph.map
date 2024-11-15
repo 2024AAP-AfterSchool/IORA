@@ -1,13 +1,31 @@
 <map id="free_if_exist" name="free_if_exist">
-<area shape="rect" id="Node000001" title="포인터의 메모리가 할당되어 있으면 해제하는 함수" alt="" coords="367,56,460,82"/>
-<area shape="rect" id="Node000002" href="$bigint__calculation_8c.html#a661579c313392e1aa1e2ca1c6c227ce6" title="bigint의 값을 다른 bigint로 할당하는 함수" alt="" coords="240,31,316,56"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="351,60,316,53,317,48,352,55"/>
-<area shape="rect" id="Node000005" href="$string_8c.html#a8750de4bacde177c789c8386d49c3c1f" title="문자열을 숫자로 변환하는 함수" alt="" coords="237,80,319,106"/>
-<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="352,82,320,88,319,83,351,77"/>
-<area shape="rect" id="Node000003" href="$bigint__subtraction_8c.html#afa4e93a166e5a4c75a1f8522d1c24425" title="두 bigint의 뺄셈을 수행하는 함수" alt="" coords="130,5,189,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="224,35,189,27,190,22,225,29"/>
-<area shape="rect" id="Node000004" href="$bigint__subtraction_8c.html#acaf10206d518b7d29722ad94205bf527" title="두 bigint의 뺄셈을 수행하는 함수." alt="" coords="5,5,82,31"/>
-<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="224,50,178,50,129,46,81,34,82,29,130,41,178,45,224,45"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="114,30,82,29,82,24,114,24"/>
-<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="97,7,130,8,129,13,97,12"/>
+<area shape="rect" id="Node000001" title="포인터의 메모리가 할당되어 있으면 해제하는 함수" alt="" coords="719,144,811,170"/>
+<area shape="rect" id="Node000002" href="$bigint__calculation_8c.html#a661579c313392e1aa1e2ca1c6c227ce6" title="bigint의 값을 다른 bigint로 할당하는 함수" alt="" coords="592,119,668,144"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="703,148,668,141,669,136,704,143"/>
+<area shape="rect" id="Node000012" href="$string_8c.html#a8750de4bacde177c789c8386d49c3c1f" title="문자열을 숫자로 변환하는 함수" alt="" coords="589,168,671,194"/>
+<area shape="poly" id="edge17_Node000001_Node000012" title=" " alt="" coords="704,170,672,176,671,171,703,165"/>
+<area shape="rect" id="Node000003" href="$bigint__multiplication_8c.html#a22e460b8cf3c3e90e551dc9d32834aac" title="두 양의 정수 A와 B의 곱셈을 수행하는 함수" alt="" coords="433,93,518,119"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="576,125,518,116,519,110,577,120"/>
+<area shape="rect" id="Node000004" href="$bigint__multiplication_8c.html#a2a7113d3ea7470a08ec3eeb8301aee38" title="두 bigint A와 B의 곱셈을 수행하는 함수" alt="" coords="109,68,185,94"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="608,109,578,78,539,52,459,21,425,13,393,9,324,14,240,33,200,49,167,70,164,65,197,44,238,28,323,8,393,4,426,8,461,16,542,48,581,74,612,105"/>
+<area shape="rect" id="Node000005" href="$bigint__subtraction_8c.html#afa4e93a166e5a4c75a1f8522d1c24425" title="두 bigint의 뺄셈을 수행하는 함수" alt="" coords="446,195,505,220"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="589,154,505,197,502,192,587,149"/>
+<area shape="rect" id="Node000009" href="$bigint__subtraction_8c.html#acaf10206d518b7d29722ad94205bf527" title="두 bigint의 뺄셈을 수행하는 함수." alt="" coords="262,145,339,171"/>
+<area shape="poly" id="edge13_Node000002_Node000009" title=" " alt="" coords="576,138,339,158,339,152,576,133"/>
+<area shape="rect" id="Node000010" href="$bigint__calculation_8c.html#a2937fd643a713afbfc81f59fec3f1798" title="word를 왼쪽으로 shift하는 함수" alt="" coords="239,43,362,68"/>
+<area shape="poly" id="edge14_Node000002_Node000010" title=" " alt="" coords="597,112,570,96,540,83,495,72,448,64,363,58,363,52,449,59,496,66,542,78,572,91,600,107"/>
+<area shape="rect" id="Node000011" href="$bigint__calculation_8c.html#a14ffb2338123b9430ff965bc10e761fe" title="word를 오른쪽으로 shift하는 함수" alt="" coords="410,244,541,270"/>
+<area shape="poly" id="edge16_Node000002_Node000011" title=" " alt="" coords="592,156,591,157,576,177,568,196,560,215,542,235,525,246,522,241,539,231,555,212,563,194,571,175,587,154,588,152"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="418,104,185,86,186,81,418,99"/>
+<area shape="rect" id="Node000006" href="$bigint__addition_8c.html#a0b664d25349d775300da493a96c02a6e" title="두 bigint의 덧셈을 수행하는 함수" alt="" coords="271,195,330,220"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="430,218,331,217,331,212,430,213"/>
+<area shape="poly" id="edge11_Node000005_Node000009" title=" " alt="" coords="430,205,325,174,327,169,431,200"/>
+<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="256,196,237,186,211,164,188,139,155,96,159,93,192,136,215,160,241,181,258,191"/>
+<area shape="poly" id="edge8_Node000006_Node000005" title=" " alt="" coords="346,197,445,198,445,203,346,202"/>
+<area shape="rect" id="Node000007" href="$bigint__addition_8c.html#afe02a70ab92f357494f002234b531e45" title="bigint 덧셈 테스트 함수" alt="" coords="103,195,191,220"/>
+<area shape="poly" id="edge9_Node000006_Node000007" title=" " alt="" coords="255,210,191,210,191,205,255,205"/>
+<area shape="rect" id="Node000008" href="$_i_o_r_a_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title=" " alt="" coords="5,195,55,220"/>
+<area shape="poly" id="edge10_Node000007_Node000008" title=" " alt="" coords="87,210,55,210,55,205,87,205"/>
+<area shape="poly" id="edge12_Node000009_Node000005" title=" " alt="" coords="355,162,451,191,449,197,354,167"/>
+<area shape="poly" id="edge15_Node000010_Node000004" title=" " alt="" coords="224,71,186,77,185,72,223,65"/>
 </map>

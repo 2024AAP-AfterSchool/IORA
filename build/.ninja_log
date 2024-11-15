@@ -1,0 +1,17 @@
+# ninja log v5
+2	120	1731138431794652509	CMakeFiles/IORA_LIB.dir/src/utils/memory.c.o	93b716b79b6b0aba
+0	114	1731138431789387126	CMakeFiles/IORA_LIB.dir/src/IORA.c.o	7cf046289df6401f
+1	141	1731138431816376350	CMakeFiles/IORA_LIB.dir/src/bigint/bigint_multiplication.c.o	7ba7124aec30d126
+1	163	1731138431839403078	CMakeFiles/IORA_LIB.dir/src/bigint/bigint_subtraction.c.o	f13fe14334e74cba
+1	117	1731138431793232256	CMakeFiles/IORA_LIB.dir/src/base/base_error.c.o	54f63911d34cbc81
+4	163	1731138431839907305	CMakeFiles/IORA.dir/src/bigint/bigint_calculation.c.o	c060229245a1cb75
+4	143	1731138431819721041	CMakeFiles/IORA.dir/src/bigint/bigint_addition.c.o	c05928ff1d9f42b9
+114	243	1731138431918292931	CMakeFiles/IORA.dir/src/bigint/bigint_subtraction.c.o	b674ef60be80ca48
+1	151	1731138431826746867	CMakeFiles/IORA_LIB.dir/src/bigint/bigint_addition.c.o	95ce582abc9510f7
+1	162	1731138431836482801	CMakeFiles/IORA_LIB.dir/src/bigint/bigint_calculation.c.o	14ba13a3e06dd26d
+3	118	1731138431793429100	CMakeFiles/IORA.dir/src/IORA.c.o	56b2432fe7ab4a99
+118	190	1731138431867485438	CMakeFiles/IORA.dir/src/utils/memory.c.o	a5d0360d35e3fc64
+114	216	1731138431873037219	CMakeFiles/IORA.dir/src/bigint/bigint_multiplication.c.o	ddec69b22f67d69b
+3	113	1731138431788840475	CMakeFiles/IORA.dir/src/base/base_error.c.o	612fb7c01dbb120e
+2	120	1731138431796586190	CMakeFiles/IORA_LIB.dir/src/utils/string.c.o	f2c957e9e1102f1e
+118	191	1731138431868460709	CMakeFiles/IORA.dir/src/utils/string.c.o	7d59a6d55b3dff13

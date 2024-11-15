@@ -2,8 +2,7 @@
 \hypertarget{base__error_8h}{}\label{base__error_8h}\index{include/base/base\_error.h@{include/base/base\_error.h}}
 {\ttfamily \#include $<$stdbool.\+h$>$}\newline
 {\ttfamily \#include "{}base\+\_\+type.\+h"{}}\newline
-Include dependency graph for base\+\_\+error.\+h\+:
-\nopagebreak
+Include dependency graph for base\+\_\+error.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -61,6 +60,12 @@ This graph shows which files directly or indirectly include this file\+:
 \item 
 \#define \mbox{\hyperlink{base__error_8h_a327396f3091ff84614a36e3b1ab79bb6}{SUCCESS\+\_\+\+SUB}}~19
 \item 
+\#define \mbox{\hyperlink{base__error_8h_a2e96141bc490a7d67eb62e81b0347b5a}{SUCCESS\+\_\+\+MUL\+\_\+\+AB}}~20
+\item 
+\#define \mbox{\hyperlink{base__error_8h_a3735f0f278bfcdfbfd8c52e2371d8019}{SUCCESS\+\_\+\+MUL\+\_\+C}}~21
+\item 
+\#define \mbox{\hyperlink{base__error_8h_ab51c2cb388508b77d8087b412a066b49}{SUCCESS\+\_\+\+SHIFT}}~22
+\item 
 \#define \mbox{\hyperlink{base__error_8h_ae79cb501726dd07d384073eb8446c016}{INVALID\+\_\+\+WORD\+\_\+\+LENGTH\+\_\+\+ERROR}}~-\/1
 \item 
 \#define \mbox{\hyperlink{base__error_8h_aa6840d299f62b023f82661d31597c982}{MEMORY\+\_\+\+ALLOCATION\+\_\+\+ERROR}}~-\/2
@@ -74,6 +79,8 @@ This graph shows which files directly or indirectly include this file\+:
 \#define \mbox{\hyperlink{base__error_8h_a4c8df1f9739ed3b088d65df59a5c7dca}{COPY\+\_\+\+FAILED\+\_\+\+ERROR}}~-\/6
 \item 
 \#define \mbox{\hyperlink{base__error_8h_a4479595d820092e7c412baa489424e94}{INVALID\+\_\+\+INPUT\+\_\+\+ERROR}}~-\/7
+\item 
+\#define \mbox{\hyperlink{base__error_8h_a09b9fc283e590da87c153fa96a6606dd}{FAIL\+\_\+\+MUL\+\_\+\+AB}}~-\/8
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
@@ -92,6 +99,8 @@ This graph shows which files directly or indirectly include this file\+:
 \begin{DoxyCompactList}\small\item\em 배열 복사 실패 시 출력하는 함수 \end{DoxyCompactList}\item 
 \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_afcf2ec99cdcd9be08648c7773423169a}{print\+\_\+invalid\+\_\+input\+\_\+error}} ()
 \begin{DoxyCompactList}\small\item\em 유효하지 않은 입력 에러 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_a5a975e16eb221849c867472d14c0514e}{print\+\_\+fail\+\_\+mul\+\_\+\+AB}} ()
+\begin{DoxyCompactList}\small\item\em MUL\+\_\+\+AB 실패 시 출력하는 함수 \end{DoxyCompactList}\item 
 \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_a574afd1336f23dab560de5409fddb920}{print\+\_\+success\+\_\+memory\+\_\+allocation}} ()
 \begin{DoxyCompactList}\small\item\em 메모리 할당 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
 \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_a47c3d935b57aeec1f128170eee7547de}{print\+\_\+success\+\_\+initialization}} ()
@@ -129,7 +138,13 @@ This graph shows which files directly or indirectly include this file\+:
 \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_a7118840452099cf18d1107961a19e964}{print\+\_\+success\+\_\+sub\+\_\+C}} ()
 \begin{DoxyCompactList}\small\item\em SUB\+\_\+C 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
 \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_ad9b36bc988699624cb041520512fbdac}{print\+\_\+success\+\_\+sub}} ()
-\begin{DoxyCompactList}\small\item\em SUB 성공 시 출력하는 함수 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em SUB 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_a1e8ba47666bd30def60780e2a4f5bcd7}{print\+\_\+success\+\_\+mul\+\_\+\+AB}} ()
+\begin{DoxyCompactList}\small\item\em MUL\+\_\+\+AB 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_a7be925b9c7abda014476f4c5937df6c7}{print\+\_\+success\+\_\+mul\+\_\+C}} ()
+\begin{DoxyCompactList}\small\item\em MUL\+\_\+C 성공 시 출력하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{base__error_8h_a4d5cce140109b97bc7539c44487de22d}{print\+\_\+success\+\_\+shift}} ()
+\begin{DoxyCompactList}\small\item\em SHIFT 성공 시 출력하는 함수 \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Macro Definition Documentation}
@@ -150,6 +165,12 @@ This graph shows which files directly or indirectly include this file\+:
 \doxysubsubsection{\texorpdfstring{COPY\_FAILED\_ERROR}{COPY\_FAILED\_ERROR}}
 {\footnotesize\ttfamily \label{base__error_8h_a4c8df1f9739ed3b088d65df59a5c7dca} 
 \#define COPY\+\_\+\+FAILED\+\_\+\+ERROR~-\/6}
+
+\Hypertarget{base__error_8h_a09b9fc283e590da87c153fa96a6606dd}\index{base\_error.h@{base\_error.h}!FAIL\_MUL\_AB@{FAIL\_MUL\_AB}}
+\index{FAIL\_MUL\_AB@{FAIL\_MUL\_AB}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{FAIL\_MUL\_AB}{FAIL\_MUL\_AB}}
+{\footnotesize\ttfamily \label{base__error_8h_a09b9fc283e590da87c153fa96a6606dd} 
+\#define FAIL\+\_\+\+MUL\+\_\+\+AB~-\/8}
 
 \Hypertarget{base__error_8h_a4479595d820092e7c412baa489424e94}\index{base\_error.h@{base\_error.h}!INVALID\_INPUT\_ERROR@{INVALID\_INPUT\_ERROR}}
 \index{INVALID\_INPUT\_ERROR@{INVALID\_INPUT\_ERROR}!base\_error.h@{base\_error.h}}
@@ -229,6 +250,18 @@ This graph shows which files directly or indirectly include this file\+:
 {\footnotesize\ttfamily \label{base__error_8h_a91e16a9169a4156f57b5fc2846768bf9} 
 \#define SUCCESS\+\_\+\+MEMORY\+\_\+\+DEALLOCATION~3}
 
+\Hypertarget{base__error_8h_a2e96141bc490a7d67eb62e81b0347b5a}\index{base\_error.h@{base\_error.h}!SUCCESS\_MUL\_AB@{SUCCESS\_MUL\_AB}}
+\index{SUCCESS\_MUL\_AB@{SUCCESS\_MUL\_AB}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS\_MUL\_AB}{SUCCESS\_MUL\_AB}}
+{\footnotesize\ttfamily \label{base__error_8h_a2e96141bc490a7d67eb62e81b0347b5a} 
+\#define SUCCESS\+\_\+\+MUL\+\_\+\+AB~20}
+
+\Hypertarget{base__error_8h_a3735f0f278bfcdfbfd8c52e2371d8019}\index{base\_error.h@{base\_error.h}!SUCCESS\_MUL\_C@{SUCCESS\_MUL\_C}}
+\index{SUCCESS\_MUL\_C@{SUCCESS\_MUL\_C}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS\_MUL\_C}{SUCCESS\_MUL\_C}}
+{\footnotesize\ttfamily \label{base__error_8h_a3735f0f278bfcdfbfd8c52e2371d8019} 
+\#define SUCCESS\+\_\+\+MUL\+\_\+C~21}
+
 \Hypertarget{base__error_8h_a9cec5171cc9014cfa75b54808151148a}\index{base\_error.h@{base\_error.h}!SUCCESS\_PRINT@{SUCCESS\_PRINT}}
 \index{SUCCESS\_PRINT@{SUCCESS\_PRINT}!base\_error.h@{base\_error.h}}
 \doxysubsubsection{\texorpdfstring{SUCCESS\_PRINT}{SUCCESS\_PRINT}}
@@ -264,6 +297,12 @@ This graph shows which files directly or indirectly include this file\+:
 \doxysubsubsection{\texorpdfstring{SUCCESS\_SET\_FROM\_STRING}{SUCCESS\_SET\_FROM\_STRING}}
 {\footnotesize\ttfamily \label{base__error_8h_ab04fe34afe0fe6345d937cb8e2670770} 
 \#define SUCCESS\+\_\+\+SET\+\_\+\+FROM\+\_\+\+STRING~11}
+
+\Hypertarget{base__error_8h_ab51c2cb388508b77d8087b412a066b49}\index{base\_error.h@{base\_error.h}!SUCCESS\_SHIFT@{SUCCESS\_SHIFT}}
+\index{SUCCESS\_SHIFT@{SUCCESS\_SHIFT}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{SUCCESS\_SHIFT}{SUCCESS\_SHIFT}}
+{\footnotesize\ttfamily \label{base__error_8h_ab51c2cb388508b77d8087b412a066b49} 
+\#define SUCCESS\+\_\+\+SHIFT~22}
 
 \Hypertarget{base__error_8h_a327396f3091ff84614a36e3b1ab79bb6}\index{base\_error.h@{base\_error.h}!SUCCESS\_SUB@{SUCCESS\_SUB}}
 \index{SUCCESS\_SUB@{SUCCESS\_SUB}!base\_error.h@{base\_error.h}}
@@ -336,6 +375,24 @@ Here is the caller graph for this function\+:
 
 배열 복사 실패 시 출력하는 함수 
 
+\Hypertarget{base__error_8h_a5a975e16eb221849c867472d14c0514e}\index{base\_error.h@{base\_error.h}!print\_fail\_mul\_AB@{print\_fail\_mul\_AB}}
+\index{print\_fail\_mul\_AB@{print\_fail\_mul\_AB}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_fail\_mul\_AB()}{print\_fail\_mul\_AB()}}
+{\footnotesize\ttfamily \label{base__error_8h_a5a975e16eb221849c867472d14c0514e} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+fail\+\_\+mul\+\_\+\+AB (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+MUL\+\_\+\+AB 실패 시 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=266pt]{base__error_8h_a5a975e16eb221849c867472d14c0514e_icgraph}
+\end{center}
+\end{figure}
 \Hypertarget{base__error_8h_afcf2ec99cdcd9be08648c7773423169a}\index{base\_error.h@{base\_error.h}!print\_invalid\_input\_error@{print\_invalid\_input\_error}}
 \index{print\_invalid\_input\_error@{print\_invalid\_input\_error}!base\_error.h@{base\_error.h}}
 \doxysubsubsection{\texorpdfstring{print\_invalid\_input\_error()}{print\_invalid\_input\_error()}}
@@ -346,8 +403,7 @@ Here is the caller graph for this function\+:
 
 유효하지 않은 입력 에러 시 출력하는 함수 
 
-Here is the caller graph for this function\+:
-\nopagebreak
+Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -518,8 +574,7 @@ Here is the caller graph for this function\+:
 
 랜덤 값 생성 성공 시 출력하는 함수 
 
-Here is the caller graph for this function\+:
-\nopagebreak
+Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -572,6 +627,42 @@ Here is the caller graph for this function\+:
 \includegraphics[width=350pt]{base__error_8h_ac71ec819b187d9d5f24892ec2a5cea40_icgraph}
 \end{center}
 \end{figure}
+\Hypertarget{base__error_8h_a1e8ba47666bd30def60780e2a4f5bcd7}\index{base\_error.h@{base\_error.h}!print\_success\_mul\_AB@{print\_success\_mul\_AB}}
+\index{print\_success\_mul\_AB@{print\_success\_mul\_AB}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_success\_mul\_AB()}{print\_success\_mul\_AB()}}
+{\footnotesize\ttfamily \label{base__error_8h_a1e8ba47666bd30def60780e2a4f5bcd7} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+success\+\_\+mul\+\_\+\+AB (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+MUL\+\_\+\+AB 성공 시 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{base__error_8h_a1e8ba47666bd30def60780e2a4f5bcd7_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{base__error_8h_a7be925b9c7abda014476f4c5937df6c7}\index{base\_error.h@{base\_error.h}!print\_success\_mul\_C@{print\_success\_mul\_C}}
+\index{print\_success\_mul\_C@{print\_success\_mul\_C}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_success\_mul\_C()}{print\_success\_mul\_C()}}
+{\footnotesize\ttfamily \label{base__error_8h_a7be925b9c7abda014476f4c5937df6c7} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+success\+\_\+mul\+\_\+C (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+MUL\+\_\+C 성공 시 출력하는 함수 
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=284pt]{base__error_8h_a7be925b9c7abda014476f4c5937df6c7_icgraph}
+\end{center}
+\end{figure}
 \Hypertarget{base__error_8h_ab028432aef6346d801fdd67266472ec8}\index{base\_error.h@{base\_error.h}!print\_success\_print@{print\_success\_print}}
 \index{print\_success\_print@{print\_success\_print}!base\_error.h@{base\_error.h}}
 \doxysubsubsection{\texorpdfstring{print\_success\_print()}{print\_success\_print()}}
@@ -582,8 +673,7 @@ Here is the caller graph for this function\+:
 
 bigint를 출력 성공 시 출력하는 함수 
 
-Here is the caller graph for this function\+:
-\nopagebreak
+Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -628,8 +718,7 @@ Refine 성공 시 출력하는 함수
 
 배열로부터 bigint에 값을 할당 성공 시 출력하는 함수 
 
-Here is the caller graph for this function\+:
-\nopagebreak
+Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -646,12 +735,29 @@ Here is the caller graph for this function\+:
 
 string을 통해 bigint에 값을 할당 성공 시 출력하는 함수 
 
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=333pt]{base__error_8h_a680e4f47716fca2fbcdc67a4396e42ac_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{base__error_8h_a4d5cce140109b97bc7539c44487de22d}\index{base\_error.h@{base\_error.h}!print\_success\_shift@{print\_success\_shift}}
+\index{print\_success\_shift@{print\_success\_shift}!base\_error.h@{base\_error.h}}
+\doxysubsubsection{\texorpdfstring{print\_success\_shift()}{print\_success\_shift()}}
+{\footnotesize\ttfamily \label{base__error_8h_a4d5cce140109b97bc7539c44487de22d} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} print\+\_\+success\+\_\+shift (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+SHIFT 성공 시 출력하는 함수 
+
 Here is the caller graph for this function\+:
 \nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=333pt]{base__error_8h_a680e4f47716fca2fbcdc67a4396e42ac_icgraph}
+\includegraphics[width=350pt]{base__error_8h_a4d5cce140109b97bc7539c44487de22d_icgraph}
 \end{center}
 \end{figure}
 \Hypertarget{base__error_8h_ad9b36bc988699624cb041520512fbdac}\index{base\_error.h@{base\_error.h}!print\_success\_sub@{print\_success\_sub}}

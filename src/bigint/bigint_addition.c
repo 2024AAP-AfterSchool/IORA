@@ -110,12 +110,12 @@ msg bi_add(OUT bigint** dst, IN bigint* A, IN bigint* B)
     {
         if (A->wordlen >= B->wordlen)
         {      
-            bi_addC(dst, A, B);
+            bi_add_C(dst, A, B);
             (*dst)->sign = 1;
         }
         else
         {    
-            bi_addC(dst, B, A);
+            bi_add_C(dst, B, A);
             (*dst)->sign = 1;
         }
     }

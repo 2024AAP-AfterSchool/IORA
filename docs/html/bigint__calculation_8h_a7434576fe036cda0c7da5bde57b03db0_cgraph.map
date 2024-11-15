@@ -4,7 +4,7 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,310,194,298,195,304,113,315"/>
 <area shape="rect" id="Node000008" href="$base__error_8c.html#aef05af2222acc0dd48f418acfaf5f174" title="bigiint의 길이가 올바르지 않을 때 출력하는 함수" alt="" coords="396,410,521,451"/>
 <area shape="poly" id="edge16_Node000001_Node000008" title=" " alt="" coords="112,322,211,338,268,351,323,368,348,382,371,396,383,402,381,406,369,401,345,386,321,373,266,356,210,343,112,327"/>
-<area shape="rect" id="Node000011" href="$bigint__calculation_8c.html#ab40de6afc896f0873e591b2263622dea" title="bigint의 마지막 워드가 0인 경우 bigint의 메모리를 재할당하는 함수" alt="" coords="206,80,276,106"/>
+<area shape="rect" id="Node000011" href="$bigint__calculation_8c.html#ad3ea6d6810e6d14a748c2ca26a16345d" title="bigint의 마지막 워드가 0인 경우 bigint의 메모리를 재할당하는 함수" alt="" coords="206,80,276,106"/>
 <area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="68,305,218,116,222,120,72,309"/>
 <area shape="rect" id="Node000013" href="$base__error_8c.html#ab2c198d5e5e93db68ca235f59902b754" title="랜덤 값 생성 성공 시 출력하는 함수" alt="" coords="160,383,322,409"/>
 <area shape="poly" id="edge17_Node000001_Node000013" title=" " alt="" coords="90,331,161,361,192,374,190,379,159,366,88,336"/>

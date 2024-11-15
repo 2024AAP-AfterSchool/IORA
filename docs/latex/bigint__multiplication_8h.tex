@@ -1,0 +1,107 @@
+\doxysection{include/bigint/bigint\+\_\+multiplication.h File Reference}
+\hypertarget{bigint__multiplication_8h}{}\label{bigint__multiplication_8h}\index{include/bigint/bigint\_multiplication.h@{include/bigint/bigint\_multiplication.h}}
+{\ttfamily \#include "{}base/base\+\_\+type.\+h"{}}\newline
+Include dependency graph for bigint\+\_\+multiplication.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=179pt]{bigint__multiplication_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=316pt]{bigint__multiplication_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{bigint__multiplication_8h_a22e460b8cf3c3e90e551dc9d32834aac}{bi\+\_\+mul\+\_\+\+AB}} (\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}dst, \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}} \texorpdfstring{$\ast$}{*}A, \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}} \texorpdfstring{$\ast$}{*}B)
+\begin{DoxyCompactList}\small\item\em 두 양의 정수 A와 B의 곱셈을 수행하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{bigint__multiplication_8h_a2a7113d3ea7470a08ec3eeb8301aee38}{bi\+\_\+mul\+\_\+C}} (\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}dst, \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}A, \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}B)
+\begin{DoxyCompactList}\small\item\em 두 bigint A와 B의 곱셈을 수행하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{bigint__multiplication_8h_a780906de6604bfec04a3e50f3cd63178}{bi\+\_\+test\+\_\+mul}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{bigint__multiplication_8h_a22e460b8cf3c3e90e551dc9d32834aac}\index{bigint\_multiplication.h@{bigint\_multiplication.h}!bi\_mul\_AB@{bi\_mul\_AB}}
+\index{bi\_mul\_AB@{bi\_mul\_AB}!bigint\_multiplication.h@{bigint\_multiplication.h}}
+\doxysubsubsection{\texorpdfstring{bi\_mul\_AB()}{bi\_mul\_AB()}}
+{\footnotesize\ttfamily \label{bigint__multiplication_8h_a22e460b8cf3c3e90e551dc9d32834aac} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} bi\+\_\+mul\+\_\+\+AB (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}} \texorpdfstring{$\ast$}{*}}]{A}{, }\item[{\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}} \texorpdfstring{$\ast$}{*}}]{B}{}\end{DoxyParamCaption})}
+
+
+
+두 양의 정수 A와 B의 곱셈을 수행하는 함수 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dst} & 결과를 저장할 bigint의 포인터 \\
+\hline
+{\em A} & 곱셈을 수행할 첫 번째 bigint \\
+\hline
+{\em B} & 곱셈을 수행할 두 번째 bigint \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__multiplication_8h_a22e460b8cf3c3e90e551dc9d32834aac_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=237pt]{bigint__multiplication_8h_a22e460b8cf3c3e90e551dc9d32834aac_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__multiplication_8h_a2a7113d3ea7470a08ec3eeb8301aee38}\index{bigint\_multiplication.h@{bigint\_multiplication.h}!bi\_mul\_C@{bi\_mul\_C}}
+\index{bi\_mul\_C@{bi\_mul\_C}!bigint\_multiplication.h@{bigint\_multiplication.h}}
+\doxysubsubsection{\texorpdfstring{bi\_mul\_C()}{bi\_mul\_C()}}
+{\footnotesize\ttfamily \label{bigint__multiplication_8h_a2a7113d3ea7470a08ec3eeb8301aee38} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} bi\+\_\+mul\+\_\+C (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}}]{A}{, }\item[{\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}}]{B}{}\end{DoxyParamCaption})}
+
+
+
+두 bigint A와 B의 곱셈을 수행하는 함수 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dst} & 결과를 저장할 bigint의 포인터 \\
+\hline
+{\em A} & 곱셈을 수행할 첫 번째 bigint \\
+\hline
+{\em B} & 곱셈을 수행할 두 번째 bigint \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__multiplication_8h_a2a7113d3ea7470a08ec3eeb8301aee38_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__multiplication_8h_a780906de6604bfec04a3e50f3cd63178}\index{bigint\_multiplication.h@{bigint\_multiplication.h}!bi\_test\_mul@{bi\_test\_mul}}
+\index{bi\_test\_mul@{bi\_test\_mul}!bigint\_multiplication.h@{bigint\_multiplication.h}}
+\doxysubsubsection{\texorpdfstring{bi\_test\_mul()}{bi\_test\_mul()}}
+{\footnotesize\ttfamily \label{bigint__multiplication_8h_a780906de6604bfec04a3e50f3cd63178} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} bi\+\_\+test\+\_\+mul (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=219pt]{bigint__multiplication_8h_a780906de6604bfec04a3e50f3cd63178_icgraph}
+\end{center}
+\end{figure}

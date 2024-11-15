@@ -30,45 +30,53 @@
 \DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ SUCCESS\_SUB\_Ab\ 17\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{//<\ SUB\_Ab\ 성공}}
 \DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ SUCCESS\_SUB\_C\ 18\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{//<\ SUB\_C\ 성공}}
 \DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ SUCCESS\_SUB\ 19\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{//<\ SUB\ 성공}}
-\DoxyCodeLine{00029\ }
-\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ INVALID\_WORD\_LENGTH\_ERROR\ -\/1\ \ \ \ \ \ \ \ }\textcolor{comment}{//<\ 잘못된\ 워드\ 길이\ 에러}}
-\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ MEMORY\_ALLOCATION\_ERROR\ -\/2\ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{//<\ 메모리\ 할당\ 실패\ 에러}}
-\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ ARRAY\_ALLOCATION\_ERROR\ -\/3\ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{//<\ 배열\ 메모리\ 할당\ 실패\ 에러}}
-\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ NULL\_POINTER\_ERROR\ -\/4\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{//<\ 널\ 포인터\ 에러}}
-\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#define\ ALREADY\_FREED\_ERROR\ -\/5\ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{//<\ 이미\ 해제된\ 포인터\ 에러}}
-\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ COPY\_FAILED\_ERROR\ -\/6\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{//<\ 복사\ 실패\ 에러}}
-\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ INVALID\_INPUT\_ERROR\ -\/7\ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{//<\ 유효하지\ 않은\ 입력\ 에러}}
-\DoxyCodeLine{00037\ }
-\DoxyCodeLine{00038\ \textcolor{comment}{//\ 함수\ 프로토타입\ 정의\ (에러\ 메시지\ 출력)}}
-\DoxyCodeLine{00039\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_aef05af2222acc0dd48f418acfaf5f174}{print\_invalid\_word\_length\_error}}();}
-\DoxyCodeLine{00040\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a0ff5fd31efce68863a3396862e215487}{print\_memory\_allocation\_error}}();}
-\DoxyCodeLine{00041\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a44788e0c4c63cd6ca292cb2d44313837}{print\_array\_allocation\_error}}();}
-\DoxyCodeLine{00042\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_abc4557fb5f08b0aa1a2de96635497f7f}{print\_null\_pointer\_error}}();}
-\DoxyCodeLine{00043\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a41dab0f04ddaf6b74e96502d377b0316}{print\_already\_freed\_error}}();}
-\DoxyCodeLine{00044\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a592d8340d715d61c86ab2c2e336a69f3}{print\_copy\_failed\_error}}();}
-\DoxyCodeLine{00045\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_afcf2ec99cdcd9be08648c7773423169a}{print\_invalid\_input\_error}}();}
-\DoxyCodeLine{00046\ }
-\DoxyCodeLine{00047\ \textcolor{comment}{//\ 함수\ 프로토타입\ 정의\ (성공\ 메시지\ 출력)}}
-\DoxyCodeLine{00048\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a574afd1336f23dab560de5409fddb920}{print\_success\_memory\_allocation}}();}
-\DoxyCodeLine{00049\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a47c3d935b57aeec1f128170eee7547de}{print\_success\_initialization}}();}
-\DoxyCodeLine{00050\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_ac71ec819b187d9d5f24892ec2a5cea40}{print\_success\_memory\_deallocation}}();}
-\DoxyCodeLine{00051\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a9da255e0af49f4ffd5e68f1429c22ee5}{print\_success\_copy}}();}
-\DoxyCodeLine{00052\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a4693d86e56d9b6e4a3411112e82f4dfe}{print\_success\_refinement}}();}
-\DoxyCodeLine{00053\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_abe75eb73e72475409ecdf5b37429e11c}{print\_success\_set\_from\_array}}();}
-\DoxyCodeLine{00054\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_ab028432aef6346d801fdd67266472ec8}{print\_success\_print}}();}
-\DoxyCodeLine{00055\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a6633c49ef7e7443b15e082bd93116a44}{print\_rand\_array}}();}
-\DoxyCodeLine{00056\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_ab2c198d5e5e93db68ca235f59902b754}{print\_success\_gen\_rand}}();}
-\DoxyCodeLine{00057\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_ac5a45264db1d1a05e68d047a2e05a8d7}{print\_success\_assign}}();}
-\DoxyCodeLine{00058\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a846f69272a7e03f6f6568a804668074d}{print\_success\_refine}}();}
-\DoxyCodeLine{00059\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a680e4f47716fca2fbcdc67a4396e42ac}{print\_success\_set\_from\_string}}();}
-\DoxyCodeLine{00060\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_ae0433a2390a5e949337b503c2d8d4e84}{print\_success\_add\_ABC}}();}
-\DoxyCodeLine{00061\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_aeb1d605706602fcc12c1f6ec9699ec00}{print\_success\_add\_C}}();}
-\DoxyCodeLine{00062\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a618d1e321ae47aecb3c51c89ad57e337}{print\_success\_add}}();}
-\DoxyCodeLine{00063\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a6e13f9a82a555f901f3b4a5868ceaf72}{print\_success\_sub\_AbB}}();}
-\DoxyCodeLine{00064\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a0cb892bcc9756591b5b6cde8c297be55}{print\_success\_sub\_Ab}}();}
-\DoxyCodeLine{00065\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a7118840452099cf18d1107961a19e964}{print\_success\_sub\_C}}();}
-\DoxyCodeLine{00066\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_ad9b36bc988699624cb041520512fbdac}{print\_success\_sub}}();}
-\DoxyCodeLine{00067\ }
-\DoxyCodeLine{00068\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ IORA\_BASE\_ERROR\_H\_}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ SUCCESS\_MUL\_AB\ 20\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{//<\ MUL\_AB\ 성공}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ SUCCESS\_MUL\_C\ 21\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{//<\ MUL\_C\ 성공}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ SUCCESS\_SHIFT\ 22\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{//<\ SHIFT\ 성공}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ INVALID\_WORD\_LENGTH\_ERROR\ -\/1\ \ \ \ \ \ \ \ }\textcolor{comment}{//<\ 잘못된\ 워드\ 길이\ 에러}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#define\ MEMORY\_ALLOCATION\_ERROR\ -\/2\ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{//<\ 메모리\ 할당\ 실패\ 에러}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ ARRAY\_ALLOCATION\_ERROR\ -\/3\ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{//<\ 배열\ 메모리\ 할당\ 실패\ 에러}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ NULL\_POINTER\_ERROR\ -\/4\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{//<\ 널\ 포인터\ 에러}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#define\ ALREADY\_FREED\_ERROR\ -\/5\ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{//<\ 이미\ 해제된\ 포인터\ 에러}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#define\ COPY\_FAILED\_ERROR\ -\/6\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{//<\ 복사\ 실패\ 에러}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#define\ INVALID\_INPUT\_ERROR\ -\/7\ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{//<\ 유효하지\ 않은\ 입력\ 에러}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#define\ FAIL\_MUL\_AB\ -\/8\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\textcolor{comment}{//<\ MUL\_AB\ 실패\ 에러}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{comment}{//\ 함수\ 프로토타입\ 정의\ (에러\ 메시지\ 출력)}}
+\DoxyCodeLine{00043\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_aef05af2222acc0dd48f418acfaf5f174}{print\_invalid\_word\_length\_error}}();}
+\DoxyCodeLine{00044\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a0ff5fd31efce68863a3396862e215487}{print\_memory\_allocation\_error}}();}
+\DoxyCodeLine{00045\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a44788e0c4c63cd6ca292cb2d44313837}{print\_array\_allocation\_error}}();}
+\DoxyCodeLine{00046\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_abc4557fb5f08b0aa1a2de96635497f7f}{print\_null\_pointer\_error}}();}
+\DoxyCodeLine{00047\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a41dab0f04ddaf6b74e96502d377b0316}{print\_already\_freed\_error}}();}
+\DoxyCodeLine{00048\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a592d8340d715d61c86ab2c2e336a69f3}{print\_copy\_failed\_error}}();}
+\DoxyCodeLine{00049\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_afcf2ec99cdcd9be08648c7773423169a}{print\_invalid\_input\_error}}();}
+\DoxyCodeLine{00050\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a5a975e16eb221849c867472d14c0514e}{print\_fail\_mul\_AB}}();}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{comment}{//\ 함수\ 프로토타입\ 정의\ (성공\ 메시지\ 출력)}}
+\DoxyCodeLine{00053\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a574afd1336f23dab560de5409fddb920}{print\_success\_memory\_allocation}}();}
+\DoxyCodeLine{00054\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a47c3d935b57aeec1f128170eee7547de}{print\_success\_initialization}}();}
+\DoxyCodeLine{00055\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_ac71ec819b187d9d5f24892ec2a5cea40}{print\_success\_memory\_deallocation}}();}
+\DoxyCodeLine{00056\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a9da255e0af49f4ffd5e68f1429c22ee5}{print\_success\_copy}}();}
+\DoxyCodeLine{00057\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a4693d86e56d9b6e4a3411112e82f4dfe}{print\_success\_refinement}}();}
+\DoxyCodeLine{00058\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_abe75eb73e72475409ecdf5b37429e11c}{print\_success\_set\_from\_array}}();}
+\DoxyCodeLine{00059\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_ab028432aef6346d801fdd67266472ec8}{print\_success\_print}}();}
+\DoxyCodeLine{00060\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a6633c49ef7e7443b15e082bd93116a44}{print\_rand\_array}}();}
+\DoxyCodeLine{00061\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_ab2c198d5e5e93db68ca235f59902b754}{print\_success\_gen\_rand}}();}
+\DoxyCodeLine{00062\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_ac5a45264db1d1a05e68d047a2e05a8d7}{print\_success\_assign}}();}
+\DoxyCodeLine{00063\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a846f69272a7e03f6f6568a804668074d}{print\_success\_refine}}();}
+\DoxyCodeLine{00064\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a680e4f47716fca2fbcdc67a4396e42ac}{print\_success\_set\_from\_string}}();}
+\DoxyCodeLine{00065\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_ae0433a2390a5e949337b503c2d8d4e84}{print\_success\_add\_ABC}}();}
+\DoxyCodeLine{00066\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_aeb1d605706602fcc12c1f6ec9699ec00}{print\_success\_add\_C}}();}
+\DoxyCodeLine{00067\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a618d1e321ae47aecb3c51c89ad57e337}{print\_success\_add}}();}
+\DoxyCodeLine{00068\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a6e13f9a82a555f901f3b4a5868ceaf72}{print\_success\_sub\_AbB}}();}
+\DoxyCodeLine{00069\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a0cb892bcc9756591b5b6cde8c297be55}{print\_success\_sub\_Ab}}();}
+\DoxyCodeLine{00070\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a7118840452099cf18d1107961a19e964}{print\_success\_sub\_C}}();}
+\DoxyCodeLine{00071\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_ad9b36bc988699624cb041520512fbdac}{print\_success\_sub}}();}
+\DoxyCodeLine{00072\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a1e8ba47666bd30def60780e2a4f5bcd7}{print\_success\_mul\_AB}}();}
+\DoxyCodeLine{00073\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a7be925b9c7abda014476f4c5937df6c7}{print\_success\_mul\_C}}();}
+\DoxyCodeLine{00074\ \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}}\ \mbox{\hyperlink{base__error_8h_a4d5cce140109b97bc7539c44487de22d}{print\_success\_shift}}();}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ IORA\_BASE\_ERROR\_H\_}}
 
 \end{DoxyCode}

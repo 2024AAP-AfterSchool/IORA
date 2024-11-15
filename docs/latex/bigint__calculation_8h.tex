@@ -30,7 +30,7 @@ This graph shows which files directly or indirectly include this file\+:
 \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{bigint__calculation_8h_a7434576fe036cda0c7da5bde57b03db0}{bi\+\_\+get\+\_\+random}} (\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}dst, \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} uint32\+\_\+t sign, \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} uint32\+\_\+t wordlen)
 \begin{DoxyCompactList}\small\item\em bigint에 무작위 값을 할당하는 함수 @create\+\_\+prime이면 마지막 블럭이 all 0가 되는 것을 방지 = 키 크기 최대한 보장 \end{DoxyCompactList}\item 
 \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{bigint__calculation_8h_ad3ea6d6810e6d14a748c2ca26a16345d}{bi\+\_\+refine}} (\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}dst)
-\item 
+\begin{DoxyCompactList}\small\item\em bigint의 마지막 워드가 0인 경우 bigint의 메모리를 재할당하는 함수 \end{DoxyCompactList}\item 
 \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{bigint__calculation_8h_a661579c313392e1aa1e2ca1c6c227ce6}{bi\+\_\+assign}} (\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}dst, \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}src)
 \begin{DoxyCompactList}\small\item\em bigint의 값을 다른 bigint로 할당하는 함수 \end{DoxyCompactList}\item 
 \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{bigint__calculation_8h_a304e07ea540143803011f7cdd399d412}{bi\+\_\+print}} (\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}dst, \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} uint32\+\_\+t base)
@@ -44,7 +44,11 @@ void \mbox{\hyperlink{bigint__calculation_8h_a60481dc2edd27dfcf89351e6c1ff1311}{
 int8\+\_\+t \mbox{\hyperlink{bigint__calculation_8h_a7e37b9de0713c39ca00ab803fc8c103c}{bi\+\_\+compare\+\_\+\+ABS}} (\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}x, \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}y)
 \item 
 int8\+\_\+t \mbox{\hyperlink{bigint__calculation_8h_abc120d0239a1533965133208e4751569}{bi\+\_\+compare}} (\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}x, \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}y)
-\end{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{bigint__calculation_8h_a2937fd643a713afbfc81f59fec3f1798}{bi\+\_\+word\+\_\+left\+\_\+shift}} (\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}dst, \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{base__type_8h_ab8ef12fab634c171394422d0ee8baf94}{byte}} k)
+\begin{DoxyCompactList}\small\item\em word를 왼쪽으로 shift하는 함수 \end{DoxyCompactList}\item 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} \mbox{\hyperlink{bigint__calculation_8h_a14ffb2338123b9430ff965bc10e761fe}{bi\+\_\+word\+\_\+right\+\_\+shift}} (\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}dst, \mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{base__type_8h_ab8ef12fab634c171394422d0ee8baf94}{byte}} k)
+\begin{DoxyCompactList}\small\item\em word를 오른쪽으로 shift하는 함수 \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Function Documentation}
@@ -54,8 +58,7 @@ int8\+\_\+t \mbox{\hyperlink{bigint__calculation_8h_abc120d0239a1533965133208e47
 {\footnotesize\ttfamily \label{bigint__calculation_8h_ab79c94ec396b3b384e7f2b102abbe18b} 
 \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} array\+\_\+copy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}} \texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{base__type_8h_a19036394f9c80a08fc846c96f668711c}{word}} \texorpdfstring{$\ast$}{*}}]{src}{, }\item[{\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} uint32\+\_\+t}]{wordlen}{}\end{DoxyParamCaption})}
 
-@memory 값을 copy하는 함수 추가함 Here is the call graph for this function\+:
-\nopagebreak
+@memory 값을 copy하는 함수 추가함 Here is the call graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -87,8 +90,7 @@ bigint의 값을 다른 bigint로 할당하는 함수
 {\em src} & bigint의 포인터 \\
 \hline
 \end{DoxyParams}
-Here is the call graph for this function\+:
-\nopagebreak
+Here is the call graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -100,7 +102,7 @@ Here is the caller graph for this function\+:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=311pt]{bigint__calculation_8h_a661579c313392e1aa1e2ca1c6c227ce6_icgraph}
+\includegraphics[width=350pt]{bigint__calculation_8h_a661579c313392e1aa1e2ca1c6c227ce6_icgraph}
 \end{center}
 \end{figure}
 \Hypertarget{bigint__calculation_8h_abc120d0239a1533965133208e4751569}\index{bigint\_calculation.h@{bigint\_calculation.h}!bi\_compare@{bi\_compare}}
@@ -109,8 +111,7 @@ Here is the caller graph for this function\+:
 {\footnotesize\ttfamily \label{bigint__calculation_8h_abc120d0239a1533965133208e4751569} 
 int8\+\_\+t bi\+\_\+compare (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}}]{x}{, }\item[{\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}}]{y}{}\end{DoxyParamCaption})}
 
-Here is the call graph for this function\+:
-\nopagebreak
+Here is the call graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -122,7 +123,7 @@ Here is the caller graph for this function\+:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=320pt]{bigint__calculation_8h_abc120d0239a1533965133208e4751569_icgraph}
+\includegraphics[width=350pt]{bigint__calculation_8h_abc120d0239a1533965133208e4751569_icgraph}
 \end{center}
 \end{figure}
 \Hypertarget{bigint__calculation_8h_a7e37b9de0713c39ca00ab803fc8c103c}\index{bigint\_calculation.h@{bigint\_calculation.h}!bi\_compare\_ABS@{bi\_compare\_ABS}}
@@ -154,8 +155,7 @@ bigint의 값을 다른 bigint로 할당하는 함수
 {\em dst} & bigint의 포인터 \\
 \hline
 \end{DoxyParams}
-Here is the call graph for this function\+:
-\nopagebreak
+Here is the call graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -197,8 +197,7 @@ Here is the call graph for this function\+:
 \includegraphics[width=350pt]{bigint__calculation_8h_a7434576fe036cda0c7da5bde57b03db0_cgraph}
 \end{center}
 \end{figure}
-Here is the caller graph for this function\+:
-\nopagebreak
+Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -222,8 +221,7 @@ bigint에 arrary를 할당하는 함수
 {\em wordlen} & 배열의 길이 \\
 \hline
 \end{DoxyParams}
-Here is the call graph for this function\+:
-\nopagebreak
+Here is the call graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -255,8 +253,7 @@ bigint를 출력하는 함수
 {\em base} & 10진수, 16진수 등 어떻게 해석할지 의미함. \\
 \hline
 \end{DoxyParams}
-Here is the call graph for this function\+:
-\nopagebreak
+Here is the call graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -269,6 +266,23 @@ Here is the call graph for this function\+:
 {\footnotesize\ttfamily \label{bigint__calculation_8h_ad3ea6d6810e6d14a748c2ca26a16345d} 
 \mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} bi\+\_\+refine (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}}]{dst}{}\end{DoxyParamCaption})}
 
+
+
+bigint의 마지막 워드가 0인 경우 bigint의 메모리를 재할당하는 함수 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dst} & bigint의 포인터 \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=291pt]{bigint__calculation_8h_ad3ea6d6810e6d14a748c2ca26a16345d_cgraph}
+\end{center}
+\end{figure}
 Here is the caller graph for this function\+:
 \nopagebreak
 \begin{figure}[H]
@@ -298,8 +312,7 @@ arrary를 통해 bigint에 값을 할당하는 함수
 {\em src} & 할당하고자 하는 배열 \\
 \hline
 \end{DoxyParams}
-Here is the call graph for this function\+:
-\nopagebreak
+Here is the call graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -325,8 +338,7 @@ string을 통해 bigint에 값을 할당하는 함수
 {\em base} & 10진수, 16진수 등 어떻게 해석할지 의미함. \\
 \hline
 \end{DoxyParams}
-Here is the call graph for this function\+:
-\nopagebreak
+Here is the call graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -339,12 +351,69 @@ Here is the call graph for this function\+:
 {\footnotesize\ttfamily \label{bigint__calculation_8h_a60481dc2edd27dfcf89351e6c1ff1311} 
 void bi\+\_\+set\+\_\+zero (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{x}{}\end{DoxyParamCaption})}
 
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__calculation_8h_a60481dc2edd27dfcf89351e6c1ff1311_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__calculation_8h_a2937fd643a713afbfc81f59fec3f1798}\index{bigint\_calculation.h@{bigint\_calculation.h}!bi\_word\_left\_shift@{bi\_word\_left\_shift}}
+\index{bi\_word\_left\_shift@{bi\_word\_left\_shift}!bigint\_calculation.h@{bigint\_calculation.h}}
+\doxysubsubsection{\texorpdfstring{bi\_word\_left\_shift()}{bi\_word\_left\_shift()}}
+{\footnotesize\ttfamily \label{bigint__calculation_8h_a2937fd643a713afbfc81f59fec3f1798} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} bi\+\_\+word\+\_\+left\+\_\+shift (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{base__type_8h_ab8ef12fab634c171394422d0ee8baf94}{byte}}}]{k}{}\end{DoxyParamCaption})}
+
+
+
+word를 왼쪽으로 shift하는 함수 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dst} & bigint의 포인터 \\
+\hline
+{\em k} & shift 하고싶은 word 사이즈 \\
+\hline
+\end{DoxyParams}
 Here is the call graph for this function\+:
 \nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=350pt]{bigint__calculation_8h_a60481dc2edd27dfcf89351e6c1ff1311_cgraph}
+\includegraphics[width=350pt]{bigint__calculation_8h_a2937fd643a713afbfc81f59fec3f1798_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=266pt]{bigint__calculation_8h_a2937fd643a713afbfc81f59fec3f1798_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{bigint__calculation_8h_a14ffb2338123b9430ff965bc10e761fe}\index{bigint\_calculation.h@{bigint\_calculation.h}!bi\_word\_right\_shift@{bi\_word\_right\_shift}}
+\index{bi\_word\_right\_shift@{bi\_word\_right\_shift}!bigint\_calculation.h@{bigint\_calculation.h}}
+\doxysubsubsection{\texorpdfstring{bi\_word\_right\_shift()}{bi\_word\_right\_shift()}}
+{\footnotesize\ttfamily \label{bigint__calculation_8h_a14ffb2338123b9430ff965bc10e761fe} 
+\mbox{\hyperlink{base__type_8h_af3db70afcfb515a4def0777a954be00d}{msg}} bi\+\_\+word\+\_\+right\+\_\+shift (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{base__type_8h_aec78e7a9e90a406a56f859ee456e8eae}{OUT}} \mbox{\hyperlink{structbigint}{bigint}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{dst}{, }\item[{\mbox{\hyperlink{base__type_8h_ac2bbd6d630a06a980d9a92ddb9a49928}{IN}} \mbox{\hyperlink{base__type_8h_ab8ef12fab634c171394422d0ee8baf94}{byte}}}]{k}{}\end{DoxyParamCaption})}
+
+
+
+word를 오른쪽으로 shift하는 함수 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dst} & bigint의 포인터 \\
+\hline
+{\em k} & shift 하고싶은 word 사이즈 \\
+\hline
+\end{DoxyParams}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{bigint__calculation_8h_a14ffb2338123b9430ff965bc10e761fe_cgraph}
 \end{center}
 \end{figure}
 \Hypertarget{bigint__calculation_8h_a85731cbcd8a4b5bfa9939fa32268a446}\index{bigint\_calculation.h@{bigint\_calculation.h}!is\_zero@{is\_zero}}
@@ -365,8 +434,7 @@ bigint가 0인지 확인하는 함수
 \begin{DoxyReturn}{Returns}
 0이면 1, 아니면 0 
 \end{DoxyReturn}
-Here is the call graph for this function\+:
-\nopagebreak
+Here is the call graph for this function\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode

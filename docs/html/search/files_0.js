@@ -7,6 +7,8 @@ var searchData=
   ['bigint_5faddition_2eh_4',['bigint_addition.h',['../bigint__addition_8h.html',1,'']]],
   ['bigint_5fcalculation_2ec_5',['bigint_calculation.c',['../bigint__calculation_8c.html',1,'']]],
   ['bigint_5fcalculation_2eh_6',['bigint_calculation.h',['../bigint__calculation_8h.html',1,'']]],
-  ['bigint_5fsubtraction_2ec_7',['bigint_subtraction.c',['../bigint__subtraction_8c.html',1,'']]],
-  ['bigint_5fsubtraction_2eh_8',['bigint_subtraction.h',['../bigint__subtraction_8h.html',1,'']]]
+  ['bigint_5fmultiplication_2ec_7',['bigint_multiplication.c',['../bigint__multiplication_8c.html',1,'']]],
+  ['bigint_5fmultiplication_2eh_8',['bigint_multiplication.h',['../bigint__multiplication_8h.html',1,'']]],
+  ['bigint_5fsubtraction_2ec_9',['bigint_subtraction.c',['../bigint__subtraction_8c.html',1,'']]],
+  ['bigint_5fsubtraction_2eh_10',['bigint_subtraction.h',['../bigint__subtraction_8h.html',1,'']]]
 ];
