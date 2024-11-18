@@ -93,6 +93,7 @@ msg bi_add(OUT bigint** dst, IN bigint* A, IN bigint* B) {
     if (A == NULL || B == NULL) {
         return NULL_POINTER_ERROR;
     }
+    
     bigint* tmp_A = NULL;
     bigint* tmp_B = NULL;
 
@@ -100,7 +101,7 @@ msg bi_add(OUT bigint** dst, IN bigint* A, IN bigint* B) {
     bi_assign(&tmp_B, B);
     
     // A¿Í BÀÇ ºÎÈ£¿¡ µû¶ó µ¡¼À ¶Ç´Â »¬¼À ¿¬»ê ¼öÇà
-    if ((tmp_A->sign == 0) && (tmp_B->sign == 1)) {
+    if ((A->sign == 0) && (B->sign == 1)) {
         tmp_B->sign = POSITIVE;
         bi_sub(dst, tmp_A, tmp_B);
         bi_delete(&tmp_A);
@@ -108,7 +109,8 @@ msg bi_add(OUT bigint** dst, IN bigint* A, IN bigint* B) {
     }
     else if ((B->sign == 0) && (A->sign == 1)) {
         tmp_A->sign = POSITIVE;
-        bi_sub(dst, tmp_B, tmp_A);
+        bi_sub(dst,tmp_A, tmp_B);
+        (*dst)->sign = 1;
         bi_delete(&tmp_A);
         bi_delete(&tmp_B);
     }
