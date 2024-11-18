@@ -129,6 +129,7 @@ def test_addtion(function, wordlen=8, iteration=10000, verbose=False):
 
         if c_result == python_result:
             if verbose:
+                print()
                 for j, bi in enumerate([bigint1, bigint2, bigint3]):
                     print(f"\nBigInt{j + 1}: ", end='')
                     function['bi_print'](bi, 16)
@@ -154,7 +155,7 @@ def test_addtion(function, wordlen=8, iteration=10000, verbose=False):
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
 
-def test_subtraction(function, wordlen=8, iteration=10000, verbose=False):
+def test_subtraction(function, wordlen=8, iteration=10000, verbose=True):
     print_center(" 3-9. BigInt 뺄셈 테스트 ", '-', '\n', 95)
 
     for i in tqdm(range(iteration), desc="BigNum Subtraction Test", unit=" iter", ncols=100):
@@ -181,6 +182,7 @@ def test_subtraction(function, wordlen=8, iteration=10000, verbose=False):
 
         if c_result == python_result:
             if verbose:
+                print()
                 for j, bi in enumerate([bigint1, bigint2, bigint3]):
                     print(f"\nBigInt{j + 1}: ", end='')
                     function['bi_print'](bi, 16)
@@ -233,6 +235,7 @@ def test_multiplication(function, wordlen=2, iteration=10000, verbose=True):
 
         if c_result == python_result:
             if verbose:
+                print()
                 for j, bi in enumerate([bigint1, bigint2, bigint3]):
                     print(f"\nBigInt{j + 1}: ", end='')
                     function['bi_print'](bi, 16)
@@ -349,6 +352,49 @@ def test():
     function['bi_print'](test_bigint1, 16)
     print()
 
+    # BONUS 특정 문자열 테스트
+    bonus_bigint1 = ctypes.POINTER(bigint)()
+    bonus_bigint2 = ctypes.POINTER(bigint)()
+    bonus_bigint3 = ctypes.POINTER(bigint)()
+    src_string1 = ctypes.c_char_p("0x000000".encode('utf-8'))
+    src_string2 = ctypes.c_char_p("-0x000001".encode('utf-8'))
+    result1 = function['bi_set_from_string'](ctypes.byref(bonus_bigint1), src_string1, base)
+    result2 = function['bi_set_from_string'](ctypes.byref(bonus_bigint2), src_string2, base)
+
+    print_line()
+    function['bi_add'](ctypes.byref(bonus_bigint3), bonus_bigint1, bonus_bigint2)
+    print("BigInt1: ", end='')
+    function['bi_print'](bonus_bigint1, 16)
+    print("BigInt2: ", end='')
+    function['bi_print'](bonus_bigint2, 16)
+    print("BigInt3: ", end='')
+    function['bi_print'](bonus_bigint3, 16)
+    print()
+    print_line()
+
+    # BONUS 특정 배열 테스트
+    bonus_wordlen = 4
+    bonus_sign1 = POSITIVE # generate_random_sign()
+    bonus_sign2 = POSITIVE # generate_random_sign()
+    bonus_bigint4 = ctypes.POINTER(bigint)()
+    bonus_bigint5 = ctypes.POINTER(bigint)()
+    bonus_bigint6 = ctypes.POINTER(bigint)()
+    src_array1 = (word * bonus_wordlen)(*([0, 0, 0, 0]))
+    src_array2 = (word * bonus_wordlen)(*([1, 0, 0, 0]))
+    result1 = function['bi_set_from_array'](ctypes.byref(bonus_bigint4), bonus_sign1, bonus_wordlen, src_array1)
+    result2 = function['bi_set_from_array'](ctypes.byref(bonus_bigint5), bonus_sign2, bonus_wordlen, src_array2)
+
+    print_line()
+    function['bi_sub'](ctypes.byref(bonus_bigint6), bonus_bigint4, bonus_bigint5)
+    print("BigInt4: ", end='')
+    function['bi_print'](bonus_bigint4, 16)
+    print("BigInt5: ", end='')
+    function['bi_print'](bonus_bigint5, 16)
+    print("BigInt6: ", end='')
+    function['bi_print'](bonus_bigint6, 16)
+    print()
+    print_line()
+
     # 3-8 BigInt 덧셈 테스트
     # test_addtion(function)
 
@@ -356,7 +402,7 @@ def test():
     # test_subtraction(function)
 
     # 3-10 BigInt 곱셈 테스트
-    test_multiplication(function)
+    # test_multiplication(function)
 
     # 실행 테스트
     # os.system(command=f"./build/{OS}/IORA")
