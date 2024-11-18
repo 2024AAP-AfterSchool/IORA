@@ -2,6 +2,7 @@
 #define IORA_BASE_TYPE_H_
 
 #include <stdint.h>
+#include <stdbool.h>
 
 #define IN
 #define OUT

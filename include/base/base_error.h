@@ -28,7 +28,8 @@
 #define SUCCESS_SUB 19                      //< SUB 성공
 #define SUCCESS_MUL_AB 20                   //< MUL_AB 성공
 #define SUCCESS_MUL_C 21                    //< MUL_C 성공
-#define SUCCESS_SHIFT 22                    //< SHIFT 성공
+#define SUCCESS_MUL 22                      //< MUL 성공
+#define SUCCESS_SHIFT 23                    //< SHIFT 성공
 
 #define INVALID_WORD_LENGTH_ERROR -1        //< 잘못된 워드 길이 에러
 #define MEMORY_ALLOCATION_ERROR -2          //< 메모리 할당 실패 에러
@@ -71,6 +72,7 @@ msg print_success_sub_C();
 msg print_success_sub();
 msg print_success_mul_AB();
 msg print_success_mul_C();
+msg print_success_mul();
 msg print_success_shift();
 
 #endif // IORA_BASE_ERROR_H_

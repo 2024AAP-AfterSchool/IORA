@@ -46,16 +46,10 @@ msg bi_mul_AB(OUT bigint** dst, IN word* A, IN word* B)
     C1 = C1 + (T1 << (sizeof(word) * 4)) + (T0 >> (sizeof(word) * 4)) + (C0 < tmp);
     C->start[0] = C0;
     C->start[1] = C1;
-    fprintf(stdout, "C0: 0x%016X\n", C0);  
-    fprintf(stdout, "C1: 0x%016X\n", C1);
-    fprintf(stdout, "C: 0x%016X\n", C->start[0]);
-    fprintf(stdout, "C: 0x%016X\n", C->start[1]);
+
     // 초기화 함수
     bi_assign(dst, C);
     bi_delete(&C);
-
-    fprintf(stdout, "dst0: 0x%016X\n", (*dst)->start[0]);
-    fprintf(stdout, "dst1: 0x%016X\n", (*dst)->start[1]);
 
     return print_success_mul_AB();
 }
@@ -68,11 +62,9 @@ msg bi_mul_AB(OUT bigint** dst, IN word* A, IN word* B)
  */
 msg bi_mul_C(OUT bigint** dst, IN bigint* A, IN bigint* B)
 {
-    fprintf(stdout, "\nbi_mul_C\n");
     bigint* C = NULL;
     bi_new(&C, A->wordlen + B->wordlen);
-    fprintf(stdout, "A_wordlen: %d\n", A->wordlen);
-    fprintf(stdout, "B_wordlen: %d\n", B->wordlen);
+    
     for (int i = 0; i < B->wordlen; i++)
     {
         bigint* T0 = NULL;
@@ -83,32 +75,21 @@ msg bi_mul_C(OUT bigint** dst, IN bigint* A, IN bigint* B)
         for (int j = 0; j < (A->wordlen) / 2; j++)
         {
             msg result;
-            fprintf(stdout, "A->start[2 * j]: 0x%016X\n", A->start[2 * j]);
-            fprintf(stdout, "B->start[i]: 0x%016X\n", B->start[i]);
+
             result = bi_mul_AB(&T0, &(A->start[2 * j]), &(B->start[i]));
-            fprintf(stdout, "T0_bf: 0x%016X\n", T0->start[0]);
             if (result != SUCCESS_MUL_AB) return print_fail_mul_AB();
             bi_word_left_shift(&T0, 2 * j);
-            fprintf(stdout, "T0_af: 0x%016X\n", T0->start[0]);
-            fprintf(stdout, "T0_af: 0x%016X\n", T0->start[1]);
 
             result = bi_mul_AB(&T1, &(A->start[(2 * j) + 1]), &(B->start[i]));
-            fprintf(stdout, "T1_bf: 0x%016X\n", T1->start[0]);
             if (result != SUCCESS_MUL_AB) return print_fail_mul_AB();
             bi_word_left_shift(&T1, (2 * j) + 1);
-            fprintf(stdout, "T1_af: 0x%016X\n", T1->start[0]);
-            fprintf(stdout, "T1_af: 0x%016X\n", T1->start[1]);
         }
 
         bigint* T = NULL;
         bi_new(&T, A->wordlen + B->wordlen);
+
         msg result = bi_add(&T, T0, T1);
-        fprintf(stdout, "T: 0x%016X\n", T->start[0]);
-        fprintf(stdout, "T: 0x%016X\n", T->start[1]);
-        
         bi_word_left_shift(&T, i);
-        fprintf(stdout, "T_af: 0x%016X\n", T->start[0]);
-        fprintf(stdout, "T_af: 0x%016X\n", T->start[1]);
         result = bi_add(&C, C, T);
 
         // 임시 변수 삭제
@@ -117,14 +98,75 @@ msg bi_mul_C(OUT bigint** dst, IN bigint* A, IN bigint* B)
         bi_delete(&T);
     }
 
-    bi_refine(*dst);
+    bi_refine(C);
     bi_assign(dst, C); // 최종 결과를 dst에 할당
     bi_delete(&C); // C 삭제
 
     return print_success_mul_C();
 }
 
-msg bi_test_mul()
+/**
+ * @brief 두 bigint A와 B의 곱셈을 수행하는 함수
+ * @param dst 결과를 저장할 bigint의 포인터
+ * @param A 곱셈을 수행할 첫 번째 bigint
+ * @param B 곱셈을 수행할 두 번째 bigint
+ * @param is_karatsuba 카라추바 곱셈을 사용할지 여부
+ */
+msg bi_mul(OUT bigint** dst, IN bigint* A, IN bigint* B, IN bool is_karatsuba)
+{
+    bigint* tmp_A = NULL;
+    bigint* tmp_B = NULL;
+    
+    bi_assign(&tmp_A, A);
+    bi_assign(&tmp_B, B);
+
+    if (bi_is_zero(tmp_A) || bi_is_zero(tmp_B))
+    {
+        bi_new(dst, 1);
+        (*dst)->start[0] = 0;
+        
+        bi_delete(&tmp_A);
+        bi_delete(&tmp_B);
+
+        return print_success_mul();
+    }
+    if (bi_is_one(tmp_A))
+    {
+        bi_assign(dst, tmp_B);
+        (*dst)->sign = (tmp_A->sign ^ tmp_B->sign);
+        
+        bi_delete(&tmp_A);
+        bi_delete(&tmp_B);
+
+        return print_success_mul();
+    }
+    if (bi_is_one(tmp_B))
+    {
+        bi_assign(dst, tmp_A);
+        (*dst)->sign = (tmp_A->sign ^ tmp_B->sign);
+        
+        bi_delete(&tmp_A);
+        bi_delete(&tmp_B);
+
+        return print_success_mul();
+    }
+
+    //카라추바에 양수 곱셈 넣고 부호는 따로 저장하기 위함
+    byte A_sign = tmp_A->sign;
+    byte B_sign = tmp_B->sign;
+    tmp_A->sign = POSITIVE;
+
+    // if ( is_karatsuba) mul_karatsuba(dst, tmp_A, tmp_B);
+    if (!is_karatsuba) bi_mul_C(dst, tmp_A, tmp_B); 
+
+    (*dst)->sign = A_sign ^ B_sign;
+    bi_delete(&tmp_A);
+    bi_delete(&tmp_B);
+
+    return print_success_mul();
+}
+
+void bi_test_mul()
 {
     fprintf(stdout, "1. 기본 곱셈 테스트\n");
     fprintf(stdout, "---------------------------\n");

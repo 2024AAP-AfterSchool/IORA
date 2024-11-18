@@ -17,7 +17,7 @@
  * @param B 피연산자 B
  * @param c 이전 연산에서 발생한 carry
  */
-msg bi_add_ABC(OUT word* C, IN word A, IN word B, carry c, IN carry* c_prime)
+msg bi_add_ABC(OUT word* C, IN word A, IN word B, IN carry c, IN carry* c_prime)
 {
     *c_prime = 0;  // 초기 캐리를 0으로 설정
     *C = A + B;
@@ -54,38 +54,34 @@ msg bi_add_C(OUT bigint** dst, IN bigint* A, IN bigint* B)
     int n = A->wordlen;
     int m = B->wordlen;
 
-    bi_new(dst, n + 1);  // 최대 n + 1 자리 (자리 올림 고려)
+    // 결과를 저장할 임시 bigint 생성
+    bigint* temp = NULL;
 
+    bi_new(&temp, n + 1);  // 최대 n + 1 자리 (자리 올림 고려)
+    
     carry c = 0;
     word C_word;
 
+    // A와 B의 각 워드 덧셈 수행
     for (int j = 0; j < n; j++)
     {
         word A_word = A->start[j];
-        word B_word;
-        if (j < m)
-        {
-            B_word = B->start[j];  // B의 길이 내에 있으면 B의 j번째 워드를 할당
-        }
-        else
-        {
-            B_word = 0;        // B의 길이를 넘는 인덱스에서는 0을 할당
-        }
+        word B_word = (j < m) ? B->start[j] : 0;
 
         bi_add_ABC(&C_word, A_word, B_word, c, &c);
-        (*dst)->start[j] = C_word;
+
+        temp->start[j] = C_word;
     }
 
-    (*dst)->start[n] = c;
-    if (c == 0)
-    {
-        (*dst)->wordlen = n;     // 자리 올림이 없으면 n 길이 사용
-    }
-    else
-    {
-        (*dst)->wordlen = n + 1; // 자리 올림이 있으면 n + 1 길이 사용
-    }
-    bi_refine(*dst);
+    // 최종 자리 올림(carry)을 저장
+    temp->start[n] = c;
+    temp->wordlen = (c == 0) ? n : n + 1;
+
+    bi_refine(temp);
+
+    bi_assign(dst, temp);
+    
+    bi_delete(&temp);
 
     return print_success_add_C();
 }
@@ -98,46 +94,60 @@ msg bi_add_C(OUT bigint** dst, IN bigint* A, IN bigint* B)
  */
 msg bi_add(OUT bigint** dst, IN bigint* A, IN bigint* B)
 {
-    if ((A->sign == 0) && (B->sign == 1))
+    if (A == NULL || B == NULL)
     {
-        bi_sub(dst, A, B);
-    }
-    if ((B->sign == 0) && (A->sign == 1))
-    {
-        bi_sub(dst, B, A);
-    }
-    if ((B->sign == 1) && (A->sign == 1))
-    {
-        if (A->wordlen >= B->wordlen)
-        {      
-            bi_add_C(dst, A, B);
-            (*dst)->sign = 1;
-        }
-        else
-        {    
-            bi_add_C(dst, B, A);
-            (*dst)->sign = 1;
-        }
-    }
-    else
-    {
-    if (A->wordlen >= B->wordlen)
-        {
-        bi_add_C(dst, A, B);
-        }
-    else
-        {
-        bi_add_C(dst, B, A);
-        }
+        return NULL_POINTER_ERROR;
     }
 
-    return print_success_add();
+    // 임시 변수 temp 생성
+    bigint* temp = NULL;
+    bi_new(&temp, A->wordlen + 1); // A->wordlen + 1 크기 할당
+
+    // A와 B의 부호에 따라 덧셈 또는 뺄셈 연산 수행
+    if ((A->sign == 0) && (B->sign == 1))
+    {
+        bi_sub(&temp, A, B); 
+    }
+    else if ((B->sign == 0) && (A->sign == 1))
+    {
+        bi_sub(&temp, B, A);
+    }
+    else if ((B->sign == 1) && (A->sign == 1))
+    {
+        if (A->wordlen >= B->wordlen)
+        {
+            bi_add_C(&temp, A, B); 
+            temp->sign = 1; 
+        }
+        else
+        {
+            bi_add_C(&temp, B, A); 
+            temp->sign = 1; 
+        }
+    }
+    else
+    { 
+        if (A->wordlen >= B->wordlen)
+        {
+            bi_add_C(&temp, A, B); 
+        }
+        else
+        {
+            bi_add_C(&temp, B, A);
+        }
+    }
+    
+    bi_refine(temp);
+    bi_assign(dst, temp);
+    bi_delete(&temp); 
+
+    return SUCCESS_ADD;
 }
 
 /**
  * @brief bigint 덧셈 테스트 함수
  */
-msg bi_test_add()
+void bi_test_add()
 {   
 
     fprintf(stdout, "===========================\n");

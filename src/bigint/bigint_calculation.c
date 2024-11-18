@@ -377,7 +377,7 @@ msg bi_print(OUT bigint* dst, IN uint32_t base)
  * @param dst bigint의 포인터
  * @return 0이면 1, 아니면 0
  */
-int8_t is_zero(OUT bigint* dst)
+bool bi_is_zero(OUT bigint* dst)
 {
     if(is_null_pointer(dst))
     {
@@ -389,7 +389,7 @@ int8_t is_zero(OUT bigint* dst)
         return false;
     }
 
-    for (int i = dst->wordlen; i >= 0 ; i--)
+    for (int i = dst->wordlen - 1; i >= 0 ; i--)
     {
         if(dst->start[i] != 0)
         {
@@ -397,6 +397,22 @@ int8_t is_zero(OUT bigint* dst)
         }
     }
 
+    return true;
+}
+
+/**
+ * @brief bigint가 1인지 확인하는 함수
+ * @param dst bigint의 포인터
+ * @return 1이면 1, 아니면 0
+ */
+bool bi_is_one(OUT bigint* dst)
+{
+    if (dst == NULL) return false;
+    if (dst->start[0] != 1) return false;
+    for (int i = 1; i < (dst->wordlen); i++)
+    {
+        if (dst->start[i] != 0) return false;
+    }
     return true;
 }
 

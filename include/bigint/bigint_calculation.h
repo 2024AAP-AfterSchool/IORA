@@ -37,7 +37,11 @@ msg bi_print(OUT bigint* dst, IN uint32_t base);
 
 msg array_copy(OUT word* dst, IN word* src, IN uint32_t wordlen);
 
-int8_t is_zero(OUT bigint* dst);
+//value가 0인지 확인하는 함수
+bool bi_is_one(OUT bigint* dst);
+
+//value가 1인지 확인하는 함수
+bool bi_is_zero(OUT bigint* dst);
 
 // set zero 확인하는 함수
 void bi_set_zero(OUT bigint** x);

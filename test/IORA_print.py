@@ -22,6 +22,6 @@ def print_total_time(start_time, end_time, end="\n"):
     print_center(f"TOTAL TIME: {total_hour}시간 {total_minute}분 {total_second}초", ' ', end)
 
 def print_result(result, verbose=False):
-    print()
     if verbose:
+        print()
         print_center(result_code[result], ' ', end="\n\n")

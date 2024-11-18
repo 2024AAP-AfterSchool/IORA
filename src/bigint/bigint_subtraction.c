@@ -160,7 +160,7 @@ msg bi_sub(OUT bigint** dst, IN bigint* A, IN bigint* B)
 /**
  * @brief bigint 뺄셈 테스트 함수
  */
-msg bi_test_sub()
+void bi_test_sub()
 {
 	fprintf(stdout, "===========================\n");
     fprintf(stdout, "BigInt 뺄셈 테스트 시작\n");

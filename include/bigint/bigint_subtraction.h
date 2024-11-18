@@ -16,6 +16,6 @@ msg bi_sub_C(OUT bigint** dst, IN bigint* A, IN bigint* B);
 msg bi_sub(OUT bigint** dst, IN bigint* A, IN bigint* B);
 
 // SUB 테스트 함수: bigint 뺄셈 테스트 함수
-msg bi_test_sub();
+void bi_test_sub();
 
 #endif // BIGINT_SUBTRACTION_H_

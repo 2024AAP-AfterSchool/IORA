@@ -1,13 +1,12 @@
+cmake_minimum_required(VERSION 3.10)
+
+set(CMAKE_C_COMPILER "/usr/bin/gcc")
+project(IORA LANGUAGES C VERSION 1.0)
+
 # 메모리 검사 옵션
 option(MEMORY_CHECK "Enable Memory Check" ON)
 
-# CMake의 최소 요구 버전을 설정합니다. 여기서는 3.10을 사용
-cmake_minimum_required(VERSION 3.10)
-
-# 프로젝트 이름과 버전을 정의합니다.
-project(IORA_Project VERSION 1.0)
-
-# C 표준을 C99로 설정합니다.
+# C 표준을 C99로 설정
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED True)
 
@@ -55,12 +54,12 @@ file(GLOB SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/*/*.c
 )
 
-# 라이브러라 파일을 빌드
+# 라이브러리 파일 빌드
 add_library(IORA_LIB SHARED ${SOURCE_FILES})
 set_target_properties(IORA_LIB PROPERTIES PREFIX "" OUTPUT_NAME "IORA"
                         LIBRARY_OUTPUT_DIRECTORY ${LIBRARY_OUTPUT_DIRECTORY})
 
-# 실행 파일을 정의합니다. IORA라는 이름으로 소스 파일들을 빌드
+# 실행 파일 빌드
 add_executable(IORA ${SOURCE_FILES})
 
 # 커버리지 리포트 생성
@@ -68,8 +67,8 @@ add_custom_target(coverage
     COMMAND ${CMAKE_MAKE_PROGRAM} test
     COMMAND lcov --capture --directory . --output-file ./test/coverage.info --rc lcov_branch_coverage=1
     COMMAND lcov --list ./test/coverage.info
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     COMMENT "Generating Test Coverage Report"
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     VERBATIM
 )
 

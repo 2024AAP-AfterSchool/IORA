@@ -270,6 +270,15 @@ msg print_fail_mul_AB()
 }
 
 /**
+ * @brief MUL 성공 시 출력하는 함수
+ */
+msg print_success_mul()
+{
+    if (VERBOSE) fprintf(stdout, "Success: print_mul.\n");
+    return SUCCESS_MUL;
+}
+
+/**
  * @brief SHIFT 성공 시 출력하는 함수
  */
 msg print_success_shift()
