@@ -93,40 +93,52 @@ msg bi_add(OUT bigint** dst, IN bigint* A, IN bigint* B) {
     if (A == NULL || B == NULL) {
         return NULL_POINTER_ERROR;
     }
+    bigint* tmp_A = NULL;
+    bigint* tmp_B = NULL;
 
-    // 임시 변수 temp 생성
-    bigint* temp = NULL;
-    bi_new(&temp, A->wordlen + 1); // A->wordlen + 1 크기 할당
+    bi_assign(&tmp_A, A);
+    bi_assign(&tmp_B, B);
     
-
     // A와 B의 부호에 따라 덧셈 또는 뺄셈 연산 수행
-    if ((A->sign == 0) && (B->sign == 1)) {
-        bi_sub(&temp, A, B); 
+    if ((tmp_A->sign == 0) && (tmp_B->sign == 1)) {
+        tmp_B->sign = POSITIVE;
+        bi_sub(dst, tmp_A, tmp_B);
+        bi_delete(&tmp_A);
+        bi_delete(&tmp_B);
     }
     else if ((B->sign == 0) && (A->sign == 1)) {
-        bi_sub(&temp, B, A);
+        tmp_A->sign = POSITIVE;
+        bi_sub(dst, tmp_B, tmp_A);
+        bi_delete(&tmp_A);
+        bi_delete(&tmp_B);
     }
     else if ((B->sign == 1) && (A->sign == 1)) {
         if (A->wordlen >= B->wordlen) {
-            bi_add_C(&temp, A, B); 
-            temp->sign = 1; 
+            bi_add_C(dst, tmp_A, tmp_B);
+            (*dst) ->sign = 1; 
+            bi_delete(&tmp_A);
+            bi_delete(&tmp_B);
         }
         else {
-            bi_add_C(&temp, B, A); 
-            temp->sign = 1; 
+            bi_add_C(dst, tmp_B, tmp_A);
+            (*dst)->sign = 1;
+            bi_delete(&tmp_A);
+            bi_delete(&tmp_B);
         }
     }
     else { 
         if (A->wordlen >= B->wordlen) {
-            bi_add_C(&temp, A, B); 
+            bi_add_C(dst, tmp_A, tmp_B);
+            bi_delete(&tmp_A);
+            bi_delete(&tmp_B);
         }
         else {
-            bi_add_C(&temp, B, A);
+            bi_add_C(dst, tmp_B, tmp_A);
+            bi_delete(&tmp_A);
+            bi_delete(&tmp_B);
         }
     }
-    bi_refine(temp);
-    bi_assign(dst, temp);
-    bi_delete(&temp); 
+    
 
     return SUCCESS_ADD;
 }
