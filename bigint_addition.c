@@ -5,10 +5,10 @@
  * @author 송원우
  */
 #include <stdio.h>
-#include "base.h"
-#include "error.h"
+#include "base_type.h"
+#include "base_error.h"
 #include "bigint_subtraction.h"
-#include "struct.h"
+#include "bigint_calculation.h"
 
  /**
   * @brief A + B + c 연산을 수행하는 함수
@@ -17,7 +17,7 @@
   * @param B 피연산자 B
   * @param c 이전 연산에서 발생한 carry
   */
-msg bi_add_ABC(OUT word* C, IN word A, IN word B, carry c, IN carry* c_prime)
+msg bi_add_ABC(OUT word* C, IN word A, IN word B, IN carry c, IN carry* c_prime)
 {
     *c_prime = 0;  // 초기 캐리를 0으로 설정
     *C = A + B;
@@ -40,11 +40,14 @@ msg bi_add_ABC(OUT word* C, IN word A, IN word B, carry c, IN carry* c_prime)
  * @param A 피연산자 A
  * @param B 피연산자 B
  */
-msg bi_add_C(OUT bigint** dst, IN bigint* A, IN bigint* B) {
-    if (A == NULL || A->start == NULL) {
+msg bi_add_C(OUT bigint** dst, IN bigint* A, IN bigint* B)
+{
+    if (A == NULL || A->start == NULL)
+    {
         return NULL_POINTER_ERROR;
     }
-    if (B == NULL || B->start == NULL) {
+    if (B == NULL || B->start == NULL)
+    {
         return NULL_POINTER_ERROR;
     }
 
@@ -55,13 +58,13 @@ msg bi_add_C(OUT bigint** dst, IN bigint* A, IN bigint* B) {
     bigint* temp = NULL;
 
     bi_new(&temp, n + 1);  // 최대 n + 1 자리 (자리 올림 고려)
-    
 
     carry c = 0;
     word C_word;
 
     // A와 B의 각 워드 덧셈 수행
-    for (int j = 0; j < n; j++) {
+    for (int j = 0; j < n; j++)
+    {
         word A_word = A->start[j];
         word B_word = (j < m) ? B->start[j] : 0;
 
@@ -77,7 +80,7 @@ msg bi_add_C(OUT bigint** dst, IN bigint* A, IN bigint* B) {
     bi_refine(temp);
 
     bi_assign(dst, temp);
-    
+
     bi_delete(&temp);
 
     return print_success_add_C();
@@ -89,65 +92,65 @@ msg bi_add_C(OUT bigint** dst, IN bigint* A, IN bigint* B) {
  * @param a 피연산자 a
  * @param b 피연산자 b
  */
-msg bi_add(OUT bigint** dst, IN bigint* A, IN bigint* B) {
-    if (A == NULL || B == NULL) {
+msg bi_add(OUT bigint** dst, IN bigint* A, IN bigint* B)
+{
+    if (A == NULL || B == NULL)
+    {
         return NULL_POINTER_ERROR;
     }
-    
+
     bigint* tmp_A = NULL;
     bigint* tmp_B = NULL;
-
+    bigint* result = NULL;
     bi_assign(&tmp_A, A);
     bi_assign(&tmp_B, B);
-    
+
     // A와 B의 부호에 따라 덧셈 또는 뺄셈 연산 수행
     if ((A->sign == 0) && (B->sign == 1)) {
         tmp_B->sign = POSITIVE;
-        bi_sub(dst, tmp_A, tmp_B);
-        bi_delete(&tmp_A);
-        bi_delete(&tmp_B);
+        bi_sub(&result, tmp_A, tmp_B);
     }
-    else if ((B->sign == 0) && (A->sign == 1)) {
+    else if ((B->sign == 0) && (A->sign == 1))
+    {
         tmp_A->sign = POSITIVE;
-        bi_sub(dst,tmp_A, tmp_B);
-        (*dst)->sign = 1;
-        bi_delete(&tmp_A);
-        bi_delete(&tmp_B);
+        bi_sub(&result, tmp_B, tmp_A);
     }
-    else if ((B->sign == 1) && (A->sign == 1)) {
-        if (A->wordlen >= B->wordlen) {
-            bi_add_C(dst, tmp_A, tmp_B);
-            (*dst) ->sign = 1; 
-            bi_delete(&tmp_A);
-            bi_delete(&tmp_B);
+    else if ((B->sign == 1) && (A->sign == 1))
+    {
+        if (A->wordlen >= B->wordlen)
+        {
+            bi_add_C(&result, tmp_A, tmp_B);
+            result->sign = 1;
         }
-        else {
-            bi_add_C(dst, tmp_B, tmp_A);
-            (*dst)->sign = 1;
-            bi_delete(&tmp_A);
-            bi_delete(&tmp_B);
+        else
+        {
+            bi_add_C(&result, tmp_B, tmp_A);
+            result->sign = 1;
         }
     }
-    else { 
-        if (A->wordlen >= B->wordlen) {
-            bi_add_C(dst, tmp_A, tmp_B);
-            bi_delete(&tmp_A);
-            bi_delete(&tmp_B);
+    else
+    {
+        if (A->wordlen >= B->wordlen)
+        {
+            bi_add_C(&result, tmp_A, tmp_B);
         }
-        else {
-            bi_add_C(dst, tmp_B, tmp_A);
-            bi_delete(&tmp_A);
-            bi_delete(&tmp_B);
+        else
+        {
+            bi_add_C(&result, tmp_B, tmp_A);
         }
     }
-    
+    bi_delete(&tmp_A);
+    bi_delete(&tmp_B);
 
+    bi_assign(dst,result);
+    bi_delete(&result);
     return SUCCESS_ADD;
 }
+
 /**
  * @brief bigint 덧셈 테스트 함수
  */
-msg bi_test_add()
+void bi_test_add()
 {
 
     fprintf(stdout, "===========================\n");
