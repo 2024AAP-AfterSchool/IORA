@@ -117,7 +117,7 @@ msg bi_set_from_array(OUT bigint** dst, IN uint32_t sign, IN uint32_t wordlen, I
     {
         return result;
     }
-
+    
     (*dst)->sign = sign;
 
     result = array_copy((*dst)->start, src, wordlen);
@@ -328,7 +328,7 @@ msg bi_assign(OUT bigint** dst, IN bigint* src)
     }
     
     (*dst)->sign = src->sign;
-    
+
     result = array_copy((*dst)->start, src->start, src->wordlen);
     if (result != SUCCESS_COPY)
     {
@@ -503,7 +503,10 @@ msg bi_word_right_shift(OUT bigint** dst, IN byte k) // k는 shift하고싶은 w
     bi_new(&tmp, (*dst)->wordlen - k);
     tmp->sign = (*dst)->sign;
 
-    for (int i = k; i < tmp->wordlen; i++)
+    fprintf(stdout, "bf dst: ");
+    bi_print(*dst, 16);
+
+    for (int i = k - 1 ; i < tmp->wordlen; i++)
     {
         tmp->start[i] = (*dst)->start[i + k];
     }
@@ -514,8 +517,67 @@ msg bi_word_right_shift(OUT bigint** dst, IN byte k) // k는 shift하고싶은 w
     // bi_assign을 사용하여 tmp의 값을 dst에 복사
     bi_assign(dst, tmp);
 
+    fprintf(stdout, "af tmp: ");
+    bi_print(tmp, 16);
+
     // tmp 및 기존 dst의 메모리를 해제
     bi_delete(&tmp);
 
+    fprintf(stdout, "af dst: ");
+    bi_print(*dst, 16);
+
+    return print_success_shift();
+}
+
+/**
+ * @brief 비트를 왼쪽으로 shift하는 함수
+ * @param dst bigint의 포인터
+ * @param k shift 하고싶은 bit 사이즈 
+ */
+msg bi_bit_left_shift(OUT bigint** dst, IN byte k) {
+    uint32_t word_shift = k / (sizeof(word) * 8);  // 워드 단위 이동
+    uint32_t bit_shift = k % (sizeof(word) * 8);   // 워드 내 비트 이동
+    bigint* tmp = NULL;
+    // 새로운 bigint 생성 (추가 워드 고려)
+    bi_new(&tmp, (*dst)->wordlen + word_shift + (bit_shift > 0 ? 1 : 0));
+    tmp->sign = (*dst)->sign;
+
+    // 비트 이동 수행
+    for (uint32_t i = 0; i < (*dst)->wordlen; i++) {
+        // 현재 워드를 이동하고 새로운 위치에 배치
+        tmp->start[i + word_shift] |= (*dst)->start[i] << bit_shift;
+        // 상위 비트의 초과분을 다음 워드로 전달
+        if (bit_shift > 0 && (i ) < (*dst)->wordlen) {
+            tmp->start[i + word_shift + 1] |= (*dst)->start[i] >> (sizeof(word) * 8 - bit_shift);
+        }
+    }
+    bi_refine(tmp);
+    // 기존 dst를 tmp로 교체
+    bi_assign(dst, tmp);
+    bi_delete(&tmp);
+
+    return print_success_shift();
+}
+
+/**
+ * @brief 비트를 오른쪽으로 shift하는 함수
+ * @param dst bigint의 포인터
+ * @param k shift 하고싶은 bit 사이즈 
+ */
+msg bi_bit_right_shift(OUT bigint** dst, IN byte k) // k는 shift하고싶은 bit 사이즈 의미
+{
+    bigint* tmp = NULL;
+    bi_new(&tmp, (*dst)->wordlen - k);
+    tmp->sign = (*dst)->sign;
+    for (int i = k; i < tmp->wordlen; i++)
+    {
+        tmp->start[i] = (*dst)->start[i + k];
+    }
+    //bi_refine(tmp); // dst가 refine된 값이라면 할 필요 x
+    // dst를 NULL로 설정하여 bi_assign이 동작하도록 준비
+    // bi_assign을 사용하여 tmp의 값을 dst에 복사
+    bi_assign(dst, tmp);
+    // tmp 및 기존 dst의 메모리를 해제
+    bi_delete(&tmp);
     return print_success_shift();
 }

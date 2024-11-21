@@ -101,56 +101,52 @@ msg bi_add(OUT bigint** dst, IN bigint* A, IN bigint* B)
 
     bigint* tmp_A = NULL;
     bigint* tmp_B = NULL;
+    bigint* result = NULL;
 
     bi_assign(&tmp_A, A);
     bi_assign(&tmp_B, B);
 
     // A와 B의 부호에 따라 덧셈 또는 뺄셈 연산 수행
-    if ((A->sign == 0) && (B->sign == 1)) {
+    if ((A->sign == POSITIVE) && (B->sign == NEGATIVE))
+    {
         tmp_B->sign = POSITIVE;
-        bi_sub(dst, tmp_A, tmp_B);
-        bi_delete(&tmp_A);
-        bi_delete(&tmp_B);
+        bi_sub(&result, tmp_A, tmp_B);
     }
-    else if ((B->sign == 0) && (A->sign == 1))
+    else if ((B->sign == POSITIVE) && (A->sign == NEGATIVE))
     {
         tmp_A->sign = POSITIVE;
-        bi_sub(dst, tmp_B, tmp_A);
-        bi_delete(&tmp_A);
-        bi_delete(&tmp_B);
+        bi_sub(&result, tmp_B, tmp_A);
     }
-    else if ((B->sign == 1) && (A->sign == 1))
+    else if ((B->sign == NEGATIVE) && (A->sign == NEGATIVE))
     {
         if (A->wordlen >= B->wordlen)
         {
-            bi_add_C(dst, tmp_A, tmp_B);
-            (*dst) ->sign = 1; 
-            bi_delete(&tmp_A);
-            bi_delete(&tmp_B);
+            bi_add_C(&result, tmp_A, tmp_B);
+            result->sign = NEGATIVE;
         }
         else
         {
-            bi_add_C(dst, tmp_B, tmp_A);
-            (*dst)->sign = 1;
-            bi_delete(&tmp_A);
-            bi_delete(&tmp_B);
+            bi_add_C(&result, tmp_B, tmp_A);
+            result->sign = NEGATIVE;
         }
     }
     else
     { 
         if (A->wordlen >= B->wordlen)
         {
-            bi_add_C(dst, tmp_A, tmp_B);
-            bi_delete(&tmp_A);
-            bi_delete(&tmp_B);
+            bi_add_C(&result, tmp_A, tmp_B);
         }
         else
         {
-            bi_add_C(dst, tmp_B, tmp_A);
-            bi_delete(&tmp_A);
-            bi_delete(&tmp_B);
+            bi_add_C(&result, tmp_B, tmp_A);
         }
     }
+
+    bi_delete(&tmp_A);
+    bi_delete(&tmp_B);
+
+    bi_assign(dst,result);
+    bi_delete(&result);
 
     return SUCCESS_ADD;
 }
