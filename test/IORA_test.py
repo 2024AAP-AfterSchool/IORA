@@ -121,11 +121,12 @@ def test_addtion(function, wordlen=8, iteration=10000, verbose=False):
         result = function['bi_new'](ctypes.byref(bigint3), max(wordlen1, wordlen2))
         result = function['bi_set_from_array'](ctypes.byref(bigint1), sign1, wordlen1, src_array1)
         result = function['bi_set_from_array'](ctypes.byref(bigint2), sign2, wordlen2, src_array2)
-        result = function['bi_add'](ctypes.byref(bigint3), bigint1, bigint2)
 
-        c_result = bi_to_int(bigint3)
         python_result = (-1 if bigint1.contents.sign == NEGATIVE else 1) * int(src_num_from_array1, 16) \
                       + (-1 if bigint2.contents.sign == NEGATIVE else 1) * int(src_num_from_array2, 16)
+
+        result = function['bi_add'](ctypes.byref(bigint3), bigint1, bigint2)
+        c_result = bi_to_int(bigint3)
 
         if c_result == python_result:
             if verbose:
@@ -133,7 +134,6 @@ def test_addtion(function, wordlen=8, iteration=10000, verbose=False):
                 for j, bi in enumerate([bigint1, bigint2, bigint3]):
                     print(f"\nBigInt{j + 1}: ", end='')
                     function['bi_print'](bi, 16)
-                print()
                 print("C Result: ", int_to_hex(c_result))
                 print("Python Result: ", int_to_hex(python_result))
                 print_center(f" TEST SUCCESS {i + 1} ", '-')
@@ -142,7 +142,8 @@ def test_addtion(function, wordlen=8, iteration=10000, verbose=False):
             function['bi_delete'](ctypes.byref(bigint3))
 
         else:
-            print_center(" TEST FAIL ", ' ')
+            print()
+            print_center(" TEST FAIL ", '-')
             print("BigInt1: ", "-" if bigint1.contents.sign else "", "0x", src_num_from_array1, sep="")
             print("BigInt2: ", "-" if bigint2.contents.sign else "", "0x", src_num_from_array2, sep="")
             print("C Result: ", int_to_hex(c_result))
@@ -155,7 +156,7 @@ def test_addtion(function, wordlen=8, iteration=10000, verbose=False):
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
 
-def test_subtraction(function, wordlen=8, iteration=10000, verbose=True):
+def test_subtraction(function, wordlen=8, iteration=10000, verbose=False):
     print_center(" 3-9. BigInt 뺄셈 테스트 ", '-', '\n', 95)
 
     for i in tqdm(range(iteration), desc="BigNum Subtraction Test", unit=" iter", ncols=100):
@@ -174,11 +175,11 @@ def test_subtraction(function, wordlen=8, iteration=10000, verbose=True):
         result = function['bi_new'](ctypes.byref(bigint3), max(wordlen1, wordlen2))
         result = function['bi_set_from_array'](ctypes.byref(bigint1), sign1, wordlen1, src_array1)
         result = function['bi_set_from_array'](ctypes.byref(bigint2), sign2, wordlen2, src_array2)
-        result = function['bi_sub'](ctypes.byref(bigint3), bigint1, bigint2)
-
-        c_result = bi_to_int(bigint3)
         python_result = (-1 if bigint1.contents.sign == NEGATIVE else 1) * int(src_num_from_array1, 16) \
                       - (-1 if bigint2.contents.sign == NEGATIVE else 1) * int(src_num_from_array2, 16)
+        
+        result = function['bi_sub'](ctypes.byref(bigint3), bigint1, bigint2)
+        c_result = bi_to_int(bigint3)
 
         if c_result == python_result:
             if verbose:
@@ -195,7 +196,8 @@ def test_subtraction(function, wordlen=8, iteration=10000, verbose=True):
             function['bi_delete'](ctypes.byref(bigint3))
 
         else:
-            print_center(" TEST FAIL ", ' ')
+            print()
+            print_center(" TEST FAIL ", '-')
             print("BigInt1: ", "-" if bigint1.contents.sign else "", "0x", src_num_from_array1, sep="")
             print("BigInt2: ", "-" if bigint2.contents.sign else "", "0x", src_num_from_array2, sep="")
             print("C Result: ", int_to_hex(c_result))
@@ -208,7 +210,7 @@ def test_subtraction(function, wordlen=8, iteration=10000, verbose=True):
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
 
-def test_multiplication(function, wordlen=2, iteration=10000, verbose=True):
+def test_multiplication(function, wordlen=8, iteration=10000, verbose=False):
     print_center(" 3-10. BigInt 곱셈 테스트 ", '-', '\n', 95)
 
     for i in tqdm(range(iteration), desc="BigNum Multiplication Test", unit=" iter", ncols=100):
@@ -227,11 +229,11 @@ def test_multiplication(function, wordlen=2, iteration=10000, verbose=True):
         result = function['bi_new'](ctypes.byref(bigint3), max(wordlen1, wordlen2))
         result = function['bi_set_from_array'](ctypes.byref(bigint1), sign1, wordlen1, src_array1)
         result = function['bi_set_from_array'](ctypes.byref(bigint2), sign2, wordlen2, src_array2)
-        result = function['bi_mul'](ctypes.byref(bigint3), bigint1, bigint2, ctypes.c_bool(False))
-
-        c_result = bi_to_int(bigint3)
         python_result = ((-1 if bigint1.contents.sign == NEGATIVE else 1) * int(src_num_from_array1, 16)) \
                       * ((-1 if bigint2.contents.sign == NEGATIVE else 1) * int(src_num_from_array2, 16))
+        
+        result = function['bi_mul'](ctypes.byref(bigint3), bigint1, bigint2, ctypes.c_bool(False))
+        c_result = bi_to_int(bigint3)
 
         if c_result == python_result:
             if verbose:
@@ -248,6 +250,62 @@ def test_multiplication(function, wordlen=2, iteration=10000, verbose=True):
             function['bi_delete'](ctypes.byref(bigint3))
 
         else:
+            print()
+            print_center(" TEST FAIL ", '-')
+            print("BigInt1: ", "-" if bigint1.contents.sign else "", "0x", src_num_from_array1, sep="")
+            print("BigInt2: ", "-" if bigint2.contents.sign else "", "0x", src_num_from_array2, sep="")
+            print("C Result: ", int_to_hex(c_result))
+            print("Python Result: ", int_to_hex(python_result))
+            print()
+            print_center(f" TEST FAIL (Exit At: {i+1}) ", '-')
+            exit(1)
+
+    if iteration == i + 1:
+        print()
+        print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
+
+def test_multiplication_karatsuba(function, wordlen=8, iteration=10000, verbose=False):
+    print_center(" 3-10. BigInt 곱셈 테스트 ", '-', '\n', 95)
+
+    for i in tqdm(range(iteration), desc="BigNum Multiplication Test", unit=" iter", ncols=100):
+        sign1, sign2 = [generate_random_sign() for _ in range(2)]
+        wordlen1, wordlen2 = [generate_random_wordlen(wordlen) for _ in range(2)]
+        bigint1, bigint2, bigint3 = [ctypes.POINTER(bigint)() for _ in range(3)]
+
+        src_array1 = (word * wordlen1)(*(generate_random_number() for _ in range(wordlen1)))
+        src_array2 = (word * wordlen2)(*(generate_random_number() for _ in range(wordlen2)))
+        
+        src_num_from_array1 = ''.join(format(x, '08X') for x in reversed(src_array1))
+        src_num_from_array2 = ''.join(format(x, '08X') for x in reversed(src_array2))
+
+        result = function['bi_new'](ctypes.byref(bigint1), wordlen1)
+        result = function['bi_new'](ctypes.byref(bigint2), wordlen2)
+        result = function['bi_new'](ctypes.byref(bigint3), max(wordlen1, wordlen2))
+        result = function['bi_set_from_array'](ctypes.byref(bigint1), sign1, wordlen1, src_array1)
+        result = function['bi_set_from_array'](ctypes.byref(bigint2), sign2, wordlen2, src_array2)
+        python_result = ((-1 if bigint1.contents.sign == NEGATIVE else 1) * int(src_num_from_array1, 16)) \
+                      * ((-1 if bigint2.contents.sign == NEGATIVE else 1) * int(src_num_from_array2, 16))
+        
+        result = function['bi_mul'](ctypes.byref(bigint3), bigint1, bigint2, ctypes.c_bool(True))
+        c_result = bi_to_int(bigint3)
+
+        if c_result == python_result:
+            if verbose:
+                print()
+                for j, bi in enumerate([bigint1, bigint2, bigint3]):
+                    print(f"\nBigInt{j + 1}: ", end='')
+                    function['bi_print'](bi, 16)
+                print()
+                print(f"C Result: {int_to_hex(c_result)}")
+                print(f"Python Result: {int_to_hex(python_result)}\n")
+                print_center(f" TEST SUCCESS {i + 1} ", '-')
+            function['bi_delete'](ctypes.byref(bigint1))
+            function['bi_delete'](ctypes.byref(bigint2))
+            function['bi_delete'](ctypes.byref(bigint3))
+
+        else:
+            print()
+            print_center(" TEST FAIL ", '-')
             print("BigInt1: ", "-" if bigint1.contents.sign else "", "0x", src_num_from_array1, sep="")
             print("BigInt2: ", "-" if bigint2.contents.sign else "", "0x", src_num_from_array2, sep="")
             print("C Result: ", int_to_hex(c_result))
@@ -352,6 +410,33 @@ def test():
     function['bi_print'](test_bigint1, 16)
     print()
 
+    # 3-8 BigInt 덧셈 테스트
+    # test_addtion(function)
+
+    # 3-9 BigInt 뺄셈 테스트
+    # test_subtraction(function)
+
+    # 3-10 BigInt 곱셈 테스트
+    test_multiplication(function)
+
+    # 3-11 BigInt 곱셈(karatsuba) 테스트
+    # test_multiplication_karatsuba(function)
+
+    # 실행 테스트
+    # os.system(command=f"./build/{OS}/IORA")
+
+    # 테스트 종료
+    print_center(" FINISH IORA TEST ")
+    end_time = datetime.now(seoul_tz)
+    print_time(end_time, "END TIME: ", '')
+
+    print_total_time(start_time, end_time)
+    print_line()
+
+if __name__ == "__main__":
+    test()
+
+'''
     # BONUS 특정 문자열 테스트
     bonus_bigint1 = ctypes.POINTER(bigint)()
     bonus_bigint2 = ctypes.POINTER(bigint)()
@@ -394,26 +479,4 @@ def test():
     function['bi_print'](bonus_bigint6, 16)
     print()
     print_line()
-
-    # 3-8 BigInt 덧셈 테스트
-    # test_addtion(function)
-
-    # 3-9 BigInt 뺄셈 테스트
-    # test_subtraction(function)
-
-    # 3-10 BigInt 곱셈 테스트
-    # test_multiplication(function)
-
-    # 실행 테스트
-    # os.system(command=f"./build/{OS}/IORA")
-
-    # 테스트 종료
-    print_center(" FINISH IORA TEST ")
-    end_time = datetime.now(seoul_tz)
-    print_time(end_time, "END TIME: ", '')
-
-    print_total_time(start_time, end_time)
-    print_line()
-
-if __name__ == "__main__":
-    test()
+'''

@@ -8,6 +8,7 @@
 #include "base/base_type.h"
 #include "base/base_error.h"
 #include "bigint/bigint_addition.h"
+#include "bigint/bigint_subtraction.h"
 #include "bigint/bigint_calculation.h"
 #include "bigint/bigint_multiplication.h"
 
@@ -63,46 +64,150 @@ msg bi_mul_AB(OUT bigint** dst, IN word* A, IN word* B)
 msg bi_mul_C(OUT bigint** dst, IN bigint* A, IN bigint* B)
 {
     bigint* C = NULL;
+    bigint* T = NULL;
     bi_new(&C, A->wordlen + B->wordlen);
-    
-    for (int i = 0; i < B->wordlen; i++)
-    {
+    bi_new(&C, A->wordlen + 1);
+    bigint* tmp_A = NULL;
+
+    // A가 홀수 길이인 경우 확장
+    if (A->wordlen % 2 == 1) {
+        bi_new(&tmp_A, A->wordlen + 1);
+        for (int i = 0; i < A->wordlen; i++) {
+            tmp_A->start[i] = A->start[i];
+        }
+        tmp_A->start[A->wordlen] = 0;
+    }
+    else {
+        bi_assign(&tmp_A, A);
+    }
+
+    // 곱셈 및 결과 누적
+    for (int i = 0; i < B->wordlen; i++) {
         bigint* T0 = NULL;
         bigint* T1 = NULL;
+        bigint* tmp_T0 = NULL;
+        bigint* tmp_T1 = NULL;
         bi_new(&T0, 2); // T0는 2 워드 크기로 생성
         bi_new(&T1, 2); // T1도 2 워드 크기로 생성
+        bi_new(&tmp_T0, (tmp_A->wordlen));
+        bi_new(&tmp_T1, (tmp_A->wordlen)+1);
 
-        for (int j = 0; j < (A->wordlen) / 2; j++)
-        {
+        for (int j = 0; j < (tmp_A->wordlen / 2); j++) {
             msg result;
 
-            result = bi_mul_AB(&T0, &(A->start[2 * j]), &(B->start[i]));
+            result = bi_mul_AB(&T0, &(tmp_A->start[2 * j]), &(B->start[i]));
             if (result != SUCCESS_MUL_AB) return print_fail_mul_AB();
-            bi_word_left_shift(&T0, 2 * j);
-
-            result = bi_mul_AB(&T1, &(A->start[(2 * j) + 1]), &(B->start[i]));
+            tmp_T0->start[2 * j] = T0->start[0];
+            tmp_T0->start[(2 * j)+1] = T0->start[1];
+            
+            result = bi_mul_AB(&T1, &(tmp_A->start[(2 * j) + 1]), &(B->start[i]));
             if (result != SUCCESS_MUL_AB) return print_fail_mul_AB();
-            bi_word_left_shift(&T1, (2 * j) + 1);
+            tmp_T1->start[(2 * j)+1] = T1->start[0];
+            tmp_T1->start[(2 * (j+1))] = T1->start[1];
         }
-
-        bigint* T = NULL;
-        bi_new(&T, A->wordlen + B->wordlen);
-
-        msg result = bi_add(&T, T0, T1);
+        bi_add(&T, tmp_T1, tmp_T0);
+        // i번째 워드에 대한 시프트 처리 후 누적 합 산
         bi_word_left_shift(&T, i);
-        result = bi_add(&C, C, T);
+        bi_add(&C, C, T);
 
         // 임시 변수 삭제
         bi_delete(&T0);
-        bi_delete(&T1);
-        bi_delete(&T);
+        bi_delete(&T1); 
+        bi_delete(&tmp_T0);
+        bi_delete(&tmp_T1);
     }
 
+    // 최종 결과 할당
     bi_refine(C);
-    bi_assign(dst, C); // 최종 결과를 dst에 할당
-    bi_delete(&C); // C 삭제
+    bi_assign(dst, C);
+    bi_delete(&C);
+    bi_delete(&tmp_A);
 
     return print_success_mul_C();
+}
+
+msg bi_mul_karatsuba(OUT bigint** dst, IN bigint* A, IN bigint* B) {
+
+    bigint* tmp_A = NULL;
+    bigint* tmp_B = NULL;
+  
+
+    bi_assign(&tmp_A, A);
+    bi_assign(&tmp_B, B);
+ 
+    uint32_t n = (tmp_A->wordlen > B->wordlen) ? tmp_A->wordlen : tmp_B->wordlen;
+
+
+    if (n == 1) {
+        return bi_mul_C(dst, tmp_A, tmp_B);
+    }
+
+    uint32_t half = (n + 1) / 2;
+
+  
+    bigint* A1 = NULL, * A0 = NULL, * B1 = NULL, * B0 = NULL;
+
+   
+    bi_new(&A1, n - half);
+    bi_new(&A0, half);
+    for (uint32_t i = 0; i < half; i++) {
+        A0->start[i] = (i < tmp_A->wordlen) ? tmp_A->start[i] : 0;
+    }
+    for (uint32_t i = half; i < n; i++) {
+        A1->start[i - half] = (i < tmp_A->wordlen) ? tmp_A->start[i] : 0;
+    }
+
+  
+    bi_new(&B1, n - half);
+    bi_new(&B0, half);
+    for (uint32_t i = 0; i < half; i++) {
+        B0->start[i] = (i < tmp_B->wordlen) ? tmp_B->start[i] : 0;
+    }
+    for (uint32_t i = half; i < n; i++) {
+        B1->start[i - half] = (i < tmp_B->wordlen) ? tmp_B->start[i] : 0;
+    }
+
+    
+    bigint* T1 = NULL, * T0 = NULL, * T2 = NULL;
+    bi_mul_karatsuba(&T1, A1, B1); // T1 = A1 * B1
+    T1->sign = A1->sign ^ B1->sign;
+    bi_mul_karatsuba(&T0, A0, B0); // T0 = A0 * B0
+    T0->sign = A0->sign ^ B0->sign;
+
+    //S1 = A0 - A1, S2 = B1 - B0
+    bigint* S1 = NULL, * S2 = NULL;
+    bi_sub(&S1, A0, A1);
+    bi_sub(&S2, B1, B0);
+
+    //T2 = S1 * S2
+    bi_mul_karatsuba(&T2, S1, S2);
+    T2->sign = S1->sign ^ S2->sign;
+    // T2: T2 = T2 + T1 + T0
+    bi_add(&T2, T2, T1);
+    bi_add(&T2, T2, T0);
+
+   
+    bi_word_left_shift(&T1, 2 * half);
+    bi_word_left_shift(&T2, half);
+
+    bigint* result = NULL;
+    bi_add(&result, T1, T2);
+    bi_add(&result, result, T0);
+
+    result->sign = A->sign ^ B->sign;
+
+    // Assign result to dst
+    bi_refine(result);
+    bi_assign(dst, result);
+
+
+    bi_delete(&A1); bi_delete(&A0);
+    bi_delete(&B1); bi_delete(&B0);
+    bi_delete(&T1); bi_delete(&T0); bi_delete(&T2);
+    bi_delete(&S1); bi_delete(&S2);
+    bi_delete(&result);
+
+    return SUCCESS_MUL_C;
 }
 
 /**
@@ -156,7 +261,7 @@ msg bi_mul(OUT bigint** dst, IN bigint* A, IN bigint* B, IN bool is_karatsuba)
     byte B_sign = tmp_B->sign;
     tmp_A->sign = POSITIVE;
 
-    // if ( is_karatsuba) mul_karatsuba(dst, tmp_A, tmp_B);
+    if ( is_karatsuba) bi_mul_karatsuba(dst, tmp_A, tmp_B);
     if (!is_karatsuba) bi_mul_C(dst, tmp_A, tmp_B); 
 
     (*dst)->sign = A_sign ^ B_sign;
