@@ -30,6 +30,7 @@
 #define SUCCESS_MUL_C 21                    //< MUL_C 성공
 #define SUCCESS_MUL 22                      //< MUL 성공
 #define SUCCESS_SHIFT 23                    //< SHIFT 성공
+#define SUCCESS_DIV 24                      //< DIV 성공
 
 #define INVALID_WORD_LENGTH_ERROR -1        //< 잘못된 워드 길이 에러
 #define MEMORY_ALLOCATION_ERROR -2          //< 메모리 할당 실패 에러
@@ -39,6 +40,7 @@
 #define COPY_FAILED_ERROR -6                //< 복사 실패 에러
 #define INVALID_INPUT_ERROR -7	            //< 유효하지 않은 입력 에러
 #define FAIL_MUL_AB -8                      //< MUL_AB 실패 에러
+#define FAIL_DIV_BIT -9                     //< DIV_BIT 실패 에러
 
 // 함수 프로토타입 정의 (에러 메시지 출력)
 msg print_invalid_word_length_error();
@@ -49,6 +51,7 @@ msg print_already_freed_error();
 msg print_copy_failed_error();
 msg print_invalid_input_error();
 msg print_fail_mul_AB();
+msg print_fail_div_bit();
 
 // 함수 프로토타입 정의 (성공 메시지 출력)
 msg print_success_memory_allocation();
@@ -74,5 +77,6 @@ msg print_success_mul_AB();
 msg print_success_mul_C();
 msg print_success_mul();
 msg print_success_shift();
+msg print_success_div();
 
 #endif // IORA_BASE_ERROR_H_

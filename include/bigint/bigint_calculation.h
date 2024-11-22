@@ -54,4 +54,7 @@ int8_t bi_compare(IN bigint* x, IN bigint* y);
 msg bi_word_left_shift(OUT bigint** dst, IN byte k);
 msg bi_word_right_shift(OUT bigint** dst, IN byte k);
 
+msg bi_bit_left_shift(OUT bigint** dst, IN byte k);
+msg bi_bit_right_shift(OUT bigint** dst, IN byte k);
+
 #endif // BIGINT_CALCULATION_H_

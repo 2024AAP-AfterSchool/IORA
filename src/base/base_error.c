@@ -286,3 +286,21 @@ msg print_success_shift()
     if (VERBOSE) fprintf(stdout, "Success: print_shift.\n");
     return SUCCESS_SHIFT;
 }
+
+/**
+ * @brief DIV 성공 시 출력하는 함수
+ */
+msg print_success_div()
+{
+    if (VERBOSE) fprintf(stdout, "Success: print_div.\n");
+    return SUCCESS_DIV;
+}
+
+/**
+ * @brief DIV_BIT 실패 시 출력하는 함수
+ */
+msg print_fail_div_bit()
+{
+    if (VERBOSE) fprintf(stderr, "Error: print_fail_div_bit.\n");
+    return FAIL_DIV_BIT;
+}
