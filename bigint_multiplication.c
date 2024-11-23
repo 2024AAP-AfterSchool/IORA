@@ -190,11 +190,11 @@ msg bi_karatsuba_mul(OUT bigint** dst, IN bigint* A, IN bigint* B) {
 
     bigint* tmp_A = NULL;
     bigint* tmp_B = NULL;
-  
+
 
     bi_assign(&tmp_A, A);
     bi_assign(&tmp_B, B);
- 
+
     uint32_t n = (tmp_A->wordlen > B->wordlen) ? tmp_A->wordlen : tmp_B->wordlen;
 
 
@@ -204,10 +204,10 @@ msg bi_karatsuba_mul(OUT bigint** dst, IN bigint* A, IN bigint* B) {
 
     uint32_t half = (n + 1) / 2;
 
-  
+
     bigint* A1 = NULL, * A0 = NULL, * B1 = NULL, * B0 = NULL;
 
-   
+
     bi_new(&A1, n - half);
     bi_new(&A0, half);
     for (uint32_t i = 0; i < half; i++) {
@@ -217,7 +217,7 @@ msg bi_karatsuba_mul(OUT bigint** dst, IN bigint* A, IN bigint* B) {
         A1->start[i - half] = (i < tmp_A->wordlen) ? tmp_A->start[i] : 0;
     }
 
-  
+
     bi_new(&B1, n - half);
     bi_new(&B0, half);
     for (uint32_t i = 0; i < half; i++) {
@@ -227,7 +227,7 @@ msg bi_karatsuba_mul(OUT bigint** dst, IN bigint* A, IN bigint* B) {
         B1->start[i - half] = (i < tmp_B->wordlen) ? tmp_B->start[i] : 0;
     }
 
-    
+
     bigint* T1 = NULL, * T0 = NULL, * T2 = NULL;
     bi_karatsuba_mul(&T1, A1, B1); // T1 = A1 * B1
     T1->sign = A1->sign ^ B1->sign;
@@ -246,7 +246,7 @@ msg bi_karatsuba_mul(OUT bigint** dst, IN bigint* A, IN bigint* B) {
     bi_add(&T2, T2, T1);
     bi_add(&T2, T2, T0);
 
-   
+
     bi_word_left_shift(&T1, 2 * half);
     bi_word_left_shift(&T2, half);
 
@@ -270,6 +270,196 @@ msg bi_karatsuba_mul(OUT bigint** dst, IN bigint* A, IN bigint* B) {
     return SUCCESS_MUL_C;
 }
 
+
+
+msg squaring_AA(OUT bigint * *dst, IN bigint * A)
+{
+    bigint* C = NULL;
+    bi_new(&C, 2); // 충분한 크기의 bigint 생성
+    int half_word_size = sizeof(word) * 4;
+
+    // word 크기에 따른 마스크 설정
+#if (half_word_size == 16)
+    // 32비트 word의 경우
+    word mask = (1U << (half_word_size)) - 1;
+#else
+    // 64비트 word의 경우
+    word mask = (1ULL << (half_word_size)) - 1;
+#endif
+
+    // A의 상위와 하위 비트 추출
+
+    word A1 = *A->start >> half_word_size; // A의 상위 비트
+    word A0 = *A->start & mask;            // A의 하위 비트
+
+    // C1 = A1^2, C0 = A0^2
+    bigint* C1 = NULL;
+    bi_new(&C1, 1);
+    C1->start[0] = (A1 * A1);
+
+    bigint* C0 = NULL;
+    bi_new(&C0, 1);
+    C0->start[0] = (A0 * A0);
+    // C = (C1 << w) + C0
+
+    bi_word_left_shift(&C1, 1); // C1 << w
+    
+    bi_add(&C, C0,  C1);                    // C = C1 + C0
+
+    // T = A0 * A1
+    bigint* T = NULL;
+    bi_new(&T, 1);
+    word cross = A0 * A1;
+    T->start[0] = cross;
+
+    // T = T << (w/2 + 1)
+    bi_bit_left_shift(&T, half_word_size + 1);
+   
+    // C = C + T
+    bi_add(&C, C, T);
+
+    // 결과를 dst에 복사
+    bi_assign(dst, C);
+
+    // 메모리 해제
+    bi_delete(&C);
+    bi_delete(&C1);
+    bi_delete(&C0);
+    bi_delete(&T);
+
+    return SUCCESS_SQUARE_A;
+}
+
+msg squaring_C(OUT bigint** dst, IN bigint* x) {
+
+    bigint* C1 = NULL;
+    bigint* C2 = NULL;
+    bigint* T1 = NULL;
+    bigint* T2 = NULL;
+
+    // C1, C2 초기화
+    bi_new(&C1, x->wordlen * 2);
+    bi_new(&C2, x->wordlen * 2);
+
+    // C1 계산
+    for (int j = 0; j < x->wordlen; j++) {
+        // T1 = x[j]^2
+        bigint* temp = NULL;
+        bi_new(&temp, 1);
+        temp->start[0] = x->start[j];
+        squaring_AA(&T1, temp);  
+        bi_delete(&temp);
+
+        // T1 <<= 2 * j (워드 단위 이동)
+        bi_word_left_shift(&T1, 2 * j);
+
+        // C1 += T1
+        bi_add(&C1, C1, T1);
+        bi_delete(&T1);
+    }
+
+    // C2 계산
+    for (int j = 0; j < x->wordlen; j++) {
+        for (int i = j + 1; i < x->wordlen; i++) {
+            // T2 = x[j] * x[i]
+            bigint* temp1 = NULL;
+            bigint* temp2 = NULL;
+            bi_new(&temp1, 1);
+            bi_new(&temp2, 1);
+            temp1->start[0] = x->start[j];
+            temp2->start[0] = x->start[i];
+            bi_mul_AB(&T2, temp1, temp2);
+            bi_delete(&temp1);
+            bi_delete(&temp2);
+
+            // T2 <<= (i + j)
+            bi_word_left_shift(&T2, i + j);
+
+            // C2 += T2
+            bi_add(&C2, C2, T2);
+            bi_delete(&T2);
+        }
+    }
+
+    // C2 <<= 1
+    bi_word_left_shift(&C2, 1);
+
+    // C = C1 + C2
+    bi_add(dst, C1, C2);
+
+    // 메모리 해제
+    bi_delete(&C1);
+    bi_delete(&C2);
+
+    return SUCCESS_SQUARE_A;
+}
+
+
+msg squaring_Karatsuba(OUT bigint** dst, IN bigint* A) {
+    if (A == NULL || A->wordlen == 0) {
+        bi_new(dst, 1); // A가 NULL이거나 비어있을 경우 0 반환
+        (*dst)->start[0] = 0;
+        return SUCCESS_SQUARE_A;
+    }
+
+    if (A->wordlen == 1) {
+        // 단일 워드 제곱 처리
+        return squaring_AA(dst, A);
+    }
+
+    // 워드 분할 길이
+    uint32_t l = (A->wordlen + 1) / 2; // 절반 길이
+    bigint* A1 = NULL;
+    bigint* A0 = NULL;
+    bi_new(&A1, A->wordlen - l);
+    bi_new(&A0, l);
+
+    // 상위 워드와 하위 워드 분리
+    for (uint32_t i = 0; i < l; i++) {
+        A0->start[i] = A->start[i]; // 하위 워드 복사
+    }
+    for (uint32_t i = l; i < A->wordlen; i++) {
+        A1->start[i - l] = A->start[i]; // 상위 워드 복사
+    }
+
+    // 중간 계산 값 초기화
+    bigint* T1 = NULL;
+    bigint* T0 = NULL;
+    bigint* R = NULL;
+    bigint* S = NULL;
+
+    // 재귀적으로 A1^2, A0^2 계산
+    squaring_Karatsuba(&T1, A1); // T1 = A1^2
+    squaring_Karatsuba(&T0, A0); // T0 = A0^2
+
+    // R = (T1 << 2l) + T0
+    bi_bit_left_shift(&T1, 2 * l * sizeof(word) * 8); // T1 << 2l (비트 단위 이동)
+    bi_add(&R, T1, T0); // R = T1 + T0
+
+    // S = A1 * A0
+    bi_karatsuba_mul(&S, A1, A0); // S = A1 * A0
+
+    // S <<= (l + 1)
+    bi_bit_left_shift(&S, (l * sizeof(word) * 8) + 1);
+
+    // C = R + S
+    bigint* C = NULL;
+    bi_add(&C, R, S);
+
+    // 결과를 dst에 복사
+    bi_assign(dst, C);
+
+    // 메모리 해제
+    bi_delete(&A1);
+    bi_delete(&A0);
+    bi_delete(&T1);
+    bi_delete(&T0);
+    bi_delete(&R);
+    bi_delete(&S);
+    bi_delete(&C);
+
+    return SUCCESS_SQUARE_A;
+}
 void bi_test_mul()
 {
     fprintf(stdout, "1. 기본 곱셈 테스트\n");
