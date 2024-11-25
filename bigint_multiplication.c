@@ -397,66 +397,66 @@ msg squaring_C(OUT bigint** dst, IN bigint* x) {
 
 msg squaring_Karatsuba(OUT bigint** dst, IN bigint* A) {
     if (A == NULL || A->wordlen == 0) {
-        bi_new(dst, 1); // A가 NULL이거나 비어있을 경우 0 반환
+        bi_new(dst, 1);
         (*dst)->start[0] = 0;
         return SUCCESS_SQUARE_A;
     }
 
     if (A->wordlen == 1) {
-        // 단일 워드 제곱 처리
         return squaring_AA(dst, A);
     }
 
-    // 워드 분할 길이
-    uint32_t l = (A->wordlen + 1) / 2; // 절반 길이
+    uint32_t l = (A->wordlen + 1) / 2;
     bigint* A1 = NULL;
     bigint* A0 = NULL;
     bi_new(&A1, A->wordlen - l);
     bi_new(&A0, l);
 
-    // 상위 워드와 하위 워드 분리
     for (uint32_t i = 0; i < l; i++) {
-        A0->start[i] = A->start[i]; // 하위 워드 복사
+        if (i < A->wordlen) {
+            A0->start[i] = A->start[i];
+        }
+        else {
+            A0->start[i] = 0;
+        }
     }
     for (uint32_t i = l; i < A->wordlen; i++) {
-        A1->start[i - l] = A->start[i]; // 상위 워드 복사
+        if (i < A->wordlen) {
+            A1->start[i - l] = A->start[i];
+        }
+        else {
+            A1->start[i - l] = 0;
+        }
     }
 
-    // 중간 계산 값 초기화
     bigint* T1 = NULL;
     bigint* T0 = NULL;
     bigint* R = NULL;
     bigint* S = NULL;
 
-    // 재귀적으로 A1^2, A0^2 계산
-    squaring_Karatsuba(&T1, A1); // T1 = A1^2
-    squaring_Karatsuba(&T0, A0); // T0 = A0^2
+    squaring_Karatsuba(&T1, A1);
+    bi_refine(T1);
+    squaring_Karatsuba(&T0, A0);
+    bi_refine(T0);
+    bi_word_left_shift(&T1, 2 * l);
+    bi_refine(T1);
+    bi_add(&R, T1, T0);
 
-    // R = (T1 << 2l) + T0
-    bi_word_left_shift(&T1, 2 * l); // T1 << 2l (비트 단위 이동)
-    bi_add(&R, T1, T0); // R = T1 + T0
+    bi_karatsuba_mul(&S, A1, A0);
+   
+    bi_bit_left_shift(&S, (l * 32) + 1);
 
-    // S = A1 * A0
-    bi_karatsuba_mul(&S, A1, A0); // S = A1 * A0
-
-    // S <<= (l + 1)
-    bi_bit_left_shift(&S, l*32 + 1);
-
-    // C = R + S
     bigint* C = NULL;
     bi_add(&C, R, S);
 
-    // 결과를 dst에 복사
     bi_assign(dst, C);
 
-    // 메모리 해제
     bi_delete(&A1);
     bi_delete(&A0);
     bi_delete(&T1);
     bi_delete(&T0);
     bi_delete(&R);
     bi_delete(&S);
-    bi_delete(&C);
 
     return SUCCESS_SQUARE_A;
 }
