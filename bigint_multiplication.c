@@ -433,14 +433,14 @@ msg squaring_Karatsuba(OUT bigint** dst, IN bigint* A) {
     squaring_Karatsuba(&T0, A0); // T0 = A0^2
 
     // R = (T1 << 2l) + T0
-    bi_bit_left_shift(&T1, 2 * l * sizeof(word) * 8); // T1 << 2l (비트 단위 이동)
+    bi_word_left_shift(&T1, 2 * l); // T1 << 2l (비트 단위 이동)
     bi_add(&R, T1, T0); // R = T1 + T0
 
     // S = A1 * A0
     bi_karatsuba_mul(&S, A1, A0); // S = A1 * A0
 
     // S <<= (l + 1)
-    bi_bit_left_shift(&S, (l * sizeof(word) * 8) + 1);
+    bi_bit_left_shift(&S, l*32 + 1);
 
     // C = R + S
     bigint* C = NULL;
