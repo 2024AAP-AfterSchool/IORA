@@ -72,7 +72,9 @@ def load_function(lib):
     function['bi_add'] = lib.bi_add
     function['bi_sub'] = lib.bi_sub
     function['bi_mul'] = lib.bi_mul
+    function['bi_square'] = lib.bi_square
     function['bi_div_bit'] = lib.bi_div_bit
+    function['bi_div'] = lib.bi_div
 
     # 로드한 함수 목록
     print_center(f" LOAD FUNCTION: {list(function.keys())[:3]} ...", ' ')
@@ -319,10 +321,112 @@ def test_multiplication_karatsuba(function, wordlen=64, iteration=10000, verbose
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
 
-def test_division(function, wordlen=8, iteration=10000, verbose=False):
-    print_center(" 3-12. BigInt 나눗셈 테스트 ", '-', '\n', 95)
+def test_squaring(function, wordlen=64, iteration=10000, verbose=False):
+    print_center(" 3-12. BigInt 제곱 테스트 ", '-', '\n', 95)
 
-    for i in tqdm(range(iteration), desc="BigNum Division Test", unit=" iter", ncols=100):
+    for i in tqdm(range(iteration), desc="BigNum Sqauring Test", unit=" iter", ncols=100):
+        sign = generate_random_sign()
+        wordlen = generate_random_wordlen(wordlen)
+        bigint1, bigint2, bigint3 = [ctypes.POINTER(bigint)() for _ in range(3)]
+
+        src_array = (word * wordlen)(*(generate_random_number() for _ in range(wordlen)))
+        src_num_from_array = ''.join(format(x, '08X') for x in reversed(src_array))
+
+        result = function['bi_new'](ctypes.byref(bigint1), wordlen)
+        result = function['bi_new'](ctypes.byref(bigint2), 2 * wordlen)
+        result = function['bi_new'](ctypes.byref(bigint3), 2 * wordlen)
+        result = function['bi_set_from_array'](ctypes.byref(bigint1), sign, wordlen, src_array)
+        python_result = int(src_num_from_array, 16) ** 2
+
+        # print()
+        # function['bi_mul'](ctypes.byref(bigint3), bigint1, bigint1, ctypes.c_bool(False))
+        # print(int_to_hex(bi_to_int(bigint1)))
+        # print(int_to_hex(bi_to_int(bigint3)))
+        # print(int_to_hex(python_result))
+        # print(int_to_hex(int(src_num_from_array, 16) ** 2))
+        # print(int_to_hex(int(src_num_from_array, 16) * int(src_num_from_array, 16)))
+
+        
+        result = function['bi_square'](ctypes.byref(bigint2), bigint1, ctypes.c_bool(False))
+        c_result = bi_to_int(bigint2)
+
+        if c_result == python_result:
+            if verbose:
+                print()
+                for j, bi in enumerate([bigint1, bigint2]):
+                    print(f"\nBigInt{j + 1}: ", end='')
+                    function['bi_print'](bi, 16)
+                print()
+                print(f"C Result: {int_to_hex(c_result)}")
+                print(f"Python Result: {int_to_hex(python_result)}\n")
+                print_center(f" TEST SUCCESS {i + 1} ", '-')
+            function['bi_delete'](ctypes.byref(bigint1))
+            function['bi_delete'](ctypes.byref(bigint2))
+
+        else:
+            print()
+            print_center(" TEST FAIL ", '-')
+            print("BigInt1: ", "-" if bigint1.contents.sign else "", "0x", src_num_from_array, sep="")
+            print("C Result: ", int_to_hex(c_result))
+            print("Python Result: ", int_to_hex(python_result))
+            print()
+            print_center(f" TEST FAIL (Exit At: {i+1}) ", '-')
+            exit(1)
+
+    if iteration == i + 1:
+        print()
+        print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
+
+def test_squaring_karatsuba(function, wordlen=8, iteration=10000, verbose=True):
+    print_center(" 3-13. BigInt 제곱(karatsuba) 테스트 ", '-', '\n', 95)
+
+    for i in tqdm(range(iteration), desc="BigNum Sqauring(Karatsuba) Test", unit=" iter", ncols=100):
+        sign = generate_random_sign()
+        # wordlen = generate_random_wordlen(wordlen)
+        bigint1, bigint2 = [ctypes.POINTER(bigint)() for _ in range(2)]
+
+        src_array = (word * wordlen)(*(generate_random_number() for _ in range(wordlen)))
+        src_num_from_array = ''.join(format(x, '08X') for x in reversed(src_array))
+
+        result = function['bi_new'](ctypes.byref(bigint1), wordlen)
+        result = function['bi_new'](ctypes.byref(bigint2), 2 * wordlen)
+        result = function['bi_set_from_array'](ctypes.byref(bigint1), sign, wordlen, src_array)
+        python_result = (((-1 if bigint1.contents.sign == NEGATIVE else 1) * int(src_num_from_array, 16))) ** 2
+        
+        result = function['bi_square'](ctypes.byref(bigint2), bigint1, ctypes.c_bool(True))
+        c_result = bi_to_int(bigint2)
+
+        if c_result == python_result:
+            if verbose:
+                print()
+                for j, bi in enumerate([bigint1, bigint2]):
+                    print(f"\nBigInt{j + 1}: ", end='')
+                    function['bi_print'](bi, 16)
+                print()
+                print(f"C      Result: {int_to_hex(c_result)}")
+                print(f"Python Result: {int_to_hex(python_result)}\n")
+                print_center(f" TEST SUCCESS {i + 1} ", '-')
+            function['bi_delete'](ctypes.byref(bigint1))
+            function['bi_delete'](ctypes.byref(bigint2))
+
+        else:
+            print()
+            print_center(" TEST FAIL ", '-')
+            print("BigInt1: ", "-" if bigint1.contents.sign else "", "0x", src_num_from_array, sep="")
+            print("C      Result: ", int_to_hex(c_result))
+            print("Python Result: ", int_to_hex(python_result))
+            print()
+            print_center(f" TEST FAIL (Exit At: {i+1}) ", '-')
+            exit(1)
+
+    if iteration == i + 1:
+        print()
+        print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
+
+def test_division_bit(function, wordlen=8, iteration=10000, verbose=False):
+    print_center(" 3-14. BigInt 나눗셈 테스트(bit) ", '-', '\n', 95)
+
+    for i in tqdm(range(iteration), desc="BigNum Division(Bit) Test", unit=" iter", ncols=100):
         sign1, sign2 = generate_random_sign(), POSITIVE
         wordlen1, wordlen2 = [generate_random_wordlen(wordlen) for _ in range(2)]
         bigint1, bigint2, bigint3, bigint4 = [ctypes.POINTER(bigint)() for _ in range(4)]
@@ -346,6 +450,76 @@ def test_division(function, wordlen=8, iteration=10000, verbose=False):
                         % ((-1 if bigint2.contents.sign == NEGATIVE else 1) * int(src_num_from_array2, 16))
 
         result = function['bi_div_bit'](ctypes.byref(bigint3), ctypes.byref(bigint4), bigint1, bigint2)
+        c_result_Q = bi_to_int(bigint3)
+        c_result_R = bi_to_int(bigint4)
+
+        if c_result_Q == python_result_Q and c_result_R == python_result_R:
+            if verbose:
+                print()
+                for j, bi in enumerate([bigint1, bigint2, bigint3, bigint4]):
+                    print(f"\nBigInt{j + 1}: ", end='')
+                    function['bi_print'](bi, 16)
+                print()
+                print(f"C Result(Q): {int_to_hex(c_result_Q)}")
+                print(f"Python Result(Q): {int_to_hex(python_result_Q)}\n")
+                print(f"C Result(R): {int_to_hex(c_result_R)}")
+                print(f"Python Result(R): {int_to_hex(python_result_R)}\n")
+                print_center(f" TEST SUCCESS {i + 1} ", '-')
+            function['bi_delete'](ctypes.byref(bigint1))
+            function['bi_delete'](ctypes.byref(bigint2))
+            function['bi_delete'](ctypes.byref(bigint3))
+            function['bi_delete'](ctypes.byref(bigint4))
+
+        else:
+            print()
+            print_center(" TEST FAIL ", '-')
+            print("BigInt1: ", "-" if bigint1.contents.sign else "", "0x", src_num_from_array1, sep="")
+            print("BigInt2: ", "-" if bigint2.contents.sign else "", "0x", src_num_from_array2, sep="")
+            print("C Result(Q): ", int_to_hex(c_result_Q))
+            print("Python Result(Q): ", int_to_hex(python_result_Q))
+            print("C Result(R): ", int_to_hex(c_result_R))
+            print("Python Result(R): ", int_to_hex(python_result_R))
+            print()
+            print_center(f" TEST FAIL (Exit At: {i+1}) ", '-')
+            exit(1)
+
+    if iteration == i + 1:
+        print()
+        print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
+
+def test_division_word(function, wordlen=1, iteration=10000, verbose=False):
+    print_center(" 3-15. BigInt 나눗셈 테스트(word) ", '-', '\n', 95)
+
+    for i in tqdm(range(iteration), desc="BigNum Division(Word) Test", unit=" iter", ncols=100):
+        sign1, sign2 = generate_random_sign(), POSITIVE
+        wordlen1, wordlen2 = [generate_random_wordlen(wordlen) for _ in range(2)]
+        bigint1, bigint2, bigint3, bigint4 = [ctypes.POINTER(bigint)() for _ in range(4)]
+
+        src_array1 = (word * wordlen1)(*(generate_random_number() for _ in range(wordlen1)))
+        src_array2 = (word * wordlen2)(*(generate_random_number() for _ in range(wordlen2)))
+        
+        src_num_from_array1 = ''.join(format(x, '08X') for x in reversed(src_array1))
+        src_num_from_array2 = ''.join(format(x, '08X') for x in reversed(src_array2))
+
+        result = function['bi_new'](ctypes.byref(bigint1), wordlen1)
+        result = function['bi_new'](ctypes.byref(bigint2), wordlen2)
+        result = function['bi_new'](ctypes.byref(bigint3), max(wordlen1, wordlen2))
+        result = function['bi_new'](ctypes.byref(bigint4), max(wordlen1, wordlen2))
+        result = function['bi_set_from_array'](ctypes.byref(bigint1), sign1, wordlen1, src_array1)
+        result = function['bi_set_from_array'](ctypes.byref(bigint2), sign2, wordlen2, src_array2)
+        python_result_Q = ((-1 if bigint1.contents.sign == NEGATIVE else 1) * int(src_num_from_array1, 16)) \
+                        // ((-1 if bigint2.contents.sign == NEGATIVE else 1) * int(src_num_from_array2, 16))
+        
+        python_result_R = ((-1 if bigint1.contents.sign == NEGATIVE else 1) * int(src_num_from_array1, 16)) \
+                        % ((-1 if bigint2.contents.sign == NEGATIVE else 1) * int(src_num_from_array2, 16))
+
+        print()
+        print("dddd")
+        print(int_to_hex(bi_to_int(bigint1)))
+        print(int_to_hex(bi_to_int(bigint2)))
+        print("dddd3")
+
+        result = function['bi_div'](ctypes.byref(bigint3), ctypes.byref(bigint4), bigint1, bigint2)
         c_result_Q = bi_to_int(bigint3)
         c_result_R = bi_to_int(bigint4)
 
@@ -487,8 +661,17 @@ def test():
     # 3-11 BigInt 곱셈(karatsuba) 테스트
     # test_multiplication_karatsuba(function)
 
-    # 3-12 BigInt 나눗셈 테스트
-    test_division(function)
+    # 3-12 BigInt 제곱 테스트
+    # test_squaring(function)
+
+    # 3-13 BigInt 제곱 테스트
+    # test_squaring_karatsuba(function)
+
+    # 3-14 BigInt 나눗셈(Bit) 테스트
+    # test_division_bit(function)
+
+    # 3-15 BigInt 나눗셈(Word) 테스트
+    test_division_word(function)
 
     # 실행 테스트
     # os.system(command=f"./build/{OS}/IORA")

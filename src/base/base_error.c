@@ -297,10 +297,10 @@ msg print_success_div()
 }
 
 /**
- * @brief DIV_BIT 실패 시 출력하는 함수
+ * @brief DIV_BIT 실패 시 출력하는 함수(0으로 나누었을 때)
  */
-msg print_fail_div_bit()
+msg print_zero_div_error()
 {
-    if (VERBOSE) fprintf(stderr, "Error: print_fail_div_bit.\n");
-    return FAIL_DIV_BIT;
+    if (VERBOSE) fprintf(stderr, "Error: print_zero_div_.\n");
+    return FAIL_DIV;
 }

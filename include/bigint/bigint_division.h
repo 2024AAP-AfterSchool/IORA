@@ -4,4 +4,13 @@
 #include "base/base_type.h"
 
 msg bi_div_bit(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B);
+
+msg bi_div_word(OUT bigint** Q, IN bigint* A, IN bigint* B);
+
+msg bi_div_C(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B);
+
+msg bi_div_CC(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B);
+
+msg bi_div(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B);
+
 #endif // BIGINT_MULTIPLICATION_H_

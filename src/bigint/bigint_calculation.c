@@ -475,7 +475,7 @@ msg bi_word_left_shift(OUT bigint** dst, IN byte k)
     bigint* tmp = NULL;
     bi_new(&tmp, (*dst)->wordlen + k);
     tmp->sign = (*dst)->sign;
-
+    fprintf(stdout, "\nK: %d\n", k);
     for (int i = k; i < tmp->wordlen; i++)
     {
         tmp->start[i] = (*dst)->start[i - k];
@@ -535,28 +535,35 @@ msg bi_word_right_shift(OUT bigint** dst, IN byte k) // k는 shift하고싶은 w
  * @param k shift 하고싶은 bit 사이즈 
  */
 msg bi_bit_left_shift(OUT bigint** dst, IN byte k) {
-    uint32_t word_shift = k / (sizeof(word) * 8);  // 워드 단위 이동
-    uint32_t bit_shift = k % (sizeof(word) * 8);   // 워드 내 비트 이동
-    bigint* tmp = NULL;
+    fprintf(stdout, "\nbitK: %d\n", k);
+    if (k == 0 || dst == NULL || *dst == NULL) {
+        return SUCCESS_SHIFT; // 이동이 필요 없거나 입력이 NULL인 경우
+    }
+    uint32_t word_shift = k / (sizeof(word) * 8);  // 워드 단위 이동 계산
+    uint32_t bit_shift = k % (sizeof(word) * 8);   // 워드 내 비트 이동 계산
     // 새로운 bigint 생성 (추가 워드 고려)
-    bi_new(&tmp, (*dst)->wordlen + word_shift + (bit_shift > 0 ? 1 : 0));
-    tmp->sign = (*dst)->sign;
-
+    uint32_t new_wordlen = (*dst)->wordlen + word_shift + (bit_shift > 0 ? 1 : 0);
+    bigint* tmp = NULL;
+    bi_new(&tmp, new_wordlen); // 메모리 할당
+    tmp->sign = (*dst)->sign;  // 기존 부호 복사
     // 비트 이동 수행
-    for (uint32_t i = 0; i < (*dst)->wordlen; i++) {
-        // 현재 워드를 이동하고 새로운 위치에 배치
+    for (int32_t i = (*dst)->wordlen - 1; i >= 0; i--) {
+        // 워드 이동 및 비트 이동
         tmp->start[i + word_shift] |= (*dst)->start[i] << bit_shift;
-        // 상위 비트의 초과분을 다음 워드로 전달
-        if (bit_shift > 0 && (i ) < (*dst)->wordlen) {
+        // 상위 비트 초과분을 다음 워드로 전달
+        if (bit_shift > 0 && (i + word_shift + 1) < new_wordlen) {
             tmp->start[i + word_shift + 1] |= (*dst)->start[i] >> (sizeof(word) * 8 - bit_shift);
         }
     }
-    bi_refine(tmp);
+    // 새로 추가된 워드 초기화
+    for (uint32_t i = 0; i < word_shift; i++) {
+        tmp->start[i] = 0; // 남는 워드들을 0으로 초기화
+    }
     // 기존 dst를 tmp로 교체
     bi_assign(dst, tmp);
+    // tmp 메모리 해제
     bi_delete(&tmp);
-
-    return print_success_shift();
+    return SUCCESS_SHIFT; // 정상 상태 반환
 }
 
 /**
