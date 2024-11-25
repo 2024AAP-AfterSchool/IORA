@@ -317,7 +317,7 @@ msg squaring_AA(OUT bigint * *dst, IN bigint * A)
    
     // C = C + T
     bi_add(&C, C, T);
-
+    bi_refine(C);
     // 결과를 dst에 복사
     bi_assign(dst, C);
 
@@ -347,7 +347,7 @@ msg squaring_C(OUT bigint** dst, IN bigint* x) {
         bigint* temp = NULL;
         bi_new(&temp, 1);
         temp->start[0] = x->start[j];
-        squaring_AA(&T1, temp);  
+        squaring_AA(&T1, temp);
         bi_delete(&temp);
 
         // T1 <<= 2 * j (워드 단위 이동)
@@ -368,7 +368,7 @@ msg squaring_C(OUT bigint** dst, IN bigint* x) {
             bi_new(&temp2, 1);
             temp1->start[0] = x->start[j];
             temp2->start[0] = x->start[i];
-            bi_mul_AB(&T2, temp1, temp2);
+            bi_mul_AB(&T2, &(temp1->start[0]), &(temp2->start[0]));
             bi_delete(&temp1);
             bi_delete(&temp2);
 
@@ -382,7 +382,7 @@ msg squaring_C(OUT bigint** dst, IN bigint* x) {
     }
 
     // C2 <<= 1
-    bi_word_left_shift(&C2, 1);
+    bi_bit_left_shift(&C2, 1);
 
     // C = C1 + C2
     bi_add(dst, C1, C2);
