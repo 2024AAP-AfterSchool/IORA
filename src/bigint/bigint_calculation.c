@@ -16,10 +16,10 @@
 
 //#define create_prameter
 
-/**
- * @brief bigint의 값을 다른 bigint로 할당하는 함수
- * @param dst bigint의 포인터
- */
+ /**
+  * @brief bigint의 값을 다른 bigint로 할당하는 함수
+  * @param dst bigint의 포인터
+  */
 msg bi_delete(OUT bigint** dst)
 {
     if (is_null_pointer(dst) || is_null_pointer(*dst))
@@ -40,7 +40,7 @@ msg bi_delete(OUT bigint** dst)
  * @param wordlen 배열의 길이
  */
 msg bi_new(OUT bigint** dst, IN uint32_t wordlen)
-{   
+{
     if (wordlen <= 0)
     {
         return print_invalid_word_length_error();
@@ -49,7 +49,7 @@ msg bi_new(OUT bigint** dst, IN uint32_t wordlen)
     if (!is_null_pointer(*dst))
     {
         if (VERBOSE) fprintf(stdout, "[Warning] Already freed pointer.\n");
-        
+
         bi_delete(dst);
     }
 
@@ -59,13 +59,14 @@ msg bi_new(OUT bigint** dst, IN uint32_t wordlen)
     {
         return print_memory_allocation_error();
     }
-
-    (*dst)->sign = POSITIVE;
-    (*dst)->wordlen = wordlen;
-    (*dst)->start = (word*)calloc(wordlen, sizeof(word));
-
-    if (is_null_pointer((*dst)->start))
-    {   
+    if (*dst != NULL)
+    {
+        (*dst)->sign = POSITIVE;
+        (*dst)->wordlen = wordlen;
+        (*dst)->start = (word*)calloc(wordlen, sizeof(word));
+    }
+    else
+    {
         free(*dst);
         return print_array_allocation_error();
     }
@@ -77,7 +78,7 @@ msg bi_new(OUT bigint** dst, IN uint32_t wordlen)
 * @memory 값을 copy하는 함수 추가함
 */
 msg array_copy(OUT word* dst, IN word* src, IN uint32_t wordlen)
-{   
+{
     if (wordlen <= 0)
     {
         return print_invalid_word_length_error();
@@ -101,13 +102,13 @@ msg array_copy(OUT word* dst, IN word* src, IN uint32_t wordlen)
  * @param src 할당하고자 하는 배열
  */
 msg bi_set_from_array(OUT bigint** dst, IN uint32_t sign, IN uint32_t wordlen, IN word* src)
-{   
+{
     if (wordlen <= 0)
     {
         return print_invalid_word_length_error();
     }
 
-    if(is_null_pointer(src))
+    if (is_null_pointer(src))
     {
         return print_null_pointer_error();
     }
@@ -117,7 +118,7 @@ msg bi_set_from_array(OUT bigint** dst, IN uint32_t sign, IN uint32_t wordlen, I
     {
         return result;
     }
-    
+
     (*dst)->sign = sign;
 
     result = array_copy((*dst)->start, src, wordlen);
@@ -148,7 +149,7 @@ msg bi_set_from_string(OUT bigint** dst, IN char* str, IN uint32_t base)
             return result;
         }
     }
-    
+
     // 부호 확인
     int start_idx = 0;
     if (str[0] == '-') {
@@ -280,8 +281,8 @@ msg bi_get_random(OUT bigint** dst, IN uint32_t sign, IN uint32_t wordlen)
  * @param dst bigint의 포인터
  */
 msg bi_refine(OUT bigint* dst)
-{   
-    if(is_null_pointer(dst))
+{
+    if (is_null_pointer(dst))
     {
         return print_null_pointer_error();
     }
@@ -293,6 +294,7 @@ msg bi_refine(OUT bigint* dst)
 
     // 새로운 포인터를 받아 기존 포인터를 그대로 유지하는 방식으로 realloc 사용
     word* new_start = (word*)realloc(dst->start, dst->wordlen * sizeof(word));
+    
     if (is_null_pointer(new_start))
     {
         return print_memory_allocation_error();
@@ -301,7 +303,7 @@ msg bi_refine(OUT bigint* dst)
     // 성공적으로 할당되었으므로 포인터 업데이트
     dst->start = new_start;
 
-    if((dst->start[0] == 0) && (dst->wordlen == 1))
+    if ((dst->start[0] == 0) && (dst->wordlen == 1))
     {
         dst->sign = POSITIVE;
     }
@@ -316,17 +318,19 @@ msg bi_refine(OUT bigint* dst)
  */
 msg bi_assign(OUT bigint** dst, IN bigint* src)
 {
-    if(is_null_pointer(src))
+    if (is_null_pointer(src))
     {
         return print_null_pointer_error();
     }
-
+    if (*dst != NULL) {
+        bi_delete(dst);
+    }
     msg result = bi_new(dst, src->wordlen);
     if (result != SUCCESS_INITIALIZATION)
     {
         return result;
     }
-    
+
     (*dst)->sign = src->sign;
 
     result = array_copy((*dst)->start, src->start, src->wordlen);
@@ -346,11 +350,11 @@ msg bi_assign(OUT bigint** dst, IN bigint* src)
  */
 msg bi_print(OUT bigint* dst, IN uint32_t base)
 {
-    if(is_null_pointer(dst))
+    if (is_null_pointer(dst))
     {
         return print_null_pointer_error();
     }
-    
+
     if (base != 16)
     {
         return fprintf(stdout, "Base %d not supported yet.\n", base);
@@ -379,19 +383,19 @@ msg bi_print(OUT bigint* dst, IN uint32_t base)
  */
 bool bi_is_zero(OUT bigint* dst)
 {
-    if(is_null_pointer(dst))
+    if (is_null_pointer(dst))
     {
         return print_null_pointer_error();
     }
 
-    if(dst->sign == NEGATIVE)
-    {   
+    if (dst->sign == NEGATIVE)
+    {
         return false;
     }
 
-    for (int i = dst->wordlen - 1; i >= 0 ; i--)
+    for (int i = dst->wordlen - 1; i >= 0; i--)
     {
-        if(dst->start[i] != 0)
+        if (dst->start[i] != 0)
         {
             return false;
         }
@@ -470,12 +474,12 @@ int8_t bi_compare(IN bigint* x, IN bigint* y)
  * @param dst bigint의 포인터
  * @param k shift 하고싶은 word 사이즈
  */
-msg bi_word_left_shift(OUT bigint** dst, IN byte k)
+msg bi_word_left_shift(OUT bigint** dst, IN word k)
 {
-    bigint* tmp = NULL;
+    bigint* tmp = NULL ;
     bi_new(&tmp, (*dst)->wordlen + k);
     tmp->sign = (*dst)->sign;
-    fprintf(stdout, "\nK: %d\n", k);
+
     for (int i = k; i < tmp->wordlen; i++)
     {
         tmp->start[i] = (*dst)->start[i - k];
@@ -485,8 +489,33 @@ msg bi_word_left_shift(OUT bigint** dst, IN byte k)
 
     // bi_assign을 사용하여 tmp의 값을 dst에 복사
     bi_assign(dst, tmp);
-
     // tmp 및 기존 dst의 메모리를 해제
+    bi_delete(&tmp);
+
+    return print_success_shift();
+}
+msg bi_bit_left_shift(OUT bigint** dst, IN word k) {
+    uint32_t word_shift = k / (sizeof(word) * 8);  // 워드 단위 이동
+    uint32_t bit_shift = k % (sizeof(word) * 8);   // 워드 내 비트 이동
+    bigint* tmp = NULL;
+
+    // 새로운 bigint 생성 (추가 워드 고려)
+    bi_new(&tmp, (*dst)->wordlen + word_shift + (bit_shift > 0 ? 1 : 0));
+    tmp->sign = (*dst)->sign;
+
+    // 비트 이동 수행
+    for (uint32_t i = 0; i < (*dst)->wordlen; i++) {
+        // 현재 워드를 이동하고 새로운 위치에 배치
+        tmp->start[i + word_shift] |= (*dst)->start[i] << bit_shift;
+
+        // 상위 비트의 초과분을 다음 워드로 전달
+        if (bit_shift > 0 && (i ) < (*dst)->wordlen) {
+            tmp->start[i + word_shift + 1] |= (*dst)->start[i] >> (sizeof(word) * 8 - bit_shift);
+        }
+    }
+    bi_refine(tmp);
+    // 기존 dst를 tmp로 교체
+    bi_assign(dst, tmp);
     bi_delete(&tmp);
 
     return print_success_shift();
@@ -497,94 +526,71 @@ msg bi_word_left_shift(OUT bigint** dst, IN byte k)
  * @param dst bigint의 포인터
  * @param k shift 하고싶은 word 사이즈
  */
-msg bi_word_right_shift(OUT bigint** dst, IN byte k) // k는 shift하고싶은 word 사이즈 의미
+msg bi_word_right_shift(OUT bigint** dst, IN word k) // k는 shift하고싶은 word 사이즈 의미
 {
     bigint* tmp = NULL;
     bi_new(&tmp, (*dst)->wordlen - k);
     tmp->sign = (*dst)->sign;
 
-    fprintf(stdout, "bf dst: ");
-    bi_print(*dst, 16);
-
-    for (int i = k - 1 ; i < tmp->wordlen; i++)
-    {
-        tmp->start[i] = (*dst)->start[i + k];
-    }
-    
-    //bi_refine(tmp); // dst가 refine된 값이라면 할 필요 x
-    // dst를 NULL로 설정하여 bi_assign이 동작하도록 준비
-
-    // bi_assign을 사용하여 tmp의 값을 dst에 복사
-    bi_assign(dst, tmp);
-
-    fprintf(stdout, "af tmp: ");
-    bi_print(tmp, 16);
-
-    // tmp 및 기존 dst의 메모리를 해제
-    bi_delete(&tmp);
-
-    fprintf(stdout, "af dst: ");
-    bi_print(*dst, 16);
-
-    return print_success_shift();
-}
-
-/**
- * @brief 비트를 왼쪽으로 shift하는 함수
- * @param dst bigint의 포인터
- * @param k shift 하고싶은 bit 사이즈 
- */
-msg bi_bit_left_shift(OUT bigint** dst, IN byte k) {
-    fprintf(stdout, "\nbitK: %d\n", k);
-    if (k == 0 || dst == NULL || *dst == NULL) {
-        return SUCCESS_SHIFT; // 이동이 필요 없거나 입력이 NULL인 경우
-    }
-    uint32_t word_shift = k / (sizeof(word) * 8);  // 워드 단위 이동 계산
-    uint32_t bit_shift = k % (sizeof(word) * 8);   // 워드 내 비트 이동 계산
-    // 새로운 bigint 생성 (추가 워드 고려)
-    uint32_t new_wordlen = (*dst)->wordlen + word_shift + (bit_shift > 0 ? 1 : 0);
-    bigint* tmp = NULL;
-    bi_new(&tmp, new_wordlen); // 메모리 할당
-    tmp->sign = (*dst)->sign;  // 기존 부호 복사
-    // 비트 이동 수행
-    for (int32_t i = (*dst)->wordlen - 1; i >= 0; i--) {
-        // 워드 이동 및 비트 이동
-        tmp->start[i + word_shift] |= (*dst)->start[i] << bit_shift;
-        // 상위 비트 초과분을 다음 워드로 전달
-        if (bit_shift > 0 && (i + word_shift + 1) < new_wordlen) {
-            tmp->start[i + word_shift + 1] |= (*dst)->start[i] >> (sizeof(word) * 8 - bit_shift);
-        }
-    }
-    // 새로 추가된 워드 초기화
-    for (uint32_t i = 0; i < word_shift; i++) {
-        tmp->start[i] = 0; // 남는 워드들을 0으로 초기화
-    }
-    // 기존 dst를 tmp로 교체
-    bi_assign(dst, tmp);
-    // tmp 메모리 해제
-    bi_delete(&tmp);
-    return SUCCESS_SHIFT; // 정상 상태 반환
-}
-
-/**
- * @brief 비트를 오른쪽으로 shift하는 함수
- * @param dst bigint의 포인터
- * @param k shift 하고싶은 bit 사이즈 
- */
-msg bi_bit_right_shift(OUT bigint** dst, IN byte k) // k는 shift하고싶은 bit 사이즈 의미
-{
-    bigint* tmp = NULL;
-    bi_new(&tmp, (*dst)->wordlen - k);
-    tmp->sign = (*dst)->sign;
     for (int i = k; i < tmp->wordlen; i++)
     {
         tmp->start[i] = (*dst)->start[i + k];
     }
+
     //bi_refine(tmp); // dst가 refine된 값이라면 할 필요 x
     // dst를 NULL로 설정하여 bi_assign이 동작하도록 준비
+
     // bi_assign을 사용하여 tmp의 값을 dst에 복사
     bi_assign(dst, tmp);
+
     // tmp 및 기존 dst의 메모리를 해제
     bi_delete(&tmp);
+
+    return print_success_shift();
+}
+msg bi_bit_right_shift(OUT bigint** dst, IN word k) {
+    uint32_t word_shift = k / (sizeof(word) * 8);  // 워드 단위 이동
+    uint32_t bit_shift = k % (sizeof(word) * 8);   // 워드 내 비트 이동
+    bigint* tmp = NULL;
+
+    // 새로운 bigint 생성 (크기를 줄임)
+    bi_new(&tmp, (*dst)->wordlen - word_shift);
+    tmp->sign = (*dst)->sign;
+
+    // 비트 이동 수행
+    for (uint32_t i = word_shift; i < (*dst)->wordlen; i++) {
+        // 현재 워드를 이동하고 새로운 위치에 배치
+        tmp->start[i - word_shift] |= (*dst)->start[i] >> bit_shift;
+
+        // 하위 비트의 초과분을 이전 워드로 전달
+        if (bit_shift > 0 && (i > word_shift)) {
+            tmp->start[i - word_shift - 1] |= (*dst)->start[i] << (sizeof(word) * 8 - bit_shift);
+        }
+    }
+
+    // 남은 값이 0인지 확인
+    bool is_all_zero = true;
+    for (uint32_t i = 0; i < tmp->wordlen; i++) {
+        if (tmp->start[i] != 0) {
+            is_all_zero = false;
+            break;
+        }
+    }
+
+    // 남은 값이 0이면 wordlen을 1로 하고 start[0]을 0으로 설정
+    if (is_all_zero) {
+        bi_delete(&tmp); // 기존 tmp 삭제
+        bi_new(&tmp, 1); // 새로 1개의 워드로 생성
+        tmp->start[0] = 0;
+        tmp->sign = POSITIVE; // 0의 부호는 양수로 설정
+    }
+    else {
+        bi_refine(tmp); // 일반적인 refine 수행
+    }
+
+    // 기존 dst를 tmp로 교체
+    bi_assign(dst, tmp);
+    bi_delete(&tmp);
+
     return print_success_shift();
 }

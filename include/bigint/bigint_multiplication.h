@@ -30,4 +30,10 @@ msg bi_square_karatsuba(OUT bigint** dst, IN bigint* X);
 // SQUARE 함수: bigint A의 제곱을 수행하는 함수
 msg bi_square(OUT bigint** dst, IN bigint* A, IN bool is_karatsuba);
 
+// LEFT_TO_RIGHT 함수: Left-to-right 방식의 거듭제곱 연산을 수행하는 함수
+msg bi_left_to_right(OUT bigint** dst, IN bigint* A, IN bigint* exp);
+
+// RIGHT_TO_LEFT 함수: Right-to-left 방식의 거듭제곱 연산을 수행하는 함수
+msg bi_right_to_left(OUT bigint** dst, IN bigint* A, IN bigint* exp);
+
 #endif // BIGINT_MULTIPLICATION_H_

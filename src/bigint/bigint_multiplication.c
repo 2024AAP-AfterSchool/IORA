@@ -138,7 +138,7 @@ msg bi_mul_karatsuba(OUT bigint** dst, IN bigint* A, IN bigint* B) {
     uint32_t n = (tmp_A->wordlen > B->wordlen) ? tmp_A->wordlen : tmp_B->wordlen;
 
 
-    if (n == 1) {
+    if (n <= 80) {
         return bi_mul_C(dst, tmp_A, tmp_B);
     }
 
@@ -197,7 +197,6 @@ msg bi_mul_karatsuba(OUT bigint** dst, IN bigint* A, IN bigint* B) {
     result->sign = A->sign ^ B->sign;
 
     // Assign result to dst
-    bi_refine(result);
     bi_assign(dst, result);
 
 
@@ -475,7 +474,9 @@ msg bi_square_karatsuba(OUT bigint** dst, IN bigint* A)
     // S = A1 * A0
     bi_mul_karatsuba(&S, A1, A0); // S = A1 * A0
     // S <<= (l + 1)
-    bi_bit_left_shift(&S, l*32 + 1);
+    
+    //bi_word_left_shift(&S,l);
+    bi_bit_left_shift(&S,l*32+1);
     
     // C = R + S
     bigint* C = NULL;
@@ -507,4 +508,103 @@ msg bi_square(OUT bigint** dst, IN bigint* A, IN bool is_karatsuba)
     if (!is_karatsuba) bi_square_C(dst, A);
 
     return SUCCESS_SQUARE_A;
+}
+
+/**
+ * @brief Left-to-right 방식의 거듭제곱 연산을 수행하는 함수
+ * @param dst 결과를 저장할 bigint의 포인터
+ * @param A 밑이 되는 bigint
+ * @param exp 지수가 되는 bigint
+ */
+msg bi_left_to_right(OUT bigint** dst, IN bigint* A, IN bigint* exp)
+{
+    if (A == NULL || exp == NULL || dst == NULL) {
+        return NULL_POINTER_ERROR;
+    }
+    // 결과 변수 초기화 
+    bigint* result = NULL;
+    bi_new(&result, 1);
+    result->start[0] = 1;
+    // 복사된 base와 exp 생성
+    bigint* tmp_base = NULL;
+    bigint* tmp_exp = NULL;
+    bi_assign(&tmp_base, A);
+    bi_assign(&tmp_exp, exp);
+    // exp의 각 비트를 확인하며 연산 수행
+    for (int i = (tmp_exp->wordlen * sizeof(word) * 8) - 1; i >= 0; i--) {
+        // result = result^2
+        msg square_status = bi_square_karatsuba(&result, result);
+        if (square_status != SUCCESS_SQUARE_A) {
+            bi_delete(&result);
+            bi_delete(&tmp_base);
+            bi_delete(&tmp_exp);
+        }
+        // 현재 비트가 1인 경우 result = result * base
+        if ((tmp_exp->start[i / (sizeof(word) * 8)] >> (i % (sizeof(word) * 8))) & 1) {
+            msg mul_status = bi_mul(&result, result, tmp_base, 0);
+            if (mul_status != SUCCESS_MUL) {
+                bi_delete(&result);
+                bi_delete(&tmp_base);
+                bi_delete(&tmp_exp);
+            }
+        }
+    }
+    // 최종 결과 저장
+    bi_assign(dst, result);
+    // 메모리 해제
+    bi_delete(&result);
+    bi_delete(&tmp_base);
+    bi_delete(&tmp_exp);
+    return SUCCESS_MUL;
+}
+
+/**
+ * @brief Right-to-left 방식의 거듭제곱 연산을 수행하는 함수
+ * @param dst 결과를 저장할 bigint의 포인터
+ * @param A 밑이 되는 bigint
+ * @param exp 지수가 되는 bigint
+ */
+msg bi_right_to_left(OUT bigint** dst, IN bigint* A, IN bigint* exp) {
+    if (A == NULL || exp == NULL || dst == NULL) {
+        return NULL_POINTER_ERROR;
+    }
+    // 결과 변수 초기화 (결과 = 1로 시작)
+    bigint* result = NULL;
+    bi_new(&result, 1);
+    result->start[0] = 1;
+    // 복사된 base와 exp 생성
+    bigint* tmp_base = NULL;
+    bigint* tmp_exp = NULL;
+    bi_assign(&tmp_base, A);
+    bi_assign(&tmp_exp, exp);
+    // tmp_exp가 0이 아닐 때까지 반복
+    while (!bi_is_zero(tmp_exp)) {
+        // exp의 LSB(가장 낮은 비트)가 1이면 result *= base
+        if (tmp_exp->start[0] & 1) {
+            msg mul_status = bi_mul(&result, result, tmp_base, false);
+            if (mul_status != SUCCESS_MUL) {
+                bi_delete(&result);
+                bi_delete(&tmp_base);
+                bi_delete(&tmp_exp);
+                return mul_status; // 곱셈 중 에러 발생 시 처리
+            }
+        }
+        // base = base^2
+        msg square_status = bi_square_C(&tmp_base, tmp_base);
+        if (square_status != SUCCESS_SQUARE_A) {
+            bi_delete(&result);
+            bi_delete(&tmp_base);
+            bi_delete(&tmp_exp);
+            return square_status; // 제곱 중 에러 발생 시 처리
+        }
+        // exp = exp >> 1 (지수를 오른쪽으로 1비트 이동)
+        bi_bit_right_shift(&tmp_exp, 1);
+    }
+    // 최종 결과 저장
+    bi_assign(dst, result);
+    // 메모리 해제
+    bi_delete(&result);
+    bi_delete(&tmp_base);
+    bi_delete(&tmp_exp);
+    return SUCCESS_MUL;
 }
