@@ -8,6 +8,7 @@
 #include "base_type.h"
 #include "base_error.h"
 #include "bigint_addition.h"
+#include "bigint_subtraction.h"
 #include "bigint_calculation.h"
 #include "bigint_multiplication.h"
 
@@ -271,8 +272,7 @@ msg bi_karatsuba_mul(OUT bigint** dst, IN bigint* A, IN bigint* B) {
 }
 
 
-
-msg squaring_AA(OUT bigint * *dst, IN bigint * A)
+msg squaring_AA(OUT bigint **dst, IN bigint * A)
 {
     bigint* C = NULL;
     bi_new(&C, 2); // 충분한 크기의 bigint 생성
@@ -302,7 +302,7 @@ msg squaring_AA(OUT bigint * *dst, IN bigint * A)
     C0->start[0] = (A0 * A0);
     // C = (C1 << w) + C0
 
-    bi_word_left_shift(&C1, 1); // C1 << w
+    bi_word_left_shift(&C1, 1);             // C1 << w
     
     bi_add(&C, C0,  C1);                    // C = C1 + C0
 
@@ -403,7 +403,7 @@ msg squaring_Karatsuba(OUT bigint** dst, IN bigint* A) {
     }
 
     if (A->wordlen == 1) {
-        return squaring_AA(dst, A);
+        return squaring_C(dst, A);
     }
 
     uint32_t l = (A->wordlen + 1) / 2;
@@ -443,8 +443,9 @@ msg squaring_Karatsuba(OUT bigint** dst, IN bigint* A) {
     bi_add(&R, T1, T0);
 
     bi_karatsuba_mul(&S, A1, A0);
-   
-    bi_bit_left_shift(&S, (l * 32) + 1);
+
+    bi_word_left_shift(&S, l);
+    bi_bit_left_shift(&S, 1);
 
     bigint* C = NULL;
     bi_add(&C, R, S);
@@ -460,6 +461,111 @@ msg squaring_Karatsuba(OUT bigint** dst, IN bigint* A) {
 
     return SUCCESS_SQUARE_A;
 }
+
+msg bi_left_to_right(OUT bigint** dst, IN bigint* A, IN bigint* exp)
+{
+    if (A == NULL || exp == NULL || dst == NULL) {
+        return NULL_POINTER_ERROR;
+    }
+
+    // 결과 변수 초기화 
+    bigint* result = NULL;
+    bi_new(&result, 1);
+    result->start[0] = 1;
+
+    // 복사된 base와 exp 생성
+    bigint* tmp_base = NULL;
+    bigint* tmp_exp = NULL;
+    bi_assign(&tmp_base, A);
+    bi_assign(&tmp_exp, exp);
+
+    // exp의 각 비트를 확인하며 연산 수행
+    for (int i = (tmp_exp->wordlen * sizeof(word) * 8) - 1; i >= 0; i--) {
+        // result = result^2
+        msg square_status = squaring_C(&result, result);
+        if (square_status != SUCCESS_SQUARE_A) {
+            bi_delete(&result);
+            bi_delete(&tmp_base);
+            bi_delete(&tmp_exp);
+        }
+
+        // 현재 비트가 1인 경우 result = result * base
+        if ((tmp_exp->start[i / (sizeof(word) * 8)] >> (i % (sizeof(word) * 8))) & 1) {
+            msg mul_status = bi_mul(&result, result, tmp_base, 0);
+            if (mul_status != SUCCESS_MUL) {
+                bi_delete(&result);
+                bi_delete(&tmp_base);
+                bi_delete(&tmp_exp);
+            }
+        }
+    }
+
+    // 최종 결과 저장
+    bi_assign(dst, result);
+
+    // 메모리 해제
+    bi_delete(&result);
+    bi_delete(&tmp_base);
+    bi_delete(&tmp_exp);
+
+    return SUCCESS_MUL;
+}
+
+
+msg bi_right_to_left(OUT bigint** dst, IN bigint* A, IN bigint* exp) {
+    if (A == NULL || exp == NULL || dst == NULL) {
+        return NULL_POINTER_ERROR;
+    }
+
+    // 결과 변수 초기화 (결과 = 1로 시작)
+    bigint* result = NULL;
+    bi_new(&result, 1);
+    result->start[0] = 1;
+
+    // 복사된 base와 exp 생성
+    bigint* tmp_base = NULL;
+    bigint* tmp_exp = NULL;
+    bi_assign(&tmp_base, A);
+    bi_assign(&tmp_exp, exp);
+
+    // tmp_exp가 0이 아닐 때까지 반복
+    while (!bi_is_zero(tmp_exp)) {
+        // exp의 LSB(가장 낮은 비트)가 1이면 result *= base
+        if (tmp_exp->start[0] & 1) {
+            msg mul_status = bi_mul(&result, result, tmp_base, false);
+            if (mul_status != SUCCESS_MUL) {
+                bi_delete(&result);
+                bi_delete(&tmp_base);
+                bi_delete(&tmp_exp);
+                return mul_status; // 곱셈 중 에러 발생 시 처리
+            }
+        }
+
+        // base = base^2
+        msg square_status = squaring_C(&tmp_base, tmp_base);
+        if (square_status != SUCCESS_SQUARE_A) {
+            bi_delete(&result);
+            bi_delete(&tmp_base);
+            bi_delete(&tmp_exp);
+            return square_status; // 제곱 중 에러 발생 시 처리
+        }
+
+        // exp = exp >> 1 (지수를 오른쪽으로 1비트 이동)
+        bi_bit_right_shift(&tmp_exp, 1);
+    }
+
+    // 최종 결과 저장
+    bi_assign(dst, result);
+
+    // 메모리 해제
+    bi_delete(&result);
+    bi_delete(&tmp_base);
+    bi_delete(&tmp_exp);
+
+    return SUCCESS_MUL;
+}
+
+
 void bi_test_mul()
 {
     fprintf(stdout, "1. 기본 곱셈 테스트\n");
