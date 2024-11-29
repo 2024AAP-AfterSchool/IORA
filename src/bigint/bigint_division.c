@@ -157,12 +157,25 @@ msg bi_div_CC(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
         upper_A->start[1] = A->start[A->wordlen - 1];
         upper_B->start[0] = B->start[B->wordlen - 1];
         bi_div_word(&tmp_Q, upper_A, upper_B);
-
+        // fprintf(stdout, "\n##@4#tem_Q:");
+        // bi_print(tmp_Q, 16);
+        // fprintf(stdout, "\n##@455#B:");
+        // bi_print(B, 16);
+        // fprintf(stdout, "\n##@455#temR:");
+        // bi_print(tmp_R, 16);
+        // fprintf(stdout, "\n##@328723878723784#\n");
         bi_delete(&upper_A);
         bi_delete(&upper_B);
     }
     bi_mul_C(&tmp_R, B, tmp_Q);
-    bi_sub_C(&tmp_R, A, tmp_R);
+    // fprintf(stdout, "\n아래가 R임저기!!!!!!!!!##@328723878723784#\n");
+    // bi_print(tmp_R, 16);
+    // fprintf(stdout, "\n아래가 A임##@328723878723784#\n");
+    // bi_print(A, 16);
+    bi_sub(&tmp_R, A, tmp_R);
+    // fprintf(stdout, "\n아래가 계산 R여기!!!!!!!!!##@328723878723784#\n");
+    // bi_print(tmp_R, 16);
+    // fprintf(stdout, "\n 끝히히##@@@@@@@@@@@@@@328723878723784#\n");
 
     bigint* one = NULL;
     bi_new(&one, 1);
@@ -197,8 +210,6 @@ msg bi_div_C(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
         bi_assign(Q, q);
         bi_assign(R, tmp_R);
 
-        //bi_assign(Q, tmp_Q);
-        //bi_assign(R, A);
         bi_delete(&tmp_Q);
 
         return print_success_div();
