@@ -26,4 +26,10 @@ typedef struct
     word* start; ///< 정수의 절댓값을 저장하기 위한 WORD 배열의 시작 주소
 } bigint;
 
+typedef struct
+{
+    msg message; ///< 메시지
+    double time; ///< 실행 시간
+} res;
+
 #endif // IORA_BASE_TYPE_H_

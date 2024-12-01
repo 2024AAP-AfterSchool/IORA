@@ -32,6 +32,8 @@
 #define SUCCESS_SHIFT 23                    //< SHIFT 성공
 #define SUCCESS_DIV 24                      //< DIV 성공
 #define SUCCESS_SQUARE_A 25                 //< SQUARE_A 성공
+#define SUCCESS_EXP 26                      //< EXP 성공
+#define SUCCESS_MOD 27                      //< MOD 성공
 
 #define INVALID_WORD_LENGTH_ERROR -1        //< 잘못된 워드 길이 에러
 #define MEMORY_ALLOCATION_ERROR -2          //< 메모리 할당 실패 에러

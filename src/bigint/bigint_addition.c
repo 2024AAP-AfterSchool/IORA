@@ -5,6 +5,7 @@
  * @author 송원우
  */
 #include <stdio.h>
+#include "utils/time.h"
 #include "base/base_type.h"
 #include "base/base_error.h"
 #include "bigint/bigint_subtraction.h"
@@ -17,8 +18,11 @@
  * @param B 피연산자 B
  * @param c 이전 연산에서 발생한 carry
  */
-msg bi_add_ABC(OUT word* C, IN word A, IN word B, IN carry c, IN carry* c_prime)
-{
+res bi_add_ABC(OUT word* C, IN word A, IN word B, IN carry c, IN carry* c_prime)
+{   
+    res result;
+    START_TIMER();
+
     *c_prime = 0;  // 초기 캐리를 0으로 설정
     *C = A + B;
     if (*C < A)
@@ -31,7 +35,8 @@ msg bi_add_ABC(OUT word* C, IN word A, IN word B, IN carry c, IN carry* c_prime)
         *c_prime += 1;
     }
 
-    return print_success_add_ABC();
+    END_TIMER(result, print_success_add_ABC());
+    return result;
 }
 
 /**
@@ -40,15 +45,20 @@ msg bi_add_ABC(OUT word* C, IN word A, IN word B, IN carry c, IN carry* c_prime)
  * @param A 피연산자 A
  * @param B 피연산자 B
  */
-msg bi_add_C(OUT bigint** dst, IN bigint* A, IN bigint* B)
+res bi_add_C(OUT bigint** dst, IN bigint* A, IN bigint* B)
 {
+    res result;
+    START_TIMER();
+
     if (A == NULL || A->start == NULL)
-    {
-        return NULL_POINTER_ERROR;
+    {   
+        END_TIMER(result, NULL_POINTER_ERROR);
+        return result;
     }
     if (B == NULL || B->start == NULL)
     {
-        return NULL_POINTER_ERROR;
+        END_TIMER(result, NULL_POINTER_ERROR);
+        return result;
     }
 
     int n = A->wordlen;
@@ -83,7 +93,8 @@ msg bi_add_C(OUT bigint** dst, IN bigint* A, IN bigint* B)
     
     bi_delete(&temp);
 
-    return print_success_add_C();
+    END_TIMER(result, print_success_add_C());
+    return result;
 }
 
 /**
@@ -92,16 +103,20 @@ msg bi_add_C(OUT bigint** dst, IN bigint* A, IN bigint* B)
  * @param a 피연산자 a
  * @param b 피연산자 b
  */
-msg bi_add(OUT bigint** dst, IN bigint* A, IN bigint* B)
-{
+res bi_add(OUT bigint** dst, IN bigint* A, IN bigint* B)
+{   
+    res result;
+    START_TIMER();
+
     if (A == NULL || B == NULL)
     {
-        return NULL_POINTER_ERROR;
+        END_TIMER(result, NULL_POINTER_ERROR);
+        return result;
     }
 
     bigint* tmp_A = NULL;
     bigint* tmp_B = NULL;
-    bigint* result = NULL;
+    bigint* tmp_result = NULL;
 
     bi_assign(&tmp_A, A);
     bi_assign(&tmp_B, B);
@@ -110,45 +125,46 @@ msg bi_add(OUT bigint** dst, IN bigint* A, IN bigint* B)
     if ((A->sign == POSITIVE) && (B->sign == NEGATIVE))
     {
         tmp_B->sign = POSITIVE;
-        bi_sub(&result, tmp_A, tmp_B);
+        bi_sub(&tmp_result, tmp_A, tmp_B);
     }
     else if ((B->sign == POSITIVE) && (A->sign == NEGATIVE))
     {
         tmp_A->sign = POSITIVE;
-        bi_sub(&result, tmp_B, tmp_A);
+        bi_sub(&tmp_result, tmp_B, tmp_A);
     }
     else if ((B->sign == NEGATIVE) && (A->sign == NEGATIVE))
     {
         if (A->wordlen >= B->wordlen)
         {
-            bi_add_C(&result, tmp_A, tmp_B);
-            result->sign = NEGATIVE;
+            bi_add_C(&tmp_result, tmp_A, tmp_B);
+            tmp_result->sign = NEGATIVE;
         }
         else
         {
-            bi_add_C(&result, tmp_B, tmp_A);
-            result->sign = NEGATIVE;
+            bi_add_C(&tmp_result, tmp_B, tmp_A);
+            tmp_result->sign = NEGATIVE;
         }
     }
     else
     { 
         if (A->wordlen >= B->wordlen)
         {
-            bi_add_C(&result, tmp_A, tmp_B);
+            bi_add_C(&tmp_result, tmp_A, tmp_B);
         }
         else
         {
-            bi_add_C(&result, tmp_B, tmp_A);
+            bi_add_C(&tmp_result, tmp_B, tmp_A);
         }
     }
 
     bi_delete(&tmp_A);
     bi_delete(&tmp_B);
 
-    bi_assign(dst,result);
-    bi_delete(&result);
-
-    return SUCCESS_ADD;
+    bi_assign(dst,tmp_result);
+    bi_delete(&tmp_result);
+    
+    END_TIMER(result, SUCCESS_ADD);
+    return result;
 }
 
 /**

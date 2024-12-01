@@ -1,10 +1,13 @@
 import os
 import ctypes
 import random
-import subprocess
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
 from tqdm import tqdm
 from datetime import datetime
-from IORA_type import bigint, POSITIVE, NEGATIVE, word, byte, msg
+from IORA_error import result_code
+from IORA_type import bigint, POSITIVE, NEGATIVE, word, byte, msg, res
 from IORA_print import print_line, print_center, print_time, print_total_time, print_result
 
 try:
@@ -75,6 +78,15 @@ def load_function(lib):
     function['bi_square'] = lib.bi_square
     function['bi_div_bit'] = lib.bi_div_bit
     function['bi_div'] = lib.bi_div
+    function['bi_bit_left_shift'] = lib.bi_bit_left_shift
+    function['bi_exp_left_to_right'] = lib.bi_exp_left_to_right
+    function['bi_exp_right_to_left'] = lib.bi_exp_right_to_left
+    function['bi_exp_montgomery'] = lib.bi_exp_montgomery
+    function['bi_mod'] = lib.bi_mod
+    
+    # 함수 반환 타입 설정
+    for key in function.keys():
+        function[key].restype = res
 
     # 로드한 함수 목록
     print_center(f" LOAD FUNCTION: {list(function.keys())[:3]} ...", ' ')
@@ -91,7 +103,7 @@ def generate_random_number(variable_length = False, byte_length=4):
     return int(hex_number, 16)
 
 def generate_random_wordlen(max_len):
-    return random.randint(1, max_len)
+    return max_len # random.randint(1, max_len)
 
 def generate_random_sign():
     return random.choice([POSITIVE, NEGATIVE])
@@ -105,9 +117,65 @@ def bi_to_int(target):
 def int_to_hex(target):
     return hex(target).upper().replace('X', 'x')
 
-def test_addtion(function, wordlen=8, iteration=10000, verbose=False):
+def drow_and_save_graph(data, title, filename):
+    
+    execution_times = data
+    avg_time = np.mean(execution_times)
+    max_time, min_time = max(execution_times), min(execution_times)
+    max_index, min_index = execution_times.index(max_time), execution_times.index(min_time)
+    
+    upper_99 = np.percentile(execution_times, 99)
+    lower_99 = np.percentile(execution_times, 1)
+
+    # 그래프 생성
+    fig, ax = plt.subplots(figsize=(12, 9))
+
+    # 산점도
+    ax.scatter(range(len(execution_times)), execution_times, color='#BFECFF', alpha=1, s=25, edgecolors='#555555', linewidths=0.7)
+
+    # 최고/최저 시간 및 평균선 표시
+    ax.scatter(max_index, max_time, color='#D91656', label='Worst Case', zorder=5, marker='*', alpha=1, s=100)
+    ax.scatter(min_index, min_time, color='#006A67', label='Best Case', zorder=5, marker='*', alpha=1, s=100)
+    ax.axhline(y=avg_time, color='#FFB200', linestyle='--', label='Average', linewidth=2, alpha=1)
+
+    # 상위 98%와 하위 98% 점선
+    ax.axhline(y=upper_99, color='#F7418F', linestyle='--', label='99th Percentile', linewidth=2, alpha=1)
+    ax.axhline(y=lower_99, color='#116A7B', linestyle='--', label='1th Percentile', linewidth=2, alpha=1)
+
+    # 그래프 디자인
+    ax.set_title(f"{title} Execution Time Graph", fontsize=16, fontweight='bold', color='#333333')
+    ax.set_xlabel("Iteration Index", fontsize=12, color='#333333',
+                bbox=dict(facecolor='#EEEEEE', edgecolor='#000000', alpha=0.7))
+    ax.set_ylabel("Execution Time (ms)", fontsize=12, color='#333333',
+                bbox=dict(facecolor='#EEEEEE', edgecolor='#000000', alpha=0.7))
+    ax.grid(color='#AAAAAA', linestyle='--', linewidth=0.7, alpha=0.7)
+    ax.legend(loc='upper right', fontsize=10, frameon=False)
+    
+    # 텍스트 설정
+    fig.text(0.065, 0.99, f"Worst Case: {max_time:.6f} ms (Index: {max_index})", fontsize=12, ha='left', va='top', color='#D91656',
+            bbox=dict(facecolor='#FFE6EA', edgecolor='#D91656', alpha=0.5))
+    fig.text(0.065, 0.95, f"Best Case: {min_time:.6f} ms (Index: {min_index})", fontsize=12, ha='left', va='top', color='#006A67',
+            bbox=dict(facecolor='#E6F9F8', edgecolor='#006A67', alpha=0.5))
+    fig.text(0.065, 0.91, f"Average Time: {avg_time:.6f} ms", fontsize=12, ha='left', va='top', color='#000000',
+            bbox=dict(facecolor='#FFF7E6', edgecolor='#FFB200', alpha=0.5))
+    fig.text(0.065, 0.87, f"99th Percentile: {upper_99:.6f} ms", fontsize=12, ha='left', va='top', color='#F7418F',
+            bbox=dict(facecolor='#FFE6F1', edgecolor='#F7418F', alpha=0.5))
+    fig.text(0.065, 0.83, f"1th Percentile: {lower_99:.6f} ms", fontsize=12, ha='left', va='top', color='#116A7B',
+            bbox=dict(facecolor='#E6F7F0', edgecolor='#006A67', alpha=0.5))
+
+
+    # 그래프 간격 조정
+    plt.subplots_adjust(top=0.8)
+
+    # 그래프 저장
+    output_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "graph", filename)
+    plt.savefig(output_path, format='png', dpi=450)
+    print(f"Graph saved to {output_path}\n")
+
+def test_addtion(function, wordlen=16, iteration=100000, verbose=False):
     print_center(" 3-8. BigInt 덧셈 테스트 ", '-', '\n', 95)
 
+    execution_times = []
     for i in tqdm(range(iteration), desc="BigNum Addition Test", unit=" iter", ncols=100):
         sign1, sign2 = [generate_random_sign() for _ in range(2)]
         wordlen1, wordlen2 = [generate_random_wordlen(wordlen) for _ in range(2)]
@@ -129,6 +197,8 @@ def test_addtion(function, wordlen=8, iteration=10000, verbose=False):
                       + (-1 if bigint2.contents.sign == NEGATIVE else 1) * int(src_num_from_array2, 16)
 
         result = function['bi_add'](ctypes.byref(bigint3), bigint1, bigint2)
+        execution_times.append(result.time)
+
         c_result = bi_to_int(bigint3)
 
         if c_result == python_result:
@@ -158,10 +228,12 @@ def test_addtion(function, wordlen=8, iteration=10000, verbose=False):
     if iteration == i + 1:
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
+        drow_and_save_graph(data=execution_times, title="Bigint Addition", filename="bi_addition_execution_time.png")
 
-def test_subtraction(function, wordlen=8, iteration=10000, verbose=False):
+def test_subtraction(function, wordlen=16, iteration=100000, verbose=False):
     print_center(" 3-9. BigInt 뺄셈 테스트 ", '-', '\n', 95)
 
+    execution_times = []
     for i in tqdm(range(iteration), desc="BigNum Subtraction Test", unit=" iter", ncols=100):
         sign1, sign2 = [generate_random_sign() for _ in range(2)]
         wordlen1, wordlen2 = [generate_random_wordlen(wordlen) for _ in range(2)]
@@ -181,8 +253,10 @@ def test_subtraction(function, wordlen=8, iteration=10000, verbose=False):
         python_result = (-1 if bigint1.contents.sign == NEGATIVE else 1) * int(src_num_from_array1, 16) \
                       - (-1 if bigint2.contents.sign == NEGATIVE else 1) * int(src_num_from_array2, 16)
         
-        result = function['bi_sub'](ctypes.byref(bigint3), bigint1, bigint2)
-        c_result = bi_to_int(bigint3)
+        result = function['bi_sub'](ctypes.byref(bigint1), bigint1, bigint2)
+        execution_times.append(result.time)
+
+        c_result = bi_to_int(bigint1)
 
         if c_result == python_result:
             if verbose:
@@ -212,10 +286,12 @@ def test_subtraction(function, wordlen=8, iteration=10000, verbose=False):
     if iteration == i + 1:
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
+        drow_and_save_graph(data=execution_times, title="Bigint Subtraction", filename="bi_subtraction_execution_time.png")
 
-def test_multiplication(function, wordlen=64, iteration=10000, verbose=False):
+def test_multiplication(function, wordlen=16, iteration=100000, verbose=False):
     print_center(" 3-10. BigInt 곱셈 테스트 ", '-', '\n', 95)
 
+    execution_times = []
     for i in tqdm(range(iteration), desc="BigNum Multiplication Test", unit=" iter", ncols=100):
         sign1, sign2 = [generate_random_sign() for _ in range(2)]
         wordlen1, wordlen2 = [generate_random_wordlen(wordlen) for _ in range(2)]
@@ -236,6 +312,8 @@ def test_multiplication(function, wordlen=64, iteration=10000, verbose=False):
                       * ((-1 if bigint2.contents.sign == NEGATIVE else 1) * int(src_num_from_array2, 16))
         
         result = function['bi_mul'](ctypes.byref(bigint3), bigint1, bigint2, ctypes.c_bool(False))
+        execution_times.append(result.time)
+
         c_result = bi_to_int(bigint3)
 
         if c_result == python_result:
@@ -266,10 +344,12 @@ def test_multiplication(function, wordlen=64, iteration=10000, verbose=False):
     if iteration == i + 1:
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
+        drow_and_save_graph(data=execution_times, title="Bigint Multiplication", filename="bi_multiplication_execution_time.png")
 
-def test_multiplication_karatsuba(function, wordlen=64, iteration=10000, verbose=False):
+def test_multiplication_karatsuba(function, wordlen=16, iteration=100000, verbose=False):
     print_center(" 3-11. BigInt 곱셈(karatsuba) 테스트 ", '-', '\n', 95)
 
+    execution_times = []
     for i in tqdm(range(iteration), desc="BigNum Multiplication(Karatsuba) Test", unit=" iter", ncols=100):
         sign1, sign2 = [generate_random_sign() for _ in range(2)]
         wordlen1, wordlen2 = [generate_random_wordlen(wordlen) for _ in range(2)]
@@ -290,6 +370,8 @@ def test_multiplication_karatsuba(function, wordlen=64, iteration=10000, verbose
                       * ((-1 if bigint2.contents.sign == NEGATIVE else 1) * int(src_num_from_array2, 16))
         
         result = function['bi_mul'](ctypes.byref(bigint3), bigint1, bigint2, ctypes.c_bool(True))
+        execution_times.append(result.time)
+
         c_result = bi_to_int(bigint3)
 
         if c_result == python_result:
@@ -320,13 +402,15 @@ def test_multiplication_karatsuba(function, wordlen=64, iteration=10000, verbose
     if iteration == i + 1:
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
+        drow_and_save_graph(data=execution_times, title="Bigint Multiplication(Karatsuba)", filename="bi_multiplication_karatsuba_execution_time.png")
 
-def test_squaring(function, wordlen=64, iteration=10000, verbose=False):
+def test_squaring(function, wordlen=16, iteration=100000, verbose=False):
     print_center(" 3-12. BigInt 제곱 테스트 ", '-', '\n', 95)
 
+    execution_times = []
     for i in tqdm(range(iteration), desc="BigNum Sqauring Test", unit=" iter", ncols=100):
         sign = generate_random_sign()
-        wordlen = generate_random_wordlen(wordlen)
+        # wordlen = generate_random_wordlen(wordlen)
         bigint1, bigint2, bigint3 = [ctypes.POINTER(bigint)() for _ in range(3)]
 
         src_array = (word * wordlen)(*(generate_random_number() for _ in range(wordlen)))
@@ -337,17 +421,10 @@ def test_squaring(function, wordlen=64, iteration=10000, verbose=False):
         result = function['bi_new'](ctypes.byref(bigint3), 2 * wordlen)
         result = function['bi_set_from_array'](ctypes.byref(bigint1), sign, wordlen, src_array)
         python_result = int(src_num_from_array, 16) ** 2
-
-        # print()
-        # function['bi_mul'](ctypes.byref(bigint3), bigint1, bigint1, ctypes.c_bool(False))
-        # print(int_to_hex(bi_to_int(bigint1)))
-        # print(int_to_hex(bi_to_int(bigint3)))
-        # print(int_to_hex(python_result))
-        # print(int_to_hex(int(src_num_from_array, 16) ** 2))
-        # print(int_to_hex(int(src_num_from_array, 16) * int(src_num_from_array, 16)))
-
         
         result = function['bi_square'](ctypes.byref(bigint2), bigint1, ctypes.c_bool(False))
+        execution_times.append(result.time)
+
         c_result = bi_to_int(bigint2)
 
         if c_result == python_result:
@@ -376,10 +453,12 @@ def test_squaring(function, wordlen=64, iteration=10000, verbose=False):
     if iteration == i + 1:
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
+        drow_and_save_graph(data=execution_times, title="Bigint Squaring", filename="bi_squaring_execution_time.png")
 
-def test_squaring_karatsuba(function, wordlen=8, iteration=10000, verbose=True):
+def test_squaring_karatsuba(function, wordlen=16, iteration=100000, verbose=False):
     print_center(" 3-13. BigInt 제곱(karatsuba) 테스트 ", '-', '\n', 95)
 
+    execution_times = []
     for i in tqdm(range(iteration), desc="BigNum Sqauring(Karatsuba) Test", unit=" iter", ncols=100):
         sign = generate_random_sign()
         # wordlen = generate_random_wordlen(wordlen)
@@ -394,6 +473,8 @@ def test_squaring_karatsuba(function, wordlen=8, iteration=10000, verbose=True):
         python_result = (((-1 if bigint1.contents.sign == NEGATIVE else 1) * int(src_num_from_array, 16))) ** 2
         
         result = function['bi_square'](ctypes.byref(bigint2), bigint1, ctypes.c_bool(True))
+        execution_times.append(result.time)
+
         c_result = bi_to_int(bigint2)
 
         if c_result == python_result:
@@ -422,10 +503,12 @@ def test_squaring_karatsuba(function, wordlen=8, iteration=10000, verbose=True):
     if iteration == i + 1:
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
+        drow_and_save_graph(data=execution_times, title="Bigint Squaring(Karatsuba)", filename="bi_squaring_karatsuba_execution_time.png")
 
-def test_division_bit(function, wordlen=8, iteration=10000, verbose=False):
+def test_division_bit(function, wordlen=16, iteration=100000, verbose=False):
     print_center(" 3-14. BigInt 나눗셈 테스트(bit) ", '-', '\n', 95)
 
+    execution_times = []
     for i in tqdm(range(iteration), desc="BigNum Division(Bit) Test", unit=" iter", ncols=100):
         sign1, sign2 = generate_random_sign(), POSITIVE
         wordlen1, wordlen2 = [generate_random_wordlen(wordlen) for _ in range(2)]
@@ -450,6 +533,8 @@ def test_division_bit(function, wordlen=8, iteration=10000, verbose=False):
                         % ((-1 if bigint2.contents.sign == NEGATIVE else 1) * int(src_num_from_array2, 16))
 
         result = function['bi_div_bit'](ctypes.byref(bigint3), ctypes.byref(bigint4), bigint1, bigint2)
+        execution_times.append(result.time)
+
         c_result_Q = bi_to_int(bigint3)
         c_result_R = bi_to_int(bigint4)
 
@@ -486,13 +571,15 @@ def test_division_bit(function, wordlen=8, iteration=10000, verbose=False):
     if iteration == i + 1:
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
+        drow_and_save_graph(data=execution_times, title="Bigint Division(Bit)", filename="bi_division_bit_execution_time.png")
 
-def test_division_word(function, wordlen=1, iteration=10000, verbose=False):
+def test_division_word(function, wordlen=16, iteration=100000, verbose=False): 
     print_center(" 3-15. BigInt 나눗셈 테스트(word) ", '-', '\n', 95)
 
+    execution_times = []
     for i in tqdm(range(iteration), desc="BigNum Division(Word) Test", unit=" iter", ncols=100):
-        sign1, sign2 = generate_random_sign(), POSITIVE
-        wordlen1, wordlen2 = [generate_random_wordlen(wordlen) for _ in range(2)]
+        sign1, sign2 = POSITIVE, POSITIVE
+        wordlen1, wordlen2 =  [generate_random_wordlen(wordlen) for _ in range(2)]
         bigint1, bigint2, bigint3, bigint4 = [ctypes.POINTER(bigint)() for _ in range(4)]
 
         src_array1 = (word * wordlen1)(*(generate_random_number() for _ in range(wordlen1)))
@@ -513,13 +600,9 @@ def test_division_word(function, wordlen=1, iteration=10000, verbose=False):
         python_result_R = ((-1 if bigint1.contents.sign == NEGATIVE else 1) * int(src_num_from_array1, 16)) \
                         % ((-1 if bigint2.contents.sign == NEGATIVE else 1) * int(src_num_from_array2, 16))
 
-        print()
-        print("dddd")
-        print(int_to_hex(bi_to_int(bigint1)))
-        print(int_to_hex(bi_to_int(bigint2)))
-        print("dddd3")
-
         result = function['bi_div'](ctypes.byref(bigint3), ctypes.byref(bigint4), bigint1, bigint2)
+        execution_times.append(result.time)
+
         c_result_Q = bi_to_int(bigint3)
         c_result_R = bi_to_int(bigint4)
 
@@ -556,6 +639,285 @@ def test_division_word(function, wordlen=1, iteration=10000, verbose=False):
     if iteration == i + 1:
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
+        drow_and_save_graph(data=execution_times, title="Bigint Division(Word)", filename="bi_division_word_execution_time.png")
+
+def test_shift_left(function, iteration=1, verbose=False):
+    print_center(" 3-16. BigInt 시프트(비트) 테스트 ", '-', '\n', 95)
+
+    execution_times = []
+    for i in tqdm(range(iteration), desc="BigNum Shift(Bit) Test", unit=" iter", ncols=100):
+        sign = generate_random_sign()
+        
+        for j in range(1024):
+            src_array = (word * 1)(*[1])
+            bigint1 = ctypes.POINTER(bigint)()
+            src_num_from_array = ''.join(format(x, '08X') for x in reversed(src_array))
+            result = function['bi_new'](ctypes.byref(bigint1), 1)
+            result = function['bi_set_from_array'](ctypes.byref(bigint1), sign, 1, src_array)
+            result = function['bi_bit_left_shift'](ctypes.byref(bigint1), (j*4))
+            execution_times.append(result.time)
+            python_result = int(src_num_from_array, 16) << (j*4)
+            
+            if verbose:
+                print('C Result: ', end='')
+                function['bi_print'](bigint1, 16)
+                print('Python Result: ', int_to_hex(python_result))
+
+            function['bi_delete'](ctypes.byref(bigint1))
+
+    if iteration == i + 1:
+        print()
+        print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
+        drow_and_save_graph(data=execution_times, title="Bigint Shift(Bit)", filename="bi_shift_bit_execution_time.png")
+
+def test_exponential_ltr(function, wordlen=64, iteration=3, verbose=False):
+    print_center(" 3-17. BigInt 거듭제곱(L-to-R) 테스트 ", '-', '\n', 95)
+
+    execution_times = []
+    for i in tqdm(range(iteration), desc="BigNum Exponential(Left-to-Right) Test", unit=" iter", ncols=100):
+        sign1, sign2 = POSITIVE, POSITIVE
+        wordlen1, wordlen2 = wordlen, 1
+        bigint1, bigint2, bigint3 = [ctypes.POINTER(bigint)() for _ in range(3)]
+
+        src_array1 = (word * wordlen1)(*(generate_random_number() for _ in range(wordlen1)))
+        src_array2 = (word * wordlen2)(*[30])
+        
+        src_num_from_array1 = ''.join(format(x, '08X') for x in reversed(src_array1))
+        src_num_from_array2 = ''.join(format(x, '08X') for x in reversed(src_array2))
+
+        result = function['bi_new'](ctypes.byref(bigint1), wordlen1)
+        result = function['bi_new'](ctypes.byref(bigint2), wordlen2)
+        result = function['bi_new'](ctypes.byref(bigint3), max(wordlen1, wordlen2))
+        result = function['bi_set_from_array'](ctypes.byref(bigint1), sign1, wordlen1, src_array1)
+        result = function['bi_set_from_array'](ctypes.byref(bigint2), sign2, wordlen2, src_array2)
+        python_result = (((-1 if bigint1.contents.sign == NEGATIVE else 1) * int(src_num_from_array1, 16))) \
+                      ** (((-1 if bigint2.contents.sign == NEGATIVE else 1) * int(src_num_from_array2, 16)))
+        
+        result = function['bi_exp_left_to_right'](ctypes.byref(bigint3), bigint1, bigint2)
+        execution_times.append(result.time)
+
+        c_result = bi_to_int(bigint3)
+
+        if c_result == python_result:
+            if verbose:
+                print()
+                for j, bi in enumerate([bigint1, bigint2, bigint3]):
+                    print(f"\nBigInt{j + 1}: ", end='')
+                    function['bi_print'](bi, 16)
+                print()
+                print(f"C Result: {int_to_hex(c_result)}")
+                print(f"Python Result: {int_to_hex(python_result)}\n")
+                print_center(f" TEST SUCCESS {i + 1} ", '-')
+            function['bi_delete'](ctypes.byref(bigint1))
+            function['bi_delete'](ctypes.byref(bigint2))
+            function['bi_delete'](ctypes.byref(bigint3))
+
+        else:
+            print()
+            print_center(" TEST FAIL ", '-')
+            print("BigInt1: ", "-" if bigint1.contents.sign else "", "0x", src_num_from_array1, sep="")
+            print("BigInt2: ", "-" if bigint2.contents.sign else "", "0x", src_num_from_array2, sep="")
+            print("C Result: ", int_to_hex(c_result))
+            print("Python Result: ", int_to_hex(python_result))
+            print()
+            print_center(f" TEST FAIL (Exit At: {i+1}) ", '-')
+            exit(1)
+
+    if iteration == i + 1:
+        print()
+        print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
+        drow_and_save_graph(data=execution_times, title="Bigint Exponential(Left-to-Right)", filename="bi_exponential_ltr_execution_time.png")
+
+def test_exponential_rtl(function, wordlen=64, iteration=3, verbose=False):
+    print_center(" 3-18. BigInt 거듭제곱(R-to-L) 테스트 ", '-', '\n', 95)
+
+    execution_times = []
+    for i in tqdm(range(iteration), desc="BigNum Exponential(Right-to-Left) Test", unit=" iter", ncols=100):
+        sign1, sign2 = POSITIVE, POSITIVE
+        wordlen1, wordlen2 = wordlen, 1
+        bigint1, bigint2, bigint3 = [ctypes.POINTER(bigint)() for _ in range(3)]
+
+        src_array1 = (word * wordlen1)(*(generate_random_number() for _ in range(wordlen1)))
+        src_array2 = (word * wordlen2)(*[30])
+        
+        src_num_from_array1 = ''.join(format(x, '08X') for x in reversed(src_array1))
+        src_num_from_array2 = ''.join(format(x, '08X') for x in reversed(src_array2))
+
+        result = function['bi_new'](ctypes.byref(bigint1), wordlen1)
+        result = function['bi_new'](ctypes.byref(bigint2), wordlen2)
+        result = function['bi_new'](ctypes.byref(bigint3), max(wordlen1, wordlen2))
+        result = function['bi_set_from_array'](ctypes.byref(bigint1), sign1, wordlen1, src_array1)
+        result = function['bi_set_from_array'](ctypes.byref(bigint2), sign2, wordlen2, src_array2)
+        python_result = (((-1 if bigint1.contents.sign == NEGATIVE else 1) * int(src_num_from_array1, 16))) \
+                      ** (((-1 if bigint2.contents.sign == NEGATIVE else 1) * int(src_num_from_array2, 16)))
+        
+        result = function['bi_exp_right_to_left'](ctypes.byref(bigint3), bigint1, bigint2)
+        execution_times.append(result.time)
+
+        c_result = bi_to_int(bigint3)
+
+        if c_result == python_result:
+            if verbose:
+                print()
+                for j, bi in enumerate([bigint1, bigint2, bigint3]):
+                    print(f"\nBigInt{j + 1}: ", end='')
+                    function['bi_print'](bi, 16)
+                print()
+                print(f"C Result: {int_to_hex(c_result)}")
+                print(f"Python Result: {int_to_hex(python_result)}\n")
+                print_center(f" TEST SUCCESS {i + 1} ", '-')
+            function['bi_delete'](ctypes.byref(bigint1))
+            function['bi_delete'](ctypes.byref(bigint2))
+            function['bi_delete'](ctypes.byref(bigint3))
+
+        else:
+            print()
+            print_center(" TEST FAIL ", '-')
+            print("BigInt1: ", "-" if bigint1.contents.sign else "", "0x", src_num_from_array1, sep="")
+            print("BigInt2: ", "-" if bigint2.contents.sign else "", "0x", src_num_from_array2, sep="")
+            print("C Result: ", int_to_hex(c_result))
+            print("Python Result: ", int_to_hex(python_result))
+            print()
+            print_center(f" TEST FAIL (Exit At: {i+1}) ", '-')
+            exit(1)
+
+    if iteration == i + 1:
+        print()
+        print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
+        drow_and_save_graph(data=execution_times, title="Bigint Exponential(Right-to-Left)", filename="bi_exponential_rtl_execution_time.png")
+
+def test_exponential_montgomery(function, wordlen=64, iteration=3, verbose=False):
+    print_center(" 3-19. BigInt 거듭제곱(Montgomery) 테스트 ", '-', '\n', 95)
+
+    execution_times = []
+    for i in tqdm(range(iteration), desc="BigNum Exponential(Montgomery) Test", unit=" iter", ncols=100):
+        sign1, sign2 = POSITIVE, POSITIVE
+        wordlen1, wordlen2 = wordlen, 1
+        bigint1, bigint2, bigint3 = [ctypes.POINTER(bigint)() for _ in range(3)]
+
+        src_array1 = (word * wordlen1)(*(generate_random_number() for _ in range(wordlen1)))
+        src_array2 = (word * wordlen2)(*[30])
+        
+        src_num_from_array1 = ''.join(format(x, '08X') for x in reversed(src_array1))
+        src_num_from_array2 = ''.join(format(x, '08X') for x in reversed(src_array2))
+
+        result = function['bi_new'](ctypes.byref(bigint1), wordlen1)
+        result = function['bi_new'](ctypes.byref(bigint2), wordlen2)
+        result = function['bi_new'](ctypes.byref(bigint3), max(wordlen1, wordlen2))
+        result = function['bi_set_from_array'](ctypes.byref(bigint1), sign1, wordlen1, src_array1)
+        result = function['bi_set_from_array'](ctypes.byref(bigint2), sign2, wordlen2, src_array2)
+        python_result = (((-1 if bigint1.contents.sign == NEGATIVE else 1) * int(src_num_from_array1, 16))) \
+                      ** (((-1 if bigint2.contents.sign == NEGATIVE else 1) * int(src_num_from_array2, 16)))
+        
+        result = function['bi_exp_montgomery'](ctypes.byref(bigint3), bigint1, bigint2)
+        execution_times.append(result.time)
+
+        c_result = bi_to_int(bigint3)
+
+        if c_result == python_result:
+            if verbose:
+                print()
+                for j, bi in enumerate([bigint1, bigint2, bigint3]):
+                    print(f"\nBigInt{j + 1}: ", end='')
+                    function['bi_print'](bi, 16)
+                print()
+                print(f"C Result: {int_to_hex(c_result)}")
+                print(f"Python Result: {int_to_hex(python_result)}\n")
+                print_center(f" TEST SUCCESS {i + 1} ", '-')
+            function['bi_delete'](ctypes.byref(bigint1))
+            function['bi_delete'](ctypes.byref(bigint2))
+            function['bi_delete'](ctypes.byref(bigint3))
+
+        else:
+            print()
+            print_center(" TEST FAIL ", '-')
+            print("BigInt1: ", "-" if bigint1.contents.sign else "", "0x", src_num_from_array1, sep="")
+            print("BigInt2: ", "-" if bigint2.contents.sign else "", "0x", src_num_from_array2, sep="")
+            print("C Result: ", int_to_hex(c_result))
+            print("Python Result: ", int_to_hex(python_result))
+            print()
+            print_center(f" TEST FAIL (Exit At: {i+1}) ", '-')
+            exit(1)
+
+    if iteration == i + 1:
+        print()
+        print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
+        drow_and_save_graph(data=execution_times, title="Bigint Exponential(Montgomery)", filename="bi_exponential_montgomery_execution_time.png")
+
+def test_reduction(function, wordlen=1, iteration=10000, verbose=False): 
+    print_center(" 3-20. BigInt 나머지 연산 테스트 ", '-', '\n', 95)
+
+    execution_times = []
+    for i in tqdm(range(iteration), desc="BigNum Reduction Test", unit=" iter", ncols=100):
+        sign1, sign2 = POSITIVE, POSITIVE
+        wordlen1, wordlen2 =  [generate_random_wordlen(wordlen) for _ in range(2)]
+        bigint1, bigint2, bigint3, bigint4 = [ctypes.POINTER(bigint)() for _ in range(4)]
+
+        src_array1 = (word * wordlen1)(*(generate_random_number() for _ in range(wordlen1)))
+        src_array2 = (word * wordlen2)(*(generate_random_number() for _ in range(wordlen2)))
+        
+        src_num_from_array1 = ''.join(format(x, '08X') for x in reversed(src_array1))
+        src_num_from_array2 = ''.join(format(x, '08X') for x in reversed(src_array2))
+
+        result = function['bi_new'](ctypes.byref(bigint1), wordlen1)
+        result = function['bi_new'](ctypes.byref(bigint2), wordlen2)
+        result = function['bi_new'](ctypes.byref(bigint3), wordlen1 * 2)
+        result = function['bi_new'](ctypes.byref(bigint4), max(wordlen1, wordlen2))
+        result = function['bi_set_from_array'](ctypes.byref(bigint1), sign1, wordlen1, src_array1)
+        result = function['bi_set_from_array'](ctypes.byref(bigint2), sign2, wordlen2, src_array2)
+        python_result = ((-1 if bigint1.contents.sign == NEGATIVE else 1) * int(src_num_from_array1, 16)) \
+                      % ((-1 if bigint2.contents.sign == NEGATIVE else 1) * int(src_num_from_array2, 16))
+
+        # w=wordlen1, W=2^w, T=W^(2*bigint2) 일때 C 함수로 계산하기
+        
+        # w를 bigint 타입으로 선언
+        base = 16
+        temp_bigint = ctypes.POINTER(bigint)()
+        src_string1 = ctypes.c_char_p(f"{hex(wordlen1)}".encode('utf-8'))
+        src_string2 = ctypes.c_char_p(f"0x2".encode('utf-8'))
+        result = function['bi_new'](ctypes.byref(temp_bigint), 1)
+        result = function['bi_set_from_string'](ctypes.byref(bigint3), src_string1, base)
+        result = function['bi_set_from_string'](ctypes.byref(temp_bigint), src_string2, base)
+        result = function['bi_exp_montgomery'](ctypes.byref(bigint3), temp_bigint, bigint3)
+        result = function['bi_mul'](ctypes.byref(temp_bigint), temp_bigint, bigint2)
+        result = function['bi_exp_montgomery'](ctypes.byref(bigint3), bigint3, temp_bigint)
+        function['bi_delete'](ctypes.byref(temp_bigint))
+
+        result = function['bi_mod'](ctypes.byref(bigint4), bigint1, bigint2, bigint3)
+        execution_times.append(result.time)
+
+        c_result = bi_to_int(bigint4)
+
+        if c_result == python_result:
+            if verbose:
+                print()
+                for j, bi in enumerate([bigint1, bigint2, bigint3, bigint4]):
+                    print(f"\nBigInt{j + 1}: ", end='')
+                    function['bi_print'](bi, 16)
+                print()
+                print(f"C Result: {int_to_hex(c_result)}")
+                print(f"Python Result: {int_to_hex(python_result)}\n")
+                print_center(f" TEST SUCCESS {i + 1} ", '-')
+            function['bi_delete'](ctypes.byref(bigint1))
+            function['bi_delete'](ctypes.byref(bigint2))
+            function['bi_delete'](ctypes.byref(bigint3))
+            function['bi_delete'](ctypes.byref(bigint4))
+
+        else:
+            print()
+            print_center(" TEST FAIL ", '-')
+            print("BigInt1: ", "-" if bigint1.contents.sign else "", "0x", src_num_from_array1, sep="")
+            print("BigInt2: ", "-" if bigint2.contents.sign else "", "0x", src_num_from_array2, sep="")
+            print("C Result(R): ", int_to_hex(c_result))
+            print("Python Result(R): ", int_to_hex(python_result))
+            print()
+            print_center(f" TEST FAIL (Exit At: {i+1}) ", '-')
+            exit(1)
+
+    if iteration == i + 1:
+        print()
+        print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
+        drow_and_save_graph(data=execution_times, title="Bigint Reduction", filename="bi_reduction_execution_time.png")
 
 def test():
     OS = os.uname().sysname
@@ -671,7 +1033,22 @@ def test():
     # test_division_bit(function)
 
     # 3-15 BigInt 나눗셈(Word) 테스트
-    test_division_word(function)
+    # test_division_word(function)
+
+    # 3-16 BigInt 시프트(비트) 테스트
+    # test_shift_left(function)
+
+    # 3-17 BigInt 거듭제곱(L-to-R) 테스트
+    # test_exponential_ltr(function)
+
+    # 3-18 BigInt 거듭제곱(R-to-L) 테스트
+    # test_exponential_rtl(function)
+
+    # 3-19 BigInt 거듭제곱(Montgomery) 테스트
+    # test_exponential_montgomery(function)
+
+    # 3-20 BigInt 나머지 연산 테스트
+    test_reduction(function)
 
     # 실행 테스트
     # os.system(command=f"./build/{OS}/IORA")
@@ -686,48 +1063,3 @@ def test():
 
 if __name__ == "__main__":
     test()
-
-'''
-    # BONUS 특정 문자열 테스트
-    bonus_bigint1 = ctypes.POINTER(bigint)()
-    bonus_bigint2 = ctypes.POINTER(bigint)()
-    bonus_bigint3 = ctypes.POINTER(bigint)()
-    src_string1 = ctypes.c_char_p("0x000000".encode('utf-8'))
-    src_string2 = ctypes.c_char_p("-0x000001".encode('utf-8'))
-    result1 = function['bi_set_from_string'](ctypes.byref(bonus_bigint1), src_string1, base)
-    result2 = function['bi_set_from_string'](ctypes.byref(bonus_bigint2), src_string2, base)
-
-    print_line()
-    function['bi_add'](ctypes.byref(bonus_bigint3), bonus_bigint1, bonus_bigint2)
-    print("BigInt1: ", end='')
-    function['bi_print'](bonus_bigint1, 16)
-    print("BigInt2: ", end='')
-    function['bi_print'](bonus_bigint2, 16)
-    print("BigInt3: ", end='')
-    function['bi_print'](bonus_bigint3, 16)
-    print()
-    print_line()
-
-    # BONUS 특정 배열 테스트
-    bonus_wordlen = 4
-    bonus_sign1 = POSITIVE # generate_random_sign()
-    bonus_sign2 = POSITIVE # generate_random_sign()
-    bonus_bigint4 = ctypes.POINTER(bigint)()
-    bonus_bigint5 = ctypes.POINTER(bigint)()
-    bonus_bigint6 = ctypes.POINTER(bigint)()
-    src_array1 = (word * bonus_wordlen)(*([0, 0, 0, 0]))
-    src_array2 = (word * bonus_wordlen)(*([1, 0, 0, 0]))
-    result1 = function['bi_set_from_array'](ctypes.byref(bonus_bigint4), bonus_sign1, bonus_wordlen, src_array1)
-    result2 = function['bi_set_from_array'](ctypes.byref(bonus_bigint5), bonus_sign2, bonus_wordlen, src_array2)
-
-    print_line()
-    function['bi_sub'](ctypes.byref(bonus_bigint6), bonus_bigint4, bonus_bigint5)
-    print("BigInt4: ", end='')
-    function['bi_print'](bonus_bigint4, 16)
-    print("BigInt5: ", end='')
-    function['bi_print'](bonus_bigint5, 16)
-    print("BigInt6: ", end='')
-    function['bi_print'](bonus_bigint6, 16)
-    print()
-    print_line()
-'''

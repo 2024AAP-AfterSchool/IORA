@@ -14,3 +14,10 @@ class bigint(ctypes.Structure):
         ("wordlen", ctypes.c_int32),
         ("start", ctypes.POINTER(word))
     ]
+
+# C언어 사용자 정의 구조체(Res)
+class res(ctypes.Structure):
+    _fields_ = [
+        ("message", msg),
+        ("time", ctypes.c_double)
+    ]

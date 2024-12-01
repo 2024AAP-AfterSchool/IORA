@@ -5,6 +5,7 @@
  * @author 김남일
  */
 #include <stdio.h>
+#include "utils/time.h"
 #include "base/base_type.h"
 #include "base/base_error.h"
 #include "bigint/bigint_addition.h"
@@ -17,8 +18,11 @@
  * @param B 피연산자 B
  * @param borrow 이전 연산에서 발생한 borrow
  */
-msg bi_sub_ABb(OUT word* dst, IN word* A, IN word* B, IN byte* borrow)
-{
+res bi_sub_ABb(OUT word* dst, IN word* A, IN word* B, IN byte* borrow)
+{   
+    res result;
+    START_TIMER();
+
 	byte tmp = 0;
 	*dst = *A - *borrow;
 	if (*A < *borrow)
@@ -28,7 +32,8 @@ msg bi_sub_ABb(OUT word* dst, IN word* A, IN word* B, IN byte* borrow)
 	*dst = *dst - *B;
 	*borrow = tmp;
 
-	return print_success_sub_AbB();
+    END_TIMER(result, print_success_sub_AbB());
+    return result;
 }
 
 /**
@@ -37,15 +42,19 @@ msg bi_sub_ABb(OUT word* dst, IN word* A, IN word* B, IN byte* borrow)
  * @param A 피연산자 A
  * @param borrow 이전 연산에서 발생한 borrow
  */
-msg bi_sub_Ab(OUT word* dst, IN word* A, IN byte* borrow)
-{
+res bi_sub_Ab(OUT word* dst, IN word* A, IN byte* borrow)
+{   
+    res result;
+    START_TIMER();
+
 	byte tmp = 0;
 	*dst = *A - *borrow;
 	if (*A < *borrow)
 		tmp = 1;
 	*borrow = tmp;
 
-	return print_success_sub_Ab();
+    END_TIMER(result, print_success_sub_Ab());
+    return result;
 }
 
 /**
@@ -54,8 +63,11 @@ msg bi_sub_Ab(OUT word* dst, IN word* A, IN byte* borrow)
  * @param A 피연산자 A
  * @param B 피연산자 B
  */
-msg bi_sub_C(OUT bigint** dst, IN bigint* A, IN bigint* B)
-{
+res bi_sub_C(OUT bigint** dst, IN bigint* A, IN bigint* B)
+{   
+    res result;
+    START_TIMER();
+
     byte b = 0;
     word C = 0;
     bigint* bi_sub = NULL;
@@ -77,7 +89,8 @@ msg bi_sub_C(OUT bigint** dst, IN bigint* A, IN bigint* B)
     bi_assign(dst, bi_sub);
     bi_delete(&bi_sub);
 
-	return print_success_sub_C();
+    END_TIMER(result, print_success_sub_C());
+    return result;
 }
 
 /**
@@ -86,8 +99,11 @@ msg bi_sub_C(OUT bigint** dst, IN bigint* A, IN bigint* B)
  * @param A 피연산자 A
  * @param B 피연산자 B
  */
-msg bi_sub(OUT bigint** dst, IN bigint* A, IN bigint* B)
-{
+res bi_sub(OUT bigint** dst, IN bigint* A, IN bigint* B)
+{   
+    res result;
+    START_TIMER();
+
 	bigint* tmp_A = NULL;
 	bigint* tmp_B = NULL;
 
@@ -100,8 +116,9 @@ msg bi_sub(OUT bigint** dst, IN bigint* A, IN bigint* B)
 		(*dst)->sign = POSITIVE;
 		bi_delete(&tmp_A);
 		bi_delete(&tmp_B);
-		
-		return print_success_sub();
+
+        END_TIMER(result, print_success_sub());
+        return result;
 	}
 	if ((tmp_A->sign == POSITIVE) && (tmp_B->sign == POSITIVE) && (bi_compare(tmp_A, tmp_B) == -1))
 	{
@@ -109,8 +126,9 @@ msg bi_sub(OUT bigint** dst, IN bigint* A, IN bigint* B)
 		(*dst)->sign = NEGATIVE;
 		bi_delete(&tmp_A);
 		bi_delete(&tmp_B);
-		
-		return print_success_sub();
+
+        END_TIMER(result, print_success_sub());
+        return result;
 	}
 	if ((tmp_A->sign == NEGATIVE) && (tmp_B->sign == NEGATIVE) && (bi_compare(tmp_A, tmp_B) != -1))
 	{
@@ -119,8 +137,9 @@ msg bi_sub(OUT bigint** dst, IN bigint* A, IN bigint* B)
 		bi_sub_C(dst, tmp_B, tmp_A);
 		bi_delete(&tmp_A);
 		bi_delete(&tmp_B);
-		
-		return print_success_sub();
+    
+        END_TIMER(result, print_success_sub());
+        return result;
 	}
 	if ((tmp_A->sign == NEGATIVE) && (tmp_B->sign == NEGATIVE) && (bi_compare(tmp_A, tmp_B) == -1))
 	{
@@ -131,7 +150,8 @@ msg bi_sub(OUT bigint** dst, IN bigint* A, IN bigint* B)
 		bi_delete(&tmp_A);
 		bi_delete(&tmp_B);
 		
-		return print_success_sub();
+        END_TIMER(result, print_success_sub());
+        return result;
 	}
 	if ((tmp_A->sign == POSITIVE) && (tmp_B->sign == NEGATIVE))
 	{
@@ -141,7 +161,8 @@ msg bi_sub(OUT bigint** dst, IN bigint* A, IN bigint* B)
 		bi_delete(&tmp_A);
 		bi_delete(&tmp_B);
 		
-		return print_success_sub();
+        END_TIMER(result, print_success_sub());
+        return result;
 	}
 	if ((tmp_A->sign == NEGATIVE) && (tmp_B->sign == POSITIVE))
 	{
@@ -151,10 +172,12 @@ msg bi_sub(OUT bigint** dst, IN bigint* A, IN bigint* B)
 		bi_delete(&tmp_A);
 		bi_delete(&tmp_B);
 		
-		return print_success_sub();
+        END_TIMER(result, print_success_sub());
+        return result;
 	}
 
-	return print_success_sub();
+    END_TIMER(result, print_success_sub());
+    return result;
 }
 
 /**

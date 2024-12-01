@@ -12,3 +12,4 @@ __pycache__
 IORA.*
 Testing/*
 build/Testing/*
+test/coverage_report/*
