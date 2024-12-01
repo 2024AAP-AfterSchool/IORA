@@ -79,7 +79,6 @@ def load_function(lib):
     function['bi_div_bit'] = lib.bi_div_bit
     function['bi_div'] = lib.bi_div
     function['bi_bit_left_shift'] = lib.bi_bit_left_shift
-<<<<<<< HEAD
     function['bi_exp_left_to_right'] = lib.bi_exp_left_to_right
     function['bi_exp_right_to_left'] = lib.bi_exp_right_to_left
     function['bi_exp_montgomery'] = lib.bi_exp_montgomery
@@ -89,11 +88,6 @@ def load_function(lib):
     for key in function.keys():
         function[key].restype = res
 
-=======
-    function['bi_left_to_right'] = lib.bi_left_to_right
-    function['bi_right_to_left'] = lib.bi_right_to_left
-    
->>>>>>> origin/samael
     # 로드한 함수 목록
     print_center(f" LOAD FUNCTION: {list(function.keys())[:3]} ...", ' ')
     print_center(" LOAD SUCCESS ", '=')
@@ -123,7 +117,6 @@ def bi_to_int(target):
 def int_to_hex(target):
     return hex(target).upper().replace('X', 'x')
 
-<<<<<<< HEAD
 def drow_and_save_graph(data, title, filename):
     
     execution_times = data
@@ -180,9 +173,6 @@ def drow_and_save_graph(data, title, filename):
     print(f"Graph saved to {output_path}\n")
 
 def test_addtion(function, wordlen=16, iteration=100000, verbose=False):
-=======
-def test_addtion(function, wordlen=64, iteration=10000, verbose=False):
->>>>>>> origin/samael
     print_center(" 3-8. BigInt 덧셈 테스트 ", '-', '\n', 95)
 
     execution_times = []
@@ -240,11 +230,7 @@ def test_addtion(function, wordlen=64, iteration=10000, verbose=False):
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
         drow_and_save_graph(data=execution_times, title="Bigint Addition", filename="bi_addition_execution_time.png")
 
-<<<<<<< HEAD
 def test_subtraction(function, wordlen=16, iteration=100000, verbose=False):
-=======
-def test_subtraction(function, wordlen=64, iteration=10000, verbose=False):
->>>>>>> origin/samael
     print_center(" 3-9. BigInt 뺄셈 테스트 ", '-', '\n', 95)
 
     execution_times = []
@@ -302,11 +288,7 @@ def test_subtraction(function, wordlen=64, iteration=10000, verbose=False):
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
         drow_and_save_graph(data=execution_times, title="Bigint Subtraction", filename="bi_subtraction_execution_time.png")
 
-<<<<<<< HEAD
 def test_multiplication(function, wordlen=16, iteration=100000, verbose=False):
-=======
-def test_multiplication(function, wordlen=1024, iteration=50, verbose=False):
->>>>>>> origin/samael
     print_center(" 3-10. BigInt 곱셈 테스트 ", '-', '\n', 95)
 
     execution_times = []
@@ -364,11 +346,7 @@ def test_multiplication(function, wordlen=1024, iteration=50, verbose=False):
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
         drow_and_save_graph(data=execution_times, title="Bigint Multiplication", filename="bi_multiplication_execution_time.png")
 
-<<<<<<< HEAD
 def test_multiplication_karatsuba(function, wordlen=16, iteration=100000, verbose=False):
-=======
-def test_multiplication_karatsuba(function, wordlen=1024, iteration=50, verbose=False):
->>>>>>> origin/samael
     print_center(" 3-11. BigInt 곱셈(karatsuba) 테스트 ", '-', '\n', 95)
 
     execution_times = []
@@ -426,11 +404,7 @@ def test_multiplication_karatsuba(function, wordlen=1024, iteration=50, verbose=
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
         drow_and_save_graph(data=execution_times, title="Bigint Multiplication(Karatsuba)", filename="bi_multiplication_karatsuba_execution_time.png")
 
-<<<<<<< HEAD
 def test_squaring(function, wordlen=16, iteration=100000, verbose=False):
-=======
-def test_squaring(function, wordlen=256, iteration=10000, verbose=False):
->>>>>>> origin/samael
     print_center(" 3-12. BigInt 제곱 테스트 ", '-', '\n', 95)
 
     execution_times = []
@@ -481,11 +455,7 @@ def test_squaring(function, wordlen=256, iteration=10000, verbose=False):
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
         drow_and_save_graph(data=execution_times, title="Bigint Squaring", filename="bi_squaring_execution_time.png")
 
-<<<<<<< HEAD
 def test_squaring_karatsuba(function, wordlen=16, iteration=100000, verbose=False):
-=======
-def test_squaring_karatsuba(function, wordlen=512, iteration=1000, verbose=False):
->>>>>>> origin/samael
     print_center(" 3-13. BigInt 제곱(karatsuba) 테스트 ", '-', '\n', 95)
 
     execution_times = []
@@ -535,11 +505,7 @@ def test_squaring_karatsuba(function, wordlen=512, iteration=1000, verbose=False
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
         drow_and_save_graph(data=execution_times, title="Bigint Squaring(Karatsuba)", filename="bi_squaring_karatsuba_execution_time.png")
 
-<<<<<<< HEAD
 def test_division_bit(function, wordlen=16, iteration=100000, verbose=False):
-=======
-def test_division_bit(function, wordlen=64, iteration=10000, verbose=False):
->>>>>>> origin/samael
     print_center(" 3-14. BigInt 나눗셈 테스트(bit) ", '-', '\n', 95)
 
     execution_times = []
@@ -607,21 +573,13 @@ def test_division_bit(function, wordlen=64, iteration=10000, verbose=False):
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
         drow_and_save_graph(data=execution_times, title="Bigint Division(Bit)", filename="bi_division_bit_execution_time.png")
 
-<<<<<<< HEAD
 def test_division_word(function, wordlen=16, iteration=100000, verbose=False): 
-=======
-def test_division_word(function, wordlen=64, iteration=10000, verbose=True): 
->>>>>>> origin/samael
     print_center(" 3-15. BigInt 나눗셈 테스트(word) ", '-', '\n', 95)
 
     execution_times = []
     for i in tqdm(range(iteration), desc="BigNum Division(Word) Test", unit=" iter", ncols=100):
         sign1, sign2 = POSITIVE, POSITIVE
         wordlen1, wordlen2 =  [generate_random_wordlen(wordlen) for _ in range(2)]
-<<<<<<< HEAD
-=======
-        print('wordlen1, wordlen2: ', wordlen1, wordlen2)
->>>>>>> origin/samael
         bigint1, bigint2, bigint3, bigint4 = [ctypes.POINTER(bigint)() for _ in range(4)]
 
         src_array1 = (word * wordlen1)(*(generate_random_number() for _ in range(wordlen1)))
@@ -642,15 +600,6 @@ def test_division_word(function, wordlen=64, iteration=10000, verbose=True):
         python_result_R = ((-1 if bigint1.contents.sign == NEGATIVE else 1) * int(src_num_from_array1, 16)) \
                         % ((-1 if bigint2.contents.sign == NEGATIVE else 1) * int(src_num_from_array2, 16))
 
-<<<<<<< HEAD
-=======
-        # print()
-        # print("dddd")
-        # print(int_to_hex(bi_to_int(bigint1)))
-        # print(int_to_hex(bi_to_int(bigint2)))
-        # print("dddd3")
-
->>>>>>> origin/samael
         result = function['bi_div'](ctypes.byref(bigint3), ctypes.byref(bigint4), bigint1, bigint2)
         execution_times.append(result.time)
 
