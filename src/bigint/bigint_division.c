@@ -207,6 +207,7 @@ res bi_div_CC(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
         bigint* upper_B = NULL;
         bi_new(&upper_A, 2);
         bi_new(&upper_B, 1);
+<<<<<<< HEAD
         upper_A->start[0] = tmp_A->start[tmp_A->wordlen - 2];
         upper_A->start[1] = tmp_A->start[tmp_A->wordlen - 1];
         upper_B->start[0] = tmp_B->start[tmp_B->wordlen - 1];
@@ -217,6 +218,31 @@ res bi_div_CC(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
     }
     bi_mul_C(&tmp_R, tmp_B, tmp_Q);
     bi_sub(&tmp_R, tmp_A, tmp_R);
+=======
+        upper_A->start[0] = A->start[A->wordlen - 2];
+        upper_A->start[1] = A->start[A->wordlen - 1];
+        upper_B->start[0] = B->start[B->wordlen - 1];
+        bi_div_word(&tmp_Q, upper_A, upper_B);
+        // fprintf(stdout, "\n##@4#tem_Q:");
+        // bi_print(tmp_Q, 16);
+        // fprintf(stdout, "\n##@455#B:");
+        // bi_print(B, 16);
+        // fprintf(stdout, "\n##@455#temR:");
+        // bi_print(tmp_R, 16);
+        // fprintf(stdout, "\n##@328723878723784#\n");
+        bi_delete(&upper_A);
+        bi_delete(&upper_B);
+    }
+    bi_mul_C(&tmp_R, B, tmp_Q);
+    // fprintf(stdout, "\n아래가 R임저기!!!!!!!!!##@328723878723784#\n");
+    // bi_print(tmp_R, 16);
+    // fprintf(stdout, "\n아래가 A임##@328723878723784#\n");
+    // bi_print(A, 16);
+    bi_sub(&tmp_R, A, tmp_R);
+    // fprintf(stdout, "\n아래가 계산 R여기!!!!!!!!!##@328723878723784#\n");
+    // bi_print(tmp_R, 16);
+    // fprintf(stdout, "\n 끝히히##@@@@@@@@@@@@@@328723878723784#\n");
+>>>>>>> origin/samael
 
     bigint* one = NULL;
     bi_new(&one, 1);
