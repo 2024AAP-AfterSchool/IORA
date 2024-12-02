@@ -11,6 +11,7 @@
 #include "bigint_subtraction.h"
 #include "bigint_calculation.h"
 #include "bigint_multiplication.h"
+#include "bigint_division.h"
 
  /**
   * @brief 두 양의 정수 A와 B의 곱셈을 수행하는 함수
@@ -178,7 +179,7 @@ msg bi_mul(OUT bigint** dst, IN bigint* A, IN bigint* B, IN bool is_karatsuba)
 
     // if ( is_karatsuba) mul_karatsuba(dst, tmp_A, tmp_B);
     if (!is_karatsuba) bi_mul_C(&result, tmp_A, tmp_B);
-
+     
     result->sign = A_sign ^ B_sign;
     bi_assign(dst, result);
     bi_delete(&tmp_A);
@@ -191,7 +192,6 @@ msg bi_karatsuba_mul(OUT bigint** dst, IN bigint* A, IN bigint* B) {
 
     bigint* tmp_A = NULL;
     bigint* tmp_B = NULL;
-
 
     bi_assign(&tmp_A, A);
     bi_assign(&tmp_B, B);
@@ -330,7 +330,7 @@ msg squaring_AA(OUT bigint **dst, IN bigint * A)
     return SUCCESS_SQUARE_A;
 }
 
-msg squaring_C(OUT bigint** dst, IN bigint* x) {
+msg bi_square_C(OUT bigint** dst, IN bigint* x) {
 
     bigint* C1 = NULL;
     bigint* C2 = NULL;
@@ -403,7 +403,7 @@ msg squaring_Karatsuba(OUT bigint** dst, IN bigint* A) {
     }
 
     if (A->wordlen == 1) {
-        return squaring_C(dst, A);
+        return bi_square_C(dst, A);
     }
 
     uint32_t l = (A->wordlen + 1) / 2;
@@ -482,13 +482,8 @@ msg bi_left_to_right(OUT bigint** dst, IN bigint* A, IN bigint* exp)
     // exp의 각 비트를 확인하며 연산 수행
     for (int i = (tmp_exp->wordlen * sizeof(word) * 8) - 1; i >= 0; i--) {
         // result = result^2
-        msg square_status = squaring_C(&result, result);
-        if (square_status != SUCCESS_SQUARE_A) {
-            bi_delete(&result);
-            bi_delete(&tmp_base);
-            bi_delete(&tmp_exp);
-        }
-
+        squaring_Karatsuba(&result, result);
+       
         // 현재 비트가 1인 경우 result = result * base
         if ((tmp_exp->start[i / (sizeof(word) * 8)] >> (i % (sizeof(word) * 8))) & 1) {
             msg mul_status = bi_mul(&result, result, tmp_base, 0);
@@ -542,7 +537,7 @@ msg bi_right_to_left(OUT bigint** dst, IN bigint* A, IN bigint* exp) {
         }
 
         // base = base^2
-        msg square_status = squaring_C(&tmp_base, tmp_base);
+        msg square_status = bi_square_C(&tmp_base, tmp_base);
         if (square_status != SUCCESS_SQUARE_A) {
             bi_delete(&result);
             bi_delete(&tmp_base);
@@ -565,6 +560,290 @@ msg bi_right_to_left(OUT bigint** dst, IN bigint* A, IN bigint* exp) {
     return SUCCESS_MUL;
 }
 
+/*
+msg bi_extended_euclidean(OUT bigint** gcd, OUT bigint** x, OUT bigint** y, IN bigint* A, IN bigint* B)
+{
+    // 초기화
+    bigint* old_r = NULL;
+    bigint* r = NULL;
+    bigint* old_s = NULL;
+    bigint* s = NULL;
+    bigint* old_t = NULL;
+    bigint* t = NULL;
+
+    // A와 B를 복사하여 사용
+    bi_assign(&old_r, A); // old_r = A
+    bi_assign(&r, B);     // r = B
+
+    // 초기화: s, old_s
+    bi_new(&old_s, 1);
+    old_s->start[0] = 1; // old_s = 1
+    bi_new(&s, 1);
+    s->start[0] = 0;     // s = 0
+
+    // 초기화: t, old_t
+    bi_new(&old_t, 1);
+    old_t->start[0] = 0; // old_t = 0
+    bi_new(&t, 1);
+    t->start[0] = 1;     // t = 1
+
+    bigint* quotient = NULL;
+    bigint* temp = NULL;
+
+    while (!bi_is_zero(r)) {
+        bigint* temp_r = NULL;
+        bigint* temp_s = NULL;
+        bigint* temp_t = NULL;
+
+        // quotient = old_r / r
+        bi_div(&quotient, &temp_r, old_r, r);
+
+        // r = old_r - quotient * r
+        bi_mul(&temp, quotient, r, false);
+        bi_sub(&temp_r, old_r, temp);
+        bi_assign(&old_r, r);
+        bi_assign(&r, temp_r);
+
+        // s = old_s - quotient * s
+        bi_mul(&temp, quotient, s, false);
+        bi_sub(&temp_s, old_s, temp);
+        bi_assign(&old_s, s);
+        bi_assign(&s, temp_s);
+
+        // t = old_t - quotient * t
+        bi_mul(&temp, quotient, t, false);
+        bi_sub(&temp_t, old_t, temp);
+        bi_assign(&old_t, t);
+        bi_assign(&t, temp_t);
+
+        // 메모리 해제
+        bi_delete(&temp_r);
+        bi_delete(&temp_s);
+        bi_delete(&temp_t);
+    }
+
+    // GCD, x, y 값 반환
+    bi_assign(gcd, old_r);
+    bi_assign(x, old_s);
+    bi_assign(y, old_t);
+
+    // 메모리 해제
+    bi_delete(&old_r);
+    bi_delete(&r);
+    bi_delete(&old_s);
+    bi_delete(&s);
+    bi_delete(&old_t);
+    bi_delete(&t);
+    bi_delete(&quotient);
+    bi_delete(&temp);
+
+    return SUCCESS_MUL;
+}
+*/
+
+msg bi_left_to_right_mod(bigint** dst, bigint* A, bigint* exp, bigint* mod) {
+    if (A == NULL || exp == NULL || dst == NULL || mod == NULL) {
+        return NULL_POINTER_ERROR;
+    }
+
+    bigint* result = NULL;
+    bi_new(&result, 1);
+    result->start[0] = 1;
+
+    bigint* tmp_base = NULL;
+    bigint* tmp_exp = NULL;
+    bi_assign(&tmp_base, A);
+    bi_assign(&tmp_exp, exp);
+
+    for (int i = (tmp_exp->wordlen * sizeof(int) * 8) - 1; i >= 0; i--) {
+        squaring_Karatsuba(&result, result);
+
+        if ((tmp_exp->start[i / (sizeof(int) * 8)] >> (i % (sizeof(int) * 8))) & 1) {
+            bi_mul(&result, result, tmp_base, 0);
+          
+        }
+
+        bigint* tmp_q = NULL;
+        bigint* tmp_r = NULL;
+        bi_div(&tmp_q, &tmp_r, result, mod);
+       
+
+        bi_assign(&result, tmp_r);
+        bi_delete(&tmp_q);
+        bi_delete(&tmp_r);
+    }
+
+    bi_assign(dst, result);
+
+    bi_delete(&result);
+    bi_delete(&tmp_base);
+    bi_delete(&tmp_exp);
+
+    return SUCCESS_MUL;
+}
+
+msg bi_right_to_left_mod(OUT bigint** dst, IN bigint* A, IN bigint* exp, IN bigint* mod) {
+    if (A == NULL || exp == NULL || dst == NULL || mod == NULL) {
+        return NULL_POINTER_ERROR;
+    }
+
+    // 결과 변수 초기화 (결과 = 1로 시작)
+    bigint* result = NULL;
+    bi_new(&result, 1);
+    result->start[0] = 1;
+
+    // 복사된 base와 exp 생성
+    bigint* tmp_base = NULL;
+    bigint* tmp_exp = NULL;
+    bi_assign(&tmp_base, A);
+    bi_assign(&tmp_exp, exp);
+
+    // tmp_exp가 0이 아닐 때까지 반복
+    while (!bi_is_zero(tmp_exp)) {
+        // exp의 LSB(가장 낮은 비트)가 1이면 result *= base
+        if (tmp_exp->start[0] & 1) {
+
+            bi_mul(&result, result, tmp_base, false);
+
+            // 곱셈 후 mod 연산 적용
+            bigint* tmp_q = NULL;
+            bigint* tmp_r = NULL;
+            bi_div(&tmp_q, &tmp_r, result, mod);
+            
+            // 결과는 나머지로 업데이트
+            bi_assign(&result, tmp_r);
+
+            // 메모리 해제
+            bi_delete(&tmp_q);
+            bi_delete(&tmp_r);
+        }
+
+        // base = base^2
+        squaring_Karatsuba(&tmp_base, tmp_base);
+
+        // 제곱 후 mod 연산 적용
+        bigint* tmp_q = NULL;
+        bigint* tmp_r = NULL;
+
+        bi_div(&tmp_q, &tmp_r, tmp_base, mod);
+        
+
+        // base 업데이트
+        bi_assign(&tmp_base, tmp_r);
+
+        // 메모리 해제
+        bi_delete(&tmp_q);
+        bi_delete(&tmp_r);
+
+        // exp = exp >> 1 (지수를 오른쪽으로 1비트 이동)
+        bi_bit_right_shift(&tmp_exp, 1);
+    }
+
+    // 최종 결과 저장
+    bi_assign(dst, result);
+
+    // 메모리 해제
+    bi_delete(&result);
+    bi_delete(&tmp_base);
+    bi_delete(&tmp_exp);
+
+    return SUCCESS_MUL;
+}
+
+msg bi_exp_mon(bigint** dst, bigint* x, bigint* n)
+{
+    bigint* t0 = NULL;
+    bigint* t1 = NULL;
+    bi_new(&t0, 1);
+    t0->start[0] = 1;
+    bi_assign(&t1, x);
+    int l = 0;
+
+    for (int i = n->wordlen * sizeof(word) * 8 - 1; i > -1; i--)
+    {
+        int ni = (n->start[i / (sizeof(word) * 8)] >> (i % (sizeof(word) * 8)) & 1);
+        if (ni == 0)
+        {
+            bi_mul_C(&t1, t0, t1);
+            bi_square_C(&t0, t0);    //squaring 함수명 확정되면 바꾸기 
+        }
+        else
+        {
+            bi_mul_C(&t0, t0, t1);
+            bi_square_C(&t1, t1);    //squaring 함수명 확정되면 바꾸기 
+        }
+    }
+    bi_assign(dst, t0);
+    bi_delete(&t0);
+    bi_delete(&t1);
+    return SUCCESS_MUL;
+}
+
+
+msg bi_exp_mon_mod(bigint** dst, bigint* x, bigint* n, bigint* mod)
+{
+    bigint* t0 = NULL;
+    bigint* t1 = NULL;
+    bi_new(&t0, 1);
+    t0->start[0] = 1;
+    bi_assign(&t1, x);
+    int l = 0;
+
+    for (int i = n->wordlen * sizeof(word) * 8 - 1; i > -1; i--)
+    {
+        int ni = (n->start[i / (sizeof(word) * 8)] >> (i % (sizeof(word) * 8)) & 1);
+        if (ni == 0)
+        {
+            bi_mul_C(&t1, t0, t1);
+
+            // 곱셈 후 mod 연산 적용
+            bigint* tmp_q = NULL;
+            bigint* tmp_r = NULL;
+            bi_div(&tmp_q, &tmp_r, t1, mod);
+           
+            bi_assign(&t1, tmp_r);
+
+            bi_square_C(&t0, t0);
+
+            // 제곱 후 mod 연산 적용
+            bi_div(&tmp_q, &tmp_r, t0, mod);
+           
+            bi_assign(&t0, tmp_r);
+
+            // 메모리 해제
+            bi_delete(&tmp_q);
+            bi_delete(&tmp_r);
+        }
+        else
+        {
+            bi_mul_C(&t0, t0, t1);
+
+            // 곱셈 후 mod 연산 적용
+            bigint* tmp_q = NULL;
+            bigint* tmp_r = NULL;
+            bi_div(&tmp_q, &tmp_r, t0, mod);
+           
+            bi_assign(&t0, tmp_r);
+
+            bi_square_C(&t1, t1);
+
+            // 제곱 후 mod 연산 적용
+            bi_div(&tmp_q, &tmp_r, t1, mod);
+           
+            bi_assign(&t1, tmp_r);
+
+            // 메모리 해제
+            bi_delete(&tmp_q);
+            bi_delete(&tmp_r);
+        }
+    }
+
+    bi_assign(dst, t0);
+    bi_delete(&t0);
+    bi_delete(&t1);
+
+    return SUCCESS_MUL;
+}
 
 void bi_test_mul()
 {
