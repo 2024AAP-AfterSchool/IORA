@@ -1,6 +1,7 @@
 import os
 import ctypes
 import random
+import platform
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -50,9 +51,9 @@ def load_library(OS):
 
     lib = ""
     # 0s.name에 따라
-    if OS == 'posix':
+    if OS == 'mac' or OS == 'linux':
         lib = ctypes.CDLL(f"./build/{OS}/IORA.so")
-    elif OS == "nt":
+    elif OS == "windows":
         lib = ctypes.CDLL(f"./build/{OS}/IORA.dll")
     
     print_center(" LOAD FILE: " + lib._name, ' ')
@@ -962,8 +963,15 @@ def test_shift_left(function, iteration=1, verbose=False):
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
 
 def test():
-    OS = os.name()
-    
+    OS = platform.system()
+
+    if OS == "Darwin":
+        OS = "mac"
+    elif OS == "Linux":
+        OS = "linux"
+    elif OS == "Windows":
+        OS = "windows"
+
     # 테스트 사전 설정
     preset()
 
