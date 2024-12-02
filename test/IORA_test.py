@@ -49,11 +49,10 @@ def load_library(OS):
     print_center(" 2. LOAD IORA PROJECT ", '=')
 
     lib = ""
-    if OS == "mac":
+    # 0s.name에 따라
+    if OS == 'posix':
         lib = ctypes.CDLL(f"./build/{OS}/IORA.so")
-    elif OS == "linux":
-        lib = ctypes.CDLL(f"./build/{OS}/IORA.so")
-    elif OS == "windows":
+    elif OS == "nt":
         lib = ctypes.CDLL(f"./build/{OS}/IORA.dll")
     
     print_center(" LOAD FILE: " + lib._name, ' ')
@@ -963,7 +962,7 @@ def test_shift_left(function, iteration=1, verbose=False):
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
 
 def test():
-    OS = os.uname().sysname
+    OS = os.name()
     
     # 테스트 사전 설정
     preset()
