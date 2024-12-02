@@ -632,7 +632,7 @@ res bi_word_right_shift(OUT bigint** dst, IN word k) // k는 shift하고싶은 w
     bi_new(&tmp, (*dst)->wordlen - k);
     tmp->sign = (*dst)->sign;
 
-    for (int i = k; i < tmp->wordlen; i++)
+    for (int i = 0; i < tmp->wordlen; i++)
     {
         tmp->start[i] = (*dst)->start[i + k];
     }

@@ -54,10 +54,15 @@ file(GLOB SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/*/*.c
 )
 
-# 라이브러리 파일 빌드
-add_library(IORA_LIB SHARED ${SOURCE_FILES})
-set_target_properties(IORA_LIB PROPERTIES PREFIX "" OUTPUT_NAME "IORA"
+# 동적 라이브러리 파일 빌드
+add_library(IORA_LIB_SHARED SHARED ${SOURCE_FILES})
+set_target_properties(IORA_LIB_SHARED PROPERTIES PREFIX "" OUTPUT_NAME "IORA"
                         LIBRARY_OUTPUT_DIRECTORY ${LIBRARY_OUTPUT_DIRECTORY})
+
+# 정적 라이브러리 파일 빌드
+add_library(IORA_LIB_STATIC STATIC ${SOURCE_FILES})
+set_target_properties(IORA_LIB_STATIC PROPERTIES PREFIX "" OUTPUT_NAME "IORA"
+                        ARCHIVE_OUTPUT_DIRECTORY ${LIBRARY_OUTPUT_DIRECTORY})
 
 # 실행 파일 빌드
 add_executable(IORA ${SOURCE_FILES})

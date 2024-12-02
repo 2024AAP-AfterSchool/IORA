@@ -27,34 +27,28 @@ res bi_mod(OUT bigint** dst, IN bigint* A, IN bigint* n, IN bigint* T)
 
     bigint* tmp_A = NULL;
     bigint* tmp_Q = NULL;
-
-    // A가 홀수 길이인 경우 확장
-    if (A->wordlen != n->wordlen * 2) 
-    {
-        bi_new(&tmp_A, n->wordlen *2);
-        for (int i = 0; i < A->wordlen; i++) 
-        {
-            tmp_A->start[i] = A->start[i];
-        }
-        for (int i = A->wordlen; i < tmp_A->wordlen; i++)
-        {
-            tmp_A->start[i] = 0;
-        }
-    }
-    else 
-    {
-        bi_assign(&tmp_A, A);
-    }
-
-    bi_assign(&tmp_Q, tmp_A);
-    bi_bit_right_shift(&tmp_Q, (tmp_A->wordlen)*sizeof(word)*4 - sizeof(word)*8);
-    bi_mul_C(&tmp_Q, tmp_Q, T);
-    bi_bit_right_shift(&tmp_Q, (tmp_A->wordlen) * sizeof(word) * 4 + sizeof(word) * 8);
-    bi_mul_C(&tmp_Q, tmp_Q, n);
-    bi_sub(&tmp_Q, tmp_A, tmp_Q);
     
-    while (bi_compare(tmp_Q, n)!=-1)
+    bi_assign(&tmp_A, A);
+    bi_assign(&tmp_Q, tmp_A);
+
+    if (A->wordlen != n->wordlen * 2)
     {
+        bi_word_right_shift(&tmp_Q, (tmp_A->wordlen) / 2);
+        bi_mul_C(&tmp_Q, tmp_Q, T);
+        bi_word_right_shift(&tmp_Q, (tmp_A->wordlen) / 2 + 1);
+    }
+    else
+    {
+        bi_word_right_shift(&tmp_Q, (tmp_A->wordlen) / 2 - 1);
+        bi_mul_C(&tmp_Q, tmp_Q, T);
+        bi_word_right_shift(&tmp_Q, (tmp_A->wordlen) / 2 + 1);
+    }
+    
+    bi_mul(&tmp_Q, tmp_Q, n, 0);
+    bi_sub(&tmp_Q, tmp_A, tmp_Q);
+
+    while (bi_compare(tmp_Q, n)!=-1)
+    {   
         bi_sub(&tmp_Q, tmp_Q, n);
     }
     bi_assign(dst, tmp_Q);

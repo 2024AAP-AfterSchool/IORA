@@ -228,7 +228,7 @@ def test_addtion(function, wordlen=16, iteration=100000, verbose=False):
     if iteration == i + 1:
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
-        drow_and_save_graph(data=execution_times, title="Bigint Addition", filename="bi_addition_execution_time.png")
+        drow_and_save_graph(data=execution_times, title="Bigint Addition", filename="1.bi_addition_execution_time.png")
 
 def test_subtraction(function, wordlen=16, iteration=100000, verbose=False):
     print_center(" 3-9. BigInt 뺄셈 테스트 ", '-', '\n', 95)
@@ -286,9 +286,9 @@ def test_subtraction(function, wordlen=16, iteration=100000, verbose=False):
     if iteration == i + 1:
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
-        drow_and_save_graph(data=execution_times, title="Bigint Subtraction", filename="bi_subtraction_execution_time.png")
+        drow_and_save_graph(data=execution_times, title="Bigint Subtraction", filename="2.bi_subtraction_execution_time.png")
 
-def test_multiplication(function, wordlen=16, iteration=100000, verbose=False):
+def test_multiplication(function, wordlen=64, iteration=5000, verbose=False):
     print_center(" 3-10. BigInt 곱셈 테스트 ", '-', '\n', 95)
 
     execution_times = []
@@ -344,9 +344,9 @@ def test_multiplication(function, wordlen=16, iteration=100000, verbose=False):
     if iteration == i + 1:
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
-        drow_and_save_graph(data=execution_times, title="Bigint Multiplication", filename="bi_multiplication_execution_time.png")
+        drow_and_save_graph(data=execution_times, title="Bigint Multiplication", filename="3.bi_multiplication_execution_time.png")
 
-def test_multiplication_karatsuba(function, wordlen=16, iteration=100000, verbose=False):
+def test_multiplication_karatsuba(function, wordlen=64, iteration=5000, verbose=False):
     print_center(" 3-11. BigInt 곱셈(karatsuba) 테스트 ", '-', '\n', 95)
 
     execution_times = []
@@ -402,7 +402,7 @@ def test_multiplication_karatsuba(function, wordlen=16, iteration=100000, verbos
     if iteration == i + 1:
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
-        drow_and_save_graph(data=execution_times, title="Bigint Multiplication(Karatsuba)", filename="bi_multiplication_karatsuba_execution_time.png")
+        drow_and_save_graph(data=execution_times, title="Bigint Multiplication(Karatsuba)", filename="4.bi_multiplication_karatsuba_execution_time.png")
 
 def test_squaring(function, wordlen=16, iteration=100000, verbose=False):
     print_center(" 3-12. BigInt 제곱 테스트 ", '-', '\n', 95)
@@ -453,7 +453,7 @@ def test_squaring(function, wordlen=16, iteration=100000, verbose=False):
     if iteration == i + 1:
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
-        drow_and_save_graph(data=execution_times, title="Bigint Squaring", filename="bi_squaring_execution_time.png")
+        drow_and_save_graph(data=execution_times, title="Bigint Squaring", filename="5.bi_squaring_execution_time.png")
 
 def test_squaring_karatsuba(function, wordlen=16, iteration=100000, verbose=False):
     print_center(" 3-13. BigInt 제곱(karatsuba) 테스트 ", '-', '\n', 95)
@@ -503,7 +503,7 @@ def test_squaring_karatsuba(function, wordlen=16, iteration=100000, verbose=Fals
     if iteration == i + 1:
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
-        drow_and_save_graph(data=execution_times, title="Bigint Squaring(Karatsuba)", filename="bi_squaring_karatsuba_execution_time.png")
+        drow_and_save_graph(data=execution_times, title="Bigint Squaring(Karatsuba)", filename="6.bi_squaring_karatsuba_execution_time.png")
 
 def test_division_bit(function, wordlen=16, iteration=100000, verbose=False):
     print_center(" 3-14. BigInt 나눗셈 테스트(bit) ", '-', '\n', 95)
@@ -571,7 +571,7 @@ def test_division_bit(function, wordlen=16, iteration=100000, verbose=False):
     if iteration == i + 1:
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
-        drow_and_save_graph(data=execution_times, title="Bigint Division(Bit)", filename="bi_division_bit_execution_time.png")
+        drow_and_save_graph(data=execution_times, title="Bigint Division(Bit)", filename="7.bi_division_bit_execution_time.png")
 
 def test_division_word(function, wordlen=16, iteration=100000, verbose=False): 
     print_center(" 3-15. BigInt 나눗셈 테스트(word) ", '-', '\n', 95)
@@ -639,7 +639,7 @@ def test_division_word(function, wordlen=16, iteration=100000, verbose=False):
     if iteration == i + 1:
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
-        drow_and_save_graph(data=execution_times, title="Bigint Division(Word)", filename="bi_division_word_execution_time.png")
+        drow_and_save_graph(data=execution_times, title="Bigint Division(Word)", filename="8.bi_division_word_execution_time.png")
 
 def test_shift_left(function, iteration=1, verbose=False):
     print_center(" 3-16. BigInt 시프트(비트) 테스트 ", '-', '\n', 95)
@@ -668,7 +668,7 @@ def test_shift_left(function, iteration=1, verbose=False):
     if iteration == i + 1:
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
-        drow_and_save_graph(data=execution_times, title="Bigint Shift(Bit)", filename="bi_shift_bit_execution_time.png")
+        drow_and_save_graph(data=execution_times, title="Bigint Shift(Bit)", filename="9.bi_shift_bit_execution_time.png")
 
 def test_exponential_ltr(function, wordlen=64, iteration=3, verbose=False):
     print_center(" 3-17. BigInt 거듭제곱(L-to-R) 테스트 ", '-', '\n', 95)
@@ -726,7 +726,7 @@ def test_exponential_ltr(function, wordlen=64, iteration=3, verbose=False):
     if iteration == i + 1:
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
-        drow_and_save_graph(data=execution_times, title="Bigint Exponential(Left-to-Right)", filename="bi_exponential_ltr_execution_time.png")
+        drow_and_save_graph(data=execution_times, title="Bigint Exponential(Left-to-Right)", filename="10.bi_exponential_ltr_execution_time.png")
 
 def test_exponential_rtl(function, wordlen=64, iteration=3, verbose=False):
     print_center(" 3-18. BigInt 거듭제곱(R-to-L) 테스트 ", '-', '\n', 95)
@@ -784,7 +784,7 @@ def test_exponential_rtl(function, wordlen=64, iteration=3, verbose=False):
     if iteration == i + 1:
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
-        drow_and_save_graph(data=execution_times, title="Bigint Exponential(Right-to-Left)", filename="bi_exponential_rtl_execution_time.png")
+        drow_and_save_graph(data=execution_times, title="Bigint Exponential(Right-to-Left)", filename="11.bi_exponential_rtl_execution_time.png")
 
 def test_exponential_montgomery(function, wordlen=64, iteration=3, verbose=False):
     print_center(" 3-19. BigInt 거듭제곱(Montgomery) 테스트 ", '-', '\n', 95)
@@ -842,9 +842,9 @@ def test_exponential_montgomery(function, wordlen=64, iteration=3, verbose=False
     if iteration == i + 1:
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
-        drow_and_save_graph(data=execution_times, title="Bigint Exponential(Montgomery)", filename="bi_exponential_montgomery_execution_time.png")
+        drow_and_save_graph(data=execution_times, title="Bigint Exponential(Montgomery)", filename="12.bi_exponential_montgomery_execution_time.png")
 
-def test_reduction(function, wordlen=1, iteration=10000, verbose=False): 
+def test_reduction(function, wordlen=1, iteration=1, verbose=False): 
     print_center(" 3-20. BigInt 나머지 연산 테스트 ", '-', '\n', 95)
 
     execution_times = []
@@ -853,8 +853,8 @@ def test_reduction(function, wordlen=1, iteration=10000, verbose=False):
         wordlen1, wordlen2 =  [generate_random_wordlen(wordlen) for _ in range(2)]
         bigint1, bigint2, bigint3, bigint4 = [ctypes.POINTER(bigint)() for _ in range(4)]
 
-        src_array1 = (word * wordlen1)(*(generate_random_number() for _ in range(wordlen1)))
-        src_array2 = (word * wordlen2)(*(generate_random_number() for _ in range(wordlen2)))
+        src_array1 = (word * wordlen1)(*[2])
+        src_array2 = (word * wordlen2)(*[3])
         
         src_num_from_array1 = ''.join(format(x, '08X') for x in reversed(src_array1))
         src_num_from_array2 = ''.join(format(x, '08X') for x in reversed(src_array2))
@@ -872,19 +872,36 @@ def test_reduction(function, wordlen=1, iteration=10000, verbose=False):
         
         # w를 bigint 타입으로 선언
         base = 16
-        temp_bigint = ctypes.POINTER(bigint)()
-        src_string1 = ctypes.c_char_p(f"{hex(wordlen1)}".encode('utf-8'))
-        src_string2 = ctypes.c_char_p(f"0x2".encode('utf-8'))
-        result = function['bi_new'](ctypes.byref(temp_bigint), 1)
-        result = function['bi_set_from_string'](ctypes.byref(bigint3), src_string1, base)
-        result = function['bi_set_from_string'](ctypes.byref(temp_bigint), src_string2, base)
-        result = function['bi_exp_montgomery'](ctypes.byref(bigint3), temp_bigint, bigint3)
-        result = function['bi_mul'](ctypes.byref(temp_bigint), temp_bigint, bigint2)
-        result = function['bi_exp_montgomery'](ctypes.byref(bigint3), bigint3, temp_bigint)
-        function['bi_delete'](ctypes.byref(temp_bigint))
+        temp_bigintA = ctypes.POINTER(bigint)()
+        temp_bigintN = ctypes.POINTER(bigint)()
+        temp_bigintT = ctypes.POINTER(bigint)()
 
-        result = function['bi_mod'](ctypes.byref(bigint4), bigint1, bigint2, bigint3)
+        A_int = 1382058139289313913155088058062394732797793233889
+        N_int = 699000786352191248570217
+        T_int = 2090844053206151817602386
+        AmodN= 309030206782452567950816
+        A = hex(A_int)
+        N = hex(N_int)
+        T = hex(T_int)
+        print(f"\nAnswer(10진수): {AmodN}")
+        print(f"Answer(16진수): {hex(AmodN)}")
+        src_stringA = ctypes.c_char_p(A.encode('utf-8'))
+        src_stringN = ctypes.c_char_p(N.encode('utf-8'))
+        src_stringT = ctypes.c_char_p(T.encode('utf-8'))
+        result = function['bi_set_from_string'](ctypes.byref(temp_bigintA), src_stringA, base)
+        result = function['bi_set_from_string'](ctypes.byref(temp_bigintN), src_stringN, base)
+        result = function['bi_set_from_string'](ctypes.byref(temp_bigintT), src_stringT, base)
+        python_result = int(A, 16) \
+                      % int(N, 16)
+        print(f"Python Result(10진수): {python_result}")
+        print(f"Python Result(16진수): {int_to_hex(python_result)}")
+        result = function['bi_mod'](ctypes.byref(bigint4), temp_bigintA, temp_bigintN, temp_bigintT)
         execution_times.append(result.time)
+
+
+        function['bi_delete'](ctypes.byref(temp_bigintA))
+        function['bi_delete'](ctypes.byref(temp_bigintN))
+        function['bi_delete'](ctypes.byref(temp_bigintT))
 
         c_result = bi_to_int(bigint4)
 
@@ -917,7 +934,7 @@ def test_reduction(function, wordlen=1, iteration=10000, verbose=False):
     if iteration == i + 1:
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
-        drow_and_save_graph(data=execution_times, title="Bigint Reduction", filename="bi_reduction_execution_time.png")
+        drow_and_save_graph(data=execution_times, title="Bigint Reduction", filename="13.bi_reduction_execution_time.png")
 
 def test_shift_left(function, iteration=1, verbose=False):
     print_center(" 3-16. BigInt 시프트(비트) 테스트 ", '-', '\n', 95)
@@ -940,60 +957,6 @@ def test_shift_left(function, iteration=1, verbose=False):
             print('Python Result: ', int_to_hex(python_result))
 
             function['bi_delete'](ctypes.byref(bigint1))
-
-    if iteration == i + 1:
-        print()
-        print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
-
-def test_exponential_ltr(function, wordlen=64, iteration=1000, verbose=False):
-    print_center(" 3-17. BigInt 거듭제곱(L-to-R) 테스트 ", '-', '\n', 95)
-
-    for i in tqdm(range(iteration), desc="BigNum Exponential(Left-to-Right) Test", unit=" iter", ncols=100):
-        sign1, sign2 = POSITIVE, POSITIVE
-        wordlen1, wordlen2 = wordlen, 1
-        bigint1, bigint2, bigint3 = [ctypes.POINTER(bigint)() for _ in range(3)]
-
-        src_array1 = (word * wordlen1)(*(generate_random_number() for _ in range(wordlen1)))
-        src_array2 = (word * wordlen2)(*[30])
-        
-        src_num_from_array1 = ''.join(format(x, '08X') for x in reversed(src_array1))
-        src_num_from_array2 = ''.join(format(x, '08X') for x in reversed(src_array2))
-
-        result = function['bi_new'](ctypes.byref(bigint1), wordlen1)
-        result = function['bi_new'](ctypes.byref(bigint2), wordlen2)
-        result = function['bi_new'](ctypes.byref(bigint3), max(wordlen1, wordlen2))
-        result = function['bi_set_from_array'](ctypes.byref(bigint1), sign1, wordlen1, src_array1)
-        result = function['bi_set_from_array'](ctypes.byref(bigint2), sign2, wordlen2, src_array2)
-        python_result = (((-1 if bigint1.contents.sign == NEGATIVE else 1) * int(src_num_from_array1, 16))) \
-                      ** (((-1 if bigint2.contents.sign == NEGATIVE else 1) * int(src_num_from_array2, 16)))
-        
-        result = function['bi_left_to_right'](ctypes.byref(bigint3), bigint1, bigint2)
-        c_result = bi_to_int(bigint3)
-
-        if c_result == python_result:
-            if verbose:
-                print()
-                for j, bi in enumerate([bigint1, bigint2, bigint3]):
-                    print(f"\nBigInt{j + 1}: ", end='')
-                    function['bi_print'](bi, 16)
-                print()
-                print(f"C Result: {int_to_hex(c_result)}")
-                print(f"Python Result: {int_to_hex(python_result)}\n")
-                print_center(f" TEST SUCCESS {i + 1} ", '-')
-            function['bi_delete'](ctypes.byref(bigint1))
-            function['bi_delete'](ctypes.byref(bigint2))
-            function['bi_delete'](ctypes.byref(bigint3))
-
-        else:
-            print()
-            print_center(" TEST FAIL ", '-')
-            print("BigInt1: ", "-" if bigint1.contents.sign else "", "0x", src_num_from_array1, sep="")
-            print("BigInt2: ", "-" if bigint2.contents.sign else "", "0x", src_num_from_array2, sep="")
-            print("C Result: ", int_to_hex(c_result))
-            print("Python Result: ", int_to_hex(python_result))
-            print()
-            print_center(f" TEST FAIL (Exit At: {i+1}) ", '-')
-            exit(1)
 
     if iteration == i + 1:
         print()
@@ -1129,12 +1092,6 @@ def test():
 
     # 3-20 BigInt 나머지 연산 테스트
     test_reduction(function)
-
-    # 3-16 BigInt 시프트(비트) 테스트
-    # test_shift_left(function)
-
-    # 3-17 BigInt 거듭제곱(L-to-R) 테스트
-    # test_exponential_ltr(function)
 
     # 실행 테스트
     # os.system(command=f"./build/{OS}/IORA")
