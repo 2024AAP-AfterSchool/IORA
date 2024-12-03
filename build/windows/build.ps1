@@ -1,8 +1,3 @@
-$buildDir = "build"
-if (-Not (Test-Path $buildDir)) {
-    New-Item -ItemType Directory -Path $buildDir
-}
+cmake -G "MinGW Makefiles" -DCMAKE_MAKE_PROGRAM="C:/MinGW/bin/mingw32-make.exe" .
 
-cmake .
-
-cmake --build .
+mingw32-make
