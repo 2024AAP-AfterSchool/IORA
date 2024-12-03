@@ -1,6 +1,13 @@
 cmake_minimum_required(VERSION 3.10)
 
-set(CMAKE_C_COMPILER "/usr/bin/gcc")
+if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    set(CMAKE_C_COMPILER "/usr/bin/gcc")
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")  # MacOS
+    set(CMAKE_C_COMPILER "/usr/bin/gcc")
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    set(CMAKE_C_COMPILER "C:/MinGW/bin/gcc.exe")
+endif()
+
 project(IORA LANGUAGES C VERSION 1.0)
 
 # 메모리 검사 옵션
@@ -39,10 +46,8 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     endif()
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     # Windows 환경 설정 (MinGW나 GCC와 같은 컴파일러 사용 시)
-    if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 -fprofile-arcs -ftest-coverage")
-        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-arcs -ftest-coverage")
-    endif()
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 -fprofile-arcs -ftest-coverage")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-arcs -ftest-coverage")
 endif()
 
 # 빌드할 소스 디렉토리와 헤더 파일이 있는 디렉토리를 포함 경로로 추가
@@ -57,7 +62,8 @@ file(GLOB SOURCE_FILES
 # 동적 라이브러리 파일 빌드
 add_library(IORA_LIB_SHARED SHARED ${SOURCE_FILES})
 set_target_properties(IORA_LIB_SHARED PROPERTIES PREFIX "" OUTPUT_NAME "IORA"
-                        LIBRARY_OUTPUT_DIRECTORY ${LIBRARY_OUTPUT_DIRECTORY})
+                        LIBRARY_OUTPUT_DIRECTORY ${LIBRARY_OUTPUT_DIRECTORY}
+                        RUNTIME_OUTPUT_DIRECTORY ${LIBRARY_OUTPUT_DIRECTORY})
 
 # 정적 라이브러리 파일 빌드
 add_library(IORA_LIB_STATIC STATIC ${SOURCE_FILES})
@@ -78,13 +84,15 @@ add_custom_target(coverage
 )
 
 # 메모리 테스트 AddressSanitizer 설정
-if(MEMORY_CHECK)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    if(MEMORY_CHECK)
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")
 
-    enable_testing()
+        enable_testing()
 
-    add_test(NAME AddressSanitizerTest
-        COMMAND $<TARGET_FILE:IORA>
-    )
+        add_test(NAME AddressSanitizerTest
+            COMMAND $<TARGET_FILE:IORA>
+        )
+    endif()
 endif()
