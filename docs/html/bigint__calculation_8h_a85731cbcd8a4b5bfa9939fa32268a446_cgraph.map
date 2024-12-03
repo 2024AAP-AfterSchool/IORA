@@ -1,7 +1,0 @@
-<map id="is_zero" name="is_zero">
-<area shape="rect" id="Node000001" title="bigint가 0인지 확인하는 함수" alt="" coords="5,35,69,60"/>
-<area shape="rect" id="Node000002" href="$memory_8c.html#a7a2336750ce2c077f29a85c1fdd9fb31" title="포인터가 NULL인지 확인하는 함수" alt="" coords="124,5,228,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="68,38,108,30,109,35,70,44"/>
-<area shape="rect" id="Node000003" href="$base__error_8c.html#abc4557fb5f08b0aa1a2de96635497f7f" title="Null 포인터가 발생했을 때 출력하는 함수" alt="" coords="117,55,236,96"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="70,51,102,58,101,63,68,56"/>
-</map>

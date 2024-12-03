@@ -1,1 +1,0 @@
-genhtml ./test/coverage.info -o ./test/coverage_report --title 'IORA Test Coverage' --legend --keep-descriptions

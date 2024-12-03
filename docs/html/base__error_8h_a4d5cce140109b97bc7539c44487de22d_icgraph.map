@@ -1,9 +1,0 @@
-<map id="print_success_shift" name="print_success_shift">
-<area shape="rect" id="Node000001" title="SHIFT 성공 시 출력하는 함수" alt="" coords="308,31,442,56"/>
-<area shape="rect" id="Node000002" href="$bigint__calculation_8c.html#a2937fd643a713afbfc81f59fec3f1798" title="word를 왼쪽으로 shift하는 함수" alt="" coords="133,5,256,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="292,35,257,29,257,24,293,29"/>
-<area shape="rect" id="Node000004" href="$bigint__calculation_8c.html#a14ffb2338123b9430ff965bc10e761fe" title="word를 오른쪽으로 shift하는 함수" alt="" coords="130,55,260,80"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="293,57,261,61,260,56,292,52"/>
-<area shape="rect" id="Node000003" href="$bigint__multiplication_8c.html#a2a7113d3ea7470a08ec3eeb8301aee38" title="두 bigint A와 B의 곱셈을 수행하는 함수" alt="" coords="5,5,82,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="118,21,82,21,82,16,118,16"/>
-</map>

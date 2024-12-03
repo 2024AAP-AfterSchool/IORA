@@ -1,5 +1,0 @@
-<map id="print_success_set_from_array" name="print_success_set_from_array">
-<area shape="rect" id="Node000001" title="배열로부터 bigint에 값을 할당 성공 시 출력하는 함수" alt="" coords="179,5,339,46"/>
-<area shape="rect" id="Node000002" href="$bigint__calculation_8c.html#ac7b2f0e58574cc42b33d3cd6b2025e70" title="arrary를 통해 bigint에 값을 할당하는 함수" alt="" coords="5,13,131,38"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="163,28,131,28,131,23,163,23"/>
-</map>

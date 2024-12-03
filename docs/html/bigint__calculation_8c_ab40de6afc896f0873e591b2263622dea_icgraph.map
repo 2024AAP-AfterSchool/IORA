@@ -1,9 +1,0 @@
-<map id="bi_refine" name="bi_refine">
-<area shape="rect" id="Node000001" title="bigint의 마지막 워드가 0인 경우 bigint의 메모리를 재할당하는 함수" alt="" coords="393,5,464,31"/>
-<area shape="rect" id="Node000002" href="$bigint__calculation_8c.html#a7434576fe036cda0c7da5bde57b03db0" title="bigint에 무작위 값을 할당하는 함수 @create_prime이면 마지막 블럭이 all 0가 되는 것을 방지 = 키 크기 최대한 보장" alt="" coords="239,5,345,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="378,21,346,21,346,16,378,16"/>
-<area shape="rect" id="Node000003" href="$bigint__addition_8c.html#afe02a70ab92f357494f002234b531e45" title="bigint 덧셈 테스트 함수" alt="" coords="103,5,191,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="223,21,192,21,192,16,223,16"/>
-<area shape="rect" id="Node000004" href="$_i_o_r_a_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title=" " alt="" coords="5,5,55,31"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="87,21,55,21,55,16,87,16"/>
-</map>

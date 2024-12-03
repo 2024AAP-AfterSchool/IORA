@@ -1,5 +1,0 @@
-<map id="print_invalid_input_error" name="print_invalid_input_error">
-<area shape="rect" id="Node000001" title="유효하지 않은 입력 에러 시 출력하는 함수" alt="" coords="182,5,307,46"/>
-<area shape="rect" id="Node000002" href="$bigint__calculation_8c.html#aae00b95a98973317f924f62bfb447a20" title="string을 통해 bigint에 값을 할당하는 함수" alt="" coords="5,13,134,38"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="166,28,134,28,134,23,166,23"/>
-</map>

@@ -1,9 +1,0 @@
-<map id="include/utils/memory.h" name="include/utils/memory.h">
-<area shape="rect" id="Node000001" title="메모리 할당, 해제 등 메모리와 관련된 함수들을 정의한 헤더 파일" alt="" coords="29,5,179,31"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,80,105"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,33,65,69,61,65,92,29"/>
-<area shape="rect" id="Node000003" href="$base__type_8h.html" title=" " alt="" coords="104,79,229,105"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="116,29,148,65,144,69,112,33"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="134,153,199,178"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="169,105,169,137,164,137,164,105"/>
-</map>
