@@ -167,9 +167,9 @@ res bi_mul_karatsuba(OUT bigint** dst, IN bigint* A, IN bigint* B)
  
     uint32_t n = (tmp_A->wordlen > B->wordlen) ? tmp_A->wordlen : tmp_B->wordlen;
 
-    if (n <= 20)
+    if (n <= 12)
     {
-        return bi_mul_C(dst, tmp_A, tmp_B);
+        return bi_mul(dst, tmp_A, tmp_B, 0);
     }
 
     uint32_t half = (n + 1) / 2;

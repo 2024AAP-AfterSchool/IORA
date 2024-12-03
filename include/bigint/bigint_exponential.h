@@ -12,4 +12,13 @@ res bi_exp_right_to_left(OUT bigint** dst, IN bigint* A, IN bigint* exp);
 // EXP_MON 함수: Multiply-and-Square(Montgomery) 방식의 거듭제곱 연산을 수행하는 함수
 res bi_exp_montgomery(OUT bigint** dst, IN bigint* A, IN bigint* exp);
 
+// LEFT_TO_RIGHT_MOD 함수: Left-to-right 방식의 거듭제곱 연산을 수행하면서 나머지 연산을 수행하는 함수
+res bi_exp_left_to_right_mod(OUT bigint** dst, IN bigint* A, IN bigint* exp, IN bigint* mod);
+
+// RIGHT_TO_LEFT_MOD 함수: Right-to-left 방식의 거듭제곱 연산을 수행하면서 나머지 연산을 수행하는 함수
+res bi_exp_right_to_left_mod(OUT bigint** dst, IN bigint* A, IN bigint* exp, IN bigint* mod);
+
+// EXP_MON_MOD 함수: Multiply-and-Square(Montgomery) 방식의 거듭제곱 연산을 수행하면서 나머지 연산을 수행하는 함수
+res bi_exp_montgomery_mod(OUT bigint** dst, IN bigint* A, IN bigint* exp, IN bigint* mod);
+
 #endif // BIGINT_EXPONENTIAL_H_
