@@ -227,7 +227,7 @@ res bi_set_from_string(OUT bigint** dst, IN char* str, IN uint32_t base)
     }
 
     // 워드 길이 계산
-    int wordlen = (str_len + 7) / 8;  // 8자리 16진수를 32비트 워드로 변환
+    int wordlen = (str_len + (sizeof(word) * 2 - 1)) / (sizeof(word) * 2);  // 8자리 16진수를 32비트 워드로 변환
     if (*dst == NULL)
     {
         res verification_result = bi_new(dst, wordlen);
@@ -448,8 +448,8 @@ res bi_print(OUT bigint* dst, IN uint32_t base)
 
     printf("0x");
     for (int i = dst->wordlen - 1; i >= 0; i--)
-    {
-        printf("%08X", dst->start[i]);
+    {   
+        printf("%02X", dst->start[i]);
         // TODO: base에 따라 출력 형식을 변경할 수 있도록 구현
     }
     printf("\n");
@@ -556,7 +556,7 @@ int8_t bi_compare(IN bigint* x, IN bigint* y)
  * @param dst bigint의 포인터
  * @param k shift 하고싶은 word 사이즈
  */
-res bi_word_left_shift(OUT bigint** dst, IN word k)
+res bi_word_left_shift(OUT bigint** dst, IN uint32_t k)
 {   
     res result;
     START_TIMER();
@@ -586,7 +586,7 @@ res bi_word_left_shift(OUT bigint** dst, IN word k)
  * @param dst bigint의 포인터
  * @param k shift 하고싶은 bit 사이즈
  */
-res bi_bit_left_shift(OUT bigint** dst, IN word k)
+res bi_bit_left_shift(OUT bigint** dst, IN uint32_t k)
 {
     res result;
     START_TIMER();
@@ -623,13 +623,26 @@ res bi_bit_left_shift(OUT bigint** dst, IN word k)
  * @param dst bigint의 포인터
  * @param k shift 하고싶은 word 사이즈
  */
-res bi_word_right_shift(OUT bigint** dst, IN word k) // k는 shift하고싶은 word 사이즈 의미
+res bi_word_right_shift(OUT bigint** dst, IN uint32_t k) // k는 shift하고싶은 word 사이즈 의미
 {   
     res result;
     START_TIMER();
 
     bigint* tmp = NULL;
-    bi_new(&tmp, (*dst)->wordlen - k);
+
+    if (k >= (*dst)->wordlen)
+    {
+        bi_new(&tmp, 1);
+        tmp->start[0] = 0;
+        tmp->sign = POSITIVE;
+        bi_assign(dst, tmp);
+        bi_delete(&tmp);
+        return result;
+    }    
+    else
+    {
+        bi_new(&tmp, (*dst)->wordlen - k);
+    }
     tmp->sign = (*dst)->sign;
 
     for (int i = 0; i < tmp->wordlen; i++)
@@ -655,7 +668,7 @@ res bi_word_right_shift(OUT bigint** dst, IN word k) // k는 shift하고싶은 w
  * @param dst bigint의 포인터
  * @param k shift 하고싶은 bit 사이즈
  */
-res bi_bit_right_shift(OUT bigint** dst, IN word k)
+res bi_bit_right_shift(OUT bigint** dst, IN uint32_t k)
 {
     res result;
     START_TIMER();
@@ -665,8 +678,19 @@ res bi_bit_right_shift(OUT bigint** dst, IN word k)
     bigint* tmp = NULL;
 
     // 새로운 bigint 생성 (크기를 줄임)
-    bi_new(&tmp, (*dst)->wordlen - word_shift);
-    tmp->sign = (*dst)->sign;
+    if (word_shift >= (*dst)->wordlen) {
+        bi_new(&tmp, 1);
+        tmp->start[0] = 0;
+        tmp->sign = POSITIVE;
+        bi_assign(dst, tmp);
+        bi_delete(&tmp);
+        return result;
+    }
+    else
+    {
+        bi_new(&tmp, (*dst)->wordlen - word_shift);
+        tmp->sign = (*dst)->sign;
+    }
 
     // 비트 이동 수행
     for (uint32_t i = word_shift; i < (*dst)->wordlen; i++) {

@@ -51,10 +51,10 @@ int8_t bi_compare_ABS(IN bigint* x, IN bigint* y);
 int8_t bi_compare(IN bigint* x, IN bigint* y);
 
 // bigint를 shift하는 함수
-res bi_word_left_shift(OUT bigint** dst, IN word k);
-res bi_word_right_shift(OUT bigint** dst, IN word k);
+res bi_word_left_shift(OUT bigint** dst, IN uint32_t k);
+res bi_word_right_shift(OUT bigint** dst, IN uint32_t k);
 
-res bi_bit_left_shift(OUT bigint** dst, IN word k);
-res bi_bit_right_shift(OUT bigint** dst, IN word k);
+res bi_bit_left_shift(OUT bigint** dst, IN uint32_t k);
+res bi_bit_right_shift(OUT bigint** dst, IN uint32_t k);
 
 #endif // BIGINT_CALCULATION_H_

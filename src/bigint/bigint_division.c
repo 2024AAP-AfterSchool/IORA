@@ -52,7 +52,7 @@ res bi_div_bit(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
         if (bi_compare(tmp_R, B) != -1)
         {
             tmp_Q->start[i / (sizeof(word) * 8)] |= (1 << (i % (sizeof(word) * 8))); // Set the i-th bit of Q
-            bi_sub_C(&tmp_R, tmp_R, B); // R = R - B
+            bi_sub(&tmp_R, tmp_R, B); // R = R - B
         }
     }
 
@@ -64,7 +64,7 @@ res bi_div_bit(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
 
         // Add 1 to tmp_Q
         bi_add(&tmp_Q, tmp_Q, one);
-        bi_sub_C(&tmp_R, B, tmp_R);
+        bi_sub(&tmp_R, B, tmp_R);
         tmp_Q->sign = A->sign;
         bi_delete(&one);
     }
@@ -119,19 +119,19 @@ res bi_div_word(OUT bigint** Q, IN bigint* A, IN bigint* B)
             bigint* one = NULL;
             bi_new(&one, 1);
             one->start[0] = 1 << i;
-            bi_add_C(&tmp_Q, tmp_Q, one);
+            bi_add(&tmp_Q, tmp_Q, one);
 
             bi_bit_left_shift(&tmp_R, 1);
             // Add the corresponding bit from A to R
-            word bit = (A->start[0] >> (i)) & 1;
+            uint32_t bit = (A->start[0] >> (i)) & 1;
             tmp_R->start[0] |= bit;
-            bi_sub_C(&tmp_R, tmp_R, B);
+            bi_sub(&tmp_R, tmp_R, B);
             bi_delete(&one);
         }
         else
         {
             // Add the corresponding bit from A to R
-            word bit = (A->start[0] >> (i)) & 1;
+            uint32_t bit = (A->start[0] >> (i)) & 1;
             bi_bit_left_shift(&tmp_R, 1);
             tmp_R->start[0] |= bit;
 
@@ -140,8 +140,8 @@ res bi_div_word(OUT bigint** Q, IN bigint* A, IN bigint* B)
                 bigint* one = NULL;
                 bi_new(&one, 1);
                 one->start[0] = 1 << i;
-                bi_add_C(&tmp_Q, tmp_Q, one);
-                bi_sub_C(&tmp_R, tmp_R, B);
+                bi_add(&tmp_Q, tmp_Q, one);
+                bi_sub(&tmp_R, tmp_R, B);
                 bi_delete(&one);
             }
         }
@@ -170,15 +170,11 @@ res bi_div_CC(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
     res result;
     START_TIMER();
 
-    int word_size = sizeof(word) * 8;
     // word 크기에 따른 마스크 설정
-#if (word_size==32)
-    // 32비트 word의 경우
-    word mask = (1U << (word_size)) - 1;
-#else
-    // 64비트 word의 경우
-    word mask = (1ULL << (word_size)) - 1;
-#endif
+    word mask = (word_size == 8) ? 0xF :
+                (word_size == 32) ? 0xFFFF :
+                 0xFFFFFFFF;
+
     bigint* tmp_A = NULL;
     bigint* tmp_B = NULL;
     bi_refine(A);
@@ -214,7 +210,7 @@ res bi_div_CC(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
         bi_delete(&upper_A);
         bi_delete(&upper_B);
     }
-    bi_mul_C(&tmp_R, tmp_B, tmp_Q);
+    bi_mul(&tmp_R, tmp_B, tmp_Q,0);
     bi_sub(&tmp_R, tmp_A, tmp_R);
 
     bigint* one = NULL;
@@ -226,6 +222,13 @@ res bi_div_CC(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
         bi_sub(&tmp_Q, tmp_Q, one);
         bi_add(&tmp_R, tmp_R, tmp_B);
     }
+    fprintf(stderr, "tmp_Q: ");
+    bi_print(tmp_Q, 16);
+    fprintf(stderr, "tmp_R: ");
+    bi_print(tmp_R, 16);
+    fprintf(stderr, "\n");
+
+
     bi_assign(Q, tmp_Q);
     bi_assign(R, tmp_R);
 
@@ -277,9 +280,9 @@ res bi_div_C(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
     bi_assign(&tmp_A, A);
     bi_assign(&tmp_B, B);
 
-    int k = 0;
+    uint32_t k = 0;
     word highest_word = B->start[B->wordlen - 1];
-    while ((highest_word & (1ULL << (sizeof(word) * 8 - 1))) == 0)
+    while ((highest_word & (1 << (sizeof(word) * 8 - 1))) == 0)
     {
         highest_word <<= 1;
         k++;
@@ -346,7 +349,7 @@ res bi_div(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
         one->start[0] = 1;
         // Add 1 to tmp_Q
         bi_add(&tmp_Q, tmp_Q, one);
-        bi_sub_C(&tmp_R, B, tmp_R);
+        bi_sub(&tmp_R, B, tmp_R);
         //부호 복사
         tmp_Q->sign = A->sign;
         bi_delete(&one);
