@@ -165,8 +165,8 @@ res bi_exp_montgomery(OUT bigint** dst, IN bigint* A, IN bigint* exp)
     bi_new(&t0, 1);
     t0->start[0] = 1;
     bi_assign(&t1, A);
-    
-    for (int i =exp->wordlen * sizeof(word) * 8 - 1; i > -1; i--)
+
+    for (int i = exp->wordlen * sizeof(word) * 8 - 1; i > -1; i--)
     {
         int expi = (exp->start[i / (sizeof(word) * 8)] >> (i % (sizeof(word) * 8)) & 1);
         if (expi == 0)
@@ -213,18 +213,18 @@ res bi_exp_left_to_right_mod(OUT bigint** dst, IN bigint* A, IN bigint* exp, IN 
     bigint* tmp_exp = NULL;
     bi_assign(&tmp_base, A);
     bi_assign(&tmp_exp, exp);
-    for (int i = (tmp_exp->wordlen * sizeof(int) * 8) - 1; i >= 0; i--)
+    for (int i = (tmp_exp->wordlen * word_size)-1; i >= 0; i--)
     {
-        bi_square_karatsuba(&tmp_result, tmp_result);
-        if ((tmp_exp->start[i / (sizeof(int) * 8)] >> (i % (sizeof(int) * 8))) & 1)
+        bi_square(&tmp_result, tmp_result, 0);
+        if ((tmp_exp->start[i / word_size] >> (i % word_size)) & 1)
         {
             bi_mul(&tmp_result, tmp_result, tmp_base, 0);
-          
+
         }
         bigint* tmp_q = NULL;
         bigint* tmp_r = NULL;
         bi_div(&tmp_q, &tmp_r, tmp_result, mod);
-       
+
         bi_assign(&tmp_result, tmp_r);
         bi_delete(&tmp_q);
         bi_delete(&tmp_r);
@@ -278,7 +278,7 @@ res bi_exp_right_to_left_mod(OUT bigint** dst, IN bigint* A, IN bigint* exp, IN 
             bigint* tmp_q = NULL;
             bigint* tmp_r = NULL;
             bi_div(&tmp_q, &tmp_r, tmp_result, mod);
-            
+
             // 결과는 나머지로 업데이트
             bi_assign(&tmp_result, tmp_r);
             // 메모리 해제
@@ -292,7 +292,7 @@ res bi_exp_right_to_left_mod(OUT bigint** dst, IN bigint* A, IN bigint* exp, IN 
         bigint* tmp_q = NULL;
         bigint* tmp_r = NULL;
         bi_div(&tmp_q, &tmp_r, tmp_base, mod);
-        
+
         // base 업데이트
         bi_assign(&tmp_base, tmp_r);
         // 메모리 해제
@@ -330,22 +330,22 @@ res bi_exp_montgomery_mod(OUT bigint** dst, IN bigint* A, IN bigint* exp, IN big
     t0->start[0] = 1;
     bi_assign(&t1, A);
 
-    for (int i = exp->wordlen * sizeof(word) * 8 - 1; i > -1; i--)
+    for (int i = exp->wordlen * word_size - 1; i > -1; i--)
     {
-        int ni = (exp->start[i / (sizeof(word) * 8)] >> (i % (sizeof(word) * 8)) & 1);
+        int ni = (exp->start[i / word_size] >> (i % (word_size)) & 1);
         if (ni == 0)
         {
-            bi_mul_C(&t1, t0, t1);
+            bi_mul(&t1, t0, t1,0);
             // 곱셈 후 mod 연산 적용
             bigint* tmp_q = NULL;
             bigint* tmp_r = NULL;
             bi_div(&tmp_q, &tmp_r, t1, mod);
-           
+
             bi_assign(&t1, tmp_r);
-            bi_square_C(&t0, t0);
+            bi_square(&t0, t0,0);
             // 제곱 후 mod 연산 적용
             bi_div(&tmp_q, &tmp_r, t0, mod);
-           
+
             bi_assign(&t0, tmp_r);
             // 메모리 해제
             bi_delete(&tmp_q);
@@ -353,17 +353,17 @@ res bi_exp_montgomery_mod(OUT bigint** dst, IN bigint* A, IN bigint* exp, IN big
         }
         else
         {
-            bi_mul_C(&t0, t0, t1);
+            bi_mul(&t0, t0, t1,0);
             // 곱셈 후 mod 연산 적용
             bigint* tmp_q = NULL;
             bigint* tmp_r = NULL;
             bi_div(&tmp_q, &tmp_r, t0, mod);
-           
+
             bi_assign(&t0, tmp_r);
-            bi_square_C(&t1, t1);
+            bi_square(&t1, t1,0);
             // 제곱 후 mod 연산 적용
             bi_div(&tmp_q, &tmp_r, t1, mod);
-           
+
             bi_assign(&t1, tmp_r);
             // 메모리 해제
             bi_delete(&tmp_q);

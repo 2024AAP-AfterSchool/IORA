@@ -1,14 +1,18 @@
 import os
+import gc
+import psutil
+import timeit
 import ctypes
 import random
 import platform
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 from tqdm import tqdm
 from datetime import datetime
 from IORA_error import result_code
-from IORA_type import bigint, POSITIVE, NEGATIVE, word, byte, msg, res
+from IORA_type import bigint, POSITIVE, NEGATIVE, word, res
 from IORA_print import print_line, print_center, print_time, print_total_time, print_result
 
 try:
@@ -19,23 +23,34 @@ except ImportError:
 
 seoul_tz = ZoneInfo('Asia/Seoul')
 
+INTENAL_ITERATION = 1
+
 def preset():
+
+    gc.disable()
+
     current_path = os.path.dirname(os.path.realpath(__file__))
     os.chdir(current_path)
     os.chdir("../")
 
 def build_project(OS):
     print_center(" 1. BUILD IORA PROJECT ", '=')
-    
+
+    pid = os.getpid()
+    p = psutil.Process(pid)
+
     if OS == "Darwin":
         OS = "mac"
         os.system(command=f"./build/{OS}/build.sh")
+        p.nice(20)
     elif OS == "Linux":
         OS = "linux"
         os.system(command=f"./build/{OS}/build.sh")
+        p.cpu_affinity([0])
     elif OS == "Windows":
         OS = "windows"
         os.system(command=f"./build/{OS}/build.ps1")
+        p.cpu_affinity([0])
     
     print()
     print_center(" BUILD SUCCESS ", '=')
@@ -50,7 +65,6 @@ def load_library(OS):
     print_center(" 2. LOAD IORA PROJECT ", '=')
 
     lib = ""
-    # 0s.name에 따라
     if OS == 'mac' or OS == 'linux':
         lib = ctypes.CDLL(f"./build/{OS}/IORA.so")
     elif OS == "windows":
@@ -97,7 +111,7 @@ def load_function(lib):
 
     return function
 
-def generate_random_number(variable_length = False, byte_length=4):
+def generate_random_number(variable_length = False, byte_length=1):
     if variable_length:
         byte_length = random.randint(0, byte_length)
 
@@ -106,14 +120,15 @@ def generate_random_number(variable_length = False, byte_length=4):
     return int(hex_number, 16)
 
 def generate_random_wordlen(max_len):
-    return max_len # random.randint(1, max_len)
+    return random.randint(1, max_len)
+    # return max_len
 
 def generate_random_sign():
     return random.choice([POSITIVE, NEGATIVE])
 
 def bi_to_int(target):
     start_of_result = [target.contents.start[i] for i in range(target.contents.wordlen)]
-    bigint_to_int = (-1 if target.contents.sign else 1) * int(''.join(format(x, '08X') for x in reversed(start_of_result)), 16)
+    bigint_to_int = (-1 if target.contents.sign else 1) * int(''.join(format(x, '02X') for x in reversed(start_of_result)), 16)
 
     return bigint_to_int
 
@@ -122,8 +137,8 @@ def int_to_hex(target):
 
 def drow_and_save_graph(data, title, filename):
     
-    execution_times = data
-    avg_time = np.mean(execution_times)
+    execution_times = [round(x, 6) for x in data]
+    avg_time = round(np.mean(execution_times), 6)
     max_time, min_time = max(execution_times), min(execution_times)
     max_index, min_index = execution_times.index(max_time), execution_times.index(min_time)
     
@@ -131,7 +146,7 @@ def drow_and_save_graph(data, title, filename):
     lower_99 = np.percentile(execution_times, 1)
 
     # 그래프 생성
-    fig, ax = plt.subplots(figsize=(12, 9))
+    fig, ax = plt.subplots(figsize=(12, 10))
 
     # 산점도
     ax.scatter(range(len(execution_times)), execution_times, color='#BFECFF', alpha=1, s=25, edgecolors='#555555', linewidths=0.7)
@@ -151,6 +166,9 @@ def drow_and_save_graph(data, title, filename):
                 bbox=dict(facecolor='#EEEEEE', edgecolor='#000000', alpha=0.7))
     ax.set_ylabel("Execution Time (ms)", fontsize=12, color='#333333',
                 bbox=dict(facecolor='#EEEEEE', edgecolor='#000000', alpha=0.7))
+    ax.xaxis.set_major_formatter(ticker.ScalarFormatter(useMathText=False))
+    ax.xaxis.get_offset_text().set_visible(False)
+    ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'{x:.6f}'))
     ax.grid(color='#AAAAAA', linestyle='--', linewidth=0.7, alpha=0.7)
     ax.legend(loc='upper right', fontsize=10, frameon=False)
     
@@ -166,7 +184,6 @@ def drow_and_save_graph(data, title, filename):
     fig.text(0.065, 0.83, f"1th Percentile: {lower_99:.6f} ms", fontsize=12, ha='left', va='top', color='#116A7B',
             bbox=dict(facecolor='#E6F7F0', edgecolor='#006A67', alpha=0.5))
 
-
     # 그래프 간격 조정
     plt.subplots_adjust(top=0.8)
 
@@ -175,20 +192,26 @@ def drow_and_save_graph(data, title, filename):
     plt.savefig(output_path, format='png', dpi=450)
     print(f"Graph saved to {output_path}\n")
 
-def test_addtion(function, wordlen=64, iteration=500, verbose=False):
+def test_addtion(function, wordlen=8, iteration=100, verbose=False):
     print_center(" 3-8. BigInt 덧셈 테스트 ", '-', '\n', 95)
 
-    execution_times = []
+    test_cases = []
+    sign1, sign2 = [generate_random_sign() for _ in range(2)]
     for i in tqdm(range(iteration), desc="BigNum Addition Test", unit=" iter", ncols=100):
-        sign1, sign2 = [generate_random_sign() for _ in range(2)]
+
+        src_array1 = (word * wordlen)(*(generate_random_number() for _ in range(wordlen)))
+        src_array2 = (word * wordlen)(*(generate_random_number() for _ in range(wordlen)))
+
+        # sign1, sign2 = [generate_random_sign() for _ in range(2)]
+        
         wordlen1, wordlen2 = [generate_random_wordlen(wordlen) for _ in range(2)]
         bigint1, bigint2, bigint3 = [ctypes.POINTER(bigint)() for _ in range(3)]
 
-        src_array1 = (word * wordlen1)(*(generate_random_number() for _ in range(wordlen1)))
-        src_array2 = (word * wordlen2)(*(generate_random_number() for _ in range(wordlen2)))
-        
-        src_num_from_array1 = ''.join(format(x, '08X') for x in reversed(src_array1))
-        src_num_from_array2 = ''.join(format(x, '08X') for x in reversed(src_array2))
+        # src_array1 = (word * wordlen1)(*(generate_random_number() for _ in range(wordlen1)))
+        # src_array2 = (word * wordlen2)(*(generate_random_number() for _ in range(wordlen2)))
+
+        src_num_from_array1 = ''.join(format(x, '02X') for x in reversed(src_array1))
+        src_num_from_array2 = ''.join(format(x, '02X') for x in reversed(src_array2))
 
         result = function['bi_new'](ctypes.byref(bigint1), wordlen1)
         result = function['bi_new'](ctypes.byref(bigint2), wordlen2)
@@ -198,42 +221,73 @@ def test_addtion(function, wordlen=64, iteration=500, verbose=False):
 
         python_result = (-1 if bigint1.contents.sign == NEGATIVE else 1) * int(src_num_from_array1, 16) \
                       + (-1 if bigint2.contents.sign == NEGATIVE else 1) * int(src_num_from_array2, 16)
+        
+        internal_execution_times = []
+        for j in range(INTENAL_ITERATION):
 
-        result = function['bi_add'](ctypes.byref(bigint3), bigint1, bigint2)
-        execution_times.append(result.time)
+            result = function['bi_add'](ctypes.byref(bigint3), bigint1, bigint2)
+            internal_execution_times.append(result.time)
 
-        c_result = bi_to_int(bigint3)
-
-        if c_result == python_result:
-            if verbose:
+            c_result = bi_to_int(bigint3)
+            if c_result != python_result:
                 print()
-                for j, bi in enumerate([bigint1, bigint2, bigint3]):
-                    print(f"\nBigInt{j + 1}: ", end='')
-                    function['bi_print'](bi, 16)
+                print_center(" TEST FAIL ", '-')
+                print("BigInt1: ", "-" if bigint1.contents.sign else "", "0x", src_num_from_array1, sep="")
+                print("BigInt2: ", "-" if bigint2.contents.sign else "", "0x", src_num_from_array2, sep="")
                 print("C Result: ", int_to_hex(c_result))
                 print("Python Result: ", int_to_hex(python_result))
-                print_center(f" TEST SUCCESS {i + 1} ", '-')
-            function['bi_delete'](ctypes.byref(bigint1))
-            function['bi_delete'](ctypes.byref(bigint2))
-            function['bi_delete'](ctypes.byref(bigint3))
+                print()
+                print_center(f" TEST FAIL (Exit At: {i+1}) ", '-')
+                exit(1)
 
-        else:
+        test_cases.append({
+            'execution_times': np.mean(internal_execution_times),
+            'bigint1': int_to_hex(bi_to_int(bigint1)),
+            'bigint2': int_to_hex(bi_to_int(bigint2)),
+            'bigint3': int_to_hex(bi_to_int(bigint3)),
+        })
+
+        execution_times = [test_case['execution_times'] for test_case in test_cases]
+
+        if verbose:
             print()
-            print_center(" TEST FAIL ", '-')
-            print("BigInt1: ", "-" if bigint1.contents.sign else "", "0x", src_num_from_array1, sep="")
-            print("BigInt2: ", "-" if bigint2.contents.sign else "", "0x", src_num_from_array2, sep="")
+            for j, bi in enumerate([bigint1, bigint2, bigint3]):
+                print(f"\nBigInt{j + 1}: ", end='')
+                function['bi_print'](bi, 16)
             print("C Result: ", int_to_hex(c_result))
             print("Python Result: ", int_to_hex(python_result))
-            print()
-            print_center(f" TEST FAIL (Exit At: {i+1}) ", '-')
-            exit(1)
+            print_center(f" TEST SUCCESS {i + 1} ", '-')
+
+    function['bi_delete'](ctypes.byref(bigint1))
+    function['bi_delete'](ctypes.byref(bigint2))
+    function['bi_delete'](ctypes.byref(bigint3))
 
     if iteration == i + 1:
         print()
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
         drow_and_save_graph(data=execution_times, title="Bigint Addition", filename="1.bi_addition_execution_time.png")
 
-def test_subtraction(function, wordlen=64, iteration=500, verbose=False):
+        worst_case_index = np.argmax(execution_times)
+        best_case_index = np.argmin(execution_times)
+
+        print(f"worst_case_index: {worst_case_index}")
+        print(f"best_case_index: {best_case_index}\n")
+
+        print("Worst case:")
+        print(f"Execution time: {execution_times[worst_case_index]:.6f}")
+        print(f"Bigint1: {test_cases[worst_case_index]['bigint1']}")
+        print(f"Bigint2: {test_cases[worst_case_index]['bigint2']}")
+        print(f"Bigint3: {test_cases[worst_case_index]['bigint3']}")
+        print()
+
+        print("\nBest case:")
+        print(f"Execution time: {execution_times[best_case_index]:.6f}")
+        print(f"Bigint1: {test_cases[best_case_index]['bigint1']}")
+        print(f"Bigint2: {test_cases[best_case_index]['bigint2']}")
+        print(f"Bigint3: {test_cases[best_case_index]['bigint3']}")
+        print()
+
+def test_subtraction(function, wordlen=64, iteration=1000, verbose=False):
     print_center(" 3-9. BigInt 뺄셈 테스트 ", '-', '\n', 95)
 
     execution_times = []
@@ -576,7 +630,7 @@ def test_division_bit(function, wordlen=64, iteration=500, verbose=False):
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
         drow_and_save_graph(data=execution_times, title="Bigint Division(Bit)", filename="7.bi_division_bit_execution_time.png")
 
-def test_division_word(function, wordlen=64, iteration=500, verbose=False): 
+def test_division_word(function, wordlen=64, iteration=50000, verbose=True): 
     print_center(" 3-15. BigInt 나눗셈 테스트(word) ", '-', '\n', 95)
 
     execution_times = []
@@ -588,8 +642,8 @@ def test_division_word(function, wordlen=64, iteration=500, verbose=False):
         src_array1 = (word * wordlen1)(*(generate_random_number() for _ in range(wordlen1)))
         src_array2 = (word * wordlen2)(*(generate_random_number() for _ in range(wordlen2)))
         
-        src_num_from_array1 = ''.join(format(x, '08X') for x in reversed(src_array1))
-        src_num_from_array2 = ''.join(format(x, '08X') for x in reversed(src_array2))
+        src_num_from_array1 = ''.join(format(x, '02X') for x in reversed(src_array1))
+        src_num_from_array2 = ''.join(format(x, '02X') for x in reversed(src_array2))
 
         result = function['bi_new'](ctypes.byref(bigint1), wordlen1)
         result = function['bi_new'](ctypes.byref(bigint2), wordlen2)
@@ -673,7 +727,7 @@ def test_shift_left(function, iteration=1, verbose=False):
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
         drow_and_save_graph(data=execution_times, title="Bigint Shift(Bit)", filename="9.bi_shift_bit_execution_time.png")
 
-def test_exponential_ltr(function, wordlen=2, iteration=30, verbose=False):
+def test_exponential_ltr(function, wordlen=8, iteration=1000, verbose=True):
     print_center(" 3-17. BigInt 거듭제곱(L-to-R) 테스트 ", '-', '\n', 95)
 
     execution_times = []
@@ -682,14 +736,13 @@ def test_exponential_ltr(function, wordlen=2, iteration=30, verbose=False):
         wordlen1, wordlen2, wordlen3 = [generate_random_wordlen(wordlen) for _ in range(3)]
         bigint1, bigint2, bigint3, bigint4 = [ctypes.POINTER(bigint)() for _ in range(4)]
 
-        wordlen1 = 64
         src_array1 = (word * wordlen1)(*(generate_random_number() for _ in range(wordlen1)))
         src_array2 = (word * wordlen2)(*(generate_random_number() for _ in range(wordlen2)))
         src_array3 = (word * wordlen3)(*(generate_random_number() for _ in range(wordlen3)))
         
-        src_num_from_array1 = ''.join(format(x, '08X') for x in reversed(src_array1))
-        src_num_from_array2 = ''.join(format(x, '08X') for x in reversed(src_array2))
-        src_num_from_array3 = ''.join(format(x, '08X') for x in reversed(src_array3))
+        src_num_from_array1 = ''.join(format(x, '02X') for x in reversed(src_array1))
+        src_num_from_array2 = ''.join(format(x, '02X') for x in reversed(src_array2))
+        src_num_from_array3 = ''.join(format(x, '02X') for x in reversed(src_array3))
 
         result = function['bi_new'](ctypes.byref(bigint1), wordlen1)
         result = function['bi_new'](ctypes.byref(bigint2), wordlen2)
@@ -714,7 +767,7 @@ def test_exponential_ltr(function, wordlen=2, iteration=30, verbose=False):
             if verbose:
                 print()
                 for j, bi in enumerate([bigint1, bigint2, bigint3, bigint4]):
-                    print(f"\nBigInt{j + 1}: ", end='')
+                    print(f"\nBigInt{j + 1}:   ", end='')
                     function['bi_print'](bi, 16)
                 print()
                 print(f"C Result: {int_to_hex(c_result)}")
@@ -751,7 +804,6 @@ def test_exponential_rtl(function, wordlen=2, iteration=30, verbose=False):
         wordlen1, wordlen2, wordlen3 = [generate_random_wordlen(wordlen) for _ in range(3)]
         bigint1, bigint2, bigint3, bigint4 = [ctypes.POINTER(bigint)() for _ in range(4)]
 
-        wordlen1 = 64
         src_array1 = (word * wordlen1)(*(generate_random_number() for _ in range(wordlen1)))
         src_array2 = (word * wordlen2)(*(generate_random_number() for _ in range(wordlen2)))
         src_array3 = (word * wordlen3)(*(generate_random_number() for _ in range(wordlen3)))
@@ -977,9 +1029,9 @@ def test_shift_left(function, iteration=1, verbose=False):
         sign = generate_random_sign()
         
         for j in range(516):
-            src_array = (word * 1)(*[1])
+            src_array = (word * 1)(*[0xFE])
             bigint1 = ctypes.POINTER(bigint)()
-            src_num_from_array = ''.join(format(x, '08X') for x in reversed(src_array))
+            src_num_from_array = ''.join(format(x, '02X') for x in reversed(src_array))
             result = function['bi_new'](ctypes.byref(bigint1), 1)
             result = function['bi_set_from_array'](ctypes.byref(bigint1), sign, 1, src_array)
             function['bi_bit_left_shift'](ctypes.byref(bigint1), (j*4))
@@ -1095,10 +1147,10 @@ def test():
     # test_subtraction(function)
 
     # 3-10 BigInt 곱셈 테스트
-    test_multiplication(function)
+    # test_multiplication(function)
 
     # 3-11 BigInt 곱셈(karatsuba) 테스트
-    test_multiplication_karatsuba(function)
+    # test_multiplication_karatsuba(function)
 
     # 3-12 BigInt 제곱 테스트
     # test_squaring(function)
@@ -1110,7 +1162,7 @@ def test():
     # test_division_bit(function)
 
     # 3-15 BigInt 나눗셈(Word) 테스트
-    # test_division_word(function)
+    test_division_word(function)
 
     # 3-16 BigInt 시프트(비트) 테스트
     # test_shift_left(function)
@@ -1131,6 +1183,9 @@ def test():
     # os.system(command=f"./build/{OS}/IORA")
 
     # 테스트 종료
+
+    gc.enable()
+
     print_center(" FINISH IORA TEST ")
     end_time = datetime.now(seoul_tz)
     print_time(end_time, "END TIME: ", '')
