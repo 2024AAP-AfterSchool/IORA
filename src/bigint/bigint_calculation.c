@@ -511,6 +511,8 @@ void bi_set_zero(OUT bigint** x)
 
 int8_t bi_compare_ABS(IN bigint* x, IN bigint* y)
 {
+    bi_refine(x);
+    bi_refine(y);
     int n = x->wordlen;
     int m = y->wordlen;
 
@@ -637,7 +639,6 @@ res bi_word_right_shift(OUT bigint** dst, IN uint32_t k) // k는 shift하고싶�
         tmp->sign = POSITIVE;
         bi_assign(dst, tmp);
         bi_delete(&tmp);
-        return result;
     }    
     else
     {
@@ -684,7 +685,6 @@ res bi_bit_right_shift(OUT bigint** dst, IN uint32_t k)
         tmp->sign = POSITIVE;
         bi_assign(dst, tmp);
         bi_delete(&tmp);
-        return result;
     }
     else
     {

@@ -10,16 +10,12 @@
 #include <time.h>
 #include "base/base_type.h"
 
-// 고해상도 타이머 시작
 #define START_TIMER() \
-    struct timespec start; \
-    clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+    clock_t start = clock();
 
-// 고해상도 타이머 종료
 #define END_TIMER(result, msg) \
-    struct timespec end; \
-    clock_gettime(CLOCK_MONOTONIC_RAW, &end); \
+    clock_t end = clock(); \
     result.message = msg; \
-    result.time = ((end.tv_sec - start.tv_sec) * 1000.0) + ((end.tv_nsec - start.tv_nsec) / 1e6);
+    result.time = ((double) (end - start)) / CLOCKS_PER_SEC;
 
 #endif // IORA_UTILS_TIME_H_

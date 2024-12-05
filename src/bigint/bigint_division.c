@@ -171,9 +171,9 @@ res bi_div_CC(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
     START_TIMER();
 
     // word 크기에 따른 마스크 설정
-    word mask = (word_size == 8) ? 0xF :
-                (word_size == 32) ? 0xFFFF :
-                 0xFFFFFFFF;
+    word mask = (word_size == 8) ? 0xFF :
+                (word_size == 32) ? 0xFFFFFFFF :
+                 0xFFFFFFFFFFFFFFFF;
 
     bigint* tmp_A = NULL;
     bigint* tmp_B = NULL;
