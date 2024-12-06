@@ -17,14 +17,15 @@
  * @param str 문자열
  * @param base 10진수, 16진수 등 어떻게 해석할지 의미함.
  */
-uint32_t str_to_hex(word** dst, char* str, int base)
+/*
+void str_to_hex(word** dst, char* str, int base)
 {
     char* end = NULL;
 
     uint32_t length = strlen(str);
     uint32_t chunk_size = 8; 
 
-    free_if_exist(dst);
+    free_if_exist((void**)dst);
 
     for (int i = 0; i < length; i += chunk_size)
     {
@@ -42,11 +43,11 @@ uint32_t str_to_hex(word** dst, char* str, int base)
         
         if (!is_valid)
         {
-            return -1;
+            // return -1;
         }
     }
 }
-
+*/
 /**
  * @brief 문자열이 10진수인지 확인하는 함수
  * @param c 문자열
