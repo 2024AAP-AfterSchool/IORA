@@ -59,10 +59,6 @@ def build_project(OS):
     return OS
 
 def load_library(OS):
-    # ==64738==ERROR: Interceptors are not working. This may be because AddressSanitizer is loaded too late (e.g. via dlopen). Please launch the executable with:
-    # DYLD_INSERT_LIBRARIES=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/lib/darwin/libclang_rt.asan_osx_dynamic.dylib
-    # 위 문제 발생 시, 아래 명령어 수행(AddressSanitizer 사용을 위함)
-    # export DYLD_INSERT_LIBRARIES=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/lib/darwin/libclang_rt.asan_osx_dynamic.dylib
     print_center(" 2. LOAD IORA PROJECT ", '=')
 
     lib = ""

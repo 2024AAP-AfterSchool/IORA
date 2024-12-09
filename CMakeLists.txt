@@ -28,7 +28,7 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")  # MacOS
     set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/build/mac)
 endif()
 
-# 컴파일 옵션 및 커버리지 설정 분기
+# 컴파일 옵션 분기
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     # Linux 환경 설정
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -O3 -fprofile-arcs")
