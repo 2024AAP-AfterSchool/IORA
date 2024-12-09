@@ -8,6 +8,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <time.h>
 #include "utils/time.h"
 #include "utils/string.h"
 #include "utils/memory.h"
@@ -16,7 +17,98 @@
 #include "bigint/bigint_calculation.h"
 
 
-//#define create_prameter
+/**
+ * @brief bigint에 무작위 값을 할당하는 함수
+ * @create_prime이면 마지막 블럭이 all 0가 되는 것을 방지 = 키 크기 최대한 보장
+ * @param dst bigint의 포인터
+ * @param sign 부호
+ * @param wordlen 배열의 길이
+ */
+
+
+res bi_get_random(OUT bigint** dst, IN uint32_t sign, IN uint32_t wordlen) {   
+    res result;
+    START_TIMER();
+
+    if (wordlen <= 0) {
+        END_TIMER(result, print_invalid_word_length_error());
+        return result;
+    }
+
+    // 랜덤 시드 초기화 (시간 기반)
+    srand((unsigned int)clock());
+
+    // 메모리 할당
+    bi_new(dst, wordlen);
+    (*dst)->sign = sign;
+
+    for (int i = 0; i < wordlen; i++) {
+        (*dst)->start[i] = 0x00;
+
+        for (int j = 1; j < sizeof(word); j++) {   
+            (*dst)->start[i] |= rand() & 0xFF; // 랜덤 값 생성
+            (*dst)->start[i] <<= 8;
+        }
+        (*dst)->start[i] |= rand() & 0xFF;
+    }
+#ifdef create_prameter
+    // 마지막 단어가 0이 아닌 값으로 보장
+    if ((*dst)->start[wordlen - 1] == 0) {
+        do {
+            (*dst)->start[wordlen - 1] = rand() & 0xFF;
+        } while ((*dst)->start[wordlen - 1] == 0);
+    }
+#endif
+
+    // 불필요한 0 제거
+    bi_refine(*dst);
+
+    END_TIMER(result, print_success_gen_rand());
+    return result;
+}
+/*
+res bi_get_random(OUT bigint** dst, IN uint32_t sign, IN uint32_t wordlen)
+{   
+    res result;
+    START_TIMER();
+
+    if (wordlen <= 0)
+    {
+        END_TIMER(result, print_invalid_word_length_error());
+        return result;
+    }
+
+    bi_new(dst, wordlen);
+
+    (*dst)->sign = sign;
+
+    for (int i = 0; i < wordlen; i++)
+    {
+        (*dst)->start[i]=0x00;
+
+        for (int j = 1; j < sizeof(word); j++)
+        {   
+            (*dst)->start[i] |= rand() & 0xFF;
+            (*dst)->start[i] <<= 8;
+        }
+    }
+
+#ifdef create_prameter
+    if ((*dst)->start[wordlen - 1] == 0)
+    {
+        (*dst)->start[wordlen - 1] = rand() & 0xFF;
+        while ((*dst)->start[wordlen - 1] == 0)
+        {
+            (*dst)->start[wordlen - 1] = rand() & 0xFF; // 0이 아닌 값을 보장
+        }
+    }
+#endif
+    bi_refine(*dst);
+
+    END_TIMER(result, print_success_gen_rand());
+    return result;
+}
+*/
 
  /**
   * @brief bigint의 값을 다른 bigint로 할당하는 함수
@@ -301,8 +393,10 @@ res bi_set_from_string(OUT bigint** dst, IN char* str, IN uint32_t base)
  * @create_prime이면 마지막 블럭이 all 0가 되는 것을 방지 = 키 크기 최대한 보장
  * @param dst bigint의 포인터
  * @param sign 부호
- * @param wordlen 배열의 길이
+ * @param byte 배열의 바이트 길이
  */
+
+/*
 res bi_get_random(OUT bigint** dst, IN uint32_t sign, IN uint32_t wordlen)
 {   
     res result;
@@ -344,6 +438,7 @@ res bi_get_random(OUT bigint** dst, IN uint32_t sign, IN uint32_t wordlen)
     END_TIMER(result, print_success_gen_rand());
     return result;
 }
+*/
 
 /**
  * @brief bigint의 마지막 워드가 0인 경우 bigint의 메모리를 재할당하는 함수
@@ -526,19 +621,28 @@ bool bi_is_one(OUT bigint* dst)
     return true;
 }
 
-void bi_set_zero(OUT bigint** x)
+/**
+ * @brief bigint가 0으로 초기화하는 함수
+ * @param dst bigint의 포인터
+ */
+void bi_set_zero(OUT bigint** dst)
 {
-    bi_new(x, 1);
-    (*x)->sign = POSITIVE;
-    (*x)->start[0] = 0;
+    bi_new(dst, 1);
+    (*dst)->sign = POSITIVE;
+    (*dst)->start[0] = 0;
 }
 
-int8_t bi_compare_ABS(IN bigint* x, IN bigint* y)
+/**
+ * @brief bigint A와 B의 절대 값 비교 함수
+ * @param dst_A bigint의 포인터
+ * @param dst_B bigint의 포인터
+ */
+int8_t bi_compare_ABS(IN bigint* dst_A, IN bigint* dst_B)
 {
-    bi_refine(x);
-    bi_refine(y);
-    int n = x->wordlen;
-    int m = y->wordlen;
+    bi_refine(dst_A);
+    bi_refine(dst_B);
+    int n = dst_A->wordlen;
+    int m = dst_B->wordlen;
 
     // Case: A > B
     if (n > m)
@@ -550,10 +654,10 @@ int8_t bi_compare_ABS(IN bigint* x, IN bigint* y)
 
     for (int i = n - 1; i >= 0; i--) {
 
-        if (x->start[i] > y->start[i])
+        if (dst_A->start[i] > dst_B->start[i])
             return 1;
 
-        if (x->start[i] < y->start[i])
+        if (dst_A->start[i] < dst_B->start[i])
             return -1;
 
     }
@@ -561,17 +665,22 @@ int8_t bi_compare_ABS(IN bigint* x, IN bigint* y)
     return 0;
 }
 
-int8_t bi_compare(IN bigint* x, IN bigint* y)
+/**
+ * @brief bigint A와 B의 값 대소 비교 함수
+ * @param dst_A bigint의 포인터
+ * @param dst_B bigint의 포인터
+ */
+int8_t bi_compare(IN bigint* dst_A, IN bigint* dst_B)
 {
-    if (x->sign == POSITIVE && y->sign == NEGATIVE)
+    if (dst_A->sign == POSITIVE && dst_B->sign == NEGATIVE)
         return 1;
 
-    if (x->sign == NEGATIVE && y->sign == POSITIVE)
+    if (dst_A->sign == NEGATIVE && dst_B->sign == POSITIVE)
         return -1;
 
-    int res = bi_compare_ABS(x, y);
+    int res = bi_compare_ABS(dst_A, dst_B);
 
-    if (x->sign == POSITIVE)
+    if (dst_A->sign == POSITIVE)
         return res;
 
     return res * (-1);
@@ -656,13 +765,14 @@ res bi_bit_left_shift(OUT bigint** dst, IN uint32_t k)
  * @param dst bigint의 포인터
  * @param k shift 하고싶은 bit 사이즈
  */
+
 res bi_word_right_shift(OUT bigint** dst, IN uint32_t k) // k는 shift하고싶은 word 사이즈 의미
 {
     res result;
     START_TIMER();
 
     bigint* tmp = NULL;
-
+    
     if (k >= (*dst)->wordlen)
     {
         bi_new(&tmp, 1);
@@ -670,6 +780,8 @@ res bi_word_right_shift(OUT bigint** dst, IN uint32_t k) // k는 shift하고싶�
         tmp->sign = POSITIVE;
         bi_assign(dst, tmp);
         bi_delete(&tmp);
+
+        END_TIMER(result, print_success_shift());
         return result;
     }
     else
@@ -696,6 +808,7 @@ res bi_word_right_shift(OUT bigint** dst, IN uint32_t k) // k는 shift하고싶�
     return result;
 }
 
+
 /**
  * @brief bit를 오른쪽으로 shift하는 함수
  * @param dst bigint의 포인터
@@ -717,7 +830,6 @@ res bi_bit_right_shift(OUT bigint** dst, IN uint32_t k)
         tmp->sign = POSITIVE;
         bi_assign(dst, tmp);
         bi_delete(&tmp);
-        return result;
     }
     else
     {

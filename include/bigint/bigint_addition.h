@@ -1,3 +1,8 @@
+/**
+ * @file bigint_addition.h
+ * @brief bigint의 덧셈을 수행하는 함수들을 선언한 헤더 파일
+ * @date 2024-11-01
+ */
 #ifndef BIGINT_ADDITION_H_
 #define BIGINT_ADDITION_H_
 

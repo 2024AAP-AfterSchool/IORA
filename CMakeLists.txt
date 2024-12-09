@@ -7,9 +7,6 @@ endif()
 
 project(IORA LANGUAGES C VERSION 1.0)
 
-# 메모리 검사 옵션
-option(MEMORY_CHECK "Enable Memory Check" ON)
-
 # C 표준을 C99로 설정
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED True)
@@ -31,21 +28,21 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")  # MacOS
     set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/build/mac)
 endif()
 
-# 컴파일 옵션 및 커버리지 설정 분기
+# 컴파일 옵션 분기
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     # Linux 환경 설정
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -O3 -fprofile-arcs -ftest-coverage")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-arcs -ftest-coverage")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -O3 -fprofile-arcs")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-arcs ")
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     # MacOS 환경 설정
     if(CMAKE_C_COMPILER_ID STREQUAL "AppleClang" OR CMAKE_C_COMPILER_ID STREQUAL "Clang")
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -O3 -fprofile-arcs -ftest-coverage")
-        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-arcs -ftest-coverage")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -O3 -fprofile-arcs")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-arcs")
     endif()
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     # Windows 환경 설정
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -O3 -fprofile-arcs -ftest-coverage")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-arcs -ftest-coverage")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -O3 -fprofile-arcs")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-arcs")
 endif()
 
 # 빌드할 소스 디렉토리와 헤더 파일이 있는 디렉토리를 포함 경로로 추가
@@ -58,7 +55,11 @@ file(GLOB SOURCE_FILES
 )
 
 # 실행 파일 빌드
-#add_executable(IORA ${SOURCE_FILES})
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    add_executable(IORA ${SOURCE_FILES})
+    set_target_properties(IORA PROPERTIES OUTPUT_NAME "IORA"
+                        RUNTIME_OUTPUT_DIRECTORY ${EXECUTABLE_OUTPUT_PATH})
+endif()
 
 # main 함수는 라이브러리 만들 때 제외
 list(REMOVE_ITEM SOURCE_FILES ${PROJECT_SOURCE_DIR}/src/main.c)
@@ -73,16 +74,6 @@ set_target_properties(IORA_LIB_SHARED PROPERTIES PREFIX "" OUTPUT_NAME "IORA"
 add_library(IORA_LIB_STATIC STATIC ${SOURCE_FILES})
 set_target_properties(IORA_LIB_STATIC PROPERTIES PREFIX "" OUTPUT_NAME "IORA"
                         ARCHIVE_OUTPUT_DIRECTORY ${LIBRARY_OUTPUT_DIRECTORY})
-
-# 커버리지 리포트 생성
-add_custom_target(coverage
-    COMMAND ${CMAKE_MAKE_PROGRAM} test
-    COMMAND lcov --capture --directory . --output-file ./test/coverage.info --rc lcov_branch_coverage=1 --ignore-errors deprecated
-    COMMAND lcov --list ./test/coverage.info
-    COMMENT "Generating Test Coverage Report"
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-    VERBATIM
-)
 
 # 메모리 테스트 AddressSanitizer 설정
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")

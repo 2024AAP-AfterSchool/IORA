@@ -54,6 +54,6 @@ res bi_mod(OUT bigint** dst, IN bigint* A, IN bigint* n, IN bigint* T)
     bi_assign(dst, tmp_Q);
     bi_delete(&tmp_A);
 
-    END_TIMER(result, SUCCESS_MOD);
+    END_TIMER(result, print_success_mod());
     return result;
 }

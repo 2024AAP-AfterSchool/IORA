@@ -65,16 +65,6 @@ CMAKE_BINARY_DIR = "/Users/donghwoocho/workspace/고급응용프로그래밍(202
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running tests..."
-	/opt/homebrew/Cellar/cmake/3.29.4/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-.PHONY : test/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running CMake cache editor..."
@@ -164,19 +154,6 @@ IORA_LIB_STATIC: cmake_check_build_system
 IORA_LIB_STATIC/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/IORA_LIB_STATIC.dir/build.make CMakeFiles/IORA_LIB_STATIC.dir/build
 .PHONY : IORA_LIB_STATIC/fast
-
-#=============================================================================
-# Target rules for targets named coverage
-
-# Build rule for target.
-coverage: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 coverage
-.PHONY : coverage
-
-# fast build rule for target.
-coverage/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/coverage.dir/build.make CMakeFiles/coverage.dir/build
-.PHONY : coverage/fast
 
 src/IORA.o: src/IORA.c.o
 .PHONY : src/IORA.o
@@ -448,6 +425,36 @@ src/bigint/bigint_subtraction.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/IORA_LIB_STATIC.dir/build.make CMakeFiles/IORA_LIB_STATIC.dir/src/bigint/bigint_subtraction.c.s
 .PHONY : src/bigint/bigint_subtraction.c.s
 
+src/crypto/RSA.o: src/crypto/RSA.c.o
+.PHONY : src/crypto/RSA.o
+
+# target to build an object file
+src/crypto/RSA.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IORA.dir/build.make CMakeFiles/IORA.dir/src/crypto/RSA.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IORA_LIB_SHARED.dir/build.make CMakeFiles/IORA_LIB_SHARED.dir/src/crypto/RSA.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IORA_LIB_STATIC.dir/build.make CMakeFiles/IORA_LIB_STATIC.dir/src/crypto/RSA.c.o
+.PHONY : src/crypto/RSA.c.o
+
+src/crypto/RSA.i: src/crypto/RSA.c.i
+.PHONY : src/crypto/RSA.i
+
+# target to preprocess a source file
+src/crypto/RSA.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IORA.dir/build.make CMakeFiles/IORA.dir/src/crypto/RSA.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IORA_LIB_SHARED.dir/build.make CMakeFiles/IORA_LIB_SHARED.dir/src/crypto/RSA.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IORA_LIB_STATIC.dir/build.make CMakeFiles/IORA_LIB_STATIC.dir/src/crypto/RSA.c.i
+.PHONY : src/crypto/RSA.c.i
+
+src/crypto/RSA.s: src/crypto/RSA.c.s
+.PHONY : src/crypto/RSA.s
+
+# target to generate assembly for a file
+src/crypto/RSA.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IORA.dir/build.make CMakeFiles/IORA.dir/src/crypto/RSA.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IORA_LIB_SHARED.dir/build.make CMakeFiles/IORA_LIB_SHARED.dir/src/crypto/RSA.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/IORA_LIB_STATIC.dir/build.make CMakeFiles/IORA_LIB_STATIC.dir/src/crypto/RSA.c.s
+.PHONY : src/crypto/RSA.c.s
+
 src/utils/memory.o: src/utils/memory.c.o
 .PHONY : src/utils/memory.o
 
@@ -516,8 +523,6 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... test"
-	@echo "... coverage"
 	@echo "... IORA"
 	@echo "... IORA_LIB_SHARED"
 	@echo "... IORA_LIB_STATIC"
@@ -548,6 +553,9 @@ help:
 	@echo "... src/bigint/bigint_subtraction.o"
 	@echo "... src/bigint/bigint_subtraction.i"
 	@echo "... src/bigint/bigint_subtraction.s"
+	@echo "... src/crypto/RSA.o"
+	@echo "... src/crypto/RSA.i"
+	@echo "... src/crypto/RSA.s"
 	@echo "... src/utils/memory.o"
 	@echo "... src/utils/memory.i"
 	@echo "... src/utils/memory.s"

@@ -163,7 +163,7 @@ res bi_add(OUT bigint** dst, IN bigint* A, IN bigint* B)
     bi_assign(dst,tmp_result);
     bi_delete(&tmp_result);
     
-    END_TIMER(result, SUCCESS_ADD);
+    END_TIMER(result, print_success_add());
     return result;
 }
 

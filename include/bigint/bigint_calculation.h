@@ -1,3 +1,9 @@
+/**
+ * @file bigint_calculation.h
+ * @brief bigint에 대한 연산을 하는 함수들을 정의한 헤더 파일
+ * @date 2024-10-18
+ * @author 조동후
+ */
 #ifndef BIGINT_CALCULATION_H_
 #define BIGINT_CALCULATION_H_
 
@@ -21,7 +27,7 @@ res bi_set_from_string(OUT bigint** dst, IN char* str, IN uint32_t base);
 
 // random 값으로 생성한 배열의 가장 마지막 인덱스는 0이 되어서는 안됨.
 // 0일 경우 wordlen보다 작은 값이 나옴.
-res bi_get_random(OUT bigint** dst, IN uint32_t sign, IN uint32_t wordlen);
+res bi_get_random(OUT bigint** dst, IN uint32_t sign, IN uint32_t byte);
 
 // bigint의 마지막 워드가 0인 경우 bigint의 메모리를 재할당하는 함수
 res bi_refine(OUT bigint* dst);
@@ -44,11 +50,11 @@ bool bi_is_one(OUT bigint* dst);
 bool bi_is_zero(OUT bigint* dst);
 
 // set zero 확인하는 함수
-void bi_set_zero(OUT bigint** x);
+void bi_set_zero(OUT bigint** dst);
 
 // 두 큰수 비교하는 함수
-int8_t bi_compare_ABS(IN bigint* x, IN bigint* y);
-int8_t bi_compare(IN bigint* x, IN bigint* y);
+int8_t bi_compare_ABS(IN bigint* dst_A, IN bigint* dst_B);
+int8_t bi_compare(IN bigint* dst_A, IN bigint* dst_B);
 
 // bigint를 shift하는 함수
 res bi_word_left_shift(OUT bigint** dst, IN uint32_t k);

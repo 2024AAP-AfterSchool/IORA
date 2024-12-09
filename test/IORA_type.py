@@ -4,7 +4,7 @@ import ctypes
 POSITIVE = 0
 NEGATIVE = 1
 byte = ctypes.c_uint8
-word = ctypes.c_uint8
+word = ctypes.c_uint64
 msg = ctypes.c_uint32
 
 

@@ -1,3 +1,9 @@
+/**
+ * @file bigint_exponential.h
+ * @brief bigint에 대한 지수 연산을 하는 함수들을 정의한 헤더 파일
+ * @date 2024-11-29
+ * @author 송원우, 김남일
+ */
 #ifndef BIGINT_EXPONENTIAL_H_
 #define BIGINT_EXPONENTIAL_H_
 
