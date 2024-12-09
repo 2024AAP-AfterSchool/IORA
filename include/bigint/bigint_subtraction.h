@@ -1,3 +1,8 @@
+/**
+ * @file bigint_subtraction.h
+ * @brief bigint의 뺄셈을 수행하는 함수들을 선언한 헤더 파일
+ * @date 2024-11-01
+ */
 #ifndef BIGINT_SUBTRACTION_H_
 #define BIGINT_SUBTRACTION_H_
 

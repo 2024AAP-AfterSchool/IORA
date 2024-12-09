@@ -1,3 +1,9 @@
+/**
+ * @file bigint_calculation.h
+ * @brief bigint에 대한 연산을 하는 함수들을 정의한 헤더 파일
+ * @date 2024-10-18
+ * @author 조동후
+ */
 #ifndef BIGINT_CALCULATION_H_
 #define BIGINT_CALCULATION_H_
 

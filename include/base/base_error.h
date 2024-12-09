@@ -1,3 +1,9 @@
+/**
+ * @file base_error.h
+ * @brief bigint에 대한 에러 및 성공 코드를 출력하는 함수들을 정의한 헤더 파일
+ * @date 2024-10-22
+ * @author 송원우
+ */
 #ifndef IORA_BASE_ERROR_H_
 #define IORA_BASE_ERROR_H_
 

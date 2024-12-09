@@ -1,3 +1,9 @@
+/**
+ * @file base_type.h
+ * @brief 기본적인 데이터 타입을 정의한 헤더 파일
+ * @date 2024-10-18
+ * @author 조동후
+ */
 #ifndef IORA_BASE_TYPE_H_
 #define IORA_BASE_TYPE_H_
 

@@ -1,5 +1,5 @@
 /**
- * @file bigint_error.c
+ * @file base_error.c
  * @brief bigint에 대한 에러 및 성공 코드를 출력하는 함수들을 정의한 소스 파일
  * @date 2024-10-22
  * @author 송원우

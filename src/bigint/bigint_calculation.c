@@ -780,6 +780,8 @@ res bi_word_right_shift(OUT bigint** dst, IN uint32_t k) // k는 shift하고싶�
         tmp->sign = POSITIVE;
         bi_assign(dst, tmp);
         bi_delete(&tmp);
+
+        END_TIMER(result, print_success_shift());
         return result;
     }
     else

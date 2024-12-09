@@ -1,4 +1,8 @@
-
+/**
+ * @file RSA.h
+ * @brief RSA 암호화 알고리즘을 구현한 헤더 파일
+ * @date 2024-12-09
+ */
 #ifndef CRYPTO_RSA_H_
 #define CRYPTO_RSA_H_
 

@@ -1,3 +1,9 @@
+/**
+ * @file RSA.c
+ * @brief RSA 암호화 알고리즘을 구현한 소스 파일
+ * @date 2024-12-09
+ * @author 김남일
+ */
 #include <stdio.h>
 #include "utils/time.h"
 #include "base/base_type.h"
@@ -10,6 +16,14 @@
 #include "bigint/bigint_exponential.h"
 #include "crypto/RSA.h"
 
+/**
+ * @brief 확장 유클리드 알고리즘을 수행하는 함수
+ * @param gcd 최대공약수
+ * @param x x에 대한 역원
+ * @param y y에 대한 역원
+ * @param A bigint A
+ * @param B bigint B
+ */
 res bi_extended_euclidean(OUT bigint** gcd, OUT bigint** x, OUT bigint** y, IN bigint* A, IN bigint* B)
 {
     res result;
@@ -93,7 +107,12 @@ res bi_extended_euclidean(OUT bigint** gcd, OUT bigint** x, OUT bigint** y, IN b
     return result;
 }
 
-
+/**
+ * @brief 유클리드 알고리즘을 수행하는 함수
+ * @param gcd 최대공약수
+ * @param A bigint A
+ * @param B bigint B
+ */
 res bi_euclidean(OUT bigint** gcd, IN bigint* A, IN bigint* B)
 {
     res result;
@@ -175,8 +194,12 @@ res bi_euclidean(OUT bigint** gcd, IN bigint* A, IN bigint* B)
     return result;
 }
 
-
-
+/**
+ * @brief 밀러-라빈 소수 판별법을 수행하는 함수
+ * @param a 밀러-라빈 테스트에서 사용할 bigint
+ * @param n 밀러-라빈 테스트에서 사용할 bigint
+ * @return 소수이면 1, 아니면 0
+ */
 res Primality_Test(bigint* IN a, bigint* IN n)
 {
     res result;
@@ -272,6 +295,13 @@ res Primality_Test(bigint* IN a, bigint* IN n)
     return result;
 }
 
+/**
+ * @brief RSA 암호화에 필요한 파라미터를 생성하는 함수
+ * @param n RSA 암호화에 사용할 n 값
+ * @param e RSA 암호화에 사용할 e 값
+ * @param d RSA 암호화에 사용할 d 값
+ * @param size RSA 암호화에 사용할 비트 수
+ */
 res RSA_parameter_create(OUT bigint** n, OUT bigint** e, OUT bigint** d, IN uint32_t size)
 {
     res result;
@@ -369,6 +399,13 @@ res RSA_parameter_create(OUT bigint** n, OUT bigint** e, OUT bigint** d, IN uint
     return result;
 }
 
+/**
+ * @brief RSA 암호화를 수행하는 함수
+ * @param c RSA 암호화 결과
+ * @param m RSA 암호화할 메시지
+ * @param e RSA 암호화에 사용할 e 값
+ * @param n RSA 암호화에 사용할 n 값
+ */
 res RSA_encrypt(OUT bigint** c, IN bigint* m, IN bigint* e, IN bigint* n)
 {
     res result;
@@ -380,6 +417,13 @@ res RSA_encrypt(OUT bigint** c, IN bigint* m, IN bigint* e, IN bigint* n)
     return result;
 }
 
+/**
+ * @brief RSA 복호화를 수행하는 함수
+ * @param m RSA 복호화 결과
+ * @param c RSA 복호화할 메시지
+ * @param d RSA 복호화에 사용할 d 값
+ * @param n RSA 복호화에 사용할 n 값
+ */
 res RSA_decrypt(OUT bigint** m, IN bigint* c, IN bigint* d, IN bigint* n)
 {
     res result;

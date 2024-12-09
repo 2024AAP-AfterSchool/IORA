@@ -1,3 +1,9 @@
+/**
+ * @file bigint_reduction.h
+ * @brief bigint에 대한 나머지 연산을 하는 함수들을 정의한 헤더 파일
+ * @date 2024-12-01
+ * @author 김남일
+ */
 #ifndef BIGINT_REDUCTION_H_
 #define BIGINT_REDUCTION_H_
 
