@@ -57,7 +57,7 @@ res bi_exp_left_to_right(OUT bigint** dst, IN bigint* A, IN bigint* exp)
         // 현재 비트가 1인 경우 result = result * base
         if ((tmp_exp->start[i / (sizeof(word) * 8)] >> (i % (sizeof(word) * 8))) & 1)
         {
-            res mul_verification_result = bi_mul(&tmp_result, tmp_result, tmp_base, 0);
+            res mul_verification_result = bi_mul(&tmp_result, tmp_result, tmp_base, 1);
             if (mul_verification_result.message != SUCCESS_MUL)
             {
                 bi_delete(&tmp_result);
@@ -75,7 +75,7 @@ res bi_exp_left_to_right(OUT bigint** dst, IN bigint* A, IN bigint* exp)
     bi_delete(&tmp_base);
     bi_delete(&tmp_exp);
 
-    END_TIMER(result, SUCCESS_EXP);
+    END_TIMER(result, print_success_left_to_right());
     return result;
 }
 
@@ -145,7 +145,7 @@ res bi_exp_right_to_left(OUT bigint** dst, IN bigint* A, IN bigint* exp)
     bi_delete(&tmp_base);
     bi_delete(&tmp_exp);
 
-    END_TIMER(result, SUCCESS_EXP);
+    END_TIMER(result, print_success_right_to_left());
     return result;
 }
 
@@ -184,7 +184,7 @@ res bi_exp_montgomery(OUT bigint** dst, IN bigint* A, IN bigint* exp)
     bi_delete(&t0);
     bi_delete(&t1);
 
-    END_TIMER(result, SUCCESS_EXP);
+    END_TIMER(result, print_success_montgomery());
     return result;
 }
 
@@ -195,46 +195,58 @@ res bi_exp_montgomery(OUT bigint** dst, IN bigint* A, IN bigint* exp)
  * @param exp 지수가 되는 bigint
  * @param mod 나머지가 되는 bigint
  */
+
 res bi_exp_left_to_right_mod(OUT bigint** dst, IN bigint* A, IN bigint* exp, IN bigint* mod)
 {
     res result;
     START_TIMER();
 
+    
     if (A == NULL || exp == NULL || dst == NULL || mod == NULL)
     {
         END_TIMER(result, NULL_POINTER_ERROR);
         return result;
     }
-
+    
+    // 초기값 설정
     bigint* tmp_result = NULL;
-    bi_new(&tmp_result, 1);
-    tmp_result->start[0] = 1;
     bigint* tmp_base = NULL;
-    bigint* tmp_exp = NULL;
-    bi_assign(&tmp_base, A);
-    bi_assign(&tmp_exp, exp);
-    for (int i = (tmp_exp->wordlen * word_size)-1; i >= 0; i--)
-    {
-        bi_square(&tmp_result, tmp_result, 0);
-        if ((tmp_exp->start[i / word_size] >> (i % word_size)) & 1)
-        {
-            bi_mul(&tmp_result, tmp_result, tmp_base, 0);
+    bi_new(&tmp_result, 1);  // 결과값 초기화
+    tmp_result->start[0] = 1;
+    bi_assign(&tmp_base, A); // A를 tmp_base에 복사
 
-        }
+    // 지수 연산 수행 (왼쪽에서 오른쪽으로 처리)
+    for (int i = (exp->wordlen * word_size) - 1; i >= 0; i--)
+    {
+        // tmp_result = tmp_result^2 % mod
+        bi_square(&tmp_result, tmp_result, 1); // 제곱
         bigint* tmp_q = NULL;
         bigint* tmp_r = NULL;
-        bi_div(&tmp_q, &tmp_r, tmp_result, mod);
-
-        bi_assign(&tmp_result, tmp_r);
+        bi_div(&tmp_q, &tmp_r, tmp_result, mod); // mod 연산
+        bi_assign(&tmp_result, tmp_r); // 나머지를 tmp_result에 저장
         bi_delete(&tmp_q);
         bi_delete(&tmp_r);
+
+        // 지수의 현재 비트가 1인 경우, 곱셈 연산 수행
+        if ((exp->start[i / word_size] >> (i % word_size)) & 1)
+        {
+            // tmp_result = tmp_result * tmp_base % mod
+            bi_mul(&tmp_result, tmp_result, tmp_base, 1); // 곱셈
+            bi_div(&tmp_q, &tmp_r, tmp_result, mod);      // mod 연산
+            bi_assign(&tmp_result, tmp_r); // 나머지를 tmp_result에 저장
+            bi_delete(&tmp_q);
+            bi_delete(&tmp_r);
+        }
     }
+
+    // 최종 결과 저장
     bi_assign(dst, tmp_result);
+
+    // 메모리 해제
     bi_delete(&tmp_result);
     bi_delete(&tmp_base);
-    bi_delete(&tmp_exp);
 
-    END_TIMER(result, SUCCESS_EXP);
+    END_TIMER(result, print_success_left_to_right_mod());
     return result;
 }
 
@@ -249,13 +261,13 @@ res bi_exp_right_to_left_mod(OUT bigint** dst, IN bigint* A, IN bigint* exp, IN 
 {
     res result;
     START_TIMER();
-
+    
     if (A == NULL || exp == NULL || dst == NULL || mod == NULL)
     {
         END_TIMER(result, NULL_POINTER_ERROR);
         return result;
     }
-
+    
     // 결과 변수 초기화 (결과 = 1로 시작)
     bigint* tmp_result = NULL;
     bi_new(&tmp_result, 1);
@@ -273,7 +285,7 @@ res bi_exp_right_to_left_mod(OUT bigint** dst, IN bigint* A, IN bigint* exp, IN 
         // exp의 LSB(가장 낮은 비트)가 1이면 result *= base
         if (tmp_exp->start[0] & 1)
         {
-            bi_mul(&tmp_result, tmp_result, tmp_base, false);
+            bi_mul(&tmp_result, tmp_result, tmp_base, 1);
             // 곱셈 후 mod 연산 적용
             bigint* tmp_q = NULL;
             bigint* tmp_r = NULL;
@@ -308,7 +320,7 @@ res bi_exp_right_to_left_mod(OUT bigint** dst, IN bigint* A, IN bigint* exp, IN 
     bi_delete(&tmp_base);
     bi_delete(&tmp_exp);
 
-    END_TIMER(result, SUCCESS_EXP);
+    END_TIMER(result, print_success_right_to_left_mod());
     return result;
 }
 
@@ -342,7 +354,7 @@ res bi_exp_montgomery_mod(OUT bigint** dst, IN bigint* A, IN bigint* exp, IN big
             bi_div(&tmp_q, &tmp_r, t1, mod);
 
             bi_assign(&t1, tmp_r);
-            bi_square(&t0, t0,0);
+            bi_square(&t0, t0,1);
             // 제곱 후 mod 연산 적용
             bi_div(&tmp_q, &tmp_r, t0, mod);
 
@@ -353,14 +365,14 @@ res bi_exp_montgomery_mod(OUT bigint** dst, IN bigint* A, IN bigint* exp, IN big
         }
         else
         {
-            bi_mul(&t0, t0, t1,0);
+            bi_mul(&t0, t0, t1,1);
             // 곱셈 후 mod 연산 적용
             bigint* tmp_q = NULL;
             bigint* tmp_r = NULL;
             bi_div(&tmp_q, &tmp_r, t0, mod);
 
             bi_assign(&t0, tmp_r);
-            bi_square(&t1, t1,0);
+            bi_square(&t1, t1,1);
             // 제곱 후 mod 연산 적용
             bi_div(&tmp_q, &tmp_r, t1, mod);
 
@@ -374,6 +386,6 @@ res bi_exp_montgomery_mod(OUT bigint** dst, IN bigint* A, IN bigint* exp, IN big
     bi_delete(&t0);
     bi_delete(&t1);
 
-    END_TIMER(result, SUCCESS_EXP);
+    END_TIMER(result, print_success_montgomery_mod());
     return result;
 }

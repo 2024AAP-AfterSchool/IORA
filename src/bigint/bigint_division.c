@@ -58,16 +58,18 @@ res bi_div_bit(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
 
     if (A->sign == NEGATIVE)
     {
-
-        bigint* one = NULL;
-        bi_new(&one, 1);
-        one->start[0] = 1;
-
-        // Add 1 to tmp_Q
-        bi_add(&tmp_Q, tmp_Q, one);
-        bi_sub(&tmp_R, B, tmp_R);
         tmp_Q->sign = A->sign;
-        bi_delete(&one);
+        if (!bi_is_zero(tmp_R))
+        {
+            bigint* one = NULL;
+            bi_new(&one, 1);
+            one->start[0] = 1;
+    // Add 1 to tmp_Q
+            bi_sub(&tmp_Q, tmp_Q, one);
+            bi_sub_C(&tmp_R, B, tmp_R);
+    
+            bi_delete(&one);
+        }
     }
     // Assign results to Q and R
     bi_refine(tmp_Q);
@@ -78,7 +80,7 @@ res bi_div_bit(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
     bi_delete(&tmp_Q);
     bi_delete(&tmp_R);
 
-    END_TIMER(result, print_success_div());
+    END_TIMER(result, print_success_div_bit());
     return result;
 }
 
@@ -146,7 +148,7 @@ res bi_div_word(OUT bigint** Q, IN bigint* A, IN bigint* B)
     bi_delete(&tmp_Q);
     bi_delete(&tmp_R);
 
-    END_TIMER(result, print_success_div());
+    END_TIMER(result, print_success_div_word());
     return result;
 }
 
@@ -211,7 +213,7 @@ res bi_div_CC(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
     bi_delete(&tmp_R);
     bi_delete(&one);
 
-    END_TIMER(result, print_success_div());
+    END_TIMER(result, print_success_div_CC());
     return result;
 }
 
@@ -245,7 +247,7 @@ res bi_div_C(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
         bi_delete(&tmp_R);
         bi_delete(&tmp_Q);
 
-        END_TIMER(result, print_success_div());
+        END_TIMER(result, print_success_div_C());
         return result;
     }
 
@@ -265,7 +267,7 @@ res bi_div_C(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
         highest_word <<= 1;
         k++;
     }
-    
+
     bi_bit_left_shift(&tmp_A, k);
     bi_bit_left_shift(&tmp_B, k);
     bi_div_CC(&tmp_Q, &tmp_R, tmp_A, tmp_B);
@@ -277,7 +279,7 @@ res bi_div_C(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
     bi_delete(&tmp_R);
     bi_delete(&tmp_A);
     bi_delete(&tmp_B);
-    END_TIMER(result, print_success_div());
+    END_TIMER(result, print_success_div_C());
     return result;
 }
 

@@ -18,7 +18,7 @@
  * @param B 피연산자 B
  * @param c 이전 연산에서 발생한 carry
  */
-res bi_add_ABC(OUT word* C, IN word A, IN word B, IN carry c, IN carry* c_prime)
+res bi_add_ABC(OUT word* C, IN word A, IN word B, IN carry c, OUT carry* c_prime)
 {   
     res result;
     START_TIMER();
@@ -163,7 +163,7 @@ res bi_add(OUT bigint** dst, IN bigint* A, IN bigint* B)
     bi_assign(dst,tmp_result);
     bi_delete(&tmp_result);
     
-    END_TIMER(result, SUCCESS_ADD);
+    END_TIMER(result, print_success_add());
     return result;
 }
 
