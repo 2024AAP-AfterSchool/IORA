@@ -74,6 +74,12 @@ add_library(IORA_LIB_STATIC STATIC ${SOURCE_FILES})
 set_target_properties(IORA_LIB_STATIC PROPERTIES PREFIX "" OUTPUT_NAME "IORA"
                         ARCHIVE_OUTPUT_DIRECTORY ${LIBRARY_OUTPUT_DIRECTORY})
 
+# bcrypt 라이브러리 링크 (Windows 환경에서만)
+if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    target_link_libraries(IORA_LIB_SHARED bcrypt)
+    target_link_libraries(IORA_LIB_STATIC bcrypt)
+endif()
+
 # 커버리지 리포트 생성
 add_custom_target(coverage
     COMMAND ${CMAKE_MAKE_PROGRAM} test

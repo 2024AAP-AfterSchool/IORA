@@ -8,6 +8,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <time.h>
 #include "utils/time.h"
 #include "utils/string.h"
 #include "utils/memory.h"
@@ -16,7 +17,98 @@
 #include "bigint/bigint_calculation.h"
 
 
-//#define create_prameter
+/**
+ * @brief bigint에 무작위 값을 할당하는 함수
+ * @create_prime이면 마지막 블럭이 all 0가 되는 것을 방지 = 키 크기 최대한 보장
+ * @param dst bigint의 포인터
+ * @param sign 부호
+ * @param wordlen 배열의 길이
+ */
+
+
+res bi_get_random(OUT bigint** dst, IN uint32_t sign, IN uint32_t wordlen) {   
+    res result;
+    START_TIMER();
+
+    if (wordlen <= 0) {
+        END_TIMER(result, print_invalid_word_length_error());
+        return result;
+    }
+
+    // 랜덤 시드 초기화 (시간 기반)
+    srand((unsigned int)clock());
+
+    // 메모리 할당
+    bi_new(dst, wordlen);
+    (*dst)->sign = sign;
+
+    for (int i = 0; i < wordlen; i++) {
+        (*dst)->start[i] = 0x00;
+
+        for (int j = 1; j < sizeof(word); j++) {   
+            (*dst)->start[i] |= rand() & 0xFF; // 랜덤 값 생성
+            (*dst)->start[i] <<= 8;
+        }
+        (*dst)->start[i] |= rand() & 0xFF;
+    }
+#ifdef create_prameter
+    // 마지막 단어가 0이 아닌 값으로 보장
+    if ((*dst)->start[wordlen - 1] == 0) {
+        do {
+            (*dst)->start[wordlen - 1] = rand() & 0xFF;
+        } while ((*dst)->start[wordlen - 1] == 0);
+    }
+#endif
+
+    // 불필요한 0 제거
+    bi_refine(*dst);
+
+    END_TIMER(result, print_success_gen_rand());
+    return result;
+}
+/*
+res bi_get_random(OUT bigint** dst, IN uint32_t sign, IN uint32_t wordlen)
+{   
+    res result;
+    START_TIMER();
+
+    if (wordlen <= 0)
+    {
+        END_TIMER(result, print_invalid_word_length_error());
+        return result;
+    }
+
+    bi_new(dst, wordlen);
+
+    (*dst)->sign = sign;
+
+    for (int i = 0; i < wordlen; i++)
+    {
+        (*dst)->start[i]=0x00;
+
+        for (int j = 1; j < sizeof(word); j++)
+        {   
+            (*dst)->start[i] |= rand() & 0xFF;
+            (*dst)->start[i] <<= 8;
+        }
+    }
+
+#ifdef create_prameter
+    if ((*dst)->start[wordlen - 1] == 0)
+    {
+        (*dst)->start[wordlen - 1] = rand() & 0xFF;
+        while ((*dst)->start[wordlen - 1] == 0)
+        {
+            (*dst)->start[wordlen - 1] = rand() & 0xFF; // 0이 아닌 값을 보장
+        }
+    }
+#endif
+    bi_refine(*dst);
+
+    END_TIMER(result, print_success_gen_rand());
+    return result;
+}
+*/
 
  /**
   * @brief bigint의 값을 다른 bigint로 할당하는 함수
@@ -301,8 +393,10 @@ res bi_set_from_string(OUT bigint** dst, IN char* str, IN uint32_t base)
  * @create_prime이면 마지막 블럭이 all 0가 되는 것을 방지 = 키 크기 최대한 보장
  * @param dst bigint의 포인터
  * @param sign 부호
- * @param wordlen 배열의 길이
+ * @param byte 배열의 바이트 길이
  */
+
+/*
 res bi_get_random(OUT bigint** dst, IN uint32_t sign, IN uint32_t wordlen)
 {   
     res result;
@@ -344,6 +438,7 @@ res bi_get_random(OUT bigint** dst, IN uint32_t sign, IN uint32_t wordlen)
     END_TIMER(result, print_success_gen_rand());
     return result;
 }
+*/
 
 /**
  * @brief bigint의 마지막 워드가 0인 경우 bigint의 메모리를 재할당하는 함수
