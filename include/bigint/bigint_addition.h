@@ -5,7 +5,7 @@
 #include "base/base_type.h"   // 기본 함수 및 타입 정의
 
 // ADD_ABC 함수: A, B, c의 덧셈을 수행하고 C에 저장, 캐리를 c_prime에 저장
-res bi_add_ABC(OUT word* C, IN word A, IN word B, IN carry c, IN carry* c_prime);
+res bi_add_ABC(OUT word* C, IN word A, IN word B, IN carry c, OUT carry* c_prime);
 
 // ADD_C 함수: 두 bigint A와 B의 덧셈을 수행하고, 결과를 result에 저장
 res bi_add_C(OUT bigint** dst, IN bigint* A, IN bigint* B);

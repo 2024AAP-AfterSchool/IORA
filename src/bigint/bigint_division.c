@@ -34,39 +34,42 @@ res bi_div_bit(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
 
     bigint* tmp_Q = NULL;
     bigint* tmp_R = NULL;
-
+    word one = 1;
     // Initialize Q and R
     bi_new(&tmp_Q, A->wordlen);
     bi_new(&tmp_R, A->wordlen);  // Increase the size of tmp_R to handle bit shifts properly
 
     // Loop from the most significant bit to the least significant bit
-    for (int i = A->wordlen * sizeof(word) * 8 - 1; i >= 0; i--) {
+    for (int i = A->wordlen * word_size - 1; i >= 0; i--) {
         // Shift R to the left by 1 bit
         bi_bit_left_shift(&tmp_R, 1);
 
         // Add the corresponding bit from A to R
-        word bit = (A->start[i / (sizeof(word) * 8)] >> (i % (sizeof(word) * 8))) & 1;
+        word bit = (A->start[i / word_size] >> (i % word_size)) & 1;
         tmp_R->start[0] |= bit;
 
         // If R >= B, set the corresponding bit in Q and subtract B from R
         if (bi_compare(tmp_R, B) != -1)
         {
-            tmp_Q->start[i / (sizeof(word) * 8)] |= (1 << (i % (sizeof(word) * 8))); // Set the i-th bit of Q
+            tmp_Q->start[i / word_size] |= (one << (i % word_size)); // Set the i-th bit of Q
             bi_sub(&tmp_R, tmp_R, B); // R = R - B
         }
     }
 
     if (A->sign == NEGATIVE)
     {
-        bigint* one = NULL;
-        bi_new(&one, 1);
-        one->start[0] = 1;
-
-        // Add 1 to tmp_Q
-        bi_add(&tmp_Q, tmp_Q, one);
-        bi_sub(&tmp_R, B, tmp_R);
         tmp_Q->sign = A->sign;
-        bi_delete(&one);
+        if (!bi_is_zero(tmp_R))
+        {
+            bigint* one = NULL;
+            bi_new(&one, 1);
+            one->start[0] = 1;
+    // Add 1 to tmp_Q
+            bi_sub(&tmp_Q, tmp_Q, one);
+            bi_sub_C(&tmp_R, B, tmp_R);
+    
+            bi_delete(&one);
+        }
     }
     // Assign results to Q and R
     bi_refine(tmp_Q);
@@ -77,7 +80,7 @@ res bi_div_bit(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
     bi_delete(&tmp_Q);
     bi_delete(&tmp_R);
 
-    END_TIMER(result, print_success_div());
+    END_TIMER(result, print_success_div_bit());
     return result;
 }
 
@@ -102,44 +105,35 @@ res bi_div_word(OUT bigint** Q, IN bigint* A, IN bigint* B)
     bigint* tmp_R = NULL;
     bi_new(&tmp_Q, 1);
     bi_new(&tmp_R, 1);
-
-    if (A->wordlen > 1)
+    tmp_R->start[0] = A->start[1];
+    word int_one = 1;
+    for (int i = (word_size - 1); i > -1; i--)
     {
-        tmp_R->start[0] = A->start[1];
-    }
-    else
-    {
-        tmp_R->start[0] = 0;
-    }
-
-    for (int i = (sizeof(word) * 8 - 1); i > -1; i--)
-    {
-        if (tmp_R->start[0] >= (1 << (sizeof(word) * 8 - 1)))
+        if (tmp_R->start[0] >= (int_one << (word_size - 1)))
         {
             bigint* one = NULL;
             bi_new(&one, 1);
-            one->start[0] = 1 << i;
-            bi_add(&tmp_Q, tmp_Q, one);
+            one->start[0] = int_one << i;
+            bi_add_C(&tmp_Q, tmp_Q, one);
 
             bi_bit_left_shift(&tmp_R, 1);
             // Add the corresponding bit from A to R
-            uint32_t bit = (A->start[0] >> (i)) & 1;
+            word bit = (A->start[0] >> (i)) & 1;
             tmp_R->start[0] |= bit;
-            bi_sub(&tmp_R, tmp_R, B);
+            bi_sub_C(&tmp_R, tmp_R, B);
             bi_delete(&one);
         }
         else
         {
             // Add the corresponding bit from A to R
-            uint32_t bit = (A->start[0] >> (i)) & 1;
+            word bit = (A->start[0] >> (i)) & 1;
             bi_bit_left_shift(&tmp_R, 1);
             tmp_R->start[0] |= bit;
-
             if (bi_compare(tmp_R, B) != -1)
             {
                 bigint* one = NULL;
                 bi_new(&one, 1);
-                one->start[0] = 1 << i;
+                one->start[0] = int_one << i;
                 bi_add(&tmp_Q, tmp_Q, one);
                 bi_sub(&tmp_R, tmp_R, B);
                 bi_delete(&one);
@@ -154,7 +148,7 @@ res bi_div_word(OUT bigint** Q, IN bigint* A, IN bigint* B)
     bi_delete(&tmp_Q);
     bi_delete(&tmp_R);
 
-    END_TIMER(result, print_success_div());
+    END_TIMER(result, print_success_div_word());
     return result;
 }
 
@@ -170,49 +164,39 @@ res bi_div_CC(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
     res result;
     START_TIMER();
 
-    // word 크기에 따른 마스크 설정
     word mask = (word_size == 8) ? 0xFF :
                 (word_size == 32) ? 0xFFFFFFFF :
-                 0xFFFFFFFFFFFFFFFF;
-
-    bigint* tmp_A = NULL;
-    bigint* tmp_B = NULL;
-    bi_refine(A);
-    bi_refine(B);
-    bi_assign(&tmp_A,A);
-    bi_assign(&tmp_B,B);
-
+                0xFFFFFFFFFFFFFFFF;
     bigint* tmp_Q = NULL;
     bigint* tmp_R = NULL;
-
-    if ((tmp_A->wordlen) == (tmp_B->wordlen))
+    if ((A->wordlen) == (B->wordlen))
     {
+        
         bi_new(&tmp_Q, 1);
-        tmp_Q->start[0] = (tmp_A->start[(tmp_A->wordlen) - 1] / tmp_B->start[(tmp_A->wordlen) - 1]);
+        tmp_Q->start[0] = (A->start[(A->wordlen) - 1] / B->start[(A->wordlen) - 1]);
     }
-    if ((((tmp_A->wordlen) - 1 == (tmp_B->wordlen)) && ((tmp_A->start[(tmp_A->wordlen) - 1])) == (tmp_A->start[(tmp_B->wordlen) - 1])))
+    if (((A->wordlen) - 1 == (B->wordlen)) && ((A->start[(A->wordlen) - 1]) == (B->start[(B->wordlen) - 1])))
     {
+        
         bi_new(&tmp_Q, 1);
         tmp_Q->start[0] = mask;
     }
-    if ((((tmp_A->wordlen) - 1 == (tmp_B->wordlen)) && ((tmp_A->start[(tmp_A->wordlen) - 1])) != (tmp_B->start[(tmp_B->wordlen) - 1])))
+    if (((A->wordlen) - 1 == (B->wordlen)) && ((A->start[(A->wordlen) - 1]) != (B->start[(B->wordlen) - 1])))
     {
         bigint* upper_A = NULL;
         bigint* upper_B = NULL;
         bi_new(&upper_A, 2);
         bi_new(&upper_B, 1);
-
-        upper_A->start[0] = tmp_A->start[tmp_A->wordlen - 2];
-        upper_A->start[1] = tmp_A->start[tmp_A->wordlen - 1];
-        upper_B->start[0] = tmp_B->start[tmp_B->wordlen - 1];
-
+        upper_A->start[0] = A->start[A->wordlen - 2];
+        upper_A->start[1] = A->start[A->wordlen - 1];
+        upper_B->start[0] = B->start[B->wordlen - 1];
         bi_div_word(&tmp_Q, upper_A, upper_B);
         bi_delete(&upper_A);
         bi_delete(&upper_B);
     }
-    bi_mul(&tmp_R, tmp_B, tmp_Q,0);
-    bi_sub(&tmp_R, tmp_A, tmp_R);
-
+    
+    bi_mul_C(&tmp_R, B, tmp_Q);
+    bi_sub(&tmp_R, A, tmp_R);
     bigint* one = NULL;
     bi_new(&one, 1);
     one->start[0] = 1;
@@ -220,25 +204,16 @@ res bi_div_CC(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
     while (tmp_R->sign == NEGATIVE)
     {
         bi_sub(&tmp_Q, tmp_Q, one);
-        bi_add(&tmp_R, tmp_R, tmp_B);
+        bi_add(&tmp_R, tmp_R, B);
     }
-    fprintf(stderr, "tmp_Q: ");
-    bi_print(tmp_Q, 16);
-    fprintf(stderr, "tmp_R: ");
-    bi_print(tmp_R, 16);
-    fprintf(stderr, "\n");
-
-
     bi_assign(Q, tmp_Q);
     bi_assign(R, tmp_R);
 
-    bi_delete(&tmp_A);
-    bi_delete(&tmp_B);
     bi_delete(&tmp_Q);
     bi_delete(&tmp_R);
     bi_delete(&one);
 
-    END_TIMER(result, print_success_div());
+    END_TIMER(result, print_success_div_CC());
     return result;
 }
 
@@ -257,32 +232,37 @@ res bi_div_C(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
     bigint* tmp_Q = NULL;
     bigint* tmp_R = NULL;
     bigint* q = NULL;
-    bi_refine(A);
-    bi_refine(B);
-
     if (bi_compare(A, B) == -1)
     {
         bi_new(&tmp_Q, 1);
+        bi_new(&tmp_R, 1);
         tmp_Q->start[0] = 0;
         bi_assign(&q, tmp_Q);
         bi_assign(&tmp_R, A);
         bi_assign(Q, q);
         bi_assign(R, tmp_R);
-
+        //bi_assign(Q, tmp_Q);
+        //bi_assign(R, A);
+        bi_delete(&q);
+        bi_delete(&tmp_R);
         bi_delete(&tmp_Q);
 
-        END_TIMER(result, print_success_div());
+        END_TIMER(result, print_success_div_C());
         return result;
     }
 
+   
+    //bigint* tmp_R = NULL;
     bigint* tmp_A = NULL;
     bigint* tmp_B = NULL;
     bi_assign(&tmp_A, A);
     bi_assign(&tmp_B, B);
-
-    uint32_t k = 0;
+    int k = 0;
+    word one = 1;
+    one = one << (word_size - 1);
     word highest_word = B->start[B->wordlen - 1];
-    while ((highest_word & (1 << (sizeof(word) * 8 - 1))) == 0)
+
+    while ((highest_word & (one)) == 0)
     {
         highest_word <<= 1;
         k++;
@@ -291,16 +271,15 @@ res bi_div_C(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
     bi_bit_left_shift(&tmp_A, k);
     bi_bit_left_shift(&tmp_B, k);
     bi_div_CC(&tmp_Q, &tmp_R, tmp_A, tmp_B);
+    
     bi_bit_right_shift(&tmp_R, k);
     bi_assign(Q, tmp_Q);
     bi_assign(R, tmp_R);
-
     bi_delete(&tmp_Q);
     bi_delete(&tmp_R);
     bi_delete(&tmp_A);
     bi_delete(&tmp_B);
-
-    END_TIMER(result, print_success_div());
+    END_TIMER(result, print_success_div_C());
     return result;
 }
 
@@ -339,8 +318,10 @@ res bi_div(OUT bigint** Q, OUT bigint** R, IN bigint* A, IN bigint* B)
         bi_word_left_shift(&tmp_R, 1);
         tmp_R->start[0] |= A->start[i];
         bi_div_C(&Qi, &tmp_R, tmp_R, B);
+        
         tmp_Q->start[i] = Qi->start[0];
     }
+    //bi_word_right_shift(&tmp_R,1);
 
     if (A->sign == NEGATIVE)
     {

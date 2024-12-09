@@ -15,6 +15,7 @@
 #include "base/base_error.h"
 #include "bigint/bigint_calculation.h"
 
+
 //#define create_prameter
 
  /**
@@ -319,7 +320,13 @@ res bi_get_random(OUT bigint** dst, IN uint32_t sign, IN uint32_t wordlen)
 
     for (int i = 0; i < wordlen; i++)
     {
-        (*dst)->start[i] = rand() & 0xFF;
+        (*dst)->start[i]=0x00;
+
+        for (int j = 1; j < sizeof(word); j++)
+        {   
+            (*dst)->start[i] |= rand() & 0xFF;
+            (*dst)->start[i] <<= 8;
+        }
     }
 
 #ifdef create_prameter
@@ -447,11 +454,28 @@ res bi_print(OUT bigint* dst, IN uint32_t base)
     }
 
     printf("0x");
-    for (int i = dst->wordlen - 1; i >= 0; i--)
-    {   
-        printf("%02X", dst->start[i]);
-        // TODO: base에 따라 출력 형식을 변경할 수 있도록 구현
+    #if word_size == 8
+    {
+        for (int i = dst->wordlen - 1; i >= 0; i--)
+        {
+            printf("%02X", dst->start[i]);
+        }
     }
+    #elif (word_size == 32)
+    {
+        for (int i = dst->wordlen - 1; i >= 0; i--)
+        {
+            printf("%08X", dst->start[i]);
+        }
+    }
+    #elif (word_size == 64)
+    {
+        for (int i = dst->wordlen - 1; i >= 0; i--)
+        {
+            printf("%016llX", dst->start[i]);
+        }
+    }
+#endif
     printf("\n");
 
     END_TIMER(result, print_success_print());
@@ -502,19 +526,28 @@ bool bi_is_one(OUT bigint* dst)
     return true;
 }
 
-void bi_set_zero(OUT bigint** x)
+/**
+ * @brief bigint가 0으로 초기화하는 함수
+ * @param dst bigint의 포인터
+ */
+void bi_set_zero(OUT bigint** dst)
 {
-    bi_new(x, 1);
-    (*x)->sign = POSITIVE;
-    (*x)->start[0] = 0;
+    bi_new(dst, 1);
+    (*dst)->sign = POSITIVE;
+    (*dst)->start[0] = 0;
 }
 
-int8_t bi_compare_ABS(IN bigint* x, IN bigint* y)
+/**
+ * @brief bigint A와 B의 절대 값 비교 함수
+ * @param dst_A bigint의 포인터
+ * @param dst_B bigint의 포인터
+ */
+int8_t bi_compare_ABS(IN bigint* dst_A, IN bigint* dst_B)
 {
-    bi_refine(x);
-    bi_refine(y);
-    int n = x->wordlen;
-    int m = y->wordlen;
+    bi_refine(dst_A);
+    bi_refine(dst_B);
+    int n = dst_A->wordlen;
+    int m = dst_B->wordlen;
 
     // Case: A > B
     if (n > m)
@@ -526,10 +559,10 @@ int8_t bi_compare_ABS(IN bigint* x, IN bigint* y)
 
     for (int i = n - 1; i >= 0; i--) {
 
-        if (x->start[i] > y->start[i])
+        if (dst_A->start[i] > dst_B->start[i])
             return 1;
 
-        if (x->start[i] < y->start[i])
+        if (dst_A->start[i] < dst_B->start[i])
             return -1;
 
     }
@@ -537,17 +570,22 @@ int8_t bi_compare_ABS(IN bigint* x, IN bigint* y)
     return 0;
 }
 
-int8_t bi_compare(IN bigint* x, IN bigint* y)
+/**
+ * @brief bigint A와 B의 값 대소 비교 함수
+ * @param dst_A bigint의 포인터
+ * @param dst_B bigint의 포인터
+ */
+int8_t bi_compare(IN bigint* dst_A, IN bigint* dst_B)
 {
-    if (x->sign == POSITIVE && y->sign == NEGATIVE)
+    if (dst_A->sign == POSITIVE && dst_B->sign == NEGATIVE)
         return 1;
 
-    if (x->sign == NEGATIVE && y->sign == POSITIVE)
+    if (dst_A->sign == NEGATIVE && dst_B->sign == POSITIVE)
         return -1;
 
-    int res = bi_compare_ABS(x, y);
+    int res = bi_compare_ABS(dst_A, dst_B);
 
-    if (x->sign == POSITIVE)
+    if (dst_A->sign == POSITIVE)
         return res;
 
     return res * (-1);
@@ -625,13 +663,21 @@ res bi_bit_left_shift(OUT bigint** dst, IN uint32_t k)
  * @param dst bigint의 포인터
  * @param k shift 하고싶은 word 사이즈
  */
+
+
+/**
+ * @brief bit를 오른쪽으로 shift하는 함수
+ * @param dst bigint의 포인터
+ * @param k shift 하고싶은 bit 사이즈
+ */
+
 res bi_word_right_shift(OUT bigint** dst, IN uint32_t k) // k는 shift하고싶은 word 사이즈 의미
-{   
+{
     res result;
     START_TIMER();
 
     bigint* tmp = NULL;
-
+    
     if (k >= (*dst)->wordlen)
     {
         bi_new(&tmp, 1);
@@ -639,7 +685,8 @@ res bi_word_right_shift(OUT bigint** dst, IN uint32_t k) // k는 shift하고싶�
         tmp->sign = POSITIVE;
         bi_assign(dst, tmp);
         bi_delete(&tmp);
-    }    
+        return result;
+    }
     else
     {
         bi_new(&tmp, (*dst)->wordlen - k);
@@ -663,6 +710,7 @@ res bi_word_right_shift(OUT bigint** dst, IN uint32_t k) // k는 shift하고싶�
     END_TIMER(result, print_success_shift());
     return result;
 }
+
 
 /**
  * @brief bit를 오른쪽으로 shift하는 함수

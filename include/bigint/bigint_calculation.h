@@ -44,11 +44,11 @@ bool bi_is_one(OUT bigint* dst);
 bool bi_is_zero(OUT bigint* dst);
 
 // set zero 확인하는 함수
-void bi_set_zero(OUT bigint** x);
+void bi_set_zero(OUT bigint** dst);
 
 // 두 큰수 비교하는 함수
-int8_t bi_compare_ABS(IN bigint* x, IN bigint* y);
-int8_t bi_compare(IN bigint* x, IN bigint* y);
+int8_t bi_compare_ABS(IN bigint* dst_A, IN bigint* dst_B);
+int8_t bi_compare(IN bigint* dst_A, IN bigint* dst_B);
 
 // bigint를 shift하는 함수
 res bi_word_left_shift(OUT bigint** dst, IN uint32_t k);

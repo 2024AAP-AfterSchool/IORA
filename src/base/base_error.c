@@ -99,15 +99,6 @@ msg print_success_copy()
 }
 
 /**
- * @brief Refine 성공 시 출력하는 함수
- */
-msg print_success_refinement()
-{
-    if (VERBOSE) fprintf(stdout, "Success: Refinement completed.\n");
-    return SUCCESS_REFINEMENT;
-}
-
-/**
  * @brief 배열로부터 bigint에 값을 할당 성공 시 출력하는 함수
  */
 msg print_success_set_from_array()
@@ -260,14 +251,6 @@ msg print_success_mul_C()
     return SUCCESS_MUL_C;
 }
 
-/**
- * @brief MUL_AB 실패 시 출력하는 함수
- */
-msg print_fail_mul_AB()
-{
-    if (VERBOSE) fprintf(stderr, "Error: print_fail_mul_AB.\n");
-    return FAIL_MUL_AB;
-}
 
 /**
  * @brief MUL 성공 시 출력하는 함수
@@ -279,12 +262,92 @@ msg print_success_mul()
 }
 
 /**
+ * @brief MUL_KARATSUBA 성공 시 출력하는 함수
+ */
+msg print_success_mul_karatsuba()
+{
+    if (VERBOSE) fprintf(stdout, "Success: print_mul_karatsuba.\n");
+    return SUCCESS_MUL_KARATSUBA;
+}
+/**
  * @brief SHIFT 성공 시 출력하는 함수
  */
 msg print_success_shift()
 {
     if (VERBOSE) fprintf(stdout, "Success: print_shift.\n");
     return SUCCESS_SHIFT;
+}
+
+/**
+ * @brief square_AA 성공 시 출력하는 함수
+ */
+msg print_success_square_AA()
+{
+    if (VERBOSE) fprintf(stdout, "Success: print_SQUARE_AA.\n");
+    return SUCCESS_SQUARE_AA;
+}
+
+/**
+ * @brief square_C 성공 시 출력하는 함수
+ */
+msg print_success_square_C()
+{
+    if (VERBOSE) fprintf(stdout, "Success: print_SQUARE_C.\n");
+    return SUCCESS_SQUARE_C;
+}
+
+/**
+ * @brief square_KARATSUBA 성공 시 출력하는 함수
+ */
+msg print_success_square_KARATSUBA()
+{
+    if (VERBOSE) fprintf(stdout, "Success: print_SQUARE_KARATSUBA.\n");
+    return SUCCESS_SQUARE_KARATSUBA;
+}
+
+/**
+ * @brief square 성공 시 출력하는 함수
+ */
+msg print_success_square()
+{
+    if (VERBOSE) fprintf(stdout, "Success: print_SQUARE.\n");
+    return SUCCESS_SQUARE;
+}
+
+/**
+ * @brief div_bit 성공 시 출력하는 함수
+ */
+msg print_success_div_bit()
+{
+    if (VERBOSE) fprintf(stdout, "Success: print_div_bit.\n");
+    return SUCCESS_DIV_BIT;
+}
+
+/**
+ * @brief div_word 성공 시 출력하는 함수
+ */
+msg print_success_div_word()
+{
+    if (VERBOSE) fprintf(stdout, "Success: print_div_word.\n");
+    return SUCCESS_DIV_WORD;
+}
+
+/**
+ * @brief div_cc 성공 시 출력하는 함수
+ */
+msg print_success_div_CC()
+{
+    if (VERBOSE) fprintf(stdout, "Success: print_div_CC.\n");
+    return SUCCESS_DIV_CC;
+}
+
+/**
+ * @brief div_c 성공 시 출력하는 함수
+ */
+msg print_success_div_C()
+{
+    if (VERBOSE) fprintf(stdout, "Success: print_div_C.\n");
+    return SUCCESS_DIV_C;
 }
 
 /**
@@ -302,5 +365,70 @@ msg print_success_div()
 msg print_zero_div_error()
 {
     if (VERBOSE) fprintf(stderr, "Error: print_zero_div_.\n");
-    return FAIL_DIV;
+    return FAIL_ZERO_DIV;
 }
+
+/**
+ * @brief left_to_right 성공 시 출력하는 함수
+ */
+msg print_success_left_to_right()
+{
+    if (VERBOSE) fprintf(stdout, "Success: print_left_to_right.\n");
+    return SUCCESS_LEFT_TO_RIGHT;
+}
+
+/**
+ * @brief right_to_left 성공 시 출력하는 함수
+ */
+msg print_success_right_to_left()
+{
+    if (VERBOSE) fprintf(stdout, "Success: print_right_to_left.\n");
+    return SUCCESS_RIGHT_TO_LEFT;
+}
+
+/**
+ * @brief montgomery 성공 시 출력하는 함수
+ */
+msg print_success_montgomery()
+{
+    if (VERBOSE) fprintf(stdout, "Success: print_montgomery.\n");
+    return SUCCESS_MONTGOMERY;
+}
+
+
+/**
+ * @brief left_to_right_mod 성공 시 출력하는 함수
+ */
+msg print_success_left_to_right_mod()
+{
+    if (VERBOSE) fprintf(stdout, "Success: print_left_to_right_mod.\n");
+    return SUCCESS_LEFT_TO_RIGHT_MOD;
+}
+
+/**
+ * @brief right_to_left_mod 성공 시 출력하는 함수
+ */
+msg print_success_right_to_left_mod()
+{
+    if (VERBOSE) fprintf(stdout, "Success: print_right_to_left_mod.\n");
+    return SUCCESS_RIGHT_TO_LEFT_MOD;
+}
+
+/**
+ * @brief montgomery_mod 성공 시 출력하는 함수
+ */
+msg print_success_montgomery_mod()
+{
+    if (VERBOSE) fprintf(stdout, "Success: print_montgomery_mod.\n");
+    return SUCCESS_MONTGOMERY_MOD;
+}
+
+/**
+ * @brief mod 성공 시 출력하는 함수
+ */
+msg print_success_mod()
+{
+    if (VERBOSE) fprintf(stdout, "Success: print_mod.\n");
+    return SUCCESS_MOD;
+}
+

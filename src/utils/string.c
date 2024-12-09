@@ -17,6 +17,7 @@
  * @param str 문자열
  * @param base 10진수, 16진수 등 어떻게 해석할지 의미함.
  */
+/*
 void str_to_hex(word** dst, char* str, int base)
 {
     char* end = NULL;
@@ -46,7 +47,7 @@ void str_to_hex(word** dst, char* str, int base)
         }
     }
 }
-
+*/
 /**
  * @brief 문자열이 10진수인지 확인하는 함수
  * @param c 문자열

@@ -58,7 +58,7 @@ file(GLOB SOURCE_FILES
 )
 
 # 실행 파일 빌드
-add_executable(IORA ${SOURCE_FILES})
+#add_executable(IORA ${SOURCE_FILES})
 
 # main 함수는 라이브러리 만들 때 제외
 list(REMOVE_ITEM SOURCE_FILES ${PROJECT_SOURCE_DIR}/src/main.c)
