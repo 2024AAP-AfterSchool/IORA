@@ -29,24 +29,25 @@
 #define SUCCESS_MUL_AB 20                   //< MUL_AB 성공
 #define SUCCESS_MUL_C 21                    //< MUL_C 성공
 #define SUCCESS_MUL 22                      //< MUL 성공
-#define SUCCESS_MUL_KARATSUBA 22            //< MUL_KARATSUBA 성공
-#define SUCCESS_SQUARE_AA 23                //< SQUARE_AA 성공
-#define SUCCESS_SQUARE_C 24                 //< SQUARE_C 성공
-#define SUCCESS_SQUARE_KARATSUBA 25         //< SQUARE_KARATSUBA 성공
-#define SUCCESS_SQUARE 26                   //< SUCCESS_SQUARE 성공
-#define SUCCESS_SQUARE_A 27                 //< SUCCESS_SQUARE_A 성공
-#define SUCCESS_DIV_BIT 28                  //< DIV_BIT 성공
-#define SUCCESS_DIV_WORD 29                 //< DIV_WORD 성공
-#define SUCCESS_DIV_CC 30                   //< DIV_CC 성공
-#define SUCCESS_DIV_C 31                    //< DIC_C 성공
-#define SUCCESS_DIV 32                      //< DIV 성공
-#define SUCCESS_LEFT_TO_RIGHT 33            //< LEFT_TO_RIGHT 성공
-#define SUCCESS_RIGHT_TO_LEFT 34            //< RIGHT_TO_LEFT 성공
-#define SUCCESS_MONTGOMERY 35               //< MONTGOMERY 성공
-#define SUCCESS_LEFT_TO_RIGHT_MOD 36        //< LEFT_TO_RIGHT_MOD 성공
-#define SUCCESS_RIGHT_TO_LEFT_MOD 37        //< RIGHT_TO_LEFT_MOD 성공
-#define SUCCESS_MONTGOMERY_MOD 38           //< MONTGOMERY_MOD 성공
-#define SUCCESS_MOD 39                      //< MOD 성공
+#define SUCCESS_MUL_KARATSUBA 23            //< MUL_KARATSUBA 성공
+#define SUCCESS_SQUARE_AA 24                //< SQUARE_AA 성공
+#define SUCCESS_SQUARE_C 25                 //< SQUARE_C 성공
+#define SUCCESS_SQUARE_KARATSUBA 26         //< SQUARE_KARATSUBA 성공
+#define SUCCESS_SQUARE 27                   //< SUCCESS_SQUARE 성공
+#define SUCCESS_SQUARE_A 28                 //< SUCCESS_SQUARE_A 성공
+#define SUCCESS_DIV_BIT 29                  //< DIV_BIT 성공
+#define SUCCESS_DIV_WORD 30                 //< DIV_WORD 성공
+#define SUCCESS_DIV_CC 31                   //< DIV_CC 성공
+#define SUCCESS_DIV_C 32                    //< DIC_C 성공
+#define SUCCESS_DIV 33                      //< DIV 성공
+#define SUCCESS_LEFT_TO_RIGHT 34            //< LEFT_TO_RIGHT 성공
+#define SUCCESS_RIGHT_TO_LEFT 35            //< RIGHT_TO_LEFT 성공
+#define SUCCESS_MONTGOMERY 36               //< MONTGOMERY 성공
+#define SUCCESS_LEFT_TO_RIGHT_MOD 37        //< LEFT_TO_RIGHT_MOD 성공
+#define SUCCESS_RIGHT_TO_LEFT_MOD 38        //< RIGHT_TO_LEFT_MOD 성공
+#define SUCCESS_MONTGOMERY_MOD 39           //< MONTGOMERY_MOD 성공
+#define SUCCESS_MOD 40                      //< MOD 성공
+#define SUCCESS_RSA 41                      //< RSA 성공
 
 #define INVALID_WORD_LENGTH_ERROR -1        //< 잘못된 워드 길이 에러
 #define MEMORY_ALLOCATION_ERROR -2          //< 메모리 할당 실패 에러

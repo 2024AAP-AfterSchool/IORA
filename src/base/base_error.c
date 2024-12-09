@@ -364,7 +364,7 @@ msg print_success_div()
  */
 msg print_zero_div_error()
 {
-    if (VERBOSE) fprintf(stderr, "Error: print_zero_div_.\n");
+    if (VERBOSE) fprintf(stderr, "Error: print_zero_div.\n");
     return FAIL_ZERO_DIV;
 }
 

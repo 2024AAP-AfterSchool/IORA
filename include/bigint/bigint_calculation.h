@@ -21,7 +21,7 @@ res bi_set_from_string(OUT bigint** dst, IN char* str, IN uint32_t base);
 
 // random 값으로 생성한 배열의 가장 마지막 인덱스는 0이 되어서는 안됨.
 // 0일 경우 wordlen보다 작은 값이 나옴.
-res bi_get_random(OUT bigint** dst, IN uint32_t sign, IN uint32_t wordlen);
+res bi_get_random(OUT bigint** dst, IN uint32_t sign, IN uint32_t byte);
 
 // bigint의 마지막 워드가 0인 경우 bigint의 메모리를 재할당하는 함수
 res bi_refine(OUT bigint* dst);

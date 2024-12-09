@@ -101,6 +101,11 @@ def load_function(lib):
     function['bi_exp_right_to_left_mod'] = lib.bi_exp_right_to_left_mod
     function['bi_exp_montgomery_mod'] = lib.bi_exp_montgomery_mod
     function['bi_mod'] = lib.bi_mod
+
+    function['RSA_parameter_create'] = lib.RSA_parameter_create
+    function['bi_get_random'] = lib.bi_get_random
+    function['RSA_encrypt'] = lib.RSA_encrypt
+    function['RSA_decrypt'] = lib.RSA_decrypt
     
     # 함수 반환 타입 설정
     for key in function.keys():
@@ -211,7 +216,7 @@ def drow_and_save_graph(data, title, filename):
     plt.savefig(output_path, format='png', dpi=450)
     print(f"Graph saved to {output_path}\n")
 
-def test_addtion(function, wordlen=32, iteration=100, verbose=False):
+def test_addtion(function, wordlen=32, iteration=10000, verbose=False):
     print_center(" 3-8. BigInt 덧셈 테스트 ", '-', '\n', 95)
     execution_times = []
     if word == ctypes.c_uint8:
@@ -276,7 +281,7 @@ def test_addtion(function, wordlen=32, iteration=100, verbose=False):
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
         drow_and_save_graph(data=execution_times, title="Bigint Addition", filename="1.bi_addition_execution_time.png")
 
-def test_subtraction(function, wordlen=64, iteration=1000, verbose=False):
+def test_subtraction(function, wordlen=32, iteration=10000, verbose=False):
     print_center(" 3-9. BigInt 뺄셈 테스트 ", '-', '\n', 95)
     if word == ctypes.c_uint8:
         format_specifier = '{:02X}'
@@ -340,7 +345,7 @@ def test_subtraction(function, wordlen=64, iteration=1000, verbose=False):
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
         drow_and_save_graph(data=execution_times, title="Bigint Subtraction", filename="2.bi_subtraction_execution_time.png")
 
-def test_multiplication(function, wordlen=32, iteration=10000, verbose=False):
+def test_multiplication(function, wordlen=32, iteration=5000, verbose=False):
     print_center(" 3-10. BigInt 곱셈 테스트 ", '-', '\n', 95)
     if word == ctypes.c_uint8:
         format_specifier = '{:02X}'
@@ -404,7 +409,7 @@ def test_multiplication(function, wordlen=32, iteration=10000, verbose=False):
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
         drow_and_save_graph(data=execution_times, title="Bigint Multiplication", filename="3.bi_multiplication_execution_time.png")
 
-def test_multiplication_karatsuba(function, wordlen=32, iteration=10000, verbose=False):
+def test_multiplication_karatsuba(function, wordlen=32, iteration=5000, verbose=False):
     print_center(" 3-11. BigInt 곱셈(karatsuba) 테스트 ", '-', '\n', 95)
     if word == ctypes.c_uint8:
         format_specifier = '{:02X}'
@@ -468,7 +473,7 @@ def test_multiplication_karatsuba(function, wordlen=32, iteration=10000, verbose
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
         drow_and_save_graph(data=execution_times, title="Bigint Multiplication(Karatsuba)", filename="4.bi_multiplication_karatsuba_execution_time.png")
 
-def test_squaring(function, wordlen=64, iteration=500, verbose=False):
+def test_squaring(function, wordlen=32, iteration=5000, verbose=False):
     print_center(" 3-12. BigInt 제곱 테스트 ", '-', '\n', 95)
     if word == ctypes.c_uint8:
         format_specifier = '{:02X}'
@@ -525,7 +530,7 @@ def test_squaring(function, wordlen=64, iteration=500, verbose=False):
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
         drow_and_save_graph(data=execution_times, title="Bigint Squaring", filename="5.bi_squaring_execution_time.png")
 
-def test_squaring_karatsuba(function, wordlen=64, iteration=500, verbose=False):
+def test_squaring_karatsuba(function, wordlen=32, iteration=5000, verbose=False):
     print_center(" 3-13. BigInt 제곱(karatsuba) 테스트 ", '-', '\n', 95)
     if word == ctypes.c_uint8:
         format_specifier = '{:02X}'
@@ -581,7 +586,7 @@ def test_squaring_karatsuba(function, wordlen=64, iteration=500, verbose=False):
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
         drow_and_save_graph(data=execution_times, title="Bigint Squaring(Karatsuba)", filename="6.bi_squaring_karatsuba_execution_time.png")
 
-def test_division_bit(function, wordlen=64, iteration=10000, verbose=True):
+def test_division_bit(function, wordlen=32, iteration=5000, verbose=False):
     print_center(" 3-14. BigInt 나눗셈 테스트(bit) ", '-', '\n', 95)
     if word == ctypes.c_uint8:
         format_specifier = '{:02X}'
@@ -595,7 +600,7 @@ def test_division_bit(function, wordlen=64, iteration=10000, verbose=True):
         sign1, sign2 = generate_random_sign(), POSITIVE
         wordlen1, wordlen2 = [generate_random_wordlen(wordlen) for _ in range(2)]
         bigint1, bigint2, bigint3, bigint4 = [ctypes.POINTER(bigint)() for _ in range(4)]
-        wordlen2 = 1
+        
         src_array1 = (word * wordlen1)(*(generate_random_number() for _ in range(wordlen1)))
         src_array2 = (word * wordlen2)(*(generate_random_number() for _ in range(wordlen2)))
         
@@ -655,7 +660,7 @@ def test_division_bit(function, wordlen=64, iteration=10000, verbose=True):
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
         drow_and_save_graph(data=execution_times, title="Bigint Division(Bit)", filename="7.bi_division_bit_execution_time.png")
 
-def test_division_word(function, wordlen=32, iteration=10000, verbose=True): 
+def test_division_word(function, wordlen=128, iteration=5000, verbose=False): 
     print_center(" 3-15. BigInt 나눗셈 테스트(word) ", '-', '\n', 95)
     if word == ctypes.c_uint8:
         format_specifier = '{:02X}'
@@ -669,7 +674,7 @@ def test_division_word(function, wordlen=32, iteration=10000, verbose=True):
         sign1, sign2 = POSITIVE, POSITIVE
         wordlen1, wordlen2 =  [generate_random_wordlen(wordlen) for _ in range(2)]
         bigint1, bigint2, bigint3, bigint4 = [ctypes.POINTER(bigint)() for _ in range(4)]
-        wordlen2 = 1
+        
         src_array1 = (word * wordlen1)(*(generate_random_number() for _ in range(wordlen1)))
         src_array2 = (word * wordlen2)(*(generate_random_number() for _ in range(wordlen2)))
         
@@ -764,7 +769,7 @@ def test_shift_left(function, iteration=1, verbose=False):
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
         drow_and_save_graph(data=execution_times, title="Bigint Shift(Bit)", filename="9.bi_shift_bit_execution_time.png")
 
-def test_exponential_ltr(function, wordlen=16, iteration=10, verbose=True):
+def test_exponential_ltr(function, wordlen=32, iteration=10, verbose=False):
     print_center(" 3-17. BigInt 거듭제곱(L-to-R) 테스트 ", '-', '\n', 95)
     if word == ctypes.c_uint8:
         format_specifier = '{:02X}'
@@ -838,7 +843,7 @@ def test_exponential_ltr(function, wordlen=16, iteration=10, verbose=True):
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
         drow_and_save_graph(data=execution_times, title="Bigint Exponential(Left-to-Right)", filename="10.bi_exponential_ltr_execution_time.png")
 
-def test_exponential_rtl(function, wordlen=16, iteration=10, verbose=False):
+def test_exponential_rtl(function, wordlen=32, iteration=10, verbose=False):
     print_center(" 3-18. BigInt 거듭제곱(R-to-L) 테스트 ", '-', '\n', 95)
     if word == ctypes.c_uint8:
         format_specifier = '{:02X}'
@@ -911,7 +916,7 @@ def test_exponential_rtl(function, wordlen=16, iteration=10, verbose=False):
         print_center(f" TEST SUCCESS (Iteration: {iteration}) ", '-')
         drow_and_save_graph(data=execution_times, title="Bigint Exponential(Right-to-Left)", filename="11.bi_exponential_rtl_execution_time.png")
 
-def test_exponential_montgomery(function, wordlen=16, iteration=10, verbose=False):
+def test_exponential_montgomery(function, wordlen=32, iteration=10, verbose=False):
     print_center(" 3-19. BigInt 거듭제곱(Montgomery) 테스트 ", '-', '\n', 95)
     if word == ctypes.c_uint8:
         format_specifier = '{:02X}'
@@ -1208,46 +1213,85 @@ def test():
     print()
 
     # 3-8 BigInt 덧셈 테스트
-    #test_addtion(function)
+    test_addtion(function)
 
     # 3-9 BigInt 뺄셈 테스트
-    #test_subtraction(function)
+    test_subtraction(function)
 
     # 3-10 BigInt 곱셈 테스트
+    
     test_multiplication(function)
 
     # 3-11 BigInt 곱셈(karatsuba) 테스트
     test_multiplication_karatsuba(function)
 
     # 3-12 BigInt 제곱 테스트
-    #test_squaring(function)
+    test_squaring(function)
 
     # 3-13 BigInt 제곱 테스트
-    #test_squaring_karatsuba(function)
+    test_squaring_karatsuba(function)
 
     # 3-14 BigInt 나눗셈(Bit) 테스트
-    #test_division_bit(function)
+    test_division_bit(function)
 
     # 3-15 BigInt 나눗셈(Word) 테스트
-    #test_division_word(function)
+    test_division_word(function)
 
     # 3-16 BigInt 시프트(비트) 테스트
-    # test_shift_left(function)
+    #test_shift_left(function)
 
     # 3-17 BigInt 거듭제곱(L-to-R) 테스트
-    #test_exponential_ltr(function)
+    test_exponential_ltr(function)
 
     # 3-18 BigInt 거듭제곱(R-to-L) 테스트
-    #test_exponential_rtl(function)
+    test_exponential_rtl(function)
 
     # 3-19 BigInt 거듭제곱(Montgomery) 테스트
-    #test_exponential_montgomery(function)
+    test_exponential_montgomery(function)
 
     # 3-20 BigInt 나머지 연산 테스트
-    # test_reduction(function)
+    #test_reduction(function)
 
     # 실행 테스트
     # os.system(command=f"./build/{OS}/IORA")
+
+    # Secure Random 테스트
+    #print_center("HELLO")
+    #p = ctypes.POINTER(bigint)()
+    #function['bi_get_random'](ctypes.byref(p), 0, 3)
+    #function['bi_print'](p, 16)
+
+    # RSA 테스트
+    print_center(" 3-21. RSA 테스트 ", '-', '\n', 95)
+    n, e, d, c, m, m1 = [ctypes.POINTER(bigint)() for _ in range(6)]
+    key_size = 1024
+    function['RSA_parameter_create'](ctypes.byref(n), ctypes.byref(e), ctypes.byref(d), key_size)
+    print("\nN: ")
+    function['bi_print'](n, 16)
+    print("\ne (Public Key): ")
+    function['bi_print'](e, 16)
+    print("\nd (Private Key): ")
+    function['bi_print'](d, 16)
+    function['bi_get_random'](ctypes.byref(m),0,3)
+    print("\nmessage: ")
+    function['bi_print'](m, 16)
+    function['RSA_encrypt'](ctypes.byref(c),m,e,n) 
+    print("\nCiphertext: ")
+    function['bi_print'](c, 16)
+    function['RSA_decrypt'](ctypes.byref(m1),c,d,n) 
+    print("\nDecrypted Messgae: ")
+    function['bi_print'](m1, 16)
+   
+    
+    function['bi_delete'](ctypes.byref(n))
+    function['bi_delete'](ctypes.byref(e))
+    function['bi_delete'](ctypes.byref(d))
+    function['bi_delete'](ctypes.byref(c))
+    function['bi_delete'](ctypes.byref(m))
+    function['bi_delete'](ctypes.byref(m1))
+
+  
+
 
     # 테스트 종료
 

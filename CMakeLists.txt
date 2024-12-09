@@ -7,9 +7,6 @@ endif()
 
 project(IORA LANGUAGES C VERSION 1.0)
 
-# 메모리 검사 옵션
-option(MEMORY_CHECK "Enable Memory Check" ON)
-
 # C 표준을 C99로 설정
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED True)
@@ -58,7 +55,11 @@ file(GLOB SOURCE_FILES
 )
 
 # 실행 파일 빌드
-#add_executable(IORA ${SOURCE_FILES})
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    add_executable(IORA ${SOURCE_FILES})
+    set_target_properties(IORA PROPERTIES OUTPUT_NAME "IORA"
+                        RUNTIME_OUTPUT_DIRECTORY ${EXECUTABLE_OUTPUT_PATH})
+endif()
 
 # main 함수는 라이브러리 만들 때 제외
 list(REMOVE_ITEM SOURCE_FILES ${PROJECT_SOURCE_DIR}/src/main.c)
